@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestIto : EnemyBese
+public class TestBullet : BulletBese
 {
-    
 }
