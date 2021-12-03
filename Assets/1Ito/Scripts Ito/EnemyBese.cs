@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Enemy(中ボス,ボス)の基底クラス
+/// Enemyの基底クラス
 /// </summary>
 [RequireComponent(typeof (Rigidbody2D))]
 [RequireComponent(typeof(Collider2D))]
