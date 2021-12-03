@@ -14,17 +14,24 @@ public class EnemyBese : MonoBehaviour
     [SerializeField] private float _enemyHp = default;
     private float _damageValue = default;
 
+
     private void Update()
     {
+        Attack();
     }
     public virtual void Attack()
     {
         Debug.LogError("派生クラスでメソッドをオーバライドしてください。");
     }
 
-    public virtual void SetDamage(float damage)
+    public virtual void OnGetDamage()
     {
         Debug.LogError("派生クラスでメソッドをオーバライドしてください。");
+    }
+
+    private void SetDamage(float damage)
+    {
+        _enemyHp -= damage;
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -32,7 +39,9 @@ public class EnemyBese : MonoBehaviour
         {
             //var bullet = collision.GetComponent<>();
             //_damageValue = bullet.GetDamegeValue();
-            //SetDamage(_damageValue);
+
+            OnGetDamage();
+            SetDamage(_damageValue);
         }
 
         if(EnemyHp <= 0)
