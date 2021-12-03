@@ -9,22 +9,33 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class EnemyBese : MonoBehaviour
 {
-    [SerializeField] public float _enemyHp = default;
+    public float EnemyHp { get => _enemyHp;}
 
+    [SerializeField] private float _enemyHp = default;
+    private float _damageValue = default;
+
+    private void Update()
+    {
+    }
     public virtual void Attack()
     {
         Debug.LogError("派生クラスでメソッドをオーバライドしてください。");
     }
 
+    public virtual void SetDamage(float damage)
+    {
+        Debug.LogError("派生クラスでメソッドをオーバライドしてください。");
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.tag == "Bullet")
         {
-            //var bullet = GetComponent<Bullet>();
-            //_enemyHp -= 
+            //var bullet = collision.GetComponent<>();
+            //_damageValue = bullet.GetDamegeValue();
+            //SetDamage(_damageValue);
         }
 
-        if(_enemyHp <= 0)
+        if(EnemyHp <= 0)
         {
             Destroy(this.gameObject);
         }
