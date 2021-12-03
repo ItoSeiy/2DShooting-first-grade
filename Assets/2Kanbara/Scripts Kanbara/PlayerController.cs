@@ -27,8 +27,9 @@ public class PlayerController : MonoBehaviour
             _rb.velocity = go * _movespeed;
         }
 
-        if(Input.GetButton("Fire1"))
+        if (Input.GetButton("Fire1"))
         {
+
 
         }
     }
