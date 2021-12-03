@@ -44,8 +44,8 @@ public class EnemyBese : MonoBehaviour
     {
         if(collision.tag == "Bullet")
         {
-            //var bullet = collision.GetComponent<>();
-            //_damageValue = bullet.GetDamegeValue();
+            var bullet = collision.GetComponent<BulletBese>();
+            _damageValue = bullet.Damege;
 
             OnGetDamage();
             SetDamage(_damageValue);
