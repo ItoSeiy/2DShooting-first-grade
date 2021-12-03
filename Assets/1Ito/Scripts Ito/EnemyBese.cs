@@ -12,12 +12,19 @@ public class EnemyBese : MonoBehaviour
     public float EnemyHp { get => _enemyHp;}
 
     [SerializeField] private float _enemyHp = default;
+    [SerializeField] private float _attackInterval = default;
+    private float _timer = default;
     private float _damageValue = default;
 
 
     private void Update()
     {
-        Attack();
+        _timer += Time.deltaTime;
+
+        if(_timer > _attackInterval)
+        {
+            Attack();
+        }
     }
     public virtual void Attack()
     {
