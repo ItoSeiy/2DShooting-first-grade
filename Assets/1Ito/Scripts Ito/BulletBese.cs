@@ -10,6 +10,6 @@ using UnityEngine;
 public class BulletBese : MonoBehaviour
 {
     public float Damege { get => _damege;}
-
+　　
     [SerializeField, Header("Bulletが与えるダメージ")] private float _damege;
 }
