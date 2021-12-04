@@ -11,11 +11,9 @@ public class EnemyBese : MonoBehaviour
 {
     public float EnemyHp { get => _enemyHp;}
 
-    [SerializeField] private float _enemyHp = default;
-    [SerializeField] private float _attackInterval = default;
+    [SerializeField, Header("体力")] private float _enemyHp = default;
+    [SerializeField, Header("攻撃頻度(秒)")] private float _attackInterval = default;
     private float _timer = default;
-    private float _damageValue = default;
-
 
     private void Update()
     {
@@ -45,12 +43,11 @@ public class EnemyBese : MonoBehaviour
         if(collision.tag == "Bullet")
         {
             var bullet = collision.GetComponent<BulletBese>();
-
-            OnGetDamage();
             SetDamage(bullet.Damege);
+
         }
 
-        if(EnemyHp <= 0)
+        if (EnemyHp <= 0)
         {
             Destroy(this.gameObject);
         }
