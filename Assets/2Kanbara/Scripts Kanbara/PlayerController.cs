@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D _rb;
     [SerializeField] float _movespeed = 3;
     [SerializeField] float _latemove = 1;
+    int[] _bulletindex = new int[] { 0, 1, 2 };
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
