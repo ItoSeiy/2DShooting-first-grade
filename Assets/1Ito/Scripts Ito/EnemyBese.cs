@@ -10,7 +10,6 @@ using UnityEngine;
 public class EnemyBese : MonoBehaviour
 {
     public float EnemyHp { get => _enemyHp;}
-
     [SerializeField, Header("体力")] private float _enemyHp = default;
     [SerializeField, Header("攻撃頻度(秒)")] private float _attackInterval = default;
     private float _timer = default;
@@ -45,6 +44,7 @@ public class EnemyBese : MonoBehaviour
             var bullet = collision.GetComponent<BulletBese>();
             SetDamage(bullet.Damege);
 
+            OnGetDamage();
         }
 
         if (EnemyHp <= 0)
