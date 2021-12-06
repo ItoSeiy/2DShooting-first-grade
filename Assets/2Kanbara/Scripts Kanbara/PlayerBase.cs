@@ -14,11 +14,13 @@ public class PlayerBase : MonoBehaviour
     Rigidbody2D _rb;
     [SerializeField, Header("動くスピード")] float _moveSpeed = default;
     [SerializeField, Header("精密操作のスピード")] float _lateMove = default;
-    [SerializeField, Header("弾を発射するポジション")] Transform _muzzle = default;
-    [SerializeField, Header("弾")] GameObject _bullet = default;
+    [SerializeField, Header("弾を発射するポジション")] public Transform _muzzle = default;
+    [SerializeField, Header("弾")] public GameObject _bullet = default;
     [SerializeField, Header("残機")] int _playerLife = default;
+    [SerializeField, Header("発射する間隔(ミリ秒)")] public int _attackDelay = default;
+    [SerializeField, Header("精密操作時の発射する間隔(ミリ秒)")] public int _superAttackDelay = default;
     int[] _bulletIndex = new int[] { 0, 1, 2 };
-    bool _bulletStop = default;
+    public bool _bulletStop = default;
     bool _lateMode = default;
     void Start()
     {
@@ -63,7 +65,7 @@ public class PlayerBase : MonoBehaviour
     {
         Debug.LogError("派生クラスでメソッドをオーバライドしてください。");
         //GameObject gob = Instantiate(_bullet, _muzzle); //テスト用
-        await Task.Delay(100);
+        await Task.Delay(_attackDelay);
         _bulletStop = false;
     }
 
@@ -71,7 +73,7 @@ public class PlayerBase : MonoBehaviour
     {
         Debug.LogError("派生クラスでメソッドをオーバライドしてください。");
         //GameObject gob = Instantiate(_bullet, _muzzle); //テスト用
-        await Task.Delay(200);
+        await Task.Delay(_superAttackDelay);
         _bulletStop = false;
     }
 
