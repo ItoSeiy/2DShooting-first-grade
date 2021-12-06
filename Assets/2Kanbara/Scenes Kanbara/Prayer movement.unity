@@ -219,7 +219,7 @@ GameObject:
   - component: {fileID: 1998364573}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -319,11 +319,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _movespeed: 8
   _latemove: 3
-  _sr: {fileID: 1998364571}
   _muzzle: {fileID: 2018753175}
-  _bullet: {fileID: 0}
-  _playerpower: 1
-  _playerinterval: 1
+  _bullet: {fileID: 523329774571824565, guid: 95118f2f2ca25ca48a86282743686410, type: 3}
+  _playerlife: 3
 --- !u!50 &1998364574
 Rigidbody2D:
   serializedVersion: 4
