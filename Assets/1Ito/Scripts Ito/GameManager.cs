@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    static GameManager _instance;
     public static GameManager Instance => _instance;
+    public int InvincibleObjectCount => _invicibleObjectCount;
 
     public int Score => _score;
     public int Power => _power;
     public int BombCount => _bombCount;
-    public int InvincibleObjectCount => _invicibleObjectCount;
 
+
+    static GameManager _instance;
     private int _score = default;
     private int _power = default;
     private int _bombCount = default;
