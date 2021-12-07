@@ -20,10 +20,16 @@ public class PlayerBase : MonoBehaviour
     [SerializeField, Header("発射する間隔(ミリ秒)")] public int _attackDelay = default;
     [SerializeField, Header("精密操作時の発射する間隔(ミリ秒)")] public int _superAttackDelay = default;
     [SerializeField, Header("ボムの個数")] public int _bomCount = default;
+    [SerializeField, Header("ボムのクールタイム（ミリ秒）")] public int _bomCoolTime = default;
+
     /// <summary>連続で弾を撃てないようにするフラグ</summary>
     public bool _isBulletStop = default;
     /// <summary>精密操作時のフラグ</summary>
     bool _isLateMode = default;
+    /// <summary>無敵モードのフラグ</summary>
+    bool _godMode = default;
+    /// <summary>ボムの使用時に立つフラグ</summary>
+    public bool _isBom = default;
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -58,15 +64,11 @@ public class PlayerBase : MonoBehaviour
             _isBulletStop = true;
         }
 
-        if(Input.GetButtonDown("Jump") && _bomCount != 0)
+        if(Input.GetButtonDown("Jump") && _bomCount != 0 && !_isBom)
         {
             Bom();
-        }
-
-        if(_playerLife == 0)
-        {
-            Destroy(this.gameObject);
-            // ここにゲームマネージャーからGameOverの関数を呼び出す予定です
+            _isBom = true;
+            _bomCount -= 1;
         }
     }
 
@@ -82,15 +84,18 @@ public class PlayerBase : MonoBehaviour
     public virtual void Bom()
     {
         Debug.LogError("派生クラスでメソッドをオーバライドしてください。");
-        _bomCount -= 1;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "EnemyBullet")
+        if(collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "EnemyBullet" && !_godMode)
         {
             _playerLife -= 1;
             // ここにリスポーンの処理を呼び出すべきでしょう
+            if(_playerLife == 0)
+            {
+                //ゲームマネージャーからGameOverの関数を呼び出す
+            }
         }
         if (collision.gameObject.tag == "Power")
         {

@@ -245,7 +245,9 @@ MonoBehaviour:
   _attackDelay: 100
   _superAttackDelay: 200
   _bomCount: 0
+  _bomCoolTime: 0
   _isBulletStop: 0
+  _isBom: 0
   _power: 0
 --- !u!58 &888640654
 CircleCollider2D:
@@ -445,7 +447,9 @@ MonoBehaviour:
   _attackDelay: 100
   _superAttackDelay: 200
   _bomCount: 3
+  _bomCoolTime: 5000
   _isBulletStop: 0
+  _isBom: 0
   _power: 0
 --- !u!50 &1915347097
 Rigidbody2D:
