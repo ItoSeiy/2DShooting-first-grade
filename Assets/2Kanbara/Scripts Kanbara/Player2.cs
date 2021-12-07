@@ -7,17 +7,71 @@ public class Player2 : PlayerBase
 {
     public override async void PlayerAttack()
     {
-        //base.PlayerAttack();
-        GameObject gob = Instantiate(_bullet, _muzzle);
+        int i = default;
+        GetPower();
+        if (_power < 50)
+        {
+            i = 0;
+        }
+        else if (50 < _power && _power < 100)
+        {
+            i = 1;
+        }
+        else if (100 < _power)
+        {
+            i = 2;
+        }
+        GameObject go = Instantiate(_bullet[i], _muzzle);
         await Task.Delay(_attackDelay);
-        _bulletStop = false;
+        _isBulletStop = false;
     }
 
     public override async void PlayerSuperAttack()
     {
-        //base.PlayerSuperAttack();
-        GameObject gob = Instantiate(_bullet, _muzzle);
+        int i = default;
+        GetPower();
+        if (_power < 50)
+        {
+            i = 0;
+        }
+        else if (50 < _power && _power < 100)
+        {
+            i = 1;
+        }
+        else if (100 < _power)
+        {
+            i = 2;
+        }
+        GameObject go = Instantiate(_superBullet[i], _muzzle);
         await Task.Delay(_superAttackDelay);
-        _bulletStop = false;
+        _isBulletStop = false;
     }
+
+    //private void OnCollisionEnter2D(Collision2D collision)
+    //{
+    //    if (collision.gameObject.tag == "Power")
+    //    {
+    //        //powerを取ったらpowerが増える処理を書く
+    //    }
+    //    if (collision.gameObject.tag == "Point")
+    //    {
+    //        //pointを取ったらpointが増える処理を書く
+    //    }
+    //    if (collision.gameObject.tag == "1up")
+    //    {
+    //        //1upを取ったら1upが増える処理を書く
+    //    }
+    //}
+
+    public override void Bom()
+    {
+        //base.Bom();
+        //ここにBomを使う処理を書く
+    }
+
+    //private int _power = default;
+    //public int GetPower()
+    //{
+    //    return _power = FindObjectOfType<GameManager>().GetComponent<GameManager>().Power;
+    //}
 }
