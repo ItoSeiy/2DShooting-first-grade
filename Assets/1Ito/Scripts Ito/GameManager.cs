@@ -34,6 +34,11 @@ public class GameManager : MonoBehaviour
         _score += score;
     }
 
+    public void GetPower(int power)
+    {
+        _power += power;
+    }
+
     public void GetBomb(int bombCount)
     {
         _bombCount += bombCount;
