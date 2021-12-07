@@ -37,6 +37,7 @@ public class PlayerBomb : BulletBese
             {
                 Destroy(b);
             }
+            Destroy(this.gameObject);
         }
     }
 }
