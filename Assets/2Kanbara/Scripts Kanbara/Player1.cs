@@ -27,7 +27,6 @@ public class Player1 : PlayerBase
 
     public override async void PlayerSuperAttack()
     {
-        //GameManager.Power();
         int i = default;
         if (_playerPower < 50)
         {

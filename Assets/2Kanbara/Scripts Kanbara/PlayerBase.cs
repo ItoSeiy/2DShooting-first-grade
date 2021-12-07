@@ -27,6 +27,8 @@ public class PlayerBase : MonoBehaviour
     [SerializeField, Header("Pointのタグ")] string _pointTag = default;
     [SerializeField, Header("1upのタグ")] string _1upTag = default;
 
+    public int _playerPower = default;
+
     /// <summary>連続で弾を撃てないようにするフラグ</summary>
     public bool _isBulletStop = default;
     /// <summary>精密操作時のフラグ</summary>
@@ -39,6 +41,8 @@ public class PlayerBase : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody2D>();
         _bomCount = FindObjectOfType<GameManager>().GetComponent<GameManager>().BombCount;
+        _playerPower = GameManager.Instance.Power;
+
     }
 
     void Update()
@@ -115,6 +119,4 @@ public class PlayerBase : MonoBehaviour
             //1upを取ったら1upが増える処理を書く
         }
     }
-
-    public int _playerPower = default;
 }
