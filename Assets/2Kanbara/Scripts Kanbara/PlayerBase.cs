@@ -21,6 +21,11 @@ public class PlayerBase : MonoBehaviour
     [SerializeField, Header("精密操作時の発射する間隔(ミリ秒)")] public int _superAttackDelay = default;
     [SerializeField, Header("ボムの個数")] public int _bomCount = default;
     [SerializeField, Header("ボムのクールタイム（ミリ秒）")] public int _bomCoolTime = default;
+    [SerializeField, Header("Enemyのタグ")] string _enemyTag = default;
+    [SerializeField, Header("EnemyのBulletのタグ")] string _enemyBulletTag = default;
+    [SerializeField, Header("Powerのタグ")] string _powerTag = default;
+    [SerializeField, Header("Pointのタグ")] string _pointTag = default;
+    [SerializeField, Header("1upのタグ")] string _1upTag = default;
 
     /// <summary>連続で弾を撃てないようにするフラグ</summary>
     public bool _isBulletStop = default;
@@ -88,7 +93,7 @@ public class PlayerBase : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "EnemyBullet" && !_godMode)
+        if(collision.gameObject.tag == _enemyTag || collision.gameObject.tag == _enemyBulletTag && !_godMode)
         {
             _playerLife -= 1;
             // ここにリスポーンの処理を呼び出すべきでしょう
@@ -97,23 +102,19 @@ public class PlayerBase : MonoBehaviour
                 //ゲームマネージャーからGameOverの関数を呼び出す
             }
         }
-        if (collision.gameObject.tag == "Power" && _power < 151)
+        if (collision.gameObject.tag == _powerTag && _playerPower < 151)
         {
-            _power += 1;
+            GameManager.Instance.GetPower(1);
         }
-        if (collision.gameObject.tag == "Point")
+        if (collision.gameObject.tag == _pointTag)
         {
             //pointを取ったらpointが増える処理を書く
         }
-        if (collision.gameObject.tag == "1up")
+        if (collision.gameObject.tag == _1upTag)
         {
             //1upを取ったら1upが増える処理を書く
         }
     }
 
-    public int _power = default;
-    public int GetPower()
-    {
-        return _power = FindObjectOfType<GameManager>().GetComponent<GameManager>().Power;
-    }
+    public int _playerPower = default;
 }

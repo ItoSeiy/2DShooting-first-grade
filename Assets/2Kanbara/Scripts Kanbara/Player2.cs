@@ -8,16 +8,15 @@ public class Player2 : PlayerBase
     public override async void PlayerAttack()
     {
         int i = default;
-        GetPower();
-        if (_power < 50)
+        if (_playerPower < 50)
         {
             i = 0;
         }
-        else if (50 < _power && _power < 100)
+        else if (50 < _playerPower && _playerPower < 100)
         {
             i = 1;
         }
-        else if (100 < _power)
+        else if (100 < _playerPower)
         {
             i = 2;
         }
@@ -29,16 +28,15 @@ public class Player2 : PlayerBase
     public override async void PlayerSuperAttack()
     {
         int i = default;
-        GetPower();
-        if (_power < 50)
+        if (_playerPower < 50)
         {
             i = 0;
         }
-        else if (50 < _power && _power < 100)
+        else if (50 < _playerPower && _playerPower < 100)
         {
             i = 1;
         }
-        else if (100 < _power)
+        else if (100 < _playerPower)
         {
             i = 2;
         }
