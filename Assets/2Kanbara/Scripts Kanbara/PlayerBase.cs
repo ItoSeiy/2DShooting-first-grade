@@ -97,9 +97,9 @@ public class PlayerBase : MonoBehaviour
                 //ゲームマネージャーからGameOverの関数を呼び出す
             }
         }
-        if (collision.gameObject.tag == "Power")
+        if (collision.gameObject.tag == "Power" && _power < 151)
         {
-            //powerを取ったらpowerが増える処理を書く
+            _power += 1;
         }
         if (collision.gameObject.tag == "Point")
         {
