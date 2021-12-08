@@ -19,7 +19,6 @@ public class PlayerBase : MonoBehaviour
     [SerializeField, Header("残機")] int _playerLife = default;
     [SerializeField, Header("発射する間隔(ミリ秒)")] public int _attackDelay = default;
     [SerializeField, Header("精密操作時の発射する間隔(ミリ秒)")] public int _superAttackDelay = default;
-    [SerializeField, Header("ボムの個数")] public int _bomCount = default;
     [SerializeField, Header("ボムのクールタイム（ミリ秒）")] public int _bomCoolTime = default;
     [SerializeField, Header("Enemyのタグ")] string _enemyTag = default;
     [SerializeField, Header("EnemyのBulletのタグ")] string _enemyBulletTag = default;
@@ -29,7 +28,8 @@ public class PlayerBase : MonoBehaviour
     [SerializeField, Header("Invincibleのタグ")] string _invincibleTag = default;
     [SerializeField, Header("この数値以上なら、一定時間無敵モードになる変数")] int _invincibleMax = default;
     [SerializeField, Header("無敵モードのクールタイム")] public int _invincibleCoolTime = default;
-
+    [SerializeField, Header("Playerのパワーの上限")] int _playerPowerMax = default;
+    int _bomCount = default;
     public int _playerPower = default;
     int _invincibleObjectCount = default;
 
@@ -110,7 +110,7 @@ public class PlayerBase : MonoBehaviour
                 //ゲームマネージャーからGameOverの関数を呼び出す
             }
         }
-        if (collision.gameObject.tag == _powerTag && _playerPower < 151)
+        if (collision.gameObject.tag == _powerTag && _playerPower < _playerPowerMax)
         {
             GameManager.Instance.GetPower(1);
         }
@@ -128,6 +128,7 @@ public class PlayerBase : MonoBehaviour
             if(_invincibleObjectCount > _invincibleMax)
             {
                 InvincibleMode();
+                _invincibleObjectCount = 0;
             }
         }
     }
