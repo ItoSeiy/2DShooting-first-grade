@@ -29,9 +29,9 @@ public class PlayerBase : MonoBehaviour
     [SerializeField, Header("この数値以上なら、一定時間無敵モードになる変数")] int _invincibleMax = default;
     [SerializeField, Header("無敵モードのクールタイム")] public int _invincibleCoolTime = default;
     [SerializeField, Header("Playerのパワーの上限")] int _playerPowerMax = default;
-    int _bomCount = default;
-    public int _playerPower = default;
-    int _invincibleObjectCount = default;
+    int _bomCount = default;//ボムの数を入れておく変数
+    public int _playerPower = default;//プレイヤーのパワーを入れておく変数
+    int _invincibleObjectCount = default;//一定数集めると無敵モードになるアイテムの数を入れておく変数
 
     /// <summary>連続で弾を撃てないようにするフラグ</summary>
     public bool _isBulletStop = default;
@@ -53,31 +53,31 @@ public class PlayerBase : MonoBehaviour
     {
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
-        if (Input.GetButton("Fire3"))
+        if (Input.GetButton("Fire3"))//精密操作
         {
             Vector2 dir = new Vector2(h, v).normalized;
             _rb.velocity = dir * _lateMove;
             _isLateMode = true;
         }
-        else
+        else//通常操作
         {
             Vector2 dir = new Vector2(h, v).normalized;
             _rb.velocity = dir * _moveSpeed;
             _isLateMode = false;
         }
 
-        if (Input.GetButton("Fire1") && _isLateMode && !_isBulletStop)
+        if (Input.GetButton("Fire1") && _isLateMode && !_isBulletStop)//精密操作時の攻撃
         {
             PlayerSuperAttack();
             _isBulletStop = true;
         }
-        else if (Input.GetButton("Fire1") && !_isBulletStop)
+        else if (Input.GetButton("Fire1") && !_isBulletStop)//通常攻撃
         {
             PlayerAttack();
             _isBulletStop = true;
         }
 
-        if(Input.GetButtonDown("Jump") && _bomCount != 0 && !_isBom)
+        if(Input.GetButtonDown("Jump") && _bomCount != 0 && !_isBom)//ボム使用
         {
             Bom();
             _isBom = true;
@@ -125,7 +125,7 @@ public class PlayerBase : MonoBehaviour
         if(collision.gameObject.tag == _invincibleTag)
         {
             GameManager.Instance.GetInvicibleObjectCount(1);
-            if(_invincibleObjectCount > _invincibleMax)
+            if(_invincibleObjectCount > _invincibleMax)//一定数アイテムを集めたら無敵モードに切り替わる
             {
                 InvincibleMode();
                 _invincibleObjectCount = 0;
