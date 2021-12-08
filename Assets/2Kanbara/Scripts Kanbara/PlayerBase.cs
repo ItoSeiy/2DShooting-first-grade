@@ -26,23 +26,27 @@ public class PlayerBase : MonoBehaviour
     [SerializeField, Header("Powerのタグ")] string _powerTag = default;
     [SerializeField, Header("Pointのタグ")] string _pointTag = default;
     [SerializeField, Header("1upのタグ")] string _1upTag = default;
+    [SerializeField, Header("Invincibleのタグ")] string _invincibleTag = default;
+    [SerializeField, Header("この数値以上なら、一定時間無敵モードになる変数")] int _invincibleMax = default;
+    [SerializeField, Header("無敵モードのクールタイム")] public int _invincibleCoolTime = default;
 
     public int _playerPower = default;
+    int _invincibleObjectCount = default;
 
     /// <summary>連続で弾を撃てないようにするフラグ</summary>
     public bool _isBulletStop = default;
     /// <summary>精密操作時のフラグ</summary>
     bool _isLateMode = default;
     /// <summary>無敵モードのフラグ</summary>
-    bool _godMode = default;
+    public bool _godMode = default;
     /// <summary>ボムの使用時に立つフラグ</summary>
     public bool _isBom = default;
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
-        _bomCount = FindObjectOfType<GameManager>().GetComponent<GameManager>().BombCount;
+        _bomCount = GameManager.Instance.BombCount;
         _playerPower = GameManager.Instance.Power;
-
+        _invincibleObjectCount = GameManager.Instance.InvincibleObjectCount;
     }
 
     void Update()
@@ -95,7 +99,7 @@ public class PlayerBase : MonoBehaviour
         Debug.LogError("派生クラスでメソッドをオーバライドしてください。");
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.tag == _enemyTag || collision.gameObject.tag == _enemyBulletTag && !_godMode)
         {
@@ -112,11 +116,23 @@ public class PlayerBase : MonoBehaviour
         }
         if (collision.gameObject.tag == _pointTag)
         {
-            //pointを取ったらpointが増える処理を書く
+            GameManager.Instance.GetScore(1);        
         }
         if (collision.gameObject.tag == _1upTag)
         {
             //1upを取ったら1upが増える処理を書く
         }
+        if(collision.gameObject.tag == _invincibleTag)
+        {
+            GameManager.Instance.GetInvicibleObjectCount(1);
+            if(_invincibleObjectCount > _invincibleMax)
+            {
+                InvincibleMode();
+            }
+        }
+    }
+    public virtual void InvincibleMode()
+    {
+        Debug.LogError("派生クラスでメソッドをオーバライドしてください。");
     }
 }
