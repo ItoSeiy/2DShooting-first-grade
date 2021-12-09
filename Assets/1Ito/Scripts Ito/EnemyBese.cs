@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 [RequireComponent(typeof (Rigidbody2D))]
 [RequireComponent(typeof(Collider2D))]
-public class EnemyBese : MonoBehaviour, IDamage
+public abstract class EnemyBese : MonoBehaviour, IDamage
 {
     public float EnemyHp { get => _enemyHp;}
 
@@ -25,15 +25,16 @@ public class EnemyBese : MonoBehaviour, IDamage
             _timer = 0;
         }
     }
-    protected virtual void Attack()
-    {
-        Debug.LogError("派生クラスでメソッドをオーバライドしてください。");
-    }
 
-    protected virtual void OnGetDamage()
-    {
-        Debug.LogError("派生クラスでメソッドをオーバライドしてください。");
-    }
+    /// <summary>
+    /// 攻撃の処理を書いてください
+    /// </summary>
+    protected abstract void Attack();
+
+    /// <summary>
+    /// ダメージを受けた際の処理を書いてください
+    /// </summary>
+    protected abstract void OnGetDamage();
 
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -44,7 +45,13 @@ public class EnemyBese : MonoBehaviour, IDamage
         }
     }
 
-    public virtual void AddDamage(float damage)
+    /// <summary>
+    /// ダメージを喰らった際にBulletBaseから呼び出される関数
+    /// Enemyがダメージを喰らう
+    /// ダメージを喰らった際の処理もここで呼ばれる
+    /// </summary>
+    /// <param name="damage">受けるダメージ量</param>
+    void IDamage.AddDamage(float damage)
     {
         _enemyHp -= damage;
         OnGetDamage();
