@@ -9,7 +9,7 @@ public class EnemyController : EnemyBese
     [SerializeField] GameObject _bullet;
     
 
-    public override void Attack()
+    protected override void Attack()
     {
         // 各 muzzle から弾を発射する
         for(int i = 0 ; i < _muzzle.Length; i++)

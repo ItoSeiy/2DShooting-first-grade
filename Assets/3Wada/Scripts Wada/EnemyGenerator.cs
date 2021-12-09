@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBullet : BulletBese
+
+public class EnemyGenerator : MonoBehaviour
+
 {
-   
-    
-    
-        
-    
+
 }
