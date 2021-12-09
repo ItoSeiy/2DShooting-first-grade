@@ -8,7 +8,6 @@ public class BombbChildBullet : MonoBehaviour
     void Start()
     {
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        rb.AddForce(_direction * 4f);
         //rb.velocity = transform.localPosition.normalized * 2f;
     }
 }
