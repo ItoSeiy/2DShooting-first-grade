@@ -24,21 +24,8 @@ public class PlayerBomb : BulletBese
         {
             for (int i = 0; i < _muzzle.Length; i++)
             {
-                Instantiate(_bombChildBullet, _muzzle[i]);
+                Instantiate(_bombChildBullet, _muzzle[i].position,_muzzle[i].rotation);
             }
-
-            //var enemy = GameObject.FindGameObjectsWithTag(_enemyTag);
-            //var bullet = GameObject.FindGameObjectsWithTag(_enemyBulletTag);
-
-            //foreach (var e in enemy)
-            //{
-            //    Destroy(e);
-            //}
-
-            //foreach (var b in bullet)
-            //{
-            //    Destroy(b);
-            //}
             //Destroy(this.gameObject);
         }
     }
