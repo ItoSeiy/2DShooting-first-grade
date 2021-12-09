@@ -7,19 +7,28 @@ using UnityEngine;
 /// </summary>
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Collider2D))]
-public class BulletBese : MonoBehaviour
+public abstract class BulletBese : MonoBehaviour
 {
-    public float Damege { get => _damege;}
+    public float Damage { get => _damage;}
     
-    [SerializeField, Header("Bulletが与えるダメージ")] private float _damege;
+    [SerializeField, Header("Bulletが与えるダメージ")] private float _damage;
 
-    private void Update()
+    
+    
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        BulletMovement();
+        BulletAttack(collision);
     }
 
-    public virtual void BulletMovement()
+    /// <summary>
+    /// Bulletの基底クラスの関数
+    /// 衝突した相手のインタフェースを参照し攻撃を加える関数
+    /// 派生クラスではbase.BulletAttack(col);と記述する(基底クラスの機能を呼び出せる)
+    /// </summary>
+    /// <param name="col">当たった相手のコライダー</param>
+    protected virtual void BulletAttack(Collider2D col)
     {
-        Debug.LogError("弾又は爆弾等の移動の処理を派生クラスからオーバーライドしてください。");
+        var target = col.gameObject?.GetComponent<IDamage>();
+        target.AddDamage(_damage);
     }
 }
