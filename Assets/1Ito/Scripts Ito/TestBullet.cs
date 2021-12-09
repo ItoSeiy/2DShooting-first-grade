@@ -6,6 +6,7 @@ public class TestBullet : BulletBese
 {
     protected override void BulletAttack(Collider2D col)
     {
+
         base.BulletAttack(col);
     }
 }
