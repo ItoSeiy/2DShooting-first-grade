@@ -7,12 +7,17 @@ using UnityEngine;
 /// </summary>
 [RequireComponent(typeof (Rigidbody2D))]
 [RequireComponent(typeof(Collider2D))]
-public class EnemyBese : MonoBehaviour, IDamage
+public abstract class EnemyBese : MonoBehaviour, IDamage
 {
     public float EnemyHp { get => _enemyHp;}
+    public float AddDamageRatio { get => _damageRatio;}
 
     [SerializeField, Header("体力")] private float _enemyHp = default;
     [SerializeField, Header("攻撃頻度(秒)")] private float _attackInterval = default;
+    /// <summary>
+    /// 攻撃力の割合
+    /// </summary>
+    [SerializeField, Header("攻撃力を何割にするか"), Range(0f, 1f)] float _damageRatio = default;
     private float _timer = default;
 
     private void Update()
@@ -25,15 +30,18 @@ public class EnemyBese : MonoBehaviour, IDamage
             _timer = 0;
         }
     }
-    protected virtual void Attack()
-    {
-        Debug.LogError("派生クラスでメソッドをオーバライドしてください。");
-    }
 
-    protected virtual void OnGetDamage()
-    {
-        Debug.LogError("派生クラスでメソッドをオーバライドしてください。");
-    }
+    /// <summary>
+    /// 攻撃の処理を書いてください
+    /// 例)Bulletプレハブを生成するなど
+    /// </summary>
+    protected abstract void Attack();
+
+    /// <summary>
+    /// ダメージを受けた際に行う処理を書いてください
+    /// 例)ダメージを受けた際のアニメーションなど
+    /// </summary>
+    protected abstract void OnGetDamage();
 
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -44,8 +52,19 @@ public class EnemyBese : MonoBehaviour, IDamage
         }
     }
 
-    public virtual void AddDamage(float damage)
+    /// <summary>
+    /// ダメージを喰らった際にBulletBaseから呼び出される関数
+    /// Enemyがダメージを喰らう
+    /// 攻撃力のデバフを行う
+    /// ダメージを喰らった際の処理もここで呼ばれる
+    /// 受けるダメージ量はBulletが指定する
+    /// </summary>
+    /// <param name="damage">受けるダメージ量</param>
+    void IDamage.AddDamage(float damage)
     {
+        //攻撃力を設定した分減らす処理
+        damage /= _damageRatio;
+
         _enemyHp -= damage;
         OnGetDamage();
     }
