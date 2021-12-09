@@ -11,15 +11,18 @@ public class BulletBese : MonoBehaviour
 {
     public float Damege { get => _damege;}
     
-    [SerializeField, Header("Bulletが与えるダメージ")] private float _damege;
+    [SerializeField, Header("Bulletが与えるダメージ")] protected float _damege;
 
-    private void Update()
+    
+    
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        BulletMovement();
+        BulletDamege(collision);
     }
 
-    public virtual void BulletMovement()
+    protected virtual void BulletDamege(Collider2D col)
     {
-        Debug.LogError("弾又は爆弾等の移動の処理を派生クラスからオーバーライドしてください。");
+        var target = col.gameObject?.GetComponent<IDamage>();
+        target.AddDamage(_damege);
     }
 }
