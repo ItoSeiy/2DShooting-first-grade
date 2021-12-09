@@ -17,4 +17,8 @@ public class EnemyController : EnemyBese
             Instantiate(_bullet,_muzzle[i]);
         }
     }
+
+    protected override void OnGetDamage()
+    {
+    }
 }
