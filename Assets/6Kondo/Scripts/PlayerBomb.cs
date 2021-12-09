@@ -8,6 +8,8 @@ public class PlayerBomb : BulletBese
     [SerializeField] string _enemyBulletTag;
     [SerializeField] Vector2 _direction = Vector2.up;
     [SerializeField] float _speed = 10f;
+    [SerializeField] GameObject _bombChildBullet = null;
+    [SerializeField] Transform[] _muzzle = null;
     Rigidbody2D _rb;
 
     private void Start()
@@ -20,7 +22,10 @@ public class PlayerBomb : BulletBese
     {
         if (collision.tag == _enemyTag)
         {
-            Instantiate();
+            for (int i = 0; i < _muzzle.Length; i++)
+            {
+                Instantiate(_bombChildBullet, _muzzle[i]);
+            }
 
             //var enemy = GameObject.FindGameObjectsWithTag(_enemyTag);
             //var bullet = GameObject.FindGameObjectsWithTag(_enemyBulletTag);
