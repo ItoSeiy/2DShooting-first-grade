@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyBullet : BulletBese
 {
-    // Start is called before the first frame update
+   
     public override void BulletMovement()
     {
         
