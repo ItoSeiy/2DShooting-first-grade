@@ -13,31 +13,28 @@ public class PlayerBomb : BulletBese
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
-        Vector3 v = _direction.normalized * _speed;
-        _rb.velocity = v;
-    }
-    public override void BulletMovement()
-    {
-
+        _rb.velocity = _direction.normalized * _speed;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == _enemyTag)
+        if (collision.tag == _enemyTag)
         {
-            var enemy = GameObject.FindGameObjectsWithTag(_enemyTag);
-            var bullet = GameObject.FindGameObjectsWithTag(_enemyBulletTag);
+            Instantiate();
 
-            foreach(var e in enemy)
-            {
-                Destroy(e);
-            }
+            //var enemy = GameObject.FindGameObjectsWithTag(_enemyTag);
+            //var bullet = GameObject.FindGameObjectsWithTag(_enemyBulletTag);
 
-            foreach(var b in bullet)
-            {
-                Destroy(b);
-            }
-            Destroy(this.gameObject);
+            //foreach (var e in enemy)
+            //{
+            //    Destroy(e);
+            //}
+
+            //foreach (var b in bullet)
+            //{
+            //    Destroy(b);
+            //}
+            //Destroy(this.gameObject);
         }
     }
 }
