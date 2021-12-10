@@ -4,5 +4,16 @@ using UnityEngine;
 
 public class TestEnemy : EnemyBese
 {
+    protected override void Attack()
+    {
+
+    }
+
+
+    protected override void OnGetDamage()
+    {
+        
+    }
+
     
 }
