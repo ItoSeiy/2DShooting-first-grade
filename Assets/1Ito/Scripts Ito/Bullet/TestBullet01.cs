@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestBullet : BulletBese
+public class TestBullet01 : BulletBese
 {
     protected override void BulletAttack(Collider2D col)
     {

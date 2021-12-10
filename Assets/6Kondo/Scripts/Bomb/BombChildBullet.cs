@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BombbChildBullet : MonoBehaviour
+public class BombChildBullet : MonoBehaviour
 {
     [SerializeField] Vector2 _direction = Vector2.up;
     void Start()
