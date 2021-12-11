@@ -24,16 +24,11 @@ public class Player01Bomb : BulletBese
     
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //if (collision.tag == _enemyTag)
-        //{
-        //    Instantiate(
-        //      m_explosionPrefab,
-        //      collision.transform.localPosition,
-        //      Quaternion.identity);
-        //}
-          
+            
+
         if (collision.tag == _enemyTag)
         {
+            Instantiate(m_explosionPrefab, collision.transform);
             for (int i = 0; i < _muzzle.Length; i++)
             {
                 Instantiate(_bombChildBullet, _muzzle[i].position,_muzzle[i].rotation);
