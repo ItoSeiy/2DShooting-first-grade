@@ -16,6 +16,10 @@ public class PlayerBomb : BulletBese
     {
         _rb = GetComponent<Rigidbody2D>();
         _rb.velocity = _direction.normalized * _speed;
+        void OnBecameInvisible()
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -26,7 +30,7 @@ public class PlayerBomb : BulletBese
             {
                 Instantiate(_bombChildBullet, _muzzle[i].position,_muzzle[i].rotation);
             }
-            //Destroy(this.gameObject);
+            Destroy(this.gameObject);
         }
     }
 }
