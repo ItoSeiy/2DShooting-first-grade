@@ -16,6 +16,7 @@ public class PlayerBase : MonoBehaviour
     [SerializeField, Header("弾を発射するポジション")] public Transform _muzzle = default;
     [SerializeField, Header("弾")] public GameObject[] _bullet = default;
     [SerializeField, Header("精密操作時の弾")] public GameObject[] _superBullet = default;
+
     [SerializeField, Header("精密操作時の発射する間隔(ミリ秒)")] public int _superAttackDelay = default;
     [SerializeField, Header("ボムのクールタイム（ミリ秒）")] public int _bomCoolTime = default;
     [SerializeField, Header("発射する間隔(ミリ秒)")] public int _attackDelay = default;
@@ -36,9 +37,14 @@ public class PlayerBase : MonoBehaviour
     [SerializeField, Header("弾を撃つときの音")] AudioSource _bulletShootingAudio = default;
     [SerializeField, Header("被弾したときの音")] AudioSource _onBulletAudio = default;
     [SerializeField, Header("ボムを撃ったときの音")] AudioSource _shootingBomAudio = default;
+    [SerializeField, Header("BGM")] AudioSource _bgm = default;
+    [SerializeField, Header("死亡時のアニメーション")] Animation _isDie = default;
+
+    [SerializeField, Header("この数値未満ならレベル１")] int _level1 = default;
+    [SerializeField, Header("この数値以上ならレベル３")] int _level3 = default;
 
     int _bomCount = default;//ボムの数を入れておく変数
-    public int _playerPower = default;//プレイヤーのパワーを入れておく変数
+    int _playerPower = default;//プレイヤーのパワーを入れておく変数
     int _invincibleObjectCount = default;//一定数集めると無敵モードになるアイテムの数を入れておく変数
         
     /// <summary>連続で弾を撃てないようにするフラグ</summary>
@@ -51,6 +57,9 @@ public class PlayerBase : MonoBehaviour
     public bool _isBom = default;
     /// <summary>コントロールが効かないようにするフラグ</summary>
     bool _isNotControll = default;
+
+    public int PlayerPower => _playerPower;
+
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -86,6 +95,7 @@ public class PlayerBase : MonoBehaviour
         else if (Input.GetButton("Fire1") && !_isBulletStop && !_isNotControll)//通常攻撃
         {
             PlayerAttack();
+            
             _isBulletStop = true;
         }
 
@@ -97,14 +107,46 @@ public class PlayerBase : MonoBehaviour
         }
     }
     /// <summary> </summary>
-    public virtual void PlayerAttack()
+    public virtual async void PlayerAttack()
     {
-        Debug.LogError("派生クラスでメソッドをオーバライドしてください。");
+        //
+        int levelIndex = default;
+
+        if (_playerPower < _level1)//レベル1のとき
+        {
+            levelIndex = 0;
+        }
+        else if (_level1 <= _playerPower && _playerPower < _level3)//レベル2のとき
+        {
+            levelIndex = 1;
+        }
+        else if (_level3 <= _playerPower)//レベル3のとき
+        {
+            levelIndex = 2;
+        }
+        GameObject go = Instantiate(_bullet[levelIndex], _muzzle);
+        await Task.Delay(_attackDelay);
+        _isBulletStop = false;
     }
 
-    public virtual void PlayerSuperAttack()
+    public virtual async void PlayerSuperAttack()
     {
-        Debug.LogError("派生クラスでメソッドをオーバライドしてください。");
+        int level = default;
+        if (_playerPower < _level1)//レベル1のとき
+        {
+            level = 0;
+        }
+        else if (_level1 <= _playerPower && _playerPower < _level3)//レベル2のとき
+        {
+            level = 1;
+        }
+        else if (_level3 <= _playerPower)//レベル3のとき
+        {
+            level = 2;
+        }
+        GameObject go = Instantiate(_superBullet[level], _muzzle);
+        await Task.Delay(_superAttackDelay);
+        _isBulletStop = false;
     }
     public virtual void Bom()
     {
@@ -113,33 +155,38 @@ public class PlayerBase : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == _enemyTag || collision.gameObject.tag == _enemyBulletTag && !_godMode)
+        //EnemyまたはEnemyBuletに当たった際行う残機を減らす処理　無敵モードであれば残機は減らない
+        if(!_godMode && collision.gameObject.tag == _enemyTag || collision.gameObject.tag == _enemyBulletTag)
         {
             if (_godMode) return;
+
             _playerLife -= 1;
-            if(_playerLife != 0)
+
+            if(_playerLife != 0)//残機が残っている場合はリスポーンを行う
             {
                 Respawn();
-                Debug.Log("yes");
             }
-            else
+            else//残機が0であればゲームオーバー処理を呼び出す
             {
-                //ゲームマネージャーからGameOverの関数を呼び出す
-                Debug.LogError("なんだろう、ゲームオーバーの関数を呼び出してもらっていいすか？");
+                GameManager.Instance.GameOver();
             }
         }
+
         if (collision.gameObject.tag == _powerTag && _playerPower < _playerPowerMax)
         {
             GameManager.Instance.GetPower(1);
         }
+
         if (collision.gameObject.tag == _pointTag)
         {
             GameManager.Instance.GetScore(1);        
         }
+
         if (collision.gameObject.tag == _1upTag)
         {
             //1upを取ったら1upが増える処理を書く
         }
+
         if(collision.gameObject.tag == _invincibleTag)
         {
             GameManager.Instance.GetInvicibleObjectCount(1);
