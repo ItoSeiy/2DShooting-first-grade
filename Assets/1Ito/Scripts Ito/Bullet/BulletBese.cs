@@ -36,7 +36,7 @@ public abstract class BulletBese : MonoBehaviour
 
     /// <summary>
     /// 基本的にはオーバライドを行わなくてもよい
-    /// 衝突した相手のインタフェースを参照し攻撃を加える関数
+    /// 衝突した相手のインタフェース(IDamage)を参照し攻撃を加える関数
     /// オーバライドする際は中身に[base.BulletAttack(col);]と記述する(基底クラスの機能を呼び出せる)
     /// </summary>
     /// <param name="col">当たった相手のコライダー</param>
