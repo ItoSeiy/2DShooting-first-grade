@@ -10,6 +10,7 @@ using UnityEngine;
 public abstract class BulletBese : MonoBehaviour
 {
     public float Damage { get => _damage;}
+    public float Speed { get => _speed;}
     
     [SerializeField, Header("Bulletが与えるダメージ")] private float _damage = 10;
     [SerializeField, Header("Bulletの動く向き")] Vector2 _direction = Vector2.up;
