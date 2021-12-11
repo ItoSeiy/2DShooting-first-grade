@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class PlayerBulletFollow : BulletBese
 {
-    [SerializeField,Header("Bulletのスピード")] float m_speed = 1f;
     [SerializeField] string _enemyTag = null;
-    Vector2 _direction;
     GameObject _enemy;
     Rigidbody2D _rb;
     float _timer;
@@ -25,12 +23,14 @@ public class PlayerBulletFollow : BulletBese
         }
     }
 
-    private void Update()
+    protected override void BulletMove()
     {
         _timer += Time.deltaTime;
         if (_timer >= _followTime) return;
-        _direction = _enemy.transform.position - this.transform.position;
-        _direction = _direction.normalized * m_speed;
-        _rb.velocity = _direction;
+
+        Vector2 _dir = _enemy.transform.position - this.transform.position;
+        _dir = _dir.normalized * Speed;
+        _rb.velocity = _dir;
+        
     }
 }
