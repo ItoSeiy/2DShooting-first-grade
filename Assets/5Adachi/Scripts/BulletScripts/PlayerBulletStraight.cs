@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class Player01BulletStraight : BulletBese
+public class PlayerBulletStraight : BulletBese
 {
     
 }

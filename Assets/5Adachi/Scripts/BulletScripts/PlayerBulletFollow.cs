@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player02BulletFollow : BulletBese
+public class PlayerBulletFollow : BulletBese
 {
     [SerializeField,Header("Bulletのスピード")] float m_speed = 1f;
+    [SerializeField] string _enemyTag = null;
     Vector2 _direction;
     GameObject _enemy;
     Rigidbody2D _rb;
@@ -13,7 +14,7 @@ public class Player02BulletFollow : BulletBese
 
     private void Start()
     {
-        _enemy = GameObject.FindGameObjectWithTag("Player");
+        _enemy = GameObject.FindGameObjectWithTag(_enemyTag);
         if(_enemy)
         {
             _rb = GetComponent<Rigidbody2D>();
