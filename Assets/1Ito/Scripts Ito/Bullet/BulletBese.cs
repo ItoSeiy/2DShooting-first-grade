@@ -13,7 +13,7 @@ public abstract class BulletBese : MonoBehaviour
     
     [SerializeField, Header("Bulletが与えるダメージ")] private float _damage;
     [SerializeField, Header("Bulletの動く向き")] Vector2 _direction = Vector2.up;
-    [SerializeField, Header("")] float _speed = default;
+    [SerializeField, Header("Bulletのスピード")] float _speed = default;
     private void Start()
     {
         BulletMove();
