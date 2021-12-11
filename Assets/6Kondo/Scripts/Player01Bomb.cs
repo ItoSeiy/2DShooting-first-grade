@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerBomb : BulletBese
+public class Player01Bomb : BulletBese
 {
     [SerializeField] string _enemyTag;
     [SerializeField] string _enemyBulletTag;
@@ -11,7 +11,7 @@ public class PlayerBomb : BulletBese
     [SerializeField] GameObject _bombChildBullet = null;
     [SerializeField] Transform[] _muzzle = null;
     Rigidbody2D _rb;
-
+    public Explosion m_explosionPrefab;
     void OnBecameInvisible()
     {
         Destroy(this.gameObject);
@@ -24,6 +24,14 @@ public class PlayerBomb : BulletBese
     
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        //if (collision.tag == _enemyTag)
+        //{
+        //    Instantiate(
+        //      m_explosionPrefab,
+        //      collision.transform.localPosition,
+        //      Quaternion.identity);
+        //}
+          
         if (collision.tag == _enemyTag)
         {
             for (int i = 0; i < _muzzle.Length; i++)
