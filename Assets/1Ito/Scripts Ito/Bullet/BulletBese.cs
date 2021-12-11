@@ -57,7 +57,19 @@ public abstract class BulletBese : MonoBehaviour
     protected virtual void BulletAttack(Collider2D col)
     {
         var target = col.gameObject?.GetComponent<IDamage>();
-        target.AddDamage(_damage);
+        target?.AddDamage(_damage);
+    }
+
+    private void OnBecameInvisible()
+    {
+        var parent = GetComponentInParent<GameObject>();
+
+        if(parent != null)
+        {
+            Destroy(parent);
+        }
+
+        Destroy(gameObject);
     }
 
     enum BulletMoveMethod
