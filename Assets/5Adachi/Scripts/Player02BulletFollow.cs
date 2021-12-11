@@ -8,9 +8,10 @@ public class Player02BulletFollow : BulletBese
 
     private void Start()
     {
-        if()
+        if(_playerPrefab)
         {
-
+            Vector2 v = _playerPrefab.transform.position - this.transform.position;
+            v = v.normalized;
         }
     }
 }
