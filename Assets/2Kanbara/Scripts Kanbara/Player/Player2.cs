@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
 
-public class Player1 : PlayerBase
+public class Player2 : PlayerBase
 {
     [SerializeField, Header("この数値未満ならレベル１")] int _level1 = default;
     [SerializeField, Header("この数値以上ならレベル３")] int _level3 = default;
@@ -50,17 +50,14 @@ public class Player1 : PlayerBase
 
     public override async void Bom()
     {
-        //base.Bom();
+        base.Bom();
         //ここにボムを使う処理を書く
         await Task.Delay(_bomCoolTime);
         _isBom = false;
     }
 
-    public override async void InvincibleMode()
+    public override void InvincibleMode()
     {
-        //base.InvincibleMode();
-        _godMode = true;
-        await Task.Delay(_invincibleCoolTime);
-        _godMode = false;
+        base.InvincibleMode();
     }
 }

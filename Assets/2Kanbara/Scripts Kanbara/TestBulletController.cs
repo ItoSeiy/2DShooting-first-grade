@@ -9,4 +9,9 @@ public class TestBulletController : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _rb.AddForce(_bulletspeed, ForceMode2D.Impulse);
     }
+
+    private void OnBecameInvisible()
+    {
+        Destroy(this.gameObject);
+;    }
 }
