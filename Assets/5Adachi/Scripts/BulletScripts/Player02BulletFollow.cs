@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player02BulletFollow : BulletBese
 {
-    [SerializeField] float m_speed = 1f;
+    [SerializeField,Header("Bulletのスピード")] float m_speed = 1f;
     Vector2 _direction;
     GameObject _enemy;
     Rigidbody2D _rb;
@@ -13,7 +13,7 @@ public class Player02BulletFollow : BulletBese
 
     private void Start()
     {
-        _enemy = GameObject.FindGameObjectWithTag("enemy");
+        _enemy = GameObject.FindGameObjectWithTag("Player");
         if(_enemy)
         {
             _rb = GetComponent<Rigidbody2D>();
