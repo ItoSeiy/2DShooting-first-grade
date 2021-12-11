@@ -12,16 +12,16 @@ public class PlayerBomb : BulletBese
     [SerializeField] Transform[] _muzzle = null;
     Rigidbody2D _rb;
 
+    void OnBecameInvisible()
+    {
+        Destroy(this.gameObject);
+    }
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
         _rb.velocity = _direction.normalized * _speed;
-        void OnBecameInvisible()
-        {
-            Destroy(this.gameObject);
-        }
     }
-
+    
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == _enemyTag)
