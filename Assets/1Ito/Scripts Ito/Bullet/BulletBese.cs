@@ -18,13 +18,17 @@ public abstract class BulletBese : MonoBehaviour
     private void Start()
     {
         if(_bulletMoveMethod == BulletMoveMethod.Start)
+        {
             BulletMove();
+        }
     }
 
     private void Update()
     {
         if (_bulletMoveMethod == BulletMoveMethod.Update)
+        {
             BulletMove();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -35,6 +39,7 @@ public abstract class BulletBese : MonoBehaviour
     /// <summary>
     /// Bulletがまっすぐ飛ぶ記述がデフォルトではされている
     /// 変則的な動きを行いたければオーバライドをすること
+    /// この関数がStart関数かUpdate関数で呼ばれるかはインスペクター上から変更すること
     /// </summary>
     protected virtual void BulletMove()
     {

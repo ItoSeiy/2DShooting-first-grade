@@ -4,4 +4,5 @@ using UnityEngine;
 
 public class TestBullet02 : BulletBese
 {
+
 }
