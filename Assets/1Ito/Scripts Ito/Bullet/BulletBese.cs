@@ -14,9 +14,17 @@ public abstract class BulletBese : MonoBehaviour
     [SerializeField, Header("Bulletが与えるダメージ")] private float _damage;
     [SerializeField, Header("Bulletの動く向き")] Vector2 _direction = Vector2.up;
     [SerializeField, Header("Bulletのスピード")] float _speed = default;
+    [SerializeField, Header("Bulletの動きをどの関数で呼び出すか")] BulletMoveMethod _bulletMoveMethod = BulletMoveMethod.Start;
     private void Start()
     {
-        BulletMove();
+        if(_bulletMoveMethod == BulletMoveMethod.Start)
+            BulletMove();
+    }
+
+    private void Update()
+    {
+        if (_bulletMoveMethod == BulletMoveMethod.Update)
+            BulletMove();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -44,5 +52,17 @@ public abstract class BulletBese : MonoBehaviour
     {
         var target = col.gameObject?.GetComponent<IDamage>();
         target.AddDamage(_damage);
+    }
+
+    enum BulletMoveMethod
+    {
+        /// <summary>
+        /// スタート関数で呼び出す
+        /// </summary>
+        Start,
+        /// <summary>
+        /// アップデート関数で呼び出す
+        /// </summary>
+        Update
     }
 }
