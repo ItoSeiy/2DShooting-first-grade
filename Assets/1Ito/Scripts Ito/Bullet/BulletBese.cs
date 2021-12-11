@@ -11,7 +11,7 @@ public abstract class BulletBese : MonoBehaviour
 {
     public float Damage { get => _damage;}
     
-    [SerializeField, Header("Bulletが与えるダメージ")] private float _damage;
+    [SerializeField, Header("Bulletが与えるダメージ")] private float _damage = 10;
     [SerializeField, Header("Bulletの動く向き")] Vector2 _direction = Vector2.up;
     [SerializeField, Header("Bulletのスピード")] float _speed = default;
     [SerializeField, Header("Bulletの動きをどの関数で呼び出すか")] BulletMoveMethod _bulletMoveMethod = BulletMoveMethod.Start;
