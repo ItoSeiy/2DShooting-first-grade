@@ -233,13 +233,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 917151605}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2215d426d48b87b4789b8558ff02644f, type: 3}
+  m_Script: {fileID: 11500000, guid: da31a70fcf534dc47838f494cd0af98a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 5
-  _direction: {x: 0, y: 1}
-  _speed: 1
-  _bulletMoveMethod: 0
+  _enemyHp: 20
+  _attackInterval: 5
+  _damageRatio: 1
 --- !u!50 &917151607
 Rigidbody2D:
   serializedVersion: 4
@@ -271,7 +270,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -380,13 +379,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1200142571}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2215d426d48b87b4789b8558ff02644f, type: 3}
+  m_Script: {fileID: 11500000, guid: 2c35657776c5be446aaf88f9263a5508, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 5
-  _direction: {x: 0, y: 1}
-  _speed: 1
-  _bulletMoveMethod: 0
+  _enemyHp: 30
+  _attackInterval: 10
+  _damageRatio: 1
 --- !u!50 &1200142573
 Rigidbody2D:
   serializedVersion: 4
@@ -418,7 +416,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -530,9 +528,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67f73534a54cbc14b9f1d6eeebe804af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 10
+  _damage: 0
   _direction: {x: 0, y: 1}
-  _speed: 1
+  _speed: 0
   _bulletMoveMethod: 0
 --- !u!50 &1317009820
 Rigidbody2D:
@@ -565,7 +563,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -679,7 +677,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 5
   _direction: {x: 0, y: 1}
-  _speed: 1
+  _speed: 0
   _bulletMoveMethod: 0
 --- !u!50 &1642601825
 Rigidbody2D:
@@ -712,7 +710,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -786,7 +784,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1642601823}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.14, y: -4.33, z: -6.704274}
+  m_LocalPosition: {x: -2.44, y: -4.36, z: -6.704274}
   m_LocalScale: {x: 5.4489, y: 5.4489, z: 5.4489}
   m_Children: []
   m_Father: {fileID: 0}
