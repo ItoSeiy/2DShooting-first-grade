@@ -64,12 +64,12 @@ public abstract class BulletBese : MonoBehaviour
     {
         var parent = GetComponentInParent<GameObject>();
 
-        if(parent != null)
+        if (parent != null)
         {
             Destroy(parent);
         }
 
-        Destroy(gameObject);
+        Destroy(this.gameObject);
     }
 
     enum BulletMoveMethod
