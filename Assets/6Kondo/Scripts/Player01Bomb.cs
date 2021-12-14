@@ -12,6 +12,7 @@ public class Player01Bomb : BulletBese
     [SerializeField] Transform[] _muzzle = null;
     Rigidbody2D _rb;
     public Explosion m_explosionPrefab;
+
     void OnBecameInvisible()
     {
         Destroy(this.gameObject);
@@ -21,7 +22,6 @@ public class Player01Bomb : BulletBese
         _rb = GetComponent<Rigidbody2D>();
         _rb.velocity = _direction.normalized * _speed;
     }
-    
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == _enemyTag)
@@ -29,7 +29,7 @@ public class Player01Bomb : BulletBese
             Instantiate(m_explosionPrefab, collision.transform);
             for (int i = 0; i < _muzzle.Length; i++)
             {
-                Instantiate(m_explosionPrefab, _muzzle[i].position,_muzzle[i].rotation);
+                Instantiate(_bombChildBullet, _muzzle[i].position,_muzzle[i].rotation);
             }
             Destroy(this.gameObject);
         }
