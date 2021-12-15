@@ -244,24 +244,28 @@ MonoBehaviour:
   _bomCoolTime: 0
   _attackDelay: 100
   _invincibleCoolTime: 0
-  _moveSpeed: 10
-  _lateMove: 5
-  _playerLife: 3
   _enemyTag: 
   _enemyBulletTag: 
   _powerTag: 
   _pointTag: 
   _1upTag: 
   _invincibleTag: 
+  _moveSpeed: 10
+  _lateMove: 5
+  _playerLife: 3
   _invincibleMax: 0
   _playerPowerMax: 0
   _respawnTime: 0
-  _playerPower: 0
+  _bulletShootingAudio: {fileID: 0}
+  _onBulletAudio: {fileID: 0}
+  _shootingBomAudio: {fileID: 0}
+  _bgm: {fileID: 0}
+  _isDie: {fileID: 0}
+  _level1: 0
+  _level3: 0
   _isBulletStop: 0
   _godMode: 0
   _isBom: 0
-  _level1: 0
-  _level3: 0
 --- !u!58 &888640654
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -703,24 +707,28 @@ MonoBehaviour:
   _bomCoolTime: 5000
   _attackDelay: 100
   _invincibleCoolTime: 3
-  _moveSpeed: 8
-  _lateMove: 3
-  _playerLife: 3
   _enemyTag: Power
   _enemyBulletTag: 
   _powerTag: 
   _pointTag: 
   _1upTag: 
   _invincibleTag: 
+  _moveSpeed: 8
+  _lateMove: 3
+  _playerLife: 3
   _invincibleMax: 10
   _playerPowerMax: 150
   _respawnTime: 2800
-  _playerPower: 0
+  _bulletShootingAudio: {fileID: 0}
+  _onBulletAudio: {fileID: 0}
+  _shootingBomAudio: {fileID: 0}
+  _bgm: {fileID: 0}
+  _isDie: {fileID: 0}
+  _level1: 50
+  _level3: 100
   _isBulletStop: 0
   _godMode: 0
   _isBom: 0
-  _level1: 50
-  _level3: 100
 --- !u!50 &1915347097
 Rigidbody2D:
   serializedVersion: 4

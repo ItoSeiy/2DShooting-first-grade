@@ -21,15 +21,17 @@ public class PlayerBase : MonoBehaviour
     [SerializeField, Header("ボムのクールタイム（ミリ秒）")] public int _bomCoolTime = default;
     [SerializeField, Header("発射する間隔(ミリ秒)")] public int _attackDelay = default;
     [SerializeField, Header("無敵モードのクールタイム")] public int _invincibleCoolTime = default;
-    [SerializeField, Header("動くスピード")] float _moveSpeed = default;
-    [SerializeField, Header("精密操作のスピード")] float _lateMove = default;
-    [SerializeField, Header("残機")] int _playerLife = default;
+
     [SerializeField, Header("Enemyのタグ")] string _enemyTag = default;
     [SerializeField, Header("EnemyのBulletのタグ")] string _enemyBulletTag = default;
     [SerializeField, Header("Powerのタグ")] string _powerTag = default;
     [SerializeField, Header("Pointのタグ")] string _pointTag = default;
     [SerializeField, Header("1upのタグ")] string _1upTag = default;
     [SerializeField, Header("Invincibleのタグ")] string _invincibleTag = default;
+
+    [SerializeField, Header("動くスピード")] float _moveSpeed = default;
+    [SerializeField, Header("精密操作のスピード")] float _lateMove = default;
+    [SerializeField, Header("残機")] int _playerLife = default;
     [SerializeField, Header("この数値以上なら、一定時間無敵モードになる変数")] int _invincibleMax = default;
     [SerializeField, Header("Playerのパワーの上限")] int _playerPowerMax = default;
     [SerializeField, Header("リスポーン中の無敵時間")] public int _respawnTime = default;
@@ -109,7 +111,6 @@ public class PlayerBase : MonoBehaviour
     /// <summary> </summary>
     public virtual async void PlayerAttack()
     {
-        //
         int levelIndex = default;
 
         if (_playerPower < _level1)//レベル1のとき
@@ -131,20 +132,20 @@ public class PlayerBase : MonoBehaviour
 
     public virtual async void PlayerSuperAttack()
     {
-        int level = default;
+        int levelIndex = default;
         if (_playerPower < _level1)//レベル1のとき
         {
-            level = 0;
+            levelIndex = 0;
         }
         else if (_level1 <= _playerPower && _playerPower < _level3)//レベル2のとき
         {
-            level = 1;
+            levelIndex = 1;
         }
         else if (_level3 <= _playerPower)//レベル3のとき
         {
-            level = 2;
+            levelIndex = 2;
         }
-        GameObject go = Instantiate(_superBullet[level], _muzzle);
+        GameObject go = Instantiate(_superBullet[levelIndex], _muzzle);
         await Task.Delay(_superAttackDelay);
         _isBulletStop = false;
     }
