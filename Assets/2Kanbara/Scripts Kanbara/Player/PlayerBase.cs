@@ -35,11 +35,12 @@ public class PlayerBase : MonoBehaviour
     [SerializeField, Header("この数値以上なら、一定時間無敵モードになる変数")] int _invincibleMax = default;
     [SerializeField, Header("Playerのパワーの上限")] int _playerPowerMax = default;
     [SerializeField, Header("リスポーン中の無敵時間")] public int _respawnTime = default;
+    [SerializeField, Header("リスポーン後の無敵時間")] int _afterRespawnTime = default;
 
-    [SerializeField, Header("弾を撃つときの音")] AudioSource _bulletShootingAudio = default;
-    [SerializeField, Header("被弾したときの音")] AudioSource _onBulletAudio = default;
-    [SerializeField, Header("ボムを撃ったときの音")] AudioSource _shootingBomAudio = default;
-    [SerializeField, Header("BGM")] AudioSource _bgm = default;
+    [SerializeField, Header("弾を撃つときの音")] AudioClip _bulletShootingAudio = default;
+    [SerializeField, Header("被弾したときの音")] AudioClip _onBulletAudio = default;
+    [SerializeField, Header("ボムを撃ったときの音")] AudioClip _shootingBomAudio = default;
+    [SerializeField, Header("BGM")] AudioClip _bgm = default;
     [SerializeField, Header("死亡時のアニメーション")] Animation _isDie = default;
 
     [SerializeField, Header("この数値未満ならレベル１")] int _level1 = default;
@@ -60,6 +61,8 @@ public class PlayerBase : MonoBehaviour
     /// <summary>コントロールが効かないようにするフラグ</summary>
     bool _isNotControll = default;
 
+    private AudioSource _audioSource = null;
+
     public int PlayerPower => _playerPower;
 
     void Start()
@@ -69,6 +72,7 @@ public class PlayerBase : MonoBehaviour
         _bomCount = GameManager.Instance.BombCount;
         _playerPower = GameManager.Instance.Power;
         _invincibleObjectCount = GameManager.Instance.InvincibleObjectCount;
+        _audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -97,7 +101,6 @@ public class PlayerBase : MonoBehaviour
         else if (Input.GetButton("Fire1") && !_isBulletStop && !_isNotControll)//通常攻撃
         {
             PlayerAttack();
-            
             _isBulletStop = true;
         }
 
@@ -126,6 +129,8 @@ public class PlayerBase : MonoBehaviour
             levelIndex = 2;
         }
         GameObject go = Instantiate(_bullet[levelIndex], _muzzle);
+        //_audioSource.clip = _bulletShootingAudio;
+        //_audioSource.Play();
         await Task.Delay(_attackDelay);
         _isBulletStop = false;
     }
@@ -146,12 +151,16 @@ public class PlayerBase : MonoBehaviour
             levelIndex = 2;
         }
         GameObject go = Instantiate(_superBullet[levelIndex], _muzzle);
+        //_audioSource.clip = _bulletShootingAudio;
+        //_audioSource.Play();
         await Task.Delay(_superAttackDelay);
         _isBulletStop = false;
     }
     public virtual void Bom()
     {
         Debug.Log("Bom");
+        //_audioSource.clip = _shootingBomAudio;
+        //_audioSource.Play();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -160,7 +169,8 @@ public class PlayerBase : MonoBehaviour
         if(!_godMode && collision.gameObject.tag == _enemyTag || collision.gameObject.tag == _enemyBulletTag)
         {
             if (_godMode) return;
-
+            //_audioSource.clip = _onBulletAudio;
+            //_audioSource.Play();
             _playerLife -= 1;
 
             if(_playerLife != 0)//残機が残っている場合はリスポーンを行う
@@ -205,8 +215,9 @@ public class PlayerBase : MonoBehaviour
         _isNotControll = true;
         await Task.Delay(_respawnTime);
         transform.position = _playerRespawn.position;
-        _godMode = false;
         _isNotControll = false;
+        await Task.Delay(_afterRespawnTime);
+        _godMode = false;
     }
     public virtual async void InvincibleMode()
     {
