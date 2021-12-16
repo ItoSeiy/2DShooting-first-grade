@@ -6,4 +6,4 @@
 
 ## プレイ動画
 
-[未完成ですので完成後記載予定です](https://github.com/ItoSeiy/2DShooting-first-grade/edit/develop/README.md)
+[未完成ですので完成後記載予定です](https://github.com/ItoSeiy/2DShooting-first-grade/blob/develop/README.md)
