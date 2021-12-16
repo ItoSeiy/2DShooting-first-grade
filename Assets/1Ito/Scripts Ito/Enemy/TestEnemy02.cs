@@ -13,7 +13,5 @@ public class TestEnemy02 : EnemyBese
     protected override void OnGetDamage()
     {
         
-    }
-
-    
+    }  
 }
