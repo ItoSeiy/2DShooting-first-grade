@@ -3175,6 +3175,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1049700112}
+  - component: {fileID: 1049700113}
   m_Layer: 0
   m_Name: ALL Cube Box
   m_TagString: Untagged
@@ -3203,6 +3204,25 @@ Transform:
   m_Father: {fileID: 2086119062}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &1049700113
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1049700111}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &1090459458
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6813,7 +6833,11 @@ PlayableDirector:
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
-  m_SceneBindings: []
+  m_SceneBindings:
+  - key: {fileID: -1837805793698799890, guid: 96ee5edf683f8b941b3eaf395346249e, type: 2}
+    value: {fileID: 1049700113}
+  - key: {fileID: -8574445712520947463, guid: 96ee5edf683f8b941b3eaf395346249e, type: 2}
+    value: {fileID: 1571661918}
   m_ExposedReferences:
     m_References: []
 --- !u!4 &2086119062
