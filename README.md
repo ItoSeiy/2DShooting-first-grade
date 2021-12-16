@@ -90,7 +90,7 @@ Issueの作成
 
 プログラマー 和田有矢 (ゲーム原案, 弾幕等の絵の作成, シナリオ [仕様書の作成](https://docs.google.com/spreadsheets/d/1pmrL_Shegj_XCRdpgxkk6T44g7faOuid/edit#gid=861402618))
 
-プログラマー ****
+プログラマー ****  (プレイヤーのボムの絵の作成)
 
 プログラマー ****　([キャラクター発注書の作成](https://docs.google.com/spreadsheets/d/1sF1S3a3Yge3sxgV-ppf4J7LAbr12b9YN/edit?rtpof=true&sd=true))
 
