@@ -1,18 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class BulletSettings : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public static BulletSettings Instance => _instance;
+    private static BulletSettings _instance = null;
+
+    private void Awake()
     {
-        
+        _instance = this;
     }
 
-    // Update is called once per frame
-    void Update()
+
+    [Serializable]
+    public class BulletData
     {
-        
+        public GameObject Prefab;
+        public string Name;
+        public int Id;
+        public float Power;
     }
 }
+
+

@@ -2,17 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletPool<T> where T : BulletSettings
+public class BulletPool<T> where T : BulletSettings.BulletData
 {
-    // Start is called before the first frame update
-    void Start()
+    GameObject _poolParent = null;
+    List<GameObject> _bulletsPool = new List<GameObject>();
+    List<T> _datas;
+
+    public void SetUpPool(List<T> datas)
     {
-        
+        _datas = datas;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void CreatePool(T data, int objCount)
     {
-        
+        if(!_poolParent)
+        {
+            GameObject poolParent = new GameObject("BulletPool");
+            _poolParent = poolParent;
+        }
+
+        for(int i = 0; i < objCount; i++)
+        {
+            GameObject bullet = Object.Instantiate(data.Prefab);
+
+            bullet.name = "";
+        }
     }
 }
