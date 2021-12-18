@@ -25,7 +25,8 @@ public class BulletPool<T> where T : BulletSettings.BulletData
         {
             GameObject bullet = Object.Instantiate(data.Prefab);
 
-            bullet.name = "";
+            bullet.name = $"ID:{data.Id}.Name:{ data.Name}";
+            
         }
     }
 }
