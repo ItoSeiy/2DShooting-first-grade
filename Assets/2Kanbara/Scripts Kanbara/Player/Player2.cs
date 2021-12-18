@@ -5,12 +5,10 @@ using System.Threading.Tasks;
 
 public class Player2 : PlayerBase
 {
-    public override async void Bom()
+    public override void Bom()
     {
         base.Bom();
         //ここにボムを使う処理を書く
-        await Task.Delay(_bomCoolTime);
-        _isBom = false;
     }
 
     public override void InvincibleMode()

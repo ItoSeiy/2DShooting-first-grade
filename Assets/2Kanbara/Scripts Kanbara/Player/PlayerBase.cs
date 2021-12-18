@@ -21,6 +21,7 @@ public class PlayerBase : MonoBehaviour
     [SerializeField, Header("弾")] public GameObject[] _bullet = default;
     [SerializeField, Header("精密操作時の弾")] public GameObject[] _superBullet = default;
     [SerializeField, Header("チャージショット時の弾")] GameObject[] _chargeBullet = default;
+    [SerializeField, Header("ボムのプレハブ")] GameObject _bomBullet = default;
 
     [SerializeField, Header("精密操作時の発射する間隔(ミリ秒)")] public int _superAttackDelay = default;
     [SerializeField, Header("発射する間隔(ミリ秒)")] public int _attackDelay = default;
@@ -221,10 +222,13 @@ public class PlayerBase : MonoBehaviour
     }
 
     /// <summary>ボム使用時の処理</summary>
-    public virtual void Bom()
+    public virtual async void Bom()
     {
         Debug.Log("Bom");
+        GameObject go = Instantiate(_bomBullet, _muzzle);
         _audioSource.PlayOneShot(_shootingBomAudio, 1.0f);
+        await Task.Delay(_bomCoolTime);
+        _isBom = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
