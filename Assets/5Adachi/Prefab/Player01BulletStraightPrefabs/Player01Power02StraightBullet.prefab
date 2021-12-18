@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8945301850737078703}
   - component: {fileID: 9006916063015916611}
-  - component: {fileID: 3170806489595600676}
-  - component: {fileID: 6535961340365491427}
-  - component: {fileID: 5977773443208948422}
+  - component: {fileID: 737132019080402074}
+  - component: {fileID: 3107659301168897079}
+  - component: {fileID: 6226001704445328519}
   m_Layer: 0
   m_Name: Player01Bullet01
   m_TagString: Untagged
@@ -49,6 +49,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -84,7 +85,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!50 &3170806489595600676
+--- !u!50 &737132019080402074
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -105,7 +106,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!58 &6535961340365491427
+--- !u!58 &3107659301168897079
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,8 +121,8 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.1
---- !u!114 &5977773443208948422
+  m_Radius: 0.09
+--- !u!114 &6226001704445328519
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -133,9 +134,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb61b39803f211a43aa6af24fdf84ed6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 0
+  _damage: 10
   _direction: {x: 0, y: 1}
-  _speed: 1
+  _speed: 10
   _bulletMoveMethod: 0
 --- !u!1 &3279311902040150542
 GameObject:
@@ -147,9 +148,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1284654175172767175}
   - component: {fileID: 5770420182633587719}
-  - component: {fileID: 104766472906623719}
-  - component: {fileID: 3075426848715715563}
-  - component: {fileID: 6613132861779713484}
+  - component: {fileID: 1871145599967264468}
+  - component: {fileID: 2376777904504839216}
+  - component: {fileID: 2344717791586920276}
   m_Layer: 0
   m_Name: Player01Bullet02
   m_TagString: Untagged
@@ -186,6 +187,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -221,7 +223,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!50 &104766472906623719
+--- !u!50 &1871145599967264468
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -242,7 +244,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!58 &3075426848715715563
+--- !u!58 &2376777904504839216
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -257,8 +259,8 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.1
---- !u!114 &6613132861779713484
+  m_Radius: 0.09
+--- !u!114 &2344717791586920276
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -270,9 +272,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb61b39803f211a43aa6af24fdf84ed6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 0
+  _damage: 10
   _direction: {x: 0, y: 1}
-  _speed: 1
+  _speed: 10
   _bulletMoveMethod: 0
 --- !u!1 &7184597152217326839
 GameObject:
@@ -283,7 +285,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7184597152217326832}
-  - component: {fileID: 8641061453008568033}
   m_Layer: 0
   m_Name: Player01Power02StraightBullet
   m_TagString: Untagged
@@ -307,16 +308,3 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8641061453008568033
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7184597152217326839}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd0d771cb72ac7d45899f66abe46b462, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _destroyTime: 0

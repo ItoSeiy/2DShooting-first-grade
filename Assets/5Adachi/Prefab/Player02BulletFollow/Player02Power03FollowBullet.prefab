@@ -119,6 +119,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -166,9 +167,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb61b39803f211a43aa6af24fdf84ed6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 0
+  _damage: 10
   _direction: {x: 0, y: 1}
-  _speed: 1
+  _speed: 10
   _bulletMoveMethod: 0
 --- !u!1 &6967542652161134117
 GameObject:
@@ -256,6 +257,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -303,9 +305,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af00dd590bddb554ca78ec225acf1b8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 0
+  _damage: 15
   _direction: {x: 0, y: 1}
-  _speed: 1
+  _speed: 15
   _bulletMoveMethod: 1
   _enemyTag: Player
   _followTime: 2
@@ -395,6 +397,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -442,9 +445,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af00dd590bddb554ca78ec225acf1b8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 0
+  _damage: 15
   _direction: {x: 0, y: 1}
-  _speed: 1
+  _speed: 15
   _bulletMoveMethod: 1
   _enemyTag: Player
   _followTime: 2
