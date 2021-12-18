@@ -71,8 +71,10 @@ public class PlayerBase : MonoBehaviour
     public bool _isBom = default;
     /// <summary>コントロールが効かないようにするフラグ</summary>
     bool _isNotControll = default;
+    /// <summary>チャージしているかどうか判定するフラグ</summary>
+    bool _isChargeNow = default;
 
-    float _time;
+    float _time = default;
 
     public int PlayerPower => _playerPower;
 
@@ -82,18 +84,16 @@ public class PlayerBase : MonoBehaviour
         _audioSource = GetComponent<AudioSource>();
         _anim = GetComponent<Animation>();
 
-        _superBulletShootingAudio = GetComponent<AudioClip>();
-
         transform.position = _playerRespawn.position;
 
-        _bomCount = GameManager.Instance.BombCount;
-        _playerPower = GameManager.Instance.Power;
-        _invincibleObjectCount = GameManager.Instance.InvincibleObjectCount;
+        _bomCount = GameManager.Instance.PlayerBombCount;
+        _playerPower = GameManager.Instance.PlayerPower;
+        _invincibleObjectCount = GameManager.Instance.PlayerInvincibleObjectCount;
     }
 
     void Update()
     {
-        _time = Time.deltaTime;
+        _time += Time.deltaTime;
 
         if (_isNotControll) return;
         float h = Input.GetAxisRaw("Horizontal");
@@ -112,31 +112,35 @@ public class PlayerBase : MonoBehaviour
             _isLateMode = false;
         }
 
-        if (Input.GetButton("Fire1") && _isLateMode && !_isBulletStop && !_isNotControll)//精密操作時の攻撃
+        if (Input.GetButton("Fire1") && _isLateMode && !_isBulletStop && !_isNotControll && !_isChargeNow)//精密操作時の攻撃
         {
             PlayerSuperAttack();
+            _isChargeNow = true;
             _isBulletStop = true;
         }
-        else if (Input.GetButton("Fire1") && !_isBulletStop && !_isNotControll)//通常攻撃
+        else if (Input.GetButton("Fire1") && !_isBulletStop && !_isNotControll && !_isChargeNow)//通常攻撃
         {
             PlayerAttack();
+            _isChargeNow = true;
             _isBulletStop = true;
         }
 
-        if (Input.GetButtonDown("Cancel") && !_isNotControll)//チャージショット（溜める）
+        if (Input.GetButtonDown("Cancel") && !_isNotControll && !_isChargeNow)//チャージショット（溜める）
         {
-            Debug.Log("q");
-            if (Input.GetButtonUp("Cancel") && Time.time > _chargeTime && !_isBulletStop && !_isNotControll)//チャージショット（放つ）
+            Debug.Log(_time);
+            _time = 0;
+            _isChargeNow = true;
+        }
+            if (Input.GetButtonUp("Cancel") && _time > _chargeTime && _isChargeNow)//チャージショット（放つ）
             {
-                Debug.Log("s");
+                Debug.Log(_time + "s");
                 PlayerChargeAttack();
                 _isBulletStop = true;
             }
-            if (Input.GetButtonUp("Cancel") && Time.time < 2f)
+            if (Input.GetButtonUp("Cancel") && _time < _chargeTime && _isChargeNow)//チャージショット（チャージ不足）
             {
-                Debug.Log("e");
+                Debug.Log(_time + "a");
             }
-        }
 
         if (Input.GetButtonDown("Jump") && _bomCount != 0 && !_isBom && !_isNotControll)//ボム使用
         {
@@ -166,6 +170,7 @@ public class PlayerBase : MonoBehaviour
         GameObject go = Instantiate(_bullet[levelIndex], _muzzle);
         _audioSource.PlayOneShot(_bulletShootingAudio, 1.0f);
         await Task.Delay(_attackDelay);
+        _isChargeNow = false;
         _isBulletStop = false;
     }
 
@@ -188,6 +193,7 @@ public class PlayerBase : MonoBehaviour
         GameObject go = Instantiate(_superBullet[levelIndex], _muzzle);
         _audioSource.PlayOneShot(_superBulletShootingAudio,1.0f);
         await Task.Delay(_superAttackDelay);
+        _isChargeNow = false;
         _isBulletStop = false;
     }
 
@@ -207,10 +213,10 @@ public class PlayerBase : MonoBehaviour
         {
             levelIndex = 2;
         }
-        Debug.Log("v");
         GameObject go = Instantiate(_chargeBullet[levelIndex], _muzzle);
         _audioSource.PlayOneShot(_chargeBulletShootingAudio, 1.0f);
         await Task.Delay(_chargeAttackDelay);
+        _isChargeNow = false;
         _isBulletStop = false;
     }
 
@@ -230,7 +236,7 @@ public class PlayerBase : MonoBehaviour
             _audioSource.PlayOneShot(_onBulletAudio, 1.0f);
             _playerLife -= 1;
 
-            if (_playerLife != 0)//残機が残っている場合はリスポーンを行う
+            if (_playerLife > 0)//残機が残っている場合はリスポーンを行う
             {
                 Respawn();
             }
@@ -243,12 +249,12 @@ public class PlayerBase : MonoBehaviour
 
         if (collision.gameObject.tag == _powerTag && _playerPower < _playerPowerMax)
         {
-            GameManager.Instance.GetPower(1);
+            GameManager.Instance.PlayerPowerChange(1);
         }
 
         if (collision.gameObject.tag == _pointTag)
         {
-            GameManager.Instance.GetScore(1);
+            GameManager.Instance.PlayerScoreChange(1);
         }
 
         if (collision.gameObject.tag == _1upTag)
@@ -258,7 +264,7 @@ public class PlayerBase : MonoBehaviour
 
         if (collision.gameObject.tag == _invincibleTag)
         {
-            GameManager.Instance.GetInvicibleObjectCount(1);
+            GameManager.Instance.PlayerInvicibleObjectValueChange(1);
             if (_invincibleObjectCount > _invincibleMax)//一定数アイテムを集めたら無敵モードに切り替わる
             {
                 InvincibleMode();
