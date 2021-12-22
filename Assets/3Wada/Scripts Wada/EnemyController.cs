@@ -1,19 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// Enemyの派生クラス
+/// </summary>
 public class EnemyController : EnemyBese
 {
-    [SerializeField] Transform[] _muzzle = null;
-    [SerializeField] GameObject _bullet = null;
-    [SerializeField] AudioSource _onDestroyAudio = null;
-    [SerializeField] float _speed = 1f;
-    [SerializeField] float _bottomposition = 0;
-    [SerializeField] Vector2 _beforeDir;
-    [SerializeField] Vector2 _afterDir;
+    [SerializeField,Header("マズルの位置")] Transform[] _muzzle = null;
+    [SerializeField, Header("バレット")] GameObject _bullet = null;
+    [SerializeField, Header("倒された時の音")] AudioSource _onDestroyAudio = null;
+    [SerializeField, Header("移動の向きの変えるY軸")] float _bottomposition = 0;
+    [SerializeField, Header("出た時の移動方向")] Vector2 _beforeDir;
+    [SerializeField, Header("移動変わった後の移動方向")] Vector2 _afterDir;
     Rigidbody2D _rb = null;
     bool _isBttomposition = false;
+    [SerializeField, Header("何秒とどまるか")] float _stopcount = 0.0f;
 
+    /// <summary>
+    /// 出た時の移動
+    /// </summary>
     void Start()
     {
         // まずまっすぐ下に移動させる
@@ -23,16 +28,31 @@ public class EnemyController : EnemyBese
 
      void Update()
     {
+        
         if (_isBttomposition) return;
 
-
-        if(this.transform.position.y ==  _bottomposition)
+        /// <summary>
+        /// 途中で止まる時の処理
+        /// </summary>
+        if (this.transform.position.y <=  _bottomposition)
         {
-            _rb.velocity = _afterDir;
-            _isBttomposition = true;
+            _rb.velocity = Vector2.zero;
+            _stopcount -= Time.deltaTime;
+            /// <summary>
+            /// また動き出す時の処理
+            /// </summary>
+            if (_stopcount <= 0)
+            {
+                _rb.velocity = _afterDir;
+                _isBttomposition = true;
+            }
+            
         }
     }
 
+    /// <summary>
+    /// 弾幕を出す処理
+    /// </summary>
     protected override void Attack()
     {
         for (int i = 0;i < _muzzle.Length; i++)
@@ -40,7 +60,9 @@ public class EnemyController : EnemyBese
             Instantiate(_bullet, _muzzle[i]);
         }
     }
-
+    /// <summary>
+    /// 倒れた時に流す音の処理
+    /// </summary>
     protected override void OnGetDamage()
     {
         if (EnemyHp == 0) 
