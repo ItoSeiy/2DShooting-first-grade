@@ -9,7 +9,8 @@ public class EnemyController : EnemyBese
     [SerializeField,Header("マズルの位置")] Transform[] _muzzle = null;
     [SerializeField, Header("バレット")] GameObject _bullet = null;
     [SerializeField, Header("倒された時の音")] AudioSource _onDestroyAudio = null;
-    [SerializeField, Header("移動の向きの変えるY軸")] float _bottomposition = 0;
+    [SerializeField, Header("移動の向きの変えるY軸")] float _ybottomposition = 0;
+    [SerializeField, Header("移動の向きの変えるx軸")] float _xbottomposition = 0;
     [SerializeField, Header("出た時の移動方向")] Vector2 _beforeDir;
     [SerializeField, Header("移動変わった後の移動方向")] Vector2 _afterDir;
     Rigidbody2D _rb = null;
@@ -32,7 +33,7 @@ public class EnemyController : EnemyBese
         /// <summary>
         /// 途中で止まる時の処理
         /// </summary>
-        if (this.transform.position.y <=  _bottomposition)
+        if ((this.transform.position.y ==  _ybottomposition)||(this.transform.position.x == _xbottomposition))
         {
             _rb.velocity = Vector2.zero;
             _stopcount -= Time.deltaTime;
