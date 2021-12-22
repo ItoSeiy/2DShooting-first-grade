@@ -21,14 +21,12 @@ public class EnemyController : EnemyBese
     /// </summary>
     void Start()
     {
-        // まずまっすぐ下に移動させる
         _rb = GetComponent<Rigidbody2D>();
         _rb.velocity = _beforeDir;
     }
 
      void Update()
-    {
-        
+    {   
         if (_isBttomposition) return;
 
         /// <summary>
@@ -67,8 +65,7 @@ public class EnemyController : EnemyBese
     {
         if (EnemyHp == 0) 
         {
-            AudioSource.PlayClipAtPoint(_onDestroyAudio.clip,transform.position);
-            
+            AudioSource.PlayClipAtPoint(_onDestroyAudio.clip,transform.position);    
         }
     }    
 }
