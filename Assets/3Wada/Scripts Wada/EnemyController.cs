@@ -17,6 +17,8 @@ public class EnemyController : EnemyBese
     Rigidbody2D _rb = null;
     bool _isBttomposition = false;
     [SerializeField, Header("何秒とどまるか")] float _stopcount = 0.0f;
+    private float _timer1 = default;
+    [SerializeField, Header("攻撃頻度(秒)")] private float _attackInterval1 = 1f;
 
     /// <summary>
     /// 出た時の移動
@@ -46,14 +48,26 @@ public class EnemyController : EnemyBese
                 EnemyMove();
             }
         }
-        /// <summary>
-        /// 途中で止まる時の処理
-        /// </summary>
+        _timer1 += Time.deltaTime;
+
+        if (_timer1 > _attackInterval1)
+        {
+            Danmaku();
+            _timer1 = 0;
+
+
+        }
+        
+    
         
     }
 
+
     void EnemyMove()
-    {
+    {   
+        /// <summary>
+        /// 途中で止まる時の処理
+        /// </summary>
         _rb.velocity = Vector2.zero;
         _stopcount -= Time.deltaTime;
         /// <summary>
@@ -63,18 +77,22 @@ public class EnemyController : EnemyBese
         {
             _rb.velocity = _afterDir;
             _isBttomposition = true;
+            
         }
     }
 
+    public void Danmaku()
+    {
+        for (int i = 0; i < _muzzle.Length; i++)
+        {
+            Instantiate(_bullet, _muzzle[i]);
+        }
+    }
     /// <summary>
     /// 弾幕を出す処理
     /// </summary>
     protected override void Attack()
-    {
-        for (int i = 0;i < _muzzle.Length; i++)
-        {
-            Instantiate(_bullet, _muzzle[i]);
-        }
+    {      
     }
 
     /// <summary>
