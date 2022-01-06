@@ -2,31 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletPool<T> where T : BulletSettings.BulletData
+/// <summary>
+/// Bulletのオブジェクトプールを管理するスクリプト
+/// </summary>
+public class BulletPool : MonoBehaviour
 {
-    GameObject _poolParent = null;
-    List<GameObject> _bulletsPool = new List<GameObject>();
-    List<T> _datas;
-
-    public void SetUpPool(List<T> datas)
+    enum BulletType
     {
-        _datas = datas;
+
     }
 
-    public void CreatePool(T data, int objCount)
+    public static BulletPool Instance => _instance;
+    static BulletPool _instance;
+
+    [SerializeField] GameObject[] _bullets = null;
+    Dictionary<GameObject, BulletType> _pool = null;
+
+    private void Awake()
     {
-        if(!_poolParent)
-        {
-            GameObject poolParent = new GameObject("BulletPool");
-            _poolParent = poolParent;
-        }
+        _instance = this;
+    }
 
-        for(int i = 0; i < objCount; i++)
+    public void CreatePool()
+    {
+        _pool = new Dictionary<GameObject, BulletType>();
+        for(int i = 0;)
         {
-            GameObject bullet = Object.Instantiate(data.Prefab);
 
-            bullet.name = $"ID:{data.Id}.Name:{ data.Name}";
-            
         }
     }
 }
