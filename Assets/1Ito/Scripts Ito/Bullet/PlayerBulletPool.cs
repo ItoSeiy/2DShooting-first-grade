@@ -11,31 +11,32 @@ public class PlayerBulletPool : MonoBehaviour
     static PlayerBulletPool _instance;
 
     [SerializeField] GameObject[] _bullets = null;
-    Dictionary<BulletType, GameObject> _pool = null;
-
-    Dictionary<int, string> _test;
+    List<BulletParameter> _pool = new List<BulletParameter>();
 
     [SerializeField] int[] _poolObjectMaxCount = default;
 
     private void Awake()
     {
         _instance = this;
-
-        _test = new Dictionary<int, string>();
-        _test.Add(1, "あ");
-        _test.Add(2, "い");
-        _test.Add(3, "う");
-        Debug.Log(_test[1]);
+        CreatePool(BulletType.Player01Power1);
+        CreatePool(BulletType.Player01Power2);
+        CreatePool(BulletType.Player01Power3);
+        CreatePool(BulletType.Player02Power1);
+        CreatePool(BulletType.Player02Power2);
+        CreatePool(BulletType.Player02Power3);
+        foreach(var pool in _pool)
+        {
+            Debug.Log(pool.BulletObject.name + pool.BulletType.ToString());
+        }
     }
 
     public void CreatePool(BulletType bulletType)
     {
-        _pool = new Dictionary<BulletType, GameObject>();
         for (int i = 0; i < _poolObjectMaxCount[(int)bulletType]; i++)
         {
             var bullet = Instantiate(_bullets[(int)bulletType]);
             bullet.SetActive(false);
-            _pool.Add(bulletType, bullet);
+            _pool.Add(new BulletParameter { BulletObject = bullet, BulletType = bulletType });
         }
     }
 
@@ -47,20 +48,20 @@ public class PlayerBulletPool : MonoBehaviour
     /// <returns></returns>
     public GameObject UseBullet(Vector2 position, BulletType bulletType)
     {
-        for(int i = 0; i < _pool.Count; i++)
+        foreach(var pool in _pool)
         {
-            if(_pool[bulletType].activeSelf == false)
+            if (pool.BulletObject.activeSelf == false && pool.BulletType == bulletType)
             {
-                var bullet = _pool[bulletType];
-                bullet.transform.position = position;
-                bullet.SetActive(true);
-                return bullet;
+                pool.BulletObject.transform.position = position;
+                pool.BulletObject.SetActive(true);
+                return pool.BulletObject;
             }
         }
 
         var newBullet = Instantiate(_bullets[(int)bulletType]);
-        newBullet.SetActive(false);
-        _pool.Add(bulletType, newBullet);
+        newBullet.transform.position = position;
+        newBullet.SetActive(true);
+        _pool.Add(new BulletParameter { BulletObject = newBullet, BulletType = bulletType });
         return newBullet;
     }
 
@@ -74,4 +75,12 @@ public class PlayerBulletPool : MonoBehaviour
         Player02Power2,
         Player02Power3,
     }
+
+    public class BulletParameter
+    {
+        public BulletType BulletType { get; set; }
+        public GameObject BulletObject { get; set; }
+    }
+
 }
+

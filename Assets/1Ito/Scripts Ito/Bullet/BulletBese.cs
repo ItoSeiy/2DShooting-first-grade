@@ -16,8 +16,10 @@ public abstract class BulletBese : MonoBehaviour
     [SerializeField, Header("Bulletの動く向き")] Vector2 _direction = Vector2.up;
     [SerializeField, Header("Bulletのスピード")] float _speed = default;
     [SerializeField, Header("Bulletの動きをどの関数で呼び出すか")] BulletMoveMethod _bulletMoveMethod = BulletMoveMethod.Start;
-    private void Start()
-    {
+    [SerializeField, Header("Enemyのタグ")] string _enemyTag = null;
+    [SerializeField, Header("壁のタグ")] string _gameZoneTag = null;
+    private void OnEnable()
+    {   
         if(_bulletMoveMethod == BulletMoveMethod.Start)
         {
             BulletMove();
@@ -32,9 +34,28 @@ public abstract class BulletBese : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    void OnTriggerEnter2D(Collider2D collision)
     {
         BulletAttack(collision);
+        if (transform.parent)
+        {
+            transform.parent.gameObject.SetActive(false);
+        }
+        else
+        {
+            this.gameObject.SetActive(false);
+        }
+    }
+    void OnBecameInvisible()
+    {
+        if(transform.parent)
+        {
+            transform.parent.gameObject.SetActive(false);
+        }
+        else
+        {
+            this.gameObject.SetActive(false);
+        }
     }
 
     /// <summary>
