@@ -13,7 +13,7 @@ public class EnemyController : EnemyBese
     [SerializeField, Header("移動の向きの変えるx軸")] float _xbottomposition = 0;
     [SerializeField, Header("出た時の移動方向")] Vector2 _beforeDir;
     [SerializeField, Header("移動変わった後の移動方向")] Vector2 _afterDir;
-    [SerializeField,Header("モブ敵を止める時の縦、横の切り替え")] MoveMode _moveMode;
+    [SerializeField,Header("モブ敵を止める時の右.左.上.下の切り替え")] MoveMode _moveMode;
     Rigidbody2D _rb = null;
     bool _isBttomposition = false;
     [SerializeField, Header("何秒とどまるか")] float _stopcount = 0.0f;
@@ -34,16 +34,30 @@ public class EnemyController : EnemyBese
     {   
         if (_isBttomposition) return;
         
-        if(_moveMode == MoveMode.horizontal)
+        if(_moveMode == MoveMode.right)
         {
             if( this.transform.position.x <= _xbottomposition)
             {
                 EnemyMove();
             }   
         }
-        if(_moveMode == MoveMode.vertical)
+        if(_moveMode == MoveMode.left)
+        {
+            if(this.transform.position.x >= _xbottomposition)
+            {
+                EnemyMove();
+            }
+        }
+        if(_moveMode == MoveMode.up)
         {
             if (this.transform.position.y <= _ybottomposition)
+            {
+                EnemyMove();
+            }
+        }
+        if(_moveMode == MoveMode.down)
+        {
+            if(this.transform.position.y >= _ybottomposition)
             {
                 EnemyMove();
             }
@@ -54,12 +68,7 @@ public class EnemyController : EnemyBese
         {
             Danmaku();
             _timer1 = 0;
-
-
         }
-        
-    
-        
     }
 
 
@@ -108,13 +117,20 @@ public class EnemyController : EnemyBese
     enum MoveMode
     {
         /// <summary>
-        ///横
+        ///右
         /// </summary>
-　　　　horizontal,
-
+        right,
         /// <summary>
-        ///縦 
+        /// 左
         /// </summary>
-         vertical
+        left,
+        /// <summary>
+        ///上 
+        /// </summary>
+        up,
+         /// <summary>
+         /// 下
+         /// </summary>
+        down
     }
 }

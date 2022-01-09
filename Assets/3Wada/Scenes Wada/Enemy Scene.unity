@@ -416,11 +416,11 @@ MonoBehaviour:
   _bullet: {fileID: 8222391408309725660, guid: 4753945a58d9ed94dbb8109d879bb8bf, type: 3}
   _onDestroyAudio: {fileID: 0}
   _ybottomposition: 2
-  _xbottomposition: -10
-  _beforeDir: {x: -2, y: -1}
+  _xbottomposition: 2
+  _beforeDir: {x: 2, y: 0}
   _afterDir: {x: -4, y: 2}
-  _moveMode: 0
-  _stopcount: 0
+  _moveMode: 1
+  _stopcount: 1
   _attackInterval1: 0.1
 --- !u!50 &1426789230
 Rigidbody2D:
@@ -518,7 +518,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1426789228}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.6, y: 5.85, z: 0}
+  m_LocalPosition: {x: -9.91, y: -0.01, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1531956019}
