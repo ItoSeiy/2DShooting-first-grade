@@ -14,30 +14,37 @@ public class PlayerBulletPool : MonoBehaviour
     List<BulletParameter> _pool = new List<BulletParameter>();
 
     [SerializeField] int[] _poolObjectMaxCount = default;
+    int _poolObjCountIndex = 0;
 
     private void Awake()
     {
         _instance = this;
-        CreatePool(BulletType.Player01Power1);
-        CreatePool(BulletType.Player01Power2);
-        CreatePool(BulletType.Player01Power3);
-        CreatePool(BulletType.Player02Power1);
-        CreatePool(BulletType.Player02Power2);
-        CreatePool(BulletType.Player02Power3);
+        _poolObjCountIndex = 0;
+        CreatePool();
         foreach(var pool in _pool)
         {
-            Debug.Log(pool.BulletObject.name + pool.BulletType.ToString());
+            Debug.Log($"オブジェクト名:{pool.BulletObject.name} 種類:{pool.BulletType}");
         }
     }
 
-    public void CreatePool(BulletType bulletType)
+    public void CreatePool()
     {
-        for (int i = 0; i < _poolObjectMaxCount[(int)bulletType]; i++)
+        if(_poolObjCountIndex >= _poolObjectMaxCount.Length)
         {
-            var bullet = Instantiate(_bullets[(int)bulletType]);
-            bullet.SetActive(false);
-            _pool.Add(new BulletParameter { BulletObject = bullet, BulletType = bulletType });
+            Debug.Log("すべてのBulletを生成しました。");
+            return;
         }
+
+
+        for (int i = 0; i < _poolObjectMaxCount[_poolObjCountIndex]; i++)
+        {
+            var bullet = Instantiate(_bullets[_poolObjCountIndex]);
+            bullet.SetActive(false);
+            _pool.Add(new BulletParameter { BulletObject = bullet, BulletType = (BulletType)_poolObjCountIndex });
+        }
+
+        _poolObjCountIndex++;
+        CreatePool();
     }
 
     /// <summary>

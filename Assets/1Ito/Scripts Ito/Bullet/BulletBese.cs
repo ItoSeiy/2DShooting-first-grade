@@ -11,13 +11,15 @@ public abstract class BulletBese : MonoBehaviour
 {
     public float Damage { get => _damage;}
     public float Speed { get => _speed;}
+    public string EnemyTag { get => _enemyTag; }
     
     [SerializeField, Header("Bulletが与えるダメージ")] private float _damage = 10f;
     [SerializeField, Header("Bulletの動く向き")] Vector2 _direction = Vector2.up;
     [SerializeField, Header("Bulletのスピード")] float _speed = default;
     [SerializeField, Header("Bulletの動きをどの関数で呼び出すか")] BulletMoveMethod _bulletMoveMethod = BulletMoveMethod.Start;
-    [SerializeField, Header("Enemyのタグ")] string _enemyTag = null;
-    [SerializeField, Header("壁のタグ")] string _gameZoneTag = null;
+    [SerializeField, Header("Enemyのタグ")] string _enemyTag = "Enemy";
+    [SerializeField, Header("壁のタグ")] string _gameZoneTag = "Finish";
+    [SerializeField, Header("Bulletの親オブジェクトのタグ")] string _parentTag = "Parent";
     private void OnEnable()
     {   
         if(_bulletMoveMethod == BulletMoveMethod.Start)
@@ -37,18 +39,20 @@ public abstract class BulletBese : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collision)
     {
         BulletAttack(collision);
-        if (transform.parent)
+        if (transform.parent && transform.parent.tag == _parentTag && collision.tag == _enemyTag || collision.tag == _gameZoneTag)
         {
+            Debug.Log("親オブジェクト非アクティブ");
             transform.parent.gameObject.SetActive(false);
         }
-        else
+        else if(collision.tag == _enemyTag || collision.tag == _gameZoneTag)
         {
+            Debug.Log("Bullet非アクティブ");
             this.gameObject.SetActive(false);
         }
     }
     void OnBecameInvisible()
     {
-        if(transform.parent)
+        if(transform.parent && transform.parent.tag == _parentTag)
         {
             transform.parent.gameObject.SetActive(false);
         }

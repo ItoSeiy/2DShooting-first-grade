@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerBulletFollow : BulletBese
 {
-    [SerializeField] string _enemyTag = null;
     GameObject _enemy;
     Rigidbody2D _rb;
     float _timer;
@@ -12,15 +11,8 @@ public class PlayerBulletFollow : BulletBese
 
     private void Start()
     {
-        _enemy = GameObject.FindGameObjectWithTag(_enemyTag);
-        if(_enemy)
-        {
-            _rb = GetComponent<Rigidbody2D>();
-        }
-        else
-        {
-            Destroy(this.gameObject);
-        }
+        _enemy = GameObject.FindGameObjectWithTag(EnemyTag);
+        _rb = GetComponent<Rigidbody2D>();
     }
 
     protected override void BulletMove()
@@ -30,7 +22,6 @@ public class PlayerBulletFollow : BulletBese
 
         Vector2 _dir = _enemy.transform.position - this.transform.position;
         _dir = _dir.normalized * Speed;
-        _rb.velocity = _dir;
-        
+        _rb.velocity = _dir;   
     }
 }

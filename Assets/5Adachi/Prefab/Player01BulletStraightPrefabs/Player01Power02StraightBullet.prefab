@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6226001704445328519}
   m_Layer: 0
   m_Name: Player01Bullet01
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -138,6 +138,9 @@ MonoBehaviour:
   _direction: {x: 0, y: 1}
   _speed: 10
   _bulletMoveMethod: 0
+  _enemyTag: Enemy
+  _gameZoneTag: Finish
+  _parentTag: Parent
 --- !u!1 &3279311902040150542
 GameObject:
   m_ObjectHideFlags: 0
@@ -153,7 +156,7 @@ GameObject:
   - component: {fileID: 2344717791586920276}
   m_Layer: 0
   m_Name: Player01Bullet02
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -276,6 +279,9 @@ MonoBehaviour:
   _direction: {x: 0, y: 1}
   _speed: 10
   _bulletMoveMethod: 0
+  _enemyTag: Enemy
+  _gameZoneTag: Finish
+  _parentTag: Parent
 --- !u!1 &7184597152217326839
 GameObject:
   m_ObjectHideFlags: 0
@@ -287,7 +293,7 @@ GameObject:
   - component: {fileID: 7184597152217326832}
   m_Layer: 0
   m_Name: Player01Power02StraightBullet
-  m_TagString: Untagged
+  m_TagString: Parent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
