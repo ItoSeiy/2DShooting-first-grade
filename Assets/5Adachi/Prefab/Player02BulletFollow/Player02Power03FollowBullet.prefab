@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 845408565079207470}
+  - component: {fileID: 1771586333486404080}
   m_Layer: 0
   m_Name: Player02Power03FollowBullet
   m_TagString: Parent
@@ -33,6 +34,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1771586333486404080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 845408565079207469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0467b2c1c601f4f4f886be6536710bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3447939919539038418
 GameObject:
   m_ObjectHideFlags: 0
@@ -310,9 +323,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 15
   _direction: {x: 0, y: 1}
-  _speed: 15
+  _speed: 1
   _bulletMoveMethod: 1
-  _enemyTag: Player
+  _enemyTag: Enemy
   _gameZoneTag: Finish
   _parentTag: Parent
   _followTime: 2
@@ -452,9 +465,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 15
   _direction: {x: 0, y: 1}
-  _speed: 15
+  _speed: 1
   _bulletMoveMethod: 1
-  _enemyTag: Player
+  _enemyTag: Enemy
   _gameZoneTag: Finish
   _parentTag: Parent
   _followTime: 2

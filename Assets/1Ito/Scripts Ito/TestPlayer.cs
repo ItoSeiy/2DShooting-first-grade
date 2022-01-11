@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class TestPlayer : MonoBehaviour
 {
-    public void Use()
+    public void Use(int i)
     {
-        PlayerBulletPool.Instance.UseBullet(this.transform.position, PlayerBulletPool.BulletType.Player01Power2);
+        PlayerBulletPool.Instance.UseBullet(this.transform.position, (BulletType)i);
     }
 }

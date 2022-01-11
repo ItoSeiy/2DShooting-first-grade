@@ -5,14 +5,14 @@ using UnityEngine;
 public class PlayerBulletFollow : BulletBese
 {
     GameObject _enemy;
-    Rigidbody2D _rb;
     float _timer;
     [SerializeField, Header("追従する時間")] float _followTime = 2f;
 
-    private void Start()
+    protected override void OnEnable()
     {
-        _enemy = GameObject.FindGameObjectWithTag(EnemyTag);
-        _rb = GetComponent<Rigidbody2D>();
+        _timer = 0;
+        _enemy = GameObject.FindWithTag(EnemyTag);
+        base.OnEnable();
     }
 
     protected override void BulletMove()
@@ -20,8 +20,15 @@ public class PlayerBulletFollow : BulletBese
         _timer += Time.deltaTime;
         if (_timer >= _followTime) return;
 
-        Vector2 _dir = _enemy.transform.position - this.transform.position;
-        _dir = _dir.normalized * Speed;
-        _rb.velocity = _dir;   
+        if(_enemy)
+        {
+            Vector2 dir = _enemy.transform.position - this.transform.position;
+            dir = dir.normalized * Speed;
+            Rb.velocity = dir;   
+        }
+        else if(!_enemy)
+        {
+            Rb.velocity = Vector2.up.normalized * Speed;
+        }
     }
 }

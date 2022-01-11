@@ -35,7 +35,6 @@ public class PlayerBulletPool : MonoBehaviour
             return;
         }
 
-
         for (int i = 0; i < _poolObjectMaxCount[_poolObjCountIndex]; i++)
         {
             var bullet = Instantiate(_bullets[_poolObjCountIndex]);
@@ -72,22 +71,22 @@ public class PlayerBulletPool : MonoBehaviour
         return newBullet;
     }
 
-    public enum BulletType
-    {
-        Player01Power1 = 0,
-        Player01Power2,
-        Player01Power3,
-
-        Player02Power1,
-        Player02Power2,
-        Player02Power3,
-    }
-
     public class BulletParameter
     {
         public BulletType BulletType { get; set; }
         public GameObject BulletObject { get; set; }
     }
 
+}
+
+public enum BulletType
+{
+    Player01Power1 = 0,
+    Player01Power2,
+    Player01Power3,
+
+    Player02Power1,
+    Player02Power2,
+    Player02Power3,
 }
 
