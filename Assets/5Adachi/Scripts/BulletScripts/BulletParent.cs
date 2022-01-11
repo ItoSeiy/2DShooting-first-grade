@@ -1,10 +1,11 @@
 using UnityEngine;
+using System.Linq;
 
 public class BulletParent : MonoBehaviour
 {
-    public int BulletChilderenCount { get => _bulletsChildren.Length; }
     BulletBese[] _bulletsChildren = new BulletBese[99];
     Vector2[] _initialBulletChildrenPos = new Vector2[99];
+    bool[] _isBulletChildrenActive;
     private void Awake()
     {
         _bulletsChildren = GetComponentsInChildren<BulletBese>();
@@ -20,5 +21,19 @@ public class BulletParent : MonoBehaviour
         {
             _bulletsChildren[i].transform.position = _initialBulletChildrenPos[i];
         }
+    }
+
+    public void ChildrenBulletEnable()
+    {
+        foreach (var bulletsChildren in _bulletsChildren)
+        {
+             bulletsChildren.gameObject.SetActive(true);
+        }   
+    }
+
+    public bool AllBulletChildrenDisable()
+    {
+        var allBulletChildrenActive = _bulletsChildren.All(i => i.gameObject.activeSelf == false);
+        return allBulletChildrenActive;
     }
 }

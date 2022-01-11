@@ -23,17 +23,15 @@ public abstract class BulletBese : MonoBehaviour
     [SerializeField, Header("Bulletの親オブジェクトのタグ")] string _parentTag = "Parent";
     Rigidbody2D _rb = null;
     BulletParent _bulletParent = null;
-    int _disableBulletCount = 0;
 
-    private void Start()
+    void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
-        _bulletParent = transform.parent.GetComponent<BulletParent>();
+        _bulletParent = transform.parent?.GetComponent<BulletParent>();
     }
 
     protected virtual void OnEnable()
     {
-        _disableBulletCount = 0;
         if(_bulletMoveMethod == BulletMoveMethod.Start)
         {
             BulletMove();
@@ -51,19 +49,19 @@ public abstract class BulletBese : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collision)
     {
         BulletAttack(collision);
+
+        //敵または壁に当たったら子オブジェクトを非アクティブにする
         if(collision.tag == _enemyTag || collision.tag == _gameZoneTag)
         {
+            //子オブジェクトがまだ残っていたら子オブジェクトを非アクティブにする
             this.gameObject.SetActive(false);
-            _disableBulletCount++;
-        }
-    }
-    void OnBecameInvisible()
-    {
-        this.gameObject.SetActive(false);
-        if(_disableBulletCount >= _bulletParent.BulletChilderenCount && _bulletParent)
-        {
-            this.gameObject.SetActive(true);
-            transform.parent.gameObject.SetActive(false);
+
+            //子オブジェクトが残っていなかったら子オブジェクトをアクティブにし、親を非アクティブにする
+            if (_bulletParent && _bulletParent.AllBulletChildrenDisable() && _bulletParent.tag == _parentTag)
+            {
+                _bulletParent?.ChildrenBulletEnable();
+                _bulletParent?.gameObject.SetActive(false);
+            }
         }
     }
 

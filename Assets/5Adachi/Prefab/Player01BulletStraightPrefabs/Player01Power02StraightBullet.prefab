@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 737132019080402074}
   - component: {fileID: 3107659301168897079}
   - component: {fileID: 6226001704445328519}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player01Bullet01
   m_TagString: Bullet
   m_Icon: {fileID: 0}
@@ -136,7 +136,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 10
   _direction: {x: 0, y: 1}
-  _speed: 10
+  _speed: 1
   _bulletMoveMethod: 0
   _enemyTag: Enemy
   _gameZoneTag: Finish
@@ -154,7 +154,7 @@ GameObject:
   - component: {fileID: 1871145599967264468}
   - component: {fileID: 2376777904504839216}
   - component: {fileID: 2344717791586920276}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player01Bullet02
   m_TagString: Bullet
   m_Icon: {fileID: 0}
@@ -277,7 +277,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 10
   _direction: {x: 0, y: 1}
-  _speed: 10
+  _speed: 1
   _bulletMoveMethod: 0
   _enemyTag: Enemy
   _gameZoneTag: Finish
@@ -292,7 +292,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7184597152217326832}
   - component: {fileID: -4748801499886503703}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player01Power02StraightBullet
   m_TagString: Parent
   m_Icon: {fileID: 0}

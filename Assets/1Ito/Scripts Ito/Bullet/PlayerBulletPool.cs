@@ -16,6 +16,8 @@ public class PlayerBulletPool : MonoBehaviour
     [SerializeField] int[] _poolObjectMaxCount = default;
     int _poolObjCountIndex = 0;
 
+    BulletParent _bulletParent;
+
     private void Awake()
     {
         _instance = this;
@@ -37,9 +39,9 @@ public class PlayerBulletPool : MonoBehaviour
 
         for (int i = 0; i < _poolObjectMaxCount[_poolObjCountIndex]; i++)
         {
-            var bullet = Instantiate(_bullets[_poolObjCountIndex]);
+            var bullet = Instantiate(_bullets[_poolObjCountIndex], this.transform);
             bullet.SetActive(false);
-            _pool.Add(new BulletParameter { BulletObject = bullet, BulletType = (BulletType)_poolObjCountIndex });
+            _pool.Add(new BulletParameter { BulletObject = bullet, BulletType = (BulletType)_poolObjCountIndex});
         }
 
         _poolObjCountIndex++;
@@ -47,7 +49,7 @@ public class PlayerBulletPool : MonoBehaviour
     }
 
     /// <summary>
-    /// Bulltを使いたいときに呼び出す関数
+    /// Bulletを使いたいときに呼び出す関数
     /// </summary>
     /// <param name="position">Bulletの位置を指定する</param>
     /// <param name="bulletType">発射するBulletの種類</param>
@@ -64,10 +66,10 @@ public class PlayerBulletPool : MonoBehaviour
             }
         }
 
-        var newBullet = Instantiate(_bullets[(int)bulletType]);
+        var newBullet = Instantiate(_bullets[(int)bulletType], this.transform);
         newBullet.transform.position = position;
         newBullet.SetActive(true);
-        _pool.Add(new BulletParameter { BulletObject = newBullet, BulletType = bulletType });
+        _pool.Add(new BulletParameter { BulletObject = newBullet, BulletType = bulletType});
         return newBullet;
     }
 
