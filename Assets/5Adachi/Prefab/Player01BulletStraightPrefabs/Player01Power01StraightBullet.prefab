@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 2470969044458107702}
   - component: {fileID: 2470969044458107703}
   - component: {fileID: 2470969044458107700}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player01Power01StraightBullet
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -136,5 +136,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 10
   _direction: {x: 0, y: 1}
-  _speed: 10
+  _speed: 1
   _bulletMoveMethod: 0
+  _enemyTag: Enemy
+  _gameZoneTag: Finish
+  _parentTag: Parent
