@@ -9,9 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 845408565079207470}
-  m_Layer: 0
+  - component: {fileID: 1771586333486404080}
+  m_Layer: 6
   m_Name: Player02Power03FollowBullet
-  m_TagString: Untagged
+  m_TagString: Parent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -33,6 +34,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1771586333486404080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 845408565079207469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0467b2c1c601f4f4f886be6536710bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3447939919539038418
 GameObject:
   m_ObjectHideFlags: 0
@@ -46,9 +59,9 @@ GameObject:
   - component: {fileID: 8340948578181724692}
   - component: {fileID: 6055834810023993876}
   - component: {fileID: 2189952177598664095}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player02Bullet02
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -169,8 +182,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 10
   _direction: {x: 0, y: 1}
-  _speed: 10
+  _speed: 1
   _bulletMoveMethod: 0
+  _enemyTag: Enemy
+  _gameZoneTag: Finish
+  _parentTag: Parent
 --- !u!1 &6967542652161134117
 GameObject:
   m_ObjectHideFlags: 0
@@ -184,9 +200,9 @@ GameObject:
   - component: {fileID: 7455835349565979502}
   - component: {fileID: 5620383194775846071}
   - component: {fileID: 1582124831850225987}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player02Bullet01
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -307,9 +323,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 15
   _direction: {x: 0, y: 1}
-  _speed: 15
+  _speed: 1
   _bulletMoveMethod: 1
-  _enemyTag: Player
+  _enemyTag: Enemy
+  _gameZoneTag: Finish
+  _parentTag: Parent
   _followTime: 2
 --- !u!1 &9180116380697167995
 GameObject:
@@ -324,9 +342,9 @@ GameObject:
   - component: {fileID: 43727212833499037}
   - component: {fileID: 2037757237870691218}
   - component: {fileID: 2718597591565960368}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player02Bullet03
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -447,7 +465,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 15
   _direction: {x: 0, y: 1}
-  _speed: 15
+  _speed: 1
   _bulletMoveMethod: 1
-  _enemyTag: Player
+  _enemyTag: Enemy
+  _gameZoneTag: Finish
+  _parentTag: Parent
   _followTime: 2

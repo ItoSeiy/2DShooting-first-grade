@@ -9,9 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3719983889570058090}
-  m_Layer: 0
+  - component: {fileID: 7530732209024507012}
+  m_Layer: 6
   m_Name: Player02Power02FollowBullet
-  m_TagString: Untagged
+  m_TagString: Parent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -32,6 +33,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7530732209024507012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3719983889570058091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0467b2c1c601f4f4f886be6536710bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4711788769188863699
 GameObject:
   m_ObjectHideFlags: 0
@@ -45,9 +58,9 @@ GameObject:
   - component: {fileID: 2219705060279118661}
   - component: {fileID: 2351554948765553951}
   - component: {fileID: 3464077937873859785}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player02Bullet02
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -168,9 +181,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 15
   _direction: {x: 0, y: 1}
-  _speed: 15
+  _speed: 1
   _bulletMoveMethod: 1
-  _enemyTag: Player
+  _enemyTag: Enemy
+  _gameZoneTag: Finish
+  _parentTag: Parent
   _followTime: 2
 --- !u!1 &4940366701055704017
 GameObject:
@@ -185,9 +200,9 @@ GameObject:
   - component: {fileID: 3033923053329608610}
   - component: {fileID: 8829294898358055654}
   - component: {fileID: 949601281519375233}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player02Bullet01
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -308,7 +323,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 15
   _direction: {x: 0, y: 1}
-  _speed: 15
+  _speed: 1
   _bulletMoveMethod: 1
-  _enemyTag: Player
+  _enemyTag: Enemy
+  _gameZoneTag: Finish
+  _parentTag: Parent
   _followTime: 2
