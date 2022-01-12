@@ -16,8 +16,6 @@ public class PlayerBulletPool : MonoBehaviour
     [SerializeField] int[] _poolObjectMaxCount = default;
     int _poolObjCountIndex = 0;
 
-    BulletParent _bulletParent;
-
     private void Awake()
     {
         _instance = this;
@@ -25,7 +23,7 @@ public class PlayerBulletPool : MonoBehaviour
         CreatePool();
         foreach(var pool in _pool)
         {
-            Debug.Log($"オブジェクト名:{pool.BulletObject.name} 種類:{pool.BulletType}");
+            Debug.Log($"オブジェクト名:{pool.Object.name} 種類:{pool.Type}");
         }
     }
 
@@ -41,7 +39,7 @@ public class PlayerBulletPool : MonoBehaviour
         {
             var bullet = Instantiate(_bullets[_poolObjCountIndex], this.transform);
             bullet.SetActive(false);
-            _pool.Add(new BulletParameter { BulletObject = bullet, BulletType = (BulletType)_poolObjCountIndex});
+            _pool.Add(new BulletParameter { Object = bullet, Type = (BulletType)_poolObjCountIndex});
         }
 
         _poolObjCountIndex++;
@@ -58,25 +56,25 @@ public class PlayerBulletPool : MonoBehaviour
     {
         foreach(var pool in _pool)
         {
-            if (pool.BulletObject.activeSelf == false && pool.BulletType == bulletType)
+            if (pool.Object.activeSelf == false && pool.Type == bulletType)
             {
-                pool.BulletObject.transform.position = position;
-                pool.BulletObject.SetActive(true);
-                return pool.BulletObject;
+                pool.Object.transform.position = position;
+                pool.Object.SetActive(true);
+                return pool.Object;
             }
         }
 
         var newBullet = Instantiate(_bullets[(int)bulletType], this.transform);
         newBullet.transform.position = position;
         newBullet.SetActive(true);
-        _pool.Add(new BulletParameter { BulletObject = newBullet, BulletType = bulletType});
+        _pool.Add(new BulletParameter { Object = newBullet, Type = bulletType});
         return newBullet;
     }
 
     public class BulletParameter
     {
-        public BulletType BulletType { get; set; }
-        public GameObject BulletObject { get; set; }
+        public GameObject Object { get; set; }
+        public BulletType Type { get; set; }
     }
 }
 
