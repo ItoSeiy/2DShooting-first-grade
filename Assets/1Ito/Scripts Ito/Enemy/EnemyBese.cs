@@ -11,6 +11,7 @@ public abstract class EnemyBese : MonoBehaviour, IDamage
 {
     public float EnemyHp { get => _enemyHp;}
     public float AddDamageRatio { get => _damageRatio;}
+    public Rigidbody2D Rb { get => _rb; set => _rb = value; }
 
     [SerializeField, Header("体力")] private float _enemyHp = 10f;
     [SerializeField, Header("攻撃頻度(秒)")] private float _attackInterval = 1f;
@@ -19,8 +20,14 @@ public abstract class EnemyBese : MonoBehaviour, IDamage
     /// </summary>
     [SerializeField, Header("攻撃力を何割にするか"), Range(0f, 1f)] float _damageRatio = 1f;
     private float _timer = default;
+    Rigidbody2D _rb = null;
 
-    private void Update()
+    private void Awake()
+    {
+        _rb = GetComponent<Rigidbody2D>();
+    }
+
+    protected virtual void Update()
     {
         _timer += Time.deltaTime;
 
