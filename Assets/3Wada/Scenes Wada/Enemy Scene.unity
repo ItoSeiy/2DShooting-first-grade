@@ -309,7 +309,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 554194327}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.45510578, y: 0.28453192, z: -7.687049}
+  m_LocalPosition: {x: -0.315, y: 0.305, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1426789233}
@@ -410,18 +410,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyHp: 1
   _attackInterval: 1
-  _damageRatio: 0.225
+  _damageRatio: 1
   _muzzle:
   - {fileID: 1531956019}
-  _bullet: {fileID: 8222391408309725660, guid: 4753945a58d9ed94dbb8109d879bb8bf, type: 3}
   _onDestroyAudio: {fileID: 0}
   _ybottomposition: 2
   _xbottomposition: 2
-  _beforeDir: {x: 2, y: 0}
+  _oldDir: {x: 0, y: 0}
   _afterDir: {x: -4, y: 2}
   _moveMode: 1
   _stopcount: 1
-  _attackInterval1: 0.1
 --- !u!50 &1426789230
 Rigidbody2D:
   serializedVersion: 4
@@ -518,7 +516,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1426789228}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.91, y: -0.01, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1531956019}
@@ -581,7 +579,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1992586202}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.43078542, y: 0.4351047, z: -7.687049}
+  m_LocalPosition: {x: 0.239, y: 0.268, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1426789233}
