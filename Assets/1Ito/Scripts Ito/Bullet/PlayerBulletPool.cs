@@ -78,7 +78,6 @@ public class PlayerBulletPool : MonoBehaviour
         public BulletType BulletType { get; set; }
         public GameObject BulletObject { get; set; }
     }
-
 }
 
 public enum BulletType
