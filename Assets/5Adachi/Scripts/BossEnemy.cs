@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class BossEnemy : EnemyBese
 {
+    protected override void Update()
+    {
+        base.Update();
+
+    }
     protected override void OnGetDamage()
     {
 
@@ -12,14 +17,4 @@ public class BossEnemy : EnemyBese
     {
 
     }
-
-    private void Update()
-    {
-        transform.position += 
-    }
-
-    /*if(_enemyHp == 0)
-    {
-
-     }*/
 }
