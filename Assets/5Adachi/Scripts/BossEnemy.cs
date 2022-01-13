@@ -12,4 +12,14 @@ public class BossEnemy : EnemyBese
     {
 
     }
+
+    private void Update()
+    {
+        transform.position += 
+    }
+
+    /*if(_enemyHp == 0)
+    {
+
+     }*/
 }
