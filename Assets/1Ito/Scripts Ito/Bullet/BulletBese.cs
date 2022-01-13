@@ -37,6 +37,7 @@ public abstract class BulletBese : MonoBehaviour
         if(_bulletMoveMethod == BulletMoveMethod.Start)
         {
             BulletMove();
+            Debug.Log("呼ばれてる");
         }
     }
 

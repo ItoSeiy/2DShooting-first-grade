@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1695237063884384653}
   - component: {fileID: 4508989130467046453}
   - component: {fileID: -8201632760338897031}
+  - component: {fileID: 8666166322165994676}
   m_Layer: 0
   m_Name: Star
   m_TagString: Untagged
@@ -48,6 +49,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -98,7 +100,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 2.5
+  m_Radius: 0.21
 --- !u!50 &-8201632760338897031
 Rigidbody2D:
   serializedVersion: 4
@@ -120,3 +122,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &8666166322165994676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1080062419905580683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db360a3e3ab61ed4c91f21c00532da3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _damage: 10
+  _direction: {x: 0, y: 1}
+  _speed: 10
+  _bulletMoveMethod: 1
+  _enemyTag: Enemy
+  _gameZoneTag: Finish
+  _parentTag: Parent
