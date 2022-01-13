@@ -12,6 +12,8 @@ public abstract class EnemyBese : MonoBehaviour, IDamage
     public float EnemyHp { get => _enemyHp;}
     public float AddDamageRatio { get => _damageRatio;}
     public Rigidbody2D Rb { get => _rb; set => _rb = value; }
+    public float Timer { get => _timer; }
+    public float AttackInterval { get => _attackInterval; }
 
     [SerializeField, Header("体力")] private float _enemyHp = 10f;
     [SerializeField, Header("攻撃頻度(秒)")] private float _attackInterval = 1f;

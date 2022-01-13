@@ -1,14 +1,14 @@
-ï»¿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Playerã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãƒ—ãƒ¼ãƒ«ã‚’ç®¡ç†ã™ã‚‹ã‚¹ã‚¯ãƒªãƒ—ãƒˆ
+/// EnemyBullet‚Ìƒv[ƒ‹‚ğŠÇ—‚·‚éƒXƒNƒŠƒvƒg
 /// </summary>
-public class PlayerBulletPool : MonoBehaviour
+public class EnemyBulletPool : MonoBehaviour
 {
-    public static PlayerBulletPool Instance => _instance;
-    static PlayerBulletPool _instance;
+    public static EnemyBulletPool Instance => _instance;
+    static EnemyBulletPool _instance;
 
     [SerializeField] GameObject[] _bullets = null;
     List<BulletParameter> _pool = new List<BulletParameter>();
@@ -21,17 +21,17 @@ public class PlayerBulletPool : MonoBehaviour
         _instance = this;
         _poolObjCountIndex = 0;
         CreatePool();
-        foreach(var pool in _pool)
+        foreach (var pool in _pool)
         {
-            Debug.Log($"ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆå:{pool.Object.name} ç¨®é¡:{pool.Type}");
+            Debug.Log($"ƒIƒuƒWƒFƒNƒg–¼:{pool.Object.name} í—Ş:{pool.Type}");
         }
     }
 
-    public void CreatePool()
+    private void CreatePool()
     {
-        if(_poolObjCountIndex >= _poolObjectMaxCount.Length)
+        if (_poolObjCountIndex >= _poolObjectMaxCount.Length)
         {
-            Debug.Log("ã™ã¹ã¦ã®PlayerBulletã‚’ç”Ÿæˆã—ã¾ã—ãŸã€‚");
+            Debug.Log("‚·‚×‚Ä‚ÌEnmeyBullet‚ğ¶¬‚µ‚Ü‚µ‚½B");
             return;
         }
 
@@ -39,7 +39,7 @@ public class PlayerBulletPool : MonoBehaviour
         {
             var bullet = Instantiate(_bullets[_poolObjCountIndex], this.transform);
             bullet.SetActive(false);
-            _pool.Add(new BulletParameter { Object = bullet, Type = (BulletType)_poolObjCountIndex});
+            _pool.Add(new BulletParameter { Object = bullet, Type = (EnemyBulletType)_poolObjCountIndex });
         }
 
         _poolObjCountIndex++;
@@ -47,14 +47,14 @@ public class PlayerBulletPool : MonoBehaviour
     }
 
     /// <summary>
-    /// Bulletã‚’ä½¿ã„ãŸã„ã¨ãã«å‘¼ã³å‡ºã™é–¢æ•°
+    /// Bullet‚ğg‚¢‚½‚¢‚Æ‚«‚ÉŒÄ‚Ño‚·ŠÖ”
     /// </summary>
-    /// <param name="position">Bulletã®ä½ç½®ã‚’æŒ‡å®šã™ã‚‹</param>
-    /// <param name="bulletType">ç™ºå°„ã™ã‚‹Bulletã®ç¨®é¡</param>
+    /// <param name="position">Bullet‚ÌˆÊ’u‚ğw’è‚·‚é</param>
+    /// <param name="bulletType">”­Ë‚·‚éBullet‚Ìí—Ş</param>
     /// <returns></returns>
-    public GameObject UseBullet(Vector2 position, BulletType bulletType)
+    public GameObject UseBullet(Vector2 position, EnemyBulletType bulletType)
     {
-        foreach(var pool in _pool)
+        foreach (var pool in _pool)
         {
             if (pool.Object.activeSelf == false && pool.Type == bulletType)
             {
@@ -67,25 +67,19 @@ public class PlayerBulletPool : MonoBehaviour
         var newBullet = Instantiate(_bullets[(int)bulletType], this.transform);
         newBullet.transform.position = position;
         newBullet.SetActive(true);
-        _pool.Add(new BulletParameter { Object = newBullet, Type = bulletType});
+        _pool.Add(new BulletParameter { Object = newBullet, Type = bulletType });
         return newBullet;
     }
 
-    public class BulletParameter
+    private class BulletParameter
     {
         public GameObject Object { get; set; }
-        public BulletType Type { get; set; }
+        public EnemyBulletType Type { get; set; }
     }
 }
 
-public enum BulletType
+public enum EnemyBulletType
 {
-    Player01Power1 = 0,
-    Player01Power2,
-    Player01Power3,
-
-    Player02Power1,
-    Player02Power2,
-    Player02Power3,
+    Example,
+    Example2
 }
-

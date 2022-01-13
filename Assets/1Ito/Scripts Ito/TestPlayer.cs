@@ -6,6 +6,6 @@ public class TestPlayer : MonoBehaviour
 {
     public void Use(int i)
     {
-        PlayerBulletPool.Instance.UseBullet(this.transform.position, (BulletType)i);
+        EnemyBulletPool.Instance.UseBullet(transform.position, (EnemyBulletType)i);
     }
 }
