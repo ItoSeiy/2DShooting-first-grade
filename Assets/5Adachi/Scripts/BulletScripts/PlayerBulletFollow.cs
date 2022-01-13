@@ -13,6 +13,7 @@ public class PlayerBulletFollow : BulletBese
     {
         _timer = 0;
         _enemy = GameObject.FindWithTag(EnemyTag);
+        base.OnEnable();
     }
 
     protected override void BulletMove()
