@@ -31,7 +31,7 @@ public class PlayerBulletPool : MonoBehaviour
     {
         if(_poolObjCountIndex >= _poolObjectMaxCount.Length)
         {
-            Debug.Log("すべてのBulletを生成しました。");
+            Debug.Log("すべてのPlayerBulletを生成しました。");
             return;
         }
 
