@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 3406039548113415542}
   - component: {fileID: 3326510601923622306}
   - component: {fileID: 3444873129846348987}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player01Bullet02
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -136,8 +136,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 10
   _direction: {x: 0, y: 1}
-  _speed: 10
+  _speed: 1
   _bulletMoveMethod: 0
+  _enemyTag: Enemy
+  _gameZoneTag: Finish
+  _parentTag: Parent
 --- !u!1 &3847419799370188992
 GameObject:
   m_ObjectHideFlags: 0
@@ -151,9 +154,9 @@ GameObject:
   - component: {fileID: 8702532500078483545}
   - component: {fileID: 5636183794906387999}
   - component: {fileID: 1679509037635186477}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player01Bullet01
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -274,8 +277,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 10
   _direction: {x: 0, y: 1}
-  _speed: 10
+  _speed: 1
   _bulletMoveMethod: 0
+  _enemyTag: Enemy
+  _gameZoneTag: Finish
+  _parentTag: Parent
 --- !u!1 &3885038963394502400
 GameObject:
   m_ObjectHideFlags: 0
@@ -285,9 +291,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3885038963394502401}
-  m_Layer: 0
+  - component: {fileID: -8658700145977523801}
+  m_Layer: 6
   m_Name: Player01Power03StraightBullet
-  m_TagString: Untagged
+  m_TagString: Parent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -309,6 +316,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-8658700145977523801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3885038963394502400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0467b2c1c601f4f4f886be6536710bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4290668903639852024
 GameObject:
   m_ObjectHideFlags: 0
@@ -322,9 +341,9 @@ GameObject:
   - component: {fileID: 1761887951100465670}
   - component: {fileID: 7098927654020268791}
   - component: {fileID: 4714163188327049654}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player01Bullet03
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -445,5 +464,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 10
   _direction: {x: 0, y: 1}
-  _speed: 10
+  _speed: 1
   _bulletMoveMethod: 0
+  _enemyTag: Enemy
+  _gameZoneTag: Finish
+  _parentTag: Parent
