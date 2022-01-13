@@ -43,7 +43,7 @@ RenderSettings:
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 11
+  serializedVersion: 12
   m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_LightingSettings: {fileID: 138827898}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -118,9 +118,72 @@ NavMeshSettings:
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
+    maxJobWorkers: 0
+    preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!850595691 &138827898
+LightingSettings:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Settings.lighting
+  serializedVersion: 3
+  m_GIWorkflowMode: 1
+  m_EnableBakedLightmaps: 0
+  m_EnableRealtimeLightmaps: 0
+  m_RealtimeEnvironmentLighting: 1
+  m_BounceScale: 1
+  m_AlbedoBoost: 1
+  m_IndirectOutputScale: 1
+  m_UsingShadowmask: 1
+  m_BakeBackend: 1
+  m_LightmapMaxSize: 1024
+  m_BakeResolution: 40
+  m_Padding: 2
+  m_TextureCompression: 1
+  m_AO: 0
+  m_AOMaxDistance: 1
+  m_CompAOExponent: 1
+  m_CompAOExponentDirect: 0
+  m_ExtractAO: 0
+  m_MixedBakeMode: 2
+  m_LightmapsBakeMode: 1
+  m_FilterMode: 1
+  m_LightmapParameters: {fileID: 15204, guid: 0000000000000000f000000000000000, type: 0}
+  m_ExportTrainingData: 0
+  m_TrainingDataDestination: TrainingData
+  m_RealtimeResolution: 2
+  m_ForceWhiteAlbedo: 0
+  m_ForceUpdates: 0
+  m_FinalGather: 0
+  m_FinalGatherRayCount: 256
+  m_FinalGatherFiltering: 1
+  m_PVRCulling: 1
+  m_PVRSampling: 1
+  m_PVRDirectSampleCount: 32
+  m_PVRSampleCount: 512
+  m_PVREnvironmentSampleCount: 256
+  m_PVREnvironmentReferencePointCount: 2048
+  m_LightProbeSampleCountMultiplier: 4
+  m_PVRBounces: 2
+  m_PVRMinBounces: 2
+  m_PVREnvironmentMIS: 1
+  m_PVRFilteringMode: 1
+  m_PVRDenoiserTypeDirect: 1
+  m_PVRDenoiserTypeIndirect: 1
+  m_PVRDenoiserTypeAO: 1
+  m_PVRFilterTypeDirect: 0
+  m_PVRFilterTypeIndirect: 0
+  m_PVRFilterTypeAO: 0
+  m_PVRFilteringGaussRadiusDirect: 1
+  m_PVRFilteringGaussRadiusIndirect: 5
+  m_PVRFilteringGaussRadiusAO: 2
+  m_PVRFilteringAtrousPositionSigmaDirect: 0.5
+  m_PVRFilteringAtrousPositionSigmaIndirect: 2
+  m_PVRFilteringAtrousPositionSigmaAO: 1
 --- !u!1 &297816677
 GameObject:
   m_ObjectHideFlags: 0
@@ -136,7 +199,7 @@ GameObject:
   - component: {fileID: 297816678}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Player
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -186,7 +249,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.64, y: 3.64}
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
 --- !u!23 &297816680
 MeshRenderer:
@@ -203,6 +266,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -227,6 +291,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &297816681
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -243,11 +308,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 297816677}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.56, y: 0.63, z: -0.71999776}
+  m_LocalPosition: {x: 0.24, y: 3.4, z: -0.71999776}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &541512838
 GameObject:
@@ -260,7 +325,7 @@ GameObject:
   - component: {fileID: 541512839}
   m_Layer: 0
   m_Name: Muzzle01
-  m_TagString: Untagged
+  m_TagString: Parent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -273,7 +338,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 541512838}
   m_LocalRotation: {x: -0.0000004997336, y: 0.00041701345, z: 0.0011984305, w: 0.9999992}
-  m_LocalPosition: {x: 2.2, y: 9.5, z: -0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2065540544}
@@ -373,7 +438,7 @@ GameObject:
   - component: {fileID: 1792886582}
   m_Layer: 0
   m_Name: Muzzle02
-  m_TagString: Untagged
+  m_TagString: Parent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -385,13 +450,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1792886581}
-  m_LocalRotation: {x: -0, y: -0, z: -0.7005525, w: 0.7136009}
-  m_LocalPosition: {x: 10.1, y: -0.4, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 0.5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2065540544}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -88.943}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!1 &2065540540
 GameObject:
   m_ObjectHideFlags: 0
@@ -402,9 +467,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2065540544}
   - component: {fileID: 2065540545}
-  - component: {fileID: 2065540541}
   - component: {fileID: 2065540543}
   - component: {fileID: 2065540542}
+  - component: {fileID: 2065540541}
   m_Layer: 0
   m_Name: Bomb
   m_TagString: Untagged
@@ -421,14 +486,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 2065540540}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a3a33ca6e5c8cb4889e48fde163030d, type: 3}
+  m_Script: {fileID: 11500000, guid: 45a8d7fabf0e58d46a88322e828df88e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 0
-  _enemyTag: Player
-  _enemyBulletTag: Bullet
+  _damage: 9.45
   _direction: {x: 0, y: 1}
-  _speed: 0
+  _speed: 5
+  _bulletMoveMethod: 0
+  _enemyTag: Enemy
+  _gameZoneTag: Finish
+  _parentTag: Parent
+  _enemyBulletTag: 
   _bombChildBullet: {fileID: 6564936669277464682, guid: efcc84a69dbf4ce4a8e1598f54fcd8d7,
     type: 3}
   _muzzle:
@@ -451,9 +519,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.36, y: -1.23}
+  m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 8.9
+  m_Radius: 0.61
 --- !u!212 &2065540543
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -469,6 +537,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -493,12 +562,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 726faac52b269604581c6f26a7135cd4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: eb0127bdf95d51f4f9cf91a72779aef0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 35.079998, y: 24.802656}
+  m_Size: {x: 2.36, y: 2.36}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -512,15 +581,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2065540540}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.47, y: -3.1, z: -0.71999776}
-  m_LocalScale: {x: 0.09403239, y: 0.09403239, z: 0.09403239}
+  m_LocalPosition: {x: 0, y: -2.94, z: -0.71999776}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 541512839}
   - {fileID: 1792886582}
   - {fileID: 2133129691}
   - {fileID: 2142991143}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &2065540545
 Rigidbody2D:
@@ -554,7 +623,7 @@ GameObject:
   - component: {fileID: 2133129691}
   m_Layer: 0
   m_Name: Muzzle03
-  m_TagString: Untagged
+  m_TagString: Parent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -567,7 +636,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2133129690}
   m_LocalRotation: {x: -0, y: -0, z: 0.71002793, w: 0.70417356}
-  m_LocalPosition: {x: -10.2, y: -2.9, z: 0}
+  m_LocalPosition: {x: -0.5, y: -0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2065540544}
@@ -584,7 +653,7 @@ GameObject:
   - component: {fileID: 2142991143}
   m_Layer: 0
   m_Name: Muzzle04
-  m_TagString: Untagged
+  m_TagString: Parent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -597,7 +666,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2142991142}
   m_LocalRotation: {x: -0, y: -0, z: -0.9999696, w: 0.007799947}
-  m_LocalPosition: {x: 0.2, y: -10.3, z: 0}
+  m_LocalPosition: {x: 0, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2065540544}
