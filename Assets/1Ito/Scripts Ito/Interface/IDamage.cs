@@ -1,5 +1,4 @@
-﻿
-public interface IDamage
+﻿public interface IDamage
 {
     void AddDamage(float damage);
 }
