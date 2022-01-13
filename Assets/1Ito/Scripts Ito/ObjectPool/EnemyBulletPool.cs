@@ -80,6 +80,6 @@ public class EnemyBulletPool : MonoBehaviour
 
 public enum EnemyBulletType
 {
-    Example,
+    Example = 0,
     Example2
 }

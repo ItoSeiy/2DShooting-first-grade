@@ -80,6 +80,6 @@ public class EnemyPool : MonoBehaviour
 
 public enum EnemyType
 {
-    Example,
+    Example = 0,
 }
 
