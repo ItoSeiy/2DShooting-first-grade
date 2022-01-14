@@ -24,7 +24,7 @@ public abstract class EnemyBese : MonoBehaviour, IDamage
     private float _timer = default;
     Rigidbody2D _rb = null;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
     }
@@ -53,11 +53,11 @@ public abstract class EnemyBese : MonoBehaviour, IDamage
     protected abstract void OnGetDamage();
 
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if(EnemyHp <= 0)
         {
-            Destroy(this.gameObject);
+            gameObject.SetActive(false);
         }
     }
 

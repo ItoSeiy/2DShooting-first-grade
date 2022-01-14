@@ -13,6 +13,8 @@ public abstract class BulletBese : MonoBehaviour
     public float Speed { get => _speed;}
     public string EnemyTag { get => _enemyTag; }
     public Rigidbody2D Rb { get => _rb; set => _rb = value; }
+    private BulletMoveMethod MoveMethod { get => _bulletMoveMethod; set => _bulletMoveMethod = value; }
+    public string GameZoneTag { get => _gameZoneTag;}
 
     [SerializeField, Header("Bulletが与えるダメージ")] private float _damage = 10f;
     [SerializeField, Header("Bulletの動く向き")] Vector2 _direction = Vector2.up;
@@ -24,7 +26,7 @@ public abstract class BulletBese : MonoBehaviour
     Rigidbody2D _rb = null;
     BulletParent _bulletParent = null;
 
-    void Awake()
+    protected virtual void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
         _bulletParent = transform.parent?.GetComponent<BulletParent>();
@@ -38,7 +40,7 @@ public abstract class BulletBese : MonoBehaviour
         }
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if (_bulletMoveMethod == BulletMoveMethod.Update)
         {
@@ -46,7 +48,7 @@ public abstract class BulletBese : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         BulletAttack(collision);
 
