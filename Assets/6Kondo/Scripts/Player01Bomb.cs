@@ -20,6 +20,7 @@ public class Player01Bomb : BulletBese
             {
                 var bombChild = PlayerBulletPool.Instance.UseBullet(_muzzle[i].position, PlayerBulletType.BombChild);
                 bombChild.transform.rotation = _muzzle[i].rotation;
+
             }
         }
     }
