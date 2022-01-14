@@ -756,8 +756,8 @@ MonoBehaviour:
   _attackInterval: 1
   _damageRatio: 1
   _bombTag: 
-  _bossEnemyMove:
-  - {fileID: 11500000, guid: 322b3d8c728777e458e66f606e18c6cc, type: 3}
+  _bossEnemyMove: []
+  _appPos: 0
 --- !u!61 &1150983090
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1019,7 +1019,7 @@ PrefabInstance:
     - target: {fileID: 8222391408309725660, guid: 4753945a58d9ed94dbb8109d879bb8bf,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4753945a58d9ed94dbb8109d879bb8bf, type: 3}
