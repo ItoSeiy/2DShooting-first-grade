@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
+using System.Linq;
 
 public class Player01Bomb : BulletBese
 {
@@ -14,22 +15,22 @@ public class Player01Bomb : BulletBese
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        base.OnTriggerEnter2D(collision);
         if (collision.tag == EnemyTag)
         {
             var explosionPrefab = Instantiate(_explosionPrefab);
             explosionPrefab.transform.position = collision.transform.position;
+            UseBombChildBullet();
         }
+        base.OnTriggerEnter2D(collision);
     }
 
     async void UseBombChildBullet()
     {
-
-        await Task.Delay();
         for (int i = 0; i < _muzzle.Length; i++)
         {
             var bombChild = PlayerBulletPool.Instance.UseBullet(_muzzle[i].position, PlayerBulletType.BombChild);
             bombChild.transform.rotation = _muzzle[i].rotation;
+
         }
     }
 
