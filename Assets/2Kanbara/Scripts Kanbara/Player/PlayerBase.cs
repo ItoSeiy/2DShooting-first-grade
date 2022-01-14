@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
+using UnityEngine.InputSystem;
 
 /// <summary>
 /// Playerの基底クラス
@@ -14,6 +15,7 @@ public class PlayerBase : MonoBehaviour
     Rigidbody2D _rb;
     AudioSource _audioSource;
     Animation _anim;
+    PlayerBulletType _pbt;
 
     [SerializeField, Header("リスポーンするポジション")] public Transform _playerRespawn = default;
     [SerializeField, Header("弾を発射するポジション")] public Transform _muzzle = default;
@@ -38,6 +40,7 @@ public class PlayerBase : MonoBehaviour
 
     [SerializeField, Header("動くスピード")] float _moveSpeed = default;
     [SerializeField, Header("精密操作のスピード")] float _lateMove = default;
+    [SerializeField, Header("速度抑制装置")] float _delayMoveSpeed = default;
 
     [SerializeField, Header("チャージショット時のチャージ時間")] float _chargeTime = default;
 
@@ -91,59 +94,24 @@ public class PlayerBase : MonoBehaviour
         _playerPower = GameManager.Instance.PlayerPower;
         _invincibleObjectCount = GameManager.Instance.PlayerInvincibleObjectCount;
     }
-
-    void Update()
+    Vector2 move;
+    public void OnMove(InputAction.CallbackContext context)
     {
-        _time += Time.deltaTime;
-
         if (_isNotControll) return;
-        float h = Input.GetAxisRaw("Horizontal");
-        float v = Input.GetAxisRaw("Vertical");
+        if (_isLateMode && context.performed)
+        {
+            move = context.ReadValue<Vector2>() * _lateMove / _delayMoveSpeed;
+        }
+        else if(!_isLateMode)
+        {
+            move = context.ReadValue<Vector2>() * _moveSpeed / _delayMoveSpeed;
+        }
+    }
 
-        if (Input.GetButton("Fire3") && !_isNotControll)//精密操作
-        {
-            Vector2 dir = new Vector2(h, v).normalized;
-            _rb.velocity = dir * _lateMove;
-            _isLateMode = true;
-        }
-        else//通常操作
-        {
-            Vector2 dir = new Vector2(h, v).normalized;
-            _rb.velocity = dir * _moveSpeed;
-            _isLateMode = false;
-        }
-
-        if (Input.GetButton("Fire1") && _isLateMode && !_isBulletStop && !_isNotControll && !_isChargeNow)//精密操作時の攻撃
-        {
-            PlayerSuperAttack();
-            _isChargeNow = true;
-            _isBulletStop = true;
-        }
-        else if (Input.GetButton("Fire1") && !_isBulletStop && !_isNotControll && !_isChargeNow)//通常攻撃
-        {
-            PlayerAttack();
-            _isChargeNow = true;
-            _isBulletStop = true;
-        }
-
-        if (Input.GetButtonDown("Cancel") && !_isNotControll && !_isChargeNow)//チャージショット（溜める）
-        {
-            Debug.Log(_time);
-            _time = 0;
-            _isChargeNow = true;
-        }
-            if (Input.GetButtonUp("Cancel") && _time > _chargeTime && _isChargeNow)//チャージショット（放つ）
-            {
-                Debug.Log(_time + "s");
-                PlayerChargeAttack();
-                _isBulletStop = true;
-            }
-            if (Input.GetButtonUp("Cancel") && _time < _chargeTime && _isChargeNow)//チャージショット（チャージ不足）
-            {
-                Debug.Log(_time + "a");
-            }
-
-        if (Input.GetButtonDown("Jump") && _bomCount != 0 && !_isBom && !_isNotControll)//ボム使用
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        if (_isNotControll) return;
+        if (context.performed)
         {
             Bom();
             _isBom = true;
@@ -151,48 +119,137 @@ public class PlayerBase : MonoBehaviour
         }
     }
 
+    public void OnFire(InputAction.CallbackContext context)
+    {
+        if(_isLateMode)
+        {
+            PlayerSuperAttack();
+            _isChargeNow = true;
+            _isBulletStop = true;
+        }
+        else
+        {
+            PlayerAttack();
+            _isChargeNow = true;
+            _isBulletStop = true;
+        }
+    }
+
+    public void OnFire1(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            _isLateMode = true;
+        }
+        else if(context.canceled)
+        {
+            _isLateMode = false;
+        }
+    }
+
+    void Update()
+    {
+        _time += Time.deltaTime;
+
+        transform.Translate(move);
+
+      //if (_isNotControll) return;
+      //  float h = Input.GetAxisRaw("Horizontal");
+      //  float v = Input.GetAxisRaw("Vertical");
+            
+      //  if (Input.GetButton("Fire3") && !_isNotControll)//精密操作
+      //  {
+      //      Vector2 dir = new Vector2(h, v).normalized;
+      //      _rb.velocity = dir * _lateMove;
+      //      _isLateMode = true;
+      //  }
+      //  else//通常操作
+      //  {
+      //      Vector2 dir = new Vector2(h, v).normalized;
+      //      _rb.velocity = dir * _moveSpeed;
+      //      _isLateMode = false;
+      //  }
+            
+      //  if (Input.GetButton("Fire1") && _isLateMode && !_isBulletStop && !_isNotControll && !_isChargeNow)//精密操作時の攻撃
+      //  {
+      //      PlayerSuperAttack();
+      //      _isChargeNow = true;
+      //      _isBulletStop = true;
+      //  }
+      //  else if (Input.GetButton("Fire1") && !_isBulletStop && !_isNotControll && !_isChargeNow)//通常攻撃
+      //  {
+      //      PlayerAttack();
+      //      _isChargeNow = true;
+      //      _isBulletStop = true;
+      //  }
+            
+      //  if (Input.GetButtonDown("Cancel") && !_isNotControll && !_isChargeNow)//チャージショット（溜める）
+      //  {
+      //      Debug.Log(_time);
+      //      _time = 0;
+      //      _isChargeNow = true;
+      //  }
+      //  if (Input.GetButtonUp("Cancel") && _time > _chargeTime && _isChargeNow)//チャージショット（放つ）
+      //  {
+      //      Debug.Log(_time + "s");
+      //      PlayerChargeAttack();
+      //      _isBulletStop = true;
+      //  }
+      //  if (Input.GetButtonUp("Cancel") && _time < _chargeTime && _isChargeNow)//チャージショット（チャージ不足）
+      //  {
+      //      Debug.Log(_time + "a");
+      //  }
+        
+      //  if (Input.GetButtonDown("Jump") && _bomCount != 0 && !_isBom && !_isNotControll)//ボム使用
+      //  {
+      //      Bom();
+      //      _isBom = true;
+      //      _bomCount -= 1;
+      //  }
+    }
+
     /// <summary>通常の攻撃処理</summary>
     public virtual async void PlayerAttack()
     {
         int levelIndex = default;
-
+            
         if (_playerPower < _level1)//レベル1のとき
         {
-            levelIndex = 0;
+            levelIndex = (int)PlayerBulletType.Player01Power1;
         }
         else if (_level1 <= _playerPower && _playerPower < _level3)//レベル2のとき
         {
-            levelIndex = 1;
+            levelIndex = (int)PlayerBulletType.Player01Power2;
         }
         else if (_level3 <= _playerPower)//レベル3のとき
         {
-            levelIndex = 2;
+            levelIndex = (int)PlayerBulletType.Player01Power3;
         }
-        GameObject go = Instantiate(_bullet[levelIndex], _muzzle);
+        //PlayerBulletPool.Instance.UseBullet(_muzzle.position, PlayerBulletType._superBullet[levelIndex]);
         _audioSource.PlayOneShot(_bulletShootingAudio, 1.0f);
         await Task.Delay(_attackDelay);
         _isChargeNow = false;
         _isBulletStop = false;
     }
-
+        
     /// <summary>精密操作時の攻撃処理</summary>
     public virtual async void PlayerSuperAttack()
     {
         int levelIndex = default;
         if (_playerPower < _level1)//レベル1のとき
         {
-            levelIndex = 0;
+            levelIndex = (int)PlayerLevel.Level1;
         }
         else if (_level1 <= _playerPower && _playerPower < _level3)//レベル2のとき
         {
-            levelIndex = 1;
+            levelIndex = (int)PlayerLevel.Level2;
         }
         else if (_level3 <= _playerPower)//レベル3のとき
         {
-            levelIndex = 2;
+            levelIndex = (int)PlayerLevel.Level3;
         }
         GameObject go = Instantiate(_superBullet[levelIndex], _muzzle);
-        _audioSource.PlayOneShot(_superBulletShootingAudio,1.0f);
+        _audioSource.PlayOneShot(_superBulletShootingAudio, 1.0f);
         await Task.Delay(_superAttackDelay);
         _isChargeNow = false;
         _isBulletStop = false;
@@ -204,15 +261,15 @@ public class PlayerBase : MonoBehaviour
         int levelIndex = default;
         if (_playerPower < _level1)//レベル1のとき
         {
-            levelIndex = 0;
+            levelIndex = (int)PlayerLevel.Level1;
         }
         else if (_level1 <= _playerPower && _playerPower < _level3)//レベル2のとき
         {
-            levelIndex = 1;
+            levelIndex = (int)PlayerLevel.Level2;
         }
         else if (_level3 <= _playerPower)//レベル3のとき
         {
-            levelIndex = 2;
+            levelIndex = (int)PlayerLevel.Level3;
         }
         GameObject go = Instantiate(_chargeBullet[levelIndex], _muzzle);
         _audioSource.PlayOneShot(_chargeBulletShootingAudio, 1.0f);
@@ -297,3 +354,11 @@ public class PlayerBase : MonoBehaviour
         _godMode = false;
     }
 }
+
+public enum PlayerLevel
+{
+    Level1 = 0,
+    Level2,
+    Level3
+}
+
