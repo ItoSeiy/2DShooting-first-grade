@@ -69,7 +69,7 @@ public abstract class EnemyBese : MonoBehaviour, IDamage
     /// 受けるダメージ量はBulletが指定する
     /// </summary>
     /// <param name="damage">受けるダメージ量</param>
-    void IDamage.AddDamage(float damage)
+    public void AddDamage(float damage)
     {
         //攻撃力を設定した分減らす処理
         damage *= _damageRatio;

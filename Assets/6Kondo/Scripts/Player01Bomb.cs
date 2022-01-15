@@ -1,37 +1,52 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading.Tasks;
+using System.Linq;
 
 public class Player01Bomb : BulletBese
 {
-    [SerializeField] string _enemyTag;
     [SerializeField] string _enemyBulletTag;
-    [SerializeField] Vector2 _direction = Vector2.up;
-    [SerializeField] float _speed = 10f;
-    [SerializeField] GameObject _bombChildBullet = null;
+    [SerializeField] Explosion _explosionPrefab　= null;
+    [SerializeField] float _childBulletDelay = 1f;
     [SerializeField] Transform[] _muzzle = null;
-    Rigidbody2D _rb;
-    public Explosion m_explosionPrefab;
+    public GameObject gameObject;
+    float _timer;
+    bool _isStop = false;
+    SpriteRenderer _sprite = null;
 
-    void OnBecameInvisible()
+    protected override void Awake()
     {
-        Destroy(this.gameObject);
+        base.Awake();
+        _sprite = GetComponent<SpriteRenderer>();
     }
-    private void Start()
+
+    protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        _rb = GetComponent<Rigidbody2D>();
-        _rb.velocity = _direction.normalized * _speed;
+        base.BulletAttack(collision);
+        StartCoroutine(UseBombChildBullet(collision));
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+
+    IEnumerator UseBombChildBullet(Collider2D collision)
     {
-        if (collision.tag == _enemyTag)
+        if (collision.tag == EnemyTag)
         {
-            Instantiate(m_explosionPrefab, collision.transform);
+            var explosionPrefab = Instantiate(_explosionPrefab);
+            explosionPrefab.transform.position = collision.transform.position;
+
+            _sprite.enabled = false;
+            _isStop = true;
+            Rb.velocity = Vector2.zero;
             for (int i = 0; i < _muzzle.Length; i++)
             {
-                Instantiate(_bombChildBullet, _muzzle[i].position,_muzzle[i].rotation);
+                var bombChild = PlayerBulletPool.Instance.UseBullet(_muzzle[i].position, PlayerBulletType.BombChild);
+                bombChild.transform.rotation = _muzzle[i].rotation;
+                yield return new WaitForSeconds(_childBulletDelay);
             }
-            Destroy(this.gameObject);
+
+            _sprite.enabled = true;
+            _isStop = false;
+            base.OnTriggerEnter2D(collision);
         }
     }
 }
