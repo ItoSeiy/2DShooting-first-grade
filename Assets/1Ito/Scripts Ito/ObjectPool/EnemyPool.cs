@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Enemyのプールを管理するスクリプト
+/// </summary>
 public class EnemyPool : MonoBehaviour
 {
     public static EnemyPool Instance => _instance;
@@ -24,7 +27,7 @@ public class EnemyPool : MonoBehaviour
         }
     }
 
-    public void CreatePool()
+    private void CreatePool()
     {
         if (_poolObjCountIndex >= _poolObjectMaxCount.Length)
         {
@@ -77,6 +80,6 @@ public class EnemyPool : MonoBehaviour
 
 public enum EnemyType
 {
-    Straight,
+    Example = 0,
 }
 
