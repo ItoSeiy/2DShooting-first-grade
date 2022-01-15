@@ -97,15 +97,15 @@ public class PlayerBase : MonoBehaviour
     Vector2 move;
     public void OnMove(InputAction.CallbackContext context)
     {
-        if (_isNotControll) return;
-        if(_isLateMode)
-        {
-            move = context.ReadValue<Vector2>() * _lateMove / _delayMoveSpeed;
-        }
-        else if(!_isLateMode)
-        {
+        //if (_isNotControll) return;
+        //if(_isLateMode)
+        //{
+        //    move = context.ReadValue<Vector2>() * _lateMove / _delayMoveSpeed;
+        //}
+        //else if(!_isLateMode)
+        //{
             move = context.ReadValue<Vector2>() * _moveSpeed / _delayMoveSpeed;
-        }
+        //}
     }
 
     public void OnJump(InputAction.CallbackContext context)
@@ -150,7 +150,7 @@ public class PlayerBase : MonoBehaviour
     public void OnDelayMove(InputAction.CallbackContext context)
     {
         move = context.ReadValue<Vector2>() * _lateMove / _delayMoveSpeed;
-        
+        Debug.Log("a");
     }
 
     void Update()
