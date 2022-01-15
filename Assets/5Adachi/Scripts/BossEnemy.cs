@@ -9,7 +9,6 @@ public class BossEnemy : EnemyBese
     private int _random = default;
     float _totalTime;
     bool _isMove;
-    Rigidbody2D _rb;
     public int _appPos;// Random.Range(-1, 3);
 
     /*private void Start()
@@ -63,8 +62,8 @@ public class BossEnemy : EnemyBese
 
     private void Start()
     {
-        _appPos = -1;// Random.Range(0, 2);
-        _rb = GetComponent<Rigidbody2D>();
+        _appPos = 11;// Random.Range(0, 2);
+        Rb = GetComponent<Rigidbody2D>();
         StartCoroutine(Move0(_appPos));
     }
 
@@ -75,10 +74,10 @@ public class BossEnemy : EnemyBese
     }
     IEnumerator Move0(int n)
     {
-        transform.position = new Vector2(18f * n,10f); 
-        _rb.velocity = new Vector2(-3f * n, -1f);   
+        transform.position = new Vector2(0f * n,7f); 
+        Rb.velocity = new Vector2(0f * n, -1f);   
         yield return new WaitForSeconds(5);                
-        _rb.velocity = transform.up * 0;             
+        Rb.velocity = transform.up * 0;             
         yield return new WaitForSeconds(0.5f);             
         _isMove = true;
     }
@@ -87,9 +86,9 @@ public class BossEnemy : EnemyBese
         if (_isMove)
         {
             _totalTime += Time.deltaTime;
-            float x = Mathf.Sin(_totalTime) * 7 * n;
-            float y = Mathf.Cos(_totalTime * 2) * 10;
-            _rb.velocity = new Vector2(x, y);
+            float x = Mathf.Sin(_totalTime) * 0 * n;
+            float y = Mathf.Cos(_totalTime * 2) * 8;
+            Rb.velocity = new Vector2(x, y);
         }
     }
 }
