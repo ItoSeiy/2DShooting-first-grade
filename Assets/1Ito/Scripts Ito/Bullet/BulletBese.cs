@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Collider2D))]
-public abstract class BulletBese : MonoBehaviour
+public abstract class BulletBese : MonoBehaviour, IDamage
 {
     public float Damage { get => _damage;}
     public float Speed { get => _speed;}
@@ -52,7 +52,6 @@ public abstract class BulletBese : MonoBehaviour
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         BulletAttack(collision);
-
         //敵または壁に当たったら子オブジェクトを非アクティブにする
         if(collision.tag == _enemyTag || collision.tag == _gameZoneTag)
         {
@@ -86,8 +85,12 @@ public abstract class BulletBese : MonoBehaviour
     /// <param name="col">当たった相手のコライダー</param>
     protected virtual void BulletAttack(Collider2D col)
     {
-        var target = col.gameObject?.GetComponent<IDamage>();
+        var target = col.gameObject.GetComponent<IDamage>();
         target?.AddDamage(_damage);
+    }
+
+    public virtual void AddDamage(float damage)
+    {
     }
 
     enum BulletMoveMethod

@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class BombChildBullet : BulletBese
 {
+    [SerializeField] string _bulletTag = "Bullet";
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == GameZoneTag)
-        {
-            return;
-        }
-        if (collision.tag == EnemyTag)
+        if (collision.tag == _bulletTag)
         {
             base.BulletAttack(collision);
+        }
+        else if (collision.tag == EnemyTag)
+        {
+            base.BulletAttack(collision);
+            gameObject.SetActive(false);
+        }
+        else if(collision.tag == GameZoneTag)
+        {
             gameObject.SetActive(false);
         }
     }
