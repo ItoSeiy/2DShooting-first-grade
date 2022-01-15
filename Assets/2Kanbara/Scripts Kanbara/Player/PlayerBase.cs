@@ -98,7 +98,7 @@ public class PlayerBase : MonoBehaviour
     public void OnMove(InputAction.CallbackContext context)
     {
         if (_isNotControll) return;
-        if (_isLateMode && context.performed)
+        if(_isLateMode)
         {
             move = context.ReadValue<Vector2>() * _lateMove / _delayMoveSpeed;
         }
@@ -141,10 +141,16 @@ public class PlayerBase : MonoBehaviour
         {
             _isLateMode = true;
         }
-        else if(context.canceled)
+        else if (context.canceled)
         {
             _isLateMode = false;
         }
+    }
+
+    public void OnDelayMove(InputAction.CallbackContext context)
+    {
+        move = context.ReadValue<Vector2>() * _lateMove / _delayMoveSpeed;
+        
     }
 
     void Update()
@@ -210,22 +216,19 @@ public class PlayerBase : MonoBehaviour
 
     /// <summary>通常の攻撃処理</summary>
     public virtual async void PlayerAttack()
-    {
-        int levelIndex = default;
-            
+    {       
         if (_playerPower < _level1)//レベル1のとき
         {
-            levelIndex = (int)PlayerBulletType.Player01Power1;
+            PlayerBulletPool.Instance.UseBullet(_muzzle.position, PlayerBulletType.Player01Power1);
         }
         else if (_level1 <= _playerPower && _playerPower < _level3)//レベル2のとき
         {
-            levelIndex = (int)PlayerBulletType.Player01Power2;
+            PlayerBulletPool.Instance.UseBullet(_muzzle.position, PlayerBulletType.Player01Power2);
         }
         else if (_level3 <= _playerPower)//レベル3のとき
         {
-            levelIndex = (int)PlayerBulletType.Player01Power3;
+            PlayerBulletPool.Instance.UseBullet(_muzzle.position, PlayerBulletType.Player01Power3);
         }
-        //PlayerBulletPool.Instance.UseBullet(_muzzle.position, PlayerBulletType._superBullet[levelIndex]);
         _audioSource.PlayOneShot(_bulletShootingAudio, 1.0f);
         await Task.Delay(_attackDelay);
         _isChargeNow = false;
@@ -282,7 +285,6 @@ public class PlayerBase : MonoBehaviour
     public virtual async void Bom()
     {
         Debug.Log("Bom");
-        GameObject go = Instantiate(_bomBullet, _muzzle);
         _audioSource.PlayOneShot(_shootingBomAudio, 1.0f);
         await Task.Delay(_bomCoolTime);
         _isBom = false;
