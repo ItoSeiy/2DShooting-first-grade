@@ -25,7 +25,7 @@ public class Player01Bomb : BulletBese
 
     IEnumerator UseBombChildBullet(Collider2D collision)
     {
-        if (collision.tag == EnemyTag || collision.tag == EnemyBulletTag)
+        if (collision.tag == EnemyTag)
         {
             var explosionPrefab = Instantiate(_explosionPrefab);
             explosionPrefab.transform.position = collision.transform.position;
