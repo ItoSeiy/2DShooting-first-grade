@@ -1,4 +1,5 @@
-﻿public interface IDamage
+﻿using UnityEngine;
+public interface IDamage
 {
-    void AddDamage(float damage);
+    void GetDamage(float damage, Collider2D col);
 }

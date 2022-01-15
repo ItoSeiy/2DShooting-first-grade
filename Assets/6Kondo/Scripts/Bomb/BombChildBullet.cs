@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class BombChildBullet : BulletBese
 {
-    [SerializeField] string _bulletTag = "Bullet";
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == _bulletTag)
+        if (collision.tag == EnemyBulletTag)
         {
             base.BulletAttack(collision);
         }

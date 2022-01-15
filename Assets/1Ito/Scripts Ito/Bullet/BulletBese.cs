@@ -15,6 +15,9 @@ public abstract class BulletBese : MonoBehaviour, IDamage
     public Rigidbody2D Rb { get => _rb; set => _rb = value; }
     private BulletMoveMethod MoveMethod { get => _bulletMoveMethod; set => _bulletMoveMethod = value; }
     public string GameZoneTag { get => _gameZoneTag;}
+    public string EnemyBulletTag { get => _enemyBulletTag; }
+    public string AttackAbleBulletTag { get => _attackAbleBulletTag;}
+    public string PlayerTag { get => _parentTag; }
 
     [SerializeField, Header("Bulletが与えるダメージ")] private float _damage = 10f;
     [SerializeField, Header("Bulletの動く向き")] Vector2 _direction = Vector2.up;
@@ -23,6 +26,9 @@ public abstract class BulletBese : MonoBehaviour, IDamage
     [SerializeField, Header("Enemyのタグ")] string _enemyTag = "Enemy";
     [SerializeField, Header("壁のタグ")] string _gameZoneTag = "Finish";
     [SerializeField, Header("Bulletの親オブジェクトのタグ")] string _parentTag = "Parent";
+    [SerializeField, Header("EnemyのBulletのタグ")] string _enemyBulletTag = "Bullet";
+    [SerializeField, Header("Bulletに対して攻撃できるBulletのタグ")] string _attackAbleBulletTag = "Bomb";
+    [SerializeField, Header("Plyaerのタグ")] string _playerTag = "Player";
     Rigidbody2D _rb = null;
     BulletParent _bulletParent = null;
 
@@ -51,10 +57,10 @@ public abstract class BulletBese : MonoBehaviour, IDamage
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        BulletAttack(collision);
         //敵または壁に当たったら子オブジェクトを非アクティブにする
-        if(collision.tag == _enemyTag || collision.tag == _gameZoneTag)
+        if(collision.tag == _enemyTag || collision.tag == _gameZoneTag || collision.tag == _playerTag)
         {
+            BulletAttack(collision);
             //子オブジェクトがまだ残っていたら子オブジェクトを非アクティブにする
             this.gameObject.SetActive(false);
 
@@ -86,11 +92,16 @@ public abstract class BulletBese : MonoBehaviour, IDamage
     protected virtual void BulletAttack(Collider2D col)
     {
         var target = col.gameObject.GetComponent<IDamage>();
-        target?.AddDamage(_damage);
+        target?.GetDamage(_damage, col);
     }
 
-    public virtual void AddDamage(float damage)
+    public virtual void GetDamage(float damage, Collider2D col)
     {
+        if (col.tag == AttackAbleBulletTag)
+        {
+            Debug.Log(gameObject.name + "攻撃された");
+            gameObject.SetActive(false);
+        }
     }
 
     enum BulletMoveMethod

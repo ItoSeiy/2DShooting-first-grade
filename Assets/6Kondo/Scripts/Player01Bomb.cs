@@ -6,13 +6,9 @@ using System.Linq;
 
 public class Player01Bomb : BulletBese
 {
-    [SerializeField] string _enemyBulletTag;
     [SerializeField] Explosion _explosionPrefab　= null;
     [SerializeField] float _childBulletDelay = 1f;
     [SerializeField] Transform[] _muzzle = null;
-    public GameObject gameObject;
-    float _timer;
-    bool _isStop = false;
     SpriteRenderer _sprite = null;
 
     protected override void Awake()
@@ -29,13 +25,12 @@ public class Player01Bomb : BulletBese
 
     IEnumerator UseBombChildBullet(Collider2D collision)
     {
-        if (collision.tag == EnemyTag)
+        if (collision.tag == EnemyTag || collision.tag == EnemyBulletTag)
         {
             var explosionPrefab = Instantiate(_explosionPrefab);
             explosionPrefab.transform.position = collision.transform.position;
 
             _sprite.enabled = false;
-            _isStop = true;
             Rb.velocity = Vector2.zero;
             for (int i = 0; i < _muzzle.Length; i++)
             {
@@ -45,8 +40,13 @@ public class Player01Bomb : BulletBese
             }
 
             _sprite.enabled = true;
-            _isStop = false;
-            base.OnTriggerEnter2D(collision);
+            gameObject.SetActive(false);
+        }
+        else if(collision.tag == GameZoneTag)
+        {
+            gameObject.SetActive(false);
         }
     }
+
+
 }
