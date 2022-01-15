@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class BombChildBullet : BulletBese
 {
-    [SerializeField] string _bulletTag = "Bullet";
+    [SerializeField, Header("EnemyのBulletのタグ")] string _enemyBulletTag = "Bullet";
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == _bulletTag)
+        if (collision.tag == _enemyBulletTag)
         {
-            base.BulletAttack(collision);
+            collision.gameObject.SetActive(false);
         }
         else if (collision.tag == EnemyTag)
         {

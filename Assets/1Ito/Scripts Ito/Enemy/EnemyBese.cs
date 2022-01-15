@@ -14,6 +14,7 @@ public abstract class EnemyBese : MonoBehaviour, IDamage
     public Rigidbody2D Rb { get => _rb; set => _rb = value; }
     public float Timer { get => _timer; }
     public float AttackInterval { get => _attackInterval; }
+    public string PlayerBulletTag { get => _playerBulletTag; }
 
     [SerializeField, Header("体力")] private float _enemyHp = 10f;
     [SerializeField, Header("攻撃頻度(秒)")] private float _attackInterval = 1f;
@@ -21,6 +22,7 @@ public abstract class EnemyBese : MonoBehaviour, IDamage
     /// 攻撃力の割合
     /// </summary>
     [SerializeField, Header("攻撃力を何割にするか"), Range(0f, 1f)] float _damageRatio = 1f;
+    [SerializeField, Header("プレイヤーのBulletのタグ")] string _playerBulletTag = "PlayerBullet";
     private float _timer = default;
     Rigidbody2D _rb = null;
 
@@ -69,7 +71,7 @@ public abstract class EnemyBese : MonoBehaviour, IDamage
     /// 受けるダメージ量はBulletが指定する
     /// </summary>
     /// <param name="damage">受けるダメージ量</param>
-    public void AddDamage(float damage)
+    public void AddDamage(float damage, Collider2D col)
     {
         //攻撃力を設定した分減らす処理
         damage *= _damageRatio;

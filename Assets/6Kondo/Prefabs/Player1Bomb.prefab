@@ -610,12 +610,12 @@ GameObject:
   m_Component:
   - component: {fileID: 5938347649577677374}
   - component: {fileID: 5938347649577677375}
-  - component: {fileID: 5938347649577677377}
+  - component: {fileID: 1122303351358872856}
   - component: {fileID: 5938347649577677376}
   - component: {fileID: 5938347649577677379}
   m_Layer: 0
   m_Name: Player1Bomb
-  m_TagString: Untagged
+  m_TagString: Bomb
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -674,8 +674,8 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!212 &5938347649577677377
+  m_Constraints: 4
+--- !u!212 &1122303351358872856
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -694,7 +694,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -720,7 +720,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2.36, y: 2.36}
+  m_Size: {x: 2.95, y: 2.95}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -736,7 +736,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -761,7 +761,9 @@ MonoBehaviour:
   _enemyTag: Enemy
   _gameZoneTag: Finish
   _parentTag: Parent
-  _enemyBulletTag: Enemy
+  _enemyBulletTag: EnemyBullet
+  _attackAbleBulletTag: 
+  _playerTag: Player
   _explosionPrefab: {fileID: 8634964597311154803, guid: c3e69dce7169a0d4bbe33064dfac4276,
     type: 3}
   _childBulletDelay: 0.05
@@ -786,5 +788,3 @@ MonoBehaviour:
   - {fileID: 5938347648158040904}
   - {fileID: 5938347649493564160}
   - {fileID: 5938347649109054116}
-  gameObject: {fileID: 1080062419905580683, guid: c5a33b68c3a9f2b4db3183602732cd5c,
-    type: 3}
