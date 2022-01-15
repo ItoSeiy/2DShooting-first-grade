@@ -1,11 +1,11 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BossEnemyMoveStraight : MonoBehaviour
 {
     Rigidbody2D _rb;
-    [SerializeField, Header("ˆÚ“®‘¬“x")] public float _moveSpeed = default;
+    [SerializeField, Header("ç§»å‹•é€Ÿåº¦")] public float _moveSpeed = default;
     float v = 0f;
     private void Update()
     {
