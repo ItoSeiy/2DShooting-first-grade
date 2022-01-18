@@ -12,18 +12,26 @@ public class BossEnemyMoveCircle : MonoBehaviour
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
+        
     }
 
     private void Update()
     {
-        Move();
+        //Move();
+        StartCoroutine("Circle");
     }
 
-    private void Move()
+    //private void Move()
+    IEnumerator Circle()
     {
+        if(transform.position.y > 0)
+        {
+            yield break; 
+        }
             _totalTime += Time.deltaTime;
             float _x = _radius * Mathf.Sin(_totalTime * _speed);
-            float _y = _radius * Mathf.Cos(_totalTime * _speed);
+            float _y = -_radius * Mathf.Cos(_totalTime * _speed);
             _rb.velocity = new Vector2(_x, _y);
+            yield return new WaitForSeconds(5);
     }
 }
