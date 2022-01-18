@@ -2,12 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BombChildBullet : MonoBehaviour
+public class BombChildBullet : BulletBese
 {
-    [SerializeField] Vector2 _direction = Vector2.up;
-    void Start()
+    [SerializeField, Header("EnemyのBulletのタグ")] string _enemyBulletTag = "Bullet";
+    protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        //rb.velocity = transform.localPosition.normalized * 2f;
+        if (collision.tag == _enemyBulletTag)
+        {
+            collision.gameObject.SetActive(false);
+        }
+        else if (collision.tag == EnemyTag)
+        {
+            base.BulletAttack(collision);
+            gameObject.SetActive(false);
+        }
+        else if(collision.tag == GameZoneTag)
+        {
+            gameObject.SetActive(false);
+        }
+    }
+
+    protected override void BulletMove()
+    {
+        Vector3 velocity = gameObject.transform.rotation * new Vector3(0, Speed, 0);
+        Rb.velocity = velocity;
     }
 }

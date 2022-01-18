@@ -11,12 +11,30 @@ public abstract class BulletBese : MonoBehaviour
 {
     public float Damage { get => _damage;}
     public float Speed { get => _speed;}
-    
+    public string EnemyTag { get => _enemyTag; }
+    public Rigidbody2D Rb { get => _rb; set => _rb = value; }
+    private BulletMoveMethod MoveMethod { get => _bulletMoveMethod; set => _bulletMoveMethod = value; }
+    public string GameZoneTag { get => _gameZoneTag;}
+    public string PlayerTag { get => _playerTag; }
+
     [SerializeField, Header("Bulletが与えるダメージ")] private float _damage = 10f;
     [SerializeField, Header("Bulletの動く向き")] Vector2 _direction = Vector2.up;
     [SerializeField, Header("Bulletのスピード")] float _speed = default;
     [SerializeField, Header("Bulletの動きをどの関数で呼び出すか")] BulletMoveMethod _bulletMoveMethod = BulletMoveMethod.Start;
-    private void Start()
+    [SerializeField, Header("Enemyのタグ")] string _enemyTag = "Enemy";
+    [SerializeField, Header("壁のタグ")] string _gameZoneTag = "Finish";
+    [SerializeField, Header("Bulletの親オブジェクトのタグ")] string _parentTag = "Parent";
+    [SerializeField, Header("Plyaerのタグ")] string _playerTag = "Player";
+    Rigidbody2D _rb = null;
+    BulletParent _bulletParent = null;
+
+    protected virtual void Awake()
+    {
+        _rb = GetComponent<Rigidbody2D>();
+        _bulletParent = transform.parent?.GetComponent<BulletParent>();
+    }
+
+    protected virtual void OnEnable()
     {
         if(_bulletMoveMethod == BulletMoveMethod.Start)
         {
@@ -24,7 +42,7 @@ public abstract class BulletBese : MonoBehaviour
         }
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if (_bulletMoveMethod == BulletMoveMethod.Update)
         {
@@ -32,9 +50,22 @@ public abstract class BulletBese : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        BulletAttack(collision);
+        //敵または壁に当たったら子オブジェクトを非アクティブにする
+        if(collision.tag == _enemyTag || collision.tag == _gameZoneTag || collision.tag == _playerTag)
+        {
+            BulletAttack(collision);
+            //子オブジェクトがまだ残っていたら子オブジェクトを非アクティブにする
+            this.gameObject.SetActive(false);
+
+            //子オブジェクトが残っていなかったら子オブジェクトをアクティブにし、親を非アクティブにする
+            if (_bulletParent && _bulletParent.AllBulletChildrenDisable() && _bulletParent.tag == _parentTag)
+            {
+                _bulletParent?.ChildrenBulletEnable();
+                _bulletParent?.gameObject.SetActive(false);
+            }
+        }
     }
 
     /// <summary>
@@ -44,7 +75,6 @@ public abstract class BulletBese : MonoBehaviour
     /// </summary>
     protected virtual void BulletMove()
     {
-        var _rb = GetComponent<Rigidbody2D>();
         _rb.velocity = _direction.normalized * _speed;
     }
 
@@ -56,8 +86,8 @@ public abstract class BulletBese : MonoBehaviour
     /// <param name="col">当たった相手のコライダー</param>
     protected virtual void BulletAttack(Collider2D col)
     {
-        var target = col.gameObject?.GetComponent<IDamage>();
-        target?.AddDamage(_damage);
+        var target = col.gameObject.GetComponent<IDamage>();
+        target?.AddDamage(_damage, col);
     }
 
     enum BulletMoveMethod
