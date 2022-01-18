@@ -20,11 +20,6 @@ public class PlayerBase : MonoBehaviour
     [SerializeField, Header("リスポーンするポジション")] public Transform _playerRespawn = default;
     [SerializeField, Header("弾を発射するポジション")] public Transform _muzzle = default;
 
-    [SerializeField, Header("弾")] public GameObject[] _bullet = default;
-    [SerializeField, Header("精密操作時の弾")] public GameObject[] _superBullet = default;
-    [SerializeField, Header("チャージショット時の弾")] GameObject[] _chargeBullet = default;
-    [SerializeField, Header("ボムのプレハブ")] GameObject _bomBullet = default;
-
     [SerializeField, Header("精密操作時の発射する間隔(ミリ秒)")] public int _superAttackDelay = default;
     [SerializeField, Header("発射する間隔(ミリ秒)")] public int _attackDelay = default;
     [SerializeField, Header("チャージショットの発射する間隔（ミリ秒）")] int _chargeAttackDelay = default;
@@ -180,20 +175,18 @@ public class PlayerBase : MonoBehaviour
     /// <summary>精密操作時の攻撃処理</summary>
     public virtual async void PlayerSuperAttack()
     {
-        int levelIndex = default;
         if (_playerPower < _level1)//レベル1のとき
         {
-         levelIndex = (int)PlayerLevel.Level1;
+            PlayerBulletPool.Instance.UseBullet(_muzzle.position, PlayerBulletType.Player01Power1);
         }
         else if (_level1 <= _playerPower && _playerPower < _level3)//レベル2のとき
         {
-            levelIndex = (int)PlayerLevel.Level2;
+            PlayerBulletPool.Instance.UseBullet(_muzzle.position, PlayerBulletType.Player01Power2);
         }
         else if (_level3 <= _playerPower)//レベル3のとき
         {
-         levelIndex = (int)PlayerLevel.Level3;
+            PlayerBulletPool.Instance.UseBullet(_muzzle.position, PlayerBulletType.Player01Power3);
         }
-        GameObject go = Instantiate(_superBullet[levelIndex], _muzzle);
         _audioSource.PlayOneShot(_superBulletShootingAudio, 1.0f);
         await Task.Delay(_superAttackDelay);
         _isChargeNow = false;
@@ -203,20 +196,18 @@ public class PlayerBase : MonoBehaviour
     /// <summary>チャージショット時の攻撃処理</summary>
     public virtual async void PlayerChargeAttack()
     {
-        int levelIndex = default;
         if (_playerPower < _level1)//レベル1のとき
         {
-         levelIndex = (int)PlayerLevel.Level1;
+            PlayerBulletPool.Instance.UseBullet(_muzzle.position, PlayerBulletType.Player01Power1);
         }
         else if (_level1 <= _playerPower && _playerPower < _level3)//レベル2のとき
         {
-         levelIndex = (int)PlayerLevel.Level2;
+            PlayerBulletPool.Instance.UseBullet(_muzzle.position, PlayerBulletType.Player01Power2);
         }
         else if (_level3 <= _playerPower)//レベル3のとき
         {
-         levelIndex = (int)PlayerLevel.Level3;
+            PlayerBulletPool.Instance.UseBullet(_muzzle.position, PlayerBulletType.Player01Power3);
         }
-        GameObject go = Instantiate(_chargeBullet[levelIndex], _muzzle);
         _audioSource.PlayOneShot(_chargeBulletShootingAudio, 1.0f);
         await Task.Delay(_chargeAttackDelay);
         _isChargeNow = false;
