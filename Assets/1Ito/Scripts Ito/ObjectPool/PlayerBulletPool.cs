@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Playerのオブジェクトプールを管理するスクリプト
+/// PlayerBulletのオブジェクトプールを管理するスクリプト
 /// </summary>
 public class PlayerBulletPool : MonoBehaviour
 {
@@ -27,7 +27,7 @@ public class PlayerBulletPool : MonoBehaviour
         }
     }
 
-    public void CreatePool()
+    private void CreatePool()
     {
         if(_poolObjCountIndex >= _poolObjectMaxCount.Length)
         {
@@ -39,7 +39,7 @@ public class PlayerBulletPool : MonoBehaviour
         {
             var bullet = Instantiate(_bullets[_poolObjCountIndex], this.transform);
             bullet.SetActive(false);
-            _pool.Add(new BulletParameter { Object = bullet, Type = (BulletType)_poolObjCountIndex});
+            _pool.Add(new BulletParameter { Object = bullet, Type = (PlayerBulletType)_poolObjCountIndex});
         }
 
         _poolObjCountIndex++;
@@ -52,7 +52,7 @@ public class PlayerBulletPool : MonoBehaviour
     /// <param name="position">Bulletの位置を指定する</param>
     /// <param name="bulletType">発射するBulletの種類</param>
     /// <returns></returns>
-    public GameObject UseBullet(Vector2 position, BulletType bulletType)
+    public GameObject UseBullet(Vector2 position, PlayerBulletType bulletType)
     {
         foreach(var pool in _pool)
         {
@@ -71,14 +71,14 @@ public class PlayerBulletPool : MonoBehaviour
         return newBullet;
     }
 
-    public class BulletParameter
+    private class BulletParameter
     {
         public GameObject Object { get; set; }
-        public BulletType Type { get; set; }
+        public PlayerBulletType Type { get; set; }
     }
 }
 
-public enum BulletType
+public enum PlayerBulletType
 {
     Player01Power1 = 0,
     Player01Power2,
@@ -87,5 +87,10 @@ public enum BulletType
     Player02Power1,
     Player02Power2,
     Player02Power3,
+
+    Player01Bomb01,
+    Player02Bomb01,
+
+    BombChild
 }
 
