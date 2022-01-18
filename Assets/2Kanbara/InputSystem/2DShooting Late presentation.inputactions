@@ -38,17 +38,9 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Fire1",
+                    "name": "IsLateMove",
                     "type": "Button",
-                    "id": "ac737cc2-b96e-40fa-9c51-cf2298f9e684",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "DelayMove",
-                    "type": "Button",
-                    "id": "a5fbb6a7-bd9e-4ce2-be38-f98cb233b53b",
+                    "id": "8b30f7f1-c825-403e-9bcc-9595d29a911d",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -288,124 +280,14 @@
                 },
                 {
                     "name": "",
-                    "id": "7f147866-2aa0-411d-b4ae-2d4d6f58d2a0",
+                    "id": "df14f11f-eaf1-4924-a0c1-550b5619a7a6",
                     "path": "<Keyboard>/leftShift",
-                    "interactions": "Press",
+                    "interactions": "Hold",
                     "processors": "",
                     "groups": "",
-                    "action": "Fire1",
+                    "action": "IsLateMove",
                     "isComposite": false,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "Button With One Modifier",
-                    "id": "90f7a1e3-537b-444c-99a4-06aca436e8e2",
-                    "path": "ButtonWithOneModifier",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "DelayMove",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "modifier",
-                    "id": "4b55c41a-fc41-476e-9b28-dc9d2e534154",
-                    "path": "<Keyboard>/leftShift",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "DelayMove",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "button",
-                    "id": "f4fb06da-f7c2-48de-a084-6520539f8219",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "DelayMove",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "button",
-                    "id": "e2550be1-d510-4a91-9c46-792124b46ac6",
-                    "path": "<Keyboard>/a",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "DelayMove",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "button",
-                    "id": "d3290c14-37d0-4823-83bf-f755a7c3ed48",
-                    "path": "<Keyboard>/s",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "DelayMove",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "button",
-                    "id": "66e9b458-6def-43a4-a822-2f2003315d10",
-                    "path": "<Keyboard>/d",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "DelayMove",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "button",
-                    "id": "03f0ecca-9abf-42b4-8d3e-af909c5684c7",
-                    "path": "<Keyboard>/upArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "DelayMove",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "button",
-                    "id": "fa1183d2-b6d1-49fb-bd06-bcd0a2c22e7e",
-                    "path": "<Keyboard>/leftArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "DelayMove",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "button",
-                    "id": "0829f9a4-ebc1-498f-b87f-d97f4d5c7b14",
-                    "path": "<Keyboard>/downArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "DelayMove",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "button",
-                    "id": "ed64db6a-c668-4574-9432-6c067f31dc20",
-                    "path": "<Keyboard>/rightArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "DelayMove",
-                    "isComposite": false,
-                    "isPartOfComposite": true
                 }
             ]
         },
