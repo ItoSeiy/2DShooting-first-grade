@@ -30,7 +30,6 @@ public class BossEnemy : EnemyBese
                 case 1:
                     Debug.Log("1");
                     _object = _bossEnemyMove[0];
-                    transform.position = new Vector3(18f, 10f, 0);
                     yield return new WaitForSeconds(5);
                     break;
                 default:
