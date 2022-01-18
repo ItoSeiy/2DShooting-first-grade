@@ -17,11 +17,9 @@ public class BossEnemyMoveCircle : MonoBehaviour
 
     private void Update()
     {
-        //Move();
         StartCoroutine("Circle");
     }
 
-    //private void Move()
     IEnumerator Circle()
     {
         if(transform.position.y > 0)
