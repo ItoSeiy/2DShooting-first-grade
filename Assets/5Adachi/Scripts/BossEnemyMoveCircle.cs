@@ -18,7 +18,7 @@ public class BossEnemyMoveCircle : MonoBehaviour
     private void Update()
     {
         _totalTime += Time.deltaTime;
-        StartCoroutine("Circle");
+        StartCoroutine(Circle());
     }
 
     IEnumerator Circle()
