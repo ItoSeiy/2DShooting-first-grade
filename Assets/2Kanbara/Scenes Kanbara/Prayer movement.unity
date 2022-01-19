@@ -319,6 +319,7 @@ MonoBehaviour:
   _powerTag: 
   _pointTag: 
   _1upTag: 
+  _bomItemTag: 
   _invincibleTag: 
   _moveSpeed: 10
   _lateMove: 5
@@ -337,6 +338,7 @@ MonoBehaviour:
   _dead: {fileID: 0}
   _level1: 0
   _level3: 0
+  _musicVolume: 0
   _isBulletStop: 0
   _godMode: 0
   _isBom: 0
@@ -1076,8 +1078,8 @@ MonoBehaviour:
   _playerRespawn: {fileID: 8494302934883400905, guid: ea9957449aa2ce04681b61bcb9045a17,
     type: 3}
   _muzzle: {fileID: 2018753175}
-  _superAttackDelay: 100
-  _attackDelay: 100
+  _superAttackDelay: 300
+  _attackDelay: 300
   _chargeAttackDelay: 2800
   _bomCoolTime: 2800
   _invincibleCoolTime: 2800
@@ -1086,6 +1088,7 @@ MonoBehaviour:
   _powerTag: 
   _pointTag: 
   _1upTag: 
+  _bomItemTag: 
   _invincibleTag: 
   _moveSpeed: 8
   _lateMove: 3
@@ -1102,8 +1105,9 @@ MonoBehaviour:
   _shootingBomAudio: {fileID: 0}
   _bgm: {fileID: 0}
   _dead: {fileID: 0}
-  _level1: 0
-  _level3: 150
+  _level1: 50
+  _level3: 100
+  _musicVolume: 1
   _isBulletStop: 0
   _godMode: 0
   _isBom: 0
