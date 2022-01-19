@@ -11,7 +11,7 @@ public class BombChildBullet : BulletBese
         {
             collision.gameObject.SetActive(false);
         }
-        else if (collision.tag == EnemyTag)
+        else if (collision.tag == OpponenTag)
         {
             base.BulletAttack(collision);
             gameObject.SetActive(false);
