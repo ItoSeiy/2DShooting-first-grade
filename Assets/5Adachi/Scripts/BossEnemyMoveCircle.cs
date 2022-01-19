@@ -17,6 +17,7 @@ public class BossEnemyMoveCircle : MonoBehaviour
 
     private void Update()
     {
+        _totalTime += Time.deltaTime;
         StartCoroutine("Circle");
     }
 
@@ -24,9 +25,9 @@ public class BossEnemyMoveCircle : MonoBehaviour
     {
         if(transform.position.y > 0)
         {
+            _rb.velocity = new Vector2(0, 0);
             yield break; 
-        }
-            _totalTime += Time.deltaTime;
+        }     
             float _x = _radius * Mathf.Sin(_totalTime * _speed);
             float _y = -_radius * Mathf.Cos(_totalTime * _speed);
             _rb.velocity = new Vector2(_x, _y);

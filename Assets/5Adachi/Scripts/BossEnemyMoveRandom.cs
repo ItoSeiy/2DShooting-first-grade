@@ -5,8 +5,8 @@ using UnityEngine;
 public class BossEnemyMoveRandom : MonoBehaviour
 {
     bool _isMove = false;
-    private float _x = 0;
-    private float _y = 0;
+    private float x = 0;
+    private float y = 0;
     float _speed = 4f;
     float _stopTime = 3;
     Rigidbody2D _rb;
@@ -18,13 +18,15 @@ public class BossEnemyMoveRandom : MonoBehaviour
         _isMove = true;
         while (true)
         {
-            Vector2 dir = new Vector2(Random.Range(-1.0f, 1.0f) - _x, Random.Range(-1.0f, 1.0f) - _y);
+            Vector2 dir = new Vector2(Random.Range(-3.0f, 3.0f) - x, Random.Range(-1.0f, 1.0f) - y);
             _rb.velocity = dir * _speed;
-            yield return new WaitForSeconds(Random.Range(1.0f, 2.0f));
+            yield return new WaitForSeconds(0.5f);
             _rb.velocity = transform.up * 0;
             yield return new WaitForSeconds(_stopTime);
-            _x = dir.x;
-            _y = dir.y;
+            x += dir.x;
+            y += dir.y;
+            Debug.Log(x);
+            Debug.Log(y);
         }
 
 
