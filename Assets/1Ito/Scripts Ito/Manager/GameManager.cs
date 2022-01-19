@@ -16,19 +16,18 @@ public class GameManager : MonoBehaviour
     public int PlayerScore => _playerScore;
     public int PlayerPower => _playerPower;
     public int PlayerBombCount => _playerBombCount;
-    /// <summary>
-    /// 一定数獲得すると無敵になるオブジェクトを獲得した数
-    /// </summary>
+    ///<summary>一定数獲得すると無敵になるオブジェクトを獲得した数</summary>
     public int PlayerInvincibleObjectCount => _playerInvicibleObjectCount;
-
+    ///<summary>プレイヤーの残基</summary>
+    public int Residue => _residue;
 
     private int _playerScore = default;
     private int _playerPower = default;
     private int _playerBombCount = default;
-    /// <summary>
-    /// 一定数獲得すると無敵になるオブジェクトを獲得した数
-    /// </summary>
+    ///<summary>一定数獲得すると無敵になるオブジェクトを獲得した数///</summary>
     private int _playerInvicibleObjectCount = default;
+    /// <summary>プレイヤーの残基</summary>
+    private int _residue =　default;
     [SerializeField] UnityEvent _gameOverEvent;
     
     private void Awake()
@@ -86,8 +85,25 @@ public class GameManager : MonoBehaviour
         _playerInvicibleObjectCount += invicibleObjectCount;
     }
 
+
+    /// <summary>
+    /// ゲームオーバー時に行いたいことを記述
+    /// </summary>
     public void GameOver()
     {
+        Init();
         _gameOverEvent.Invoke();
+    }
+
+    /// <summary>
+    /// 変数を初期化する関数
+    /// </summary>
+    public void Init()
+    {
+        _playerScore = default;
+        _playerPower = default;
+        _playerBombCount = default;
+        _playerInvicibleObjectCount = default;
+        _residue = default;
     }
 }
