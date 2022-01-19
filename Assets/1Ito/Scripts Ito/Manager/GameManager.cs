@@ -86,6 +86,14 @@ public class GameManager : MonoBehaviour
         _playerInvicibleObjectCount += invicibleObjectCount;
     }
 
+    /// <summary>
+    /// 残基に変更を加える関数
+    /// </summary>
+    /// <param name="residue">残基加算 -> 引数,正の数 : 残基減算 -> 引数,負の数</param>
+    public void ResidueChange(int residue)
+    {
+        _residue += residue;
+    }
 
     /// <summary>
     /// ゲームオーバー時に行いたいことを記述
