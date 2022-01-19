@@ -6,13 +6,13 @@ public class Phase2 : MonoBehaviour, IState
 {
     void IState.Method1()
     {
-        Debug.Log("State2の状態でMethod1が実行されました");
+        Debug.Log("Phase2の状態でMethod1が実行されました");
     }
 
     IState IState.Method2()
     {
-        Debug.Log("State1の状態でMethod2が実行されました");
-        Debug.Log("StateがState1に遷移します");
-        return new Phase1();
+        Debug.Log("Phase2の状態でMethod2が実行されました");
+        Debug.Log("Phase2がPhase1に遷移します");
+        return GetComponent<Phase1>();
     }
 }
