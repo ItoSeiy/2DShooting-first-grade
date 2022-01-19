@@ -12,7 +12,7 @@ public class PlayerBulletFollow : BulletBese
     protected override void OnEnable()
     {
         _timer = 0;
-        _enemy = GameObject.FindWithTag(EnemyTag);
+        _enemy = GameObject.FindWithTag(OpponenTag);
         base.OnEnable();
     }
 
