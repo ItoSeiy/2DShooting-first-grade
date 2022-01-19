@@ -20,7 +20,7 @@ public abstract class BulletBese : MonoBehaviour
     [SerializeField, Header("Bulletの動く向き")] Vector2 _direction = Vector2.up;
     [SerializeField, Header("Bulletのスピード")] float _speed = default;
     [SerializeField, Header("Bulletの動きをどの関数で呼び出すか")] BulletMoveMethod _bulletMoveMethod = BulletMoveMethod.Start;
-    [SerializeField, Header("相手(当たってはいけないオブジェクトのタグ")] string _opponentTag = "Enemy";
+    [SerializeField, Header("相手(当たったら消えるオブジェクトのタグ")] string _opponentTag;
     [SerializeField, Header("壁のタグ")] string _gameZoneTag = "Finish";
     [SerializeField, Header("Bulletの親オブジェクトのタグ")] string _parentTag = "Parent";
     [SerializeField, Header("Plyaerのタグ")] string _playerTag = "Player";
