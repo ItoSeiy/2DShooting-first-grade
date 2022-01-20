@@ -37,10 +37,4 @@ public class BossEnemyMoveRandom : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         StartCoroutine("StationA_Move");
     }
-
-    private void Update()
-    {
-        
-    }
-
 }

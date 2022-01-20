@@ -4,31 +4,27 @@ using UnityEngine;
 
 public class BossEnemyMove03 : MonoBehaviour
 {
-    float _totalTime;
     Rigidbody2D _rb;
     public GameObject _player = GameObject.FindGameObjectWithTag("Player");
-    public bool _move = false;
+    public bool _move = true;
     int count2 = 0;
     public float x;
 
     private void Start()
     {
-        _rb = GetComponent<Rigidbody2D>();
-        
+        _rb = GetComponent<Rigidbody2D>();    
     }
 
     private void Update()
-    {
-        
-        StartCoroutine(Vertical());
+    {    
+        StartCoroutine("Vertical");
     }
 
     IEnumerator Vertical()
     {
         transform.position = new Vector2(Mathf.Clamp(transform.position.x, -8f, 8f), Mathf.Clamp(transform.position.y, -4f, 4f));
-        if (!_move)
+        if (_move)
         {
-            _totalTime += Time.deltaTime;
             x = _player.transform.position.x;
             if (count2 == 0)
             {
@@ -79,7 +75,7 @@ public class BossEnemyMove03 : MonoBehaviour
 
                     if (_player.transform.position.y >= transform.position.y)
                     {
-                        _move = true;
+                        _move = false;
                         Debug.Log(_move);
                         _rb.velocity = new Vector2(0, 0);
                         yield return new WaitForSeconds(1);
@@ -87,7 +83,7 @@ public class BossEnemyMove03 : MonoBehaviour
                     }
                     else if(transform.position.y <= -4)
                     {
-                        _move = true;
+                        _move = false;
                         _rb.velocity = new Vector2(0, 0);
                         yield return new WaitForSeconds(1);
                         StartCoroutine(Up());
@@ -103,4 +99,4 @@ public class BossEnemyMove03 : MonoBehaviour
                 }
             }
         }
-    }
+}
