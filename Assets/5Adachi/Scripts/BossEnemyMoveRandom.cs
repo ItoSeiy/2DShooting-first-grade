@@ -13,6 +13,7 @@ public class BossEnemyMoveRandom : MonoBehaviour
 
     IEnumerator StationA_Move()
     {
+        transform.position = new Vector2(Mathf.Clamp(transform.position.x, -8f, 8f), Mathf.Clamp(transform.position.y, 0f, 4.5f));
         _rb.velocity = transform.up * 0;
         yield return new WaitForSeconds(0.5f);
         _isMove = true;
@@ -34,12 +35,12 @@ public class BossEnemyMoveRandom : MonoBehaviour
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
-        StartCoroutine(StationA_Move());
+        StartCoroutine("StationA_Move");
     }
 
     private void Update()
     {
-        transform.position = new Vector2(Mathf.Clamp(transform.position.x, -8f, 8f), Mathf.Clamp(transform.position.y, 0f, 4.5f));
+        
     }
 
 }

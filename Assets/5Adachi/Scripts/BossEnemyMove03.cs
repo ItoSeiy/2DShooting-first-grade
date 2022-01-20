@@ -7,93 +7,100 @@ public class BossEnemyMove03 : MonoBehaviour
     float _totalTime;
     Rigidbody2D _rb;
     public GameObject _player = GameObject.FindGameObjectWithTag("Player");
-    int count = 0;
+    public bool _move = false;
     int count2 = 0;
-    float x;
+    public float x;
 
     private void Start()
     {
+        _rb = GetComponent<Rigidbody2D>();
+        
     }
 
     private void Update()
     {
+        
         StartCoroutine(Vertical());
     }
 
     IEnumerator Vertical()
     {
-        if (count != 2)
+        transform.position = new Vector2(Mathf.Clamp(transform.position.x, -8f, 8f), Mathf.Clamp(transform.position.y, -4f, 4f));
+        if (!_move)
         {
-            //if (_player.transform.position.x <= transform.position.x)
-            //{
-                //count2 = 1;
-               float x = _player.transform.position.x;
-            //}
-            /*else if (_player.transform.position.x >= transform.position.x)
+            _totalTime += Time.deltaTime;
+            x = _player.transform.position.x;
+            if (count2 == 0)
             {
-                count2 = 2;
-                x = -_player.transform.position.x;
-            }*/
-
-            //if (count2 == 1)
-            //{
-                _rb.velocity = new Vector2(x, 0);
                 if (_player.transform.position.x >= transform.position.x)
                 {
-                    count = 1;
-                    Debug.Log(count);
-                }
-                if (count == 1)
-                {
-                    _rb.velocity = new Vector2(0, 0);
-                    yield return new WaitForSeconds(0.5f);
-                    StartCoroutine(Down());
-                }
-            //}
+                    Debug.Log("a");
+                    count2 = 1;
+                    _rb.velocity = new Vector2(x, 0);
 
-            /*if (count2 == 2)
-            {
-                _rb.velocity = new Vector2(x, 0);
-                if (x <= transform.position.x)
-                {
-                    count = 1;
-                    Debug.Log(count);
                 }
-                if (count == 1)
+                else// if (_player.transform.position.x <= transform.position.x)
+                {
+                    Debug.Log("i");
+                    count2 = 2;
+                    _rb.velocity = new Vector2(x, 0);
+                }
+            }
+
+            if (count2 == 1)
+            {
+                if (_player.transform.position.x <= transform.position.x)
                 {
                     _rb.velocity = new Vector2(0, 0);
                     yield return new WaitForSeconds(0.5f);
                     StartCoroutine(Down());
                 }
-            }*/
+            }
+
+            if (count2 == 2)
+            {
+                if (_player.transform.position.x >= transform.position.x)
+                {
+                    Debug.Log(_move);
+                    _rb.velocity = new Vector2(0, 0);
+                    yield return new WaitForSeconds(0.5f);
+                    StartCoroutine(Down());
+                }
+            }
+        }
 
             IEnumerator Down()
             {
-                if (count != 2)
+                if (!_move)
                 {
-                    float y = _player.transform.position.y;
-                    _rb.velocity = new Vector2(0, y);
-                    yield return new WaitForSeconds(0.5f);
+                        float y = _player.transform.position.y;
+                        _rb.velocity = new Vector2(0, y * 3);
+                        yield return new WaitForSeconds(0.5f);
+
                     if (_player.transform.position.y >= transform.position.y)
                     {
-                        count = 2;
-                        Debug.Log(count);
+                        _move = true;
+                        Debug.Log(_move);
+                        _rb.velocity = new Vector2(0, 0);
+                        yield return new WaitForSeconds(1);
+                        StartCoroutine(Up());
                     }
-                    if (count == 2)
+                    else if(transform.position.y <= -4)
                     {
+                        _move = true;
                         _rb.velocity = new Vector2(0, 0);
                         yield return new WaitForSeconds(1);
                         StartCoroutine(Up());
                     }
                 }
+
                 IEnumerator Up()
                 {
                     _rb.velocity = new Vector2(0, 3);
-                    yield return new WaitForSeconds(2);
+                    yield return new WaitForSeconds(3);
                     _rb.velocity = new Vector2(0, 0);
                     yield break;
                 }
             }
         }
     }
-}
