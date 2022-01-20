@@ -90,7 +90,5 @@ public enum PlayerBulletType
 
     Player01Bomb01,
     Player02Bomb01,
-
-    BombChild
 }
 
