@@ -91,6 +91,22 @@ public enum PlayerBulletType
     Player01Bomb01,
     Player02Bomb01,
 
-    BombChild
+    BombChild,
+
+    Player01SuperPower1,
+    Player01SuperPower2,
+    Player01SuperPower3,
+
+    Player02SuperPower1,
+    Player02SuperPower2,
+    Player02SuperPower3,
+
+    Player01ChargePower1,
+    Player01ChargePower2,
+    Player01ChargePower3,
+
+    Player02ChargePower1,
+    Player02ChargePower2,
+    Player02ChargePower3
 }
 
