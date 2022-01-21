@@ -24,12 +24,14 @@ public class BossEnemy : EnemyBese
 
     //Move03
     private GameObject _player;
-    public bool _isMove = true;
+    public bool _isMove = false;
     int count2 = 0;
     [SerializeField] public string _playerTag = null;
+    private int _test = 0;
     //public float x;
 
-    void  RandomMove()
+    //IEnumerator
+    void RandomMove()
     {
         /*switch (_random)
         {
@@ -44,33 +46,44 @@ public class BossEnemy : EnemyBese
                 yield return new WaitForSeconds(0);
                 break;
         }*/
-        if(_random == 1)
+        /*if(_random == 1)
         {
             Debug.Log("1");
-            StartCoroutine("Vertical");
+            StartCoroutine(StationA_Move());
         }
         else
         {
             Debug.Log("default");
-            //StartCoroutine("StationA_Move");
-            StartCoroutine("Vertical");
+            StartCoroutine(StationA_Move());
+            
         }
+        yield return new WaitForSeconds(10);*/
+        Debug.Log("fuuu");
+        _isMove = false;
+        StartCoroutine(Vertical());
     }
 
     void Start()
     {
         _player = GameObject.FindGameObjectWithTag(_playerTag);
         //RandomMove();
-        StartCoroutine("StationA_Move");
+        //StartCoroutine(StationA_Move());
     }
     protected override void Update()
     {
         base.Update();
         transform.position = new Vector2(Mathf.Clamp(transform.position.x, -8f, 8f), Mathf.Clamp(transform.position.y, -4f, 4f));
         _totalTime += Time.deltaTime;
-        //StartCoroutine("RandomMove");        
+        //StartCoroutine("RandomMove");
+        if(_random == 1)
+        {
+            StopCoroutine(Vertical());
+        }
+        //Debug.Log(_random);
+            
+        StartCoroutine(Vertical());
     }
-    
+
     protected override void OnGetDamage()
     {
 
@@ -124,29 +137,31 @@ public class BossEnemy : EnemyBese
             Debug.Log(x);
             Debug.Log(y);
             Rb.velocity = new Vector2(0, 0);
-            _random = Random.Range(0, 2);
-            RandomMove();
+            _random = 1;//Random.Range(0, 2);
+            if(_random == 0)
+            {
+                Debug.Log("aiueo");
+                StartCoroutine(StationA_Move());
+            }
         }
     }
 
     IEnumerator Vertical()
     {
         transform.position = new Vector2(Mathf.Clamp(transform.position.x, -8f, 8f), Mathf.Clamp(transform.position.y, -4f, 4f));
-        if (_isMove)
+        if (!_isMove)
         {
             x = _player.transform.position.x;
             if (count2 == 0)
             {
                 if (_player.transform.position.x >= transform.position.x)
                 {
-                    Debug.Log("a");
                     count2 = 1;
                     Rb.velocity = new Vector2(x, 0);
                     yield return new WaitForSeconds(3);
                 }
                 else// if (_player.transform.position.x <= transform.position.x)
                 {
-                    Debug.Log("i");
                     count2 = 2;
                     Rb.velocity = new Vector2(x, 0);
                     yield return new WaitForSeconds(3);
@@ -177,7 +192,7 @@ public class BossEnemy : EnemyBese
 
         IEnumerator Down()
         {
-            if (_isMove)
+            if (!_isMove)
             {
                 float y = _player.transform.position.y;
                 Rb.velocity = new Vector2(0, y * 3);
@@ -185,7 +200,7 @@ public class BossEnemy : EnemyBese
 
                 if (_player.transform.position.y >= transform.position.y)
                 {
-                    _isMove = false;
+                   // _isMove = true;
                     Debug.Log(_isMove);
                     Rb.velocity = new Vector2(0, 0);
                     yield return new WaitForSeconds(1);
@@ -193,7 +208,7 @@ public class BossEnemy : EnemyBese
                 }
                 else if (transform.position.y <= -4)
                 {
-                    _isMove = false;
+                    //_isMove = true;
                     Rb.velocity = new Vector2(0, 0);
                     yield return new WaitForSeconds(1);
                     StartCoroutine(Up());
@@ -202,10 +217,12 @@ public class BossEnemy : EnemyBese
 
             IEnumerator Up()
             {
+                _isMove = true;
                 Rb.velocity = new Vector2(0, 3);
                 yield return new WaitForSeconds(3);
                 Rb.velocity = new Vector2(0, 0);
-                yield break;
+                //RandomMove();
+                StartCoroutine(Vertical());
             }
         }
     }
