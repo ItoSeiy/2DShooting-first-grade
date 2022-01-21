@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class BossEnemy : EnemyBese
 {
-    [SerializeField, Header("BossEnemyの軌道")] public Object[]_bossEnemyMove = default;
     [SerializeField, Header("Bombのタグ")] public string _bombTag = null;
 
     int _random = default;
     Object _object;
-    bool _isMove = false;
 
     //Cirle
     public float _x;
@@ -22,9 +20,16 @@ public class BossEnemy : EnemyBese
     //Random
     private float x = 0;
     private float y = 0;
-    float _stopTime = 3;
+    [SerializeField] public float _stopTime = default;
 
-    IEnumerator RandomMove()
+    //Move03
+    private GameObject _player;
+    public bool _isMove = true;
+    int count2 = 0;
+    [SerializeField] public string _playerTag = null;
+    //public float x;
+
+    void  RandomMove()
     {
         /*switch (_random)
         {
@@ -42,27 +47,28 @@ public class BossEnemy : EnemyBese
         if(_random == 1)
         {
             Debug.Log("1");
-            StartCoroutine("Circle");
-            yield return new WaitForSeconds(0);
+            StartCoroutine("Vertical");
         }
         else
         {
             Debug.Log("default");
-            StartCoroutine("StationA_Move");
-            yield return new WaitForSeconds(0);
+            //StartCoroutine("StationA_Move");
+            StartCoroutine("Vertical");
         }
     }
 
     void Start()
     {
-        StartCoroutine("RandomMove");
+        _player = GameObject.FindGameObjectWithTag(_playerTag);
+        //RandomMove();
+        StartCoroutine("StationA_Move");
     }
     protected override void Update()
     {
         base.Update();
         transform.position = new Vector2(Mathf.Clamp(transform.position.x, -8f, 8f), Mathf.Clamp(transform.position.y, -4f, 4f));
         _totalTime += Time.deltaTime;
-        
+        //StartCoroutine("RandomMove");        
     }
     
     protected override void OnGetDamage()
@@ -74,7 +80,7 @@ public class BossEnemy : EnemyBese
 
     }
 
-    IEnumerator Circle()
+    /*IEnumerator Circle()
     {
         Debug.Log("a");
         if (_random == 1)
@@ -97,7 +103,7 @@ public class BossEnemy : EnemyBese
                 StartCoroutine("RandomMove");
             }
         }
-    }
+    }*/
 
     IEnumerator StationA_Move()
     {
@@ -119,7 +125,88 @@ public class BossEnemy : EnemyBese
             Debug.Log(y);
             Rb.velocity = new Vector2(0, 0);
             _random = Random.Range(0, 2);
-            StartCoroutine("RandomMove");
+            RandomMove();
+        }
+    }
+
+    IEnumerator Vertical()
+    {
+        transform.position = new Vector2(Mathf.Clamp(transform.position.x, -8f, 8f), Mathf.Clamp(transform.position.y, -4f, 4f));
+        if (_isMove)
+        {
+            x = _player.transform.position.x;
+            if (count2 == 0)
+            {
+                if (_player.transform.position.x >= transform.position.x)
+                {
+                    Debug.Log("a");
+                    count2 = 1;
+                    Rb.velocity = new Vector2(x, 0);
+                    yield return new WaitForSeconds(3);
+                }
+                else// if (_player.transform.position.x <= transform.position.x)
+                {
+                    Debug.Log("i");
+                    count2 = 2;
+                    Rb.velocity = new Vector2(x, 0);
+                    yield return new WaitForSeconds(3);
+                }
+            }
+
+            if (count2 == 1)
+            {
+                if (_player.transform.position.x <= transform.position.x)
+                {
+                    Rb.velocity = new Vector2(0, 0);
+                    yield return new WaitForSeconds(0.5f);
+                    StartCoroutine(Down());
+                }
+            }
+
+            if (count2 == 2)
+            {
+                if (_player.transform.position.x >= transform.position.x)
+                {
+                    Debug.Log(_isMove);
+                    Rb.velocity = new Vector2(0, 0);
+                    yield return new WaitForSeconds(0.5f);
+                    StartCoroutine(Down());
+                }
+            }
+        }
+
+        IEnumerator Down()
+        {
+            if (_isMove)
+            {
+                float y = _player.transform.position.y;
+                Rb.velocity = new Vector2(0, y * 3);
+                yield return new WaitForSeconds(0.5f);
+
+                if (_player.transform.position.y >= transform.position.y)
+                {
+                    _isMove = false;
+                    Debug.Log(_isMove);
+                    Rb.velocity = new Vector2(0, 0);
+                    yield return new WaitForSeconds(1);
+                    StartCoroutine(Up());
+                }
+                else if (transform.position.y <= -4)
+                {
+                    _isMove = false;
+                    Rb.velocity = new Vector2(0, 0);
+                    yield return new WaitForSeconds(1);
+                    StartCoroutine(Up());
+                }
+            }
+
+            IEnumerator Up()
+            {
+                Rb.velocity = new Vector2(0, 3);
+                yield return new WaitForSeconds(3);
+                Rb.velocity = new Vector2(0, 0);
+                yield break;
+            }
         }
     }
 }

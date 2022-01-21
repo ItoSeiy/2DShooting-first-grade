@@ -499,7 +499,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &445858254
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -873,7 +873,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1150983089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -890,13 +890,14 @@ MonoBehaviour:
   _attackInterval: 1
   _damageRatio: 1
   _playerBulletTag: PlayerBullet
-  _bossEnemyMove: []
   _bombTag: 
   _x: 0
   _y: 0
   y2: 0
   _totalTime: 0
   _speed: 3
+  _stopTime: 3
+  _isMove: 0
 --- !u!61 &1150983090
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1371,7 +1372,7 @@ PrefabInstance:
     - target: {fileID: 8222391408309725660, guid: 4753945a58d9ed94dbb8109d879bb8bf,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4753945a58d9ed94dbb8109d879bb8bf, type: 3}
@@ -1407,9 +1408,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b041b7c247df4949b3cfa9df47a0525, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 445858253}
-  _move: 0
+  _isMove: 1
   x: 0
+  _playerTag: Player
 --- !u!50 &1743488891
 Rigidbody2D:
   serializedVersion: 4

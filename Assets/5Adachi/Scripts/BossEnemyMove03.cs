@@ -5,85 +5,90 @@ using UnityEngine;
 public class BossEnemyMove03 : MonoBehaviour
 {
     Rigidbody2D _rb;
-    public GameObject _player = GameObject.FindGameObjectWithTag("Player");
-    public bool _move = true;
-    int count2 = 0;
+
+    public bool _isMove = true;
+    int _count = 0;
     public float x;
+    private GameObject _player;
+    [SerializeField] private string _playerTag = null;
 
     private void Start()
     {
-        _rb = GetComponent<Rigidbody2D>();    
+        _rb = GetComponent<Rigidbody2D>();
+        _player = GameObject.FindGameObjectWithTag(_playerTag);
+        StartCoroutine("Vertical");
     }
 
     private void Update()
-    {    
-        StartCoroutine("Vertical");
+    {
+
     }
 
     IEnumerator Vertical()
     {
-        transform.position = new Vector2(Mathf.Clamp(transform.position.x, -8f, 8f), Mathf.Clamp(transform.position.y, -4f, 4f));
-        if (_move)
-        {
-            x = _player.transform.position.x;
-            if (count2 == 0)
+            transform.position = new Vector2(Mathf.Clamp(transform.position.x, -8f, 8f), Mathf.Clamp(transform.position.y, -4f, 4f));
+            if (_isMove)
             {
-                if (_player.transform.position.x >= transform.position.x)
+                x = _player.transform.position.x;
+                if (_count == 0)
                 {
-                    Debug.Log("a");
-                    count2 = 1;
-                    _rb.velocity = new Vector2(x, 0);
-
+                    if (_player.transform.position.x >= transform.position.x)
+                    {
+                        Debug.Log("a");
+                        _count = 1;
+                        _rb.velocity = new Vector2(x, 0);
+                        //yield return new WaitForSeconds();
+                    }
+                    else// if (_player.transform.position.x <= transform.position.x)
+                    {
+                        Debug.Log("i");
+                        _count = 2;
+                        _rb.velocity = new Vector2(x, 0);
+                        //yield return new WaitForSeconds();
+                    }
                 }
-                else// if (_player.transform.position.x <= transform.position.x)
+
+                if (_count == 1)
                 {
-                    Debug.Log("i");
-                    count2 = 2;
-                    _rb.velocity = new Vector2(x, 0);
+                    if (_player.transform.position.x <= transform.position.x)
+                    {
+                        _rb.velocity = new Vector2(0, 0);
+                        yield return new WaitForSeconds(0.5f);
+                        StartCoroutine(Down());
+                    }
+                }
+
+                if (_count == 2)
+                {
+                    if (_player.transform.position.x >= transform.position.x)
+                    {
+                        Debug.Log(_isMove);
+                        _rb.velocity = new Vector2(0, 0);
+                        yield return new WaitForSeconds(0.5f);
+                        StartCoroutine(Down());
+                    }
                 }
             }
-
-            if (count2 == 1)
-            {
-                if (_player.transform.position.x <= transform.position.x)
-                {
-                    _rb.velocity = new Vector2(0, 0);
-                    yield return new WaitForSeconds(0.5f);
-                    StartCoroutine(Down());
-                }
-            }
-
-            if (count2 == 2)
-            {
-                if (_player.transform.position.x >= transform.position.x)
-                {
-                    Debug.Log(_move);
-                    _rb.velocity = new Vector2(0, 0);
-                    yield return new WaitForSeconds(0.5f);
-                    StartCoroutine(Down());
-                }
-            }
-        }
 
             IEnumerator Down()
             {
-                if (!_move)
+                if (_isMove)
                 {
-                        float y = _player.transform.position.y;
-                        _rb.velocity = new Vector2(0, y * 3);
-                        yield return new WaitForSeconds(0.5f);
+                    float y = _player.transform.position.y;
+                    _rb.velocity = new Vector2(0, y * 3);
+                    yield return new WaitForSeconds(0.5f);
 
                     if (_player.transform.position.y >= transform.position.y)
                     {
-                        _move = false;
-                        Debug.Log(_move);
+                        _isMove = false;
+                        Debug.Log(_isMove);
                         _rb.velocity = new Vector2(0, 0);
                         yield return new WaitForSeconds(1);
                         StartCoroutine(Up());
                     }
-                    else if(transform.position.y <= -4)
+                    else if (transform.position.y <= -4)
                     {
-                        _move = false;
+                        _isMove = false;
                         _rb.velocity = new Vector2(0, 0);
                         yield return new WaitForSeconds(1);
                         StartCoroutine(Up());
