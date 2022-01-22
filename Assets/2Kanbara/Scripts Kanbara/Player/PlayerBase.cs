@@ -83,7 +83,7 @@ public class PlayerBase : MonoBehaviour
     /// <summary>コントロールが効かないようにするフラグ</summary>
     bool _isNotControll = default;
     /// <summary>チャージしているかどうか判定するフラグ</summary>
-    bool _isChargeNow = default;
+    bool _wasCharge = default;
 
     /// <summary>カウントアップする定数</summary>
     const int _defaultUp = 1;
@@ -162,30 +162,32 @@ public class PlayerBase : MonoBehaviour
 
     public void InputChargeShotButton(InputAction.CallbackContext context)
     {
-        if (context.started && !_isChargeNow)
+        if (context.started && !_wasCharge)
         {
+            Debug.Log("canceled" + _wasCharge);
             _audioSource.PlayOneShot(_chargeAudio, _musicVolume);
             Debug.Log("started");
         }
         if(context.performed)
         {
-            _isChargeNow = true;
+            Debug.Log("canceled" + _wasCharge);
+            _wasCharge = true;
             Debug.Log("performed");
         }
         if(context.canceled)
         {
-            if(_isChargeNow)
+            if(_wasCharge)
             {
-                Debug.Log("canceled" + _isChargeNow);
+                Debug.Log("canceled" + _wasCharge);
                 PlayerChargeAttack();
-                _isChargeNow = true;
+                _wasCharge = true;
                 _isBulletStop = true;
             }
             else
             {
-                Debug.Log("canceled" + _isChargeNow);
+                Debug.Log("canceled" + _wasCharge);
             }
-            _isChargeNow = false;
+            _wasCharge = false;
         }
     }
 
@@ -194,13 +196,13 @@ public class PlayerBase : MonoBehaviour
         if (_isLateMode && !context.canceled)//精密操作時の処理
         {
             PlayerSuperAttack();
-            _isChargeNow = true;
+            _wasCharge = true;
             _isBulletStop = true;
         }
         else if (!_isLateMode && !context.canceled)//通常時の処理
         {
             PlayerAttack();
-            _isChargeNow = true;
+            _wasCharge = true;
             _isBulletStop = true;
         }
     }
@@ -209,7 +211,7 @@ public class PlayerBase : MonoBehaviour
     public virtual async void PlayerAttack()
     {
         await Task.Delay(_attackDelay);
-        _isChargeNow = false;
+        _wasCharge = false;
         _isBulletStop = false;
     }
 
@@ -217,7 +219,7 @@ public class PlayerBase : MonoBehaviour
     public virtual async void PlayerSuperAttack()
     {
         await Task.Delay(_superAttackDelay);
-        _isChargeNow = false;
+        _wasCharge = false;
         _isBulletStop = false;
     }
 
@@ -225,7 +227,7 @@ public class PlayerBase : MonoBehaviour
     public virtual async void PlayerChargeAttack()
     {
         await Task.Delay(_chargeAttackDelay);
-        _isChargeNow = false;
+        _wasCharge = false;
         _isBulletStop = false;
     }
 
