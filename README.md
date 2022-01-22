@@ -90,7 +90,9 @@ Issueの作成
 
 プログラマー, プロジェクト管理　伊東聖矢
 
-ゲームイラストレーター　****
+イラストレーター　****
+
+サウンド neko.yanagii [Twitter](https://twitter.com/notreallyrook)
 
 プログラマー 神原琉成
 
