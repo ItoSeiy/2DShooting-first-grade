@@ -11,6 +11,9 @@ public class PlayerBulletPool : MonoBehaviour
     static PlayerBulletPool _instance;
 
     [SerializeField] GameObject[] _bullets = null;
+
+    [SerializeField] List<BulletSettings> _bulletSettings = new List<BulletSettings>();
+
     List<BulletParameter> _pool = new List<BulletParameter>();
 
     [SerializeField] int[] _poolObjectMaxCount = default;
@@ -76,6 +79,14 @@ public class PlayerBulletPool : MonoBehaviour
         public GameObject Object { get; set; }
         public PlayerBulletType Type { get; set; }
     }
+
+    [System.Serializable]
+    private class BulletSettings
+    {
+        [SerializeField] List<GameObject> BulletObject = new List<GameObject>();
+        [SerializeField] List<PlayerBulletType> BulletType = new List<PlayerBulletType>();
+    }
+
 }
 
 public enum PlayerBulletType
