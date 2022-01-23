@@ -4,10 +4,10 @@ using UnityEngine;
 using System;
 
 /// <summary>プールするオブジェクトを格納したスクリプタブルオブジェクト</summary>
-[CreateAssetMenu(fileName = )]
-public class ObjectPoolParamAseet : MonoBehaviour
+[CreateAssetMenu(fileName = "PoolObjectParam")]
+public class PoolObjectParamAsset : ScriptableObject
 {
-    public List<PoolObjectParam> PoolObjectParams { get => poolObjectParams;}
+    public List<PoolObjectParam> Params { get => poolObjectParams;}
 
     [SerializeField] private List<PoolObjectParam> poolObjectParams = new List<PoolObjectParam>();
 }
@@ -16,11 +16,13 @@ public class ObjectPoolParamAseet : MonoBehaviour
 [Serializable]
 public class PoolObjectParam
 {
-    public GameObject ObjectPrefab { get => objectPrefab;}
-    public PlayerBulletType ObjectType { get => objectType;}
+    public GameObject Prefab { get => objectPrefab;}
+    public PlayerBulletType Type { get => objectType;}
+    public int MaxCount { get => objectMaxCount;}
 
     [SerializeField] private string objectName;
-    [SerializeField] private GameObject objectPrefab;
     [SerializeField] private PlayerBulletType objectType;
+    [SerializeField] private GameObject objectPrefab;
+    [SerializeField] private int objectMaxCount;
 }
 

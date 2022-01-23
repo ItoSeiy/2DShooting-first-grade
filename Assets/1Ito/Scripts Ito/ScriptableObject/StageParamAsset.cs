@@ -6,29 +6,27 @@ using System;
 [CreateAssetMenu(fileName = "PhaseParam")]
 public class StageParamAsset : ScriptableObject
 {
-    public List<StageParam> StageParams { get => stageParams; }
+    //public List<StageParam> StageParams { get => stageParams; }
 
-    [SerializeField] private List<StageParam> stageParams = new List<StageParam>();
+    [SerializeField] public List<StageParam> stageParams = new List<StageParam>();
+}
+
+
+/// <summary>ステージのデータを格納したクラス</summary>
+[Serializable]
+public class StageParam
+{
+    [SerializeField] string StageName = "Stage";
+
+    [SerializeField] public List<PhaseParm> phaseParms = new List<PhaseParm>();
 }
 
 
 /// <summary>フェイズのデータを格納したクラス</summary>
 [Serializable]
-public class StageParam
-{
-    public List<PhaseParm> PhaseParms { get => phaseParms;}
-
-    [SerializeField] string StageName = "Stage";
-
-    [SerializeField] private List<PhaseParm> phaseParms = new List<PhaseParm>();
-}
-
-
-/// <summary>フェイズそのもののデータを格納したクラス</summary>
-[Serializable]
 public class PhaseParm
 {
-    public GameObject PhasePrefab { get => phasePrefab;}
+    public GameObject Prefab { get => phasePrefab;}
     public float BoforeInterval { get => boforeInterval;}
     public float Interval { get => interval;}
     public float AfterInterval { get => afterInterval;}

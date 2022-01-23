@@ -10,9 +10,8 @@ public class PlayerBulletPool : MonoBehaviour
     public static PlayerBulletPool Instance => _instance;
     static PlayerBulletPool _instance;
 
-    [SerializeField] GameObject[] _bullets = null;
-
-    [SerializeField] List<BulletSettings> _bulletSettings = new List<BulletSettings>();
+    //[SerializeField] GameObject[] _bullets = null;
+    [SerializeField] PoolObjectParamAsset _poolObjParam = default;
 
     List<BulletParameter> _pool = new List<BulletParameter>();
 
@@ -32,13 +31,13 @@ public class PlayerBulletPool : MonoBehaviour
 
     private void CreatePool()
     {
-        if(_poolObjCountIndex >= _poolObjectMaxCount.Length)
+        if(_poolObjCountIndex >= _poolObjParam.Params.Count /*_bullets.Length*/)
         {
             Debug.Log("すべてのPlayerBulletを生成しました。");
             return;
         }
 
-        for (int i = 0; i < _poolObjectMaxCount[_poolObjCountIndex]; i++)
+        for (int i = 0; i < _poolObjParam.Params[_poolObjCountIndex].MaxCount/*_poolObjectMaxCount[_poolObjCountIndex];*/ i++)
         {
             var bullet = Instantiate(_bullets[_poolObjCountIndex], this.transform);
             bullet.SetActive(false);
@@ -79,14 +78,6 @@ public class PlayerBulletPool : MonoBehaviour
         public GameObject Object { get; set; }
         public PlayerBulletType Type { get; set; }
     }
-
-    [System.Serializable]
-    private class BulletSettings
-    {
-        [SerializeField] List<GameObject> BulletObject = new List<GameObject>();
-        [SerializeField] List<PlayerBulletType> BulletType = new List<PlayerBulletType>();
-    }
-
 }
 
 public enum PlayerBulletType
