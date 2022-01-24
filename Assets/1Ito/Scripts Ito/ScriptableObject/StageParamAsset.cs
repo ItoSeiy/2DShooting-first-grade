@@ -6,7 +6,7 @@ using System;
 [CreateAssetMenu(fileName = "PhaseParam")]
 public class StageParamAsset : ScriptableObject
 {
-    //public List<StageParam> StageParams { get => stageParams; }
+    public List<StageParam> StageParams { get => stageParams; }
 
     [SerializeField] public List<StageParam> stageParams = new List<StageParam>();
 }

@@ -12,18 +12,6 @@ public class PhaseManager : MonoBehaviour
     }
     public void Test()
     {
-        //while(_stageState != Phase.End)
-        //{
-        //    switch (_stageState)
-        //    {
-        //        case Phase.test:
-
-        //            break;
-        //        case 
-        //    }
-        //}
-
-        
     }
 }
 
