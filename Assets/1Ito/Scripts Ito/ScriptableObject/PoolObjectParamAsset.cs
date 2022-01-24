@@ -19,8 +19,7 @@ public class PoolObjectParam
     public GameObject Prefab { get => objectPrefab;}
     public PlayerBulletType Type { get => objectType;}
     public int MaxCount { get => objectMaxCount;}
-
-    [SerializeField] private string objectName;
+    [SerializeField] private string Name;
     [SerializeField] private PlayerBulletType objectType;
     [SerializeField] private GameObject objectPrefab;
     [SerializeField] private int objectMaxCount;
