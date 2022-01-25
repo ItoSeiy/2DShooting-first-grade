@@ -27,7 +27,7 @@ public class BossEnemyMove03 : MonoBehaviour
 
         _x = _player.transform.position.x;
 
-            
+        Veritical();
     }
 
     private void Update()
@@ -53,81 +53,82 @@ public class BossEnemyMove03 : MonoBehaviour
                 {
                     _rb.velocity = new Vector2(0, 0);
                     StartCoroutine(Down());
-
                 }
             }
             
         }
     }
 
-    private void Veritical()//プレイヤーの位置によってどっちに移動するかを決める関数
+    private void Veritical()//プレイヤーの位置によって左右のどちらかに移動するかを決める関数
     {
-            if (_player.transform.position.x >= transform.position.x)//プレイヤーが右にいたら
-            {
-                Debug.Log("right");
-                _count = 1;
-                _rb.velocity = new Vector2(_x, 0);
-            }
-            else//左にいたら
-            {
-                Debug.Log("left");
-                _count = 2;
-                _rb.velocity = new Vector2(_x, 0);
-            }
+        if (_player.transform.position.x >= transform.position.x)//プレイヤーが右にいたら
+        {
+            Debug.Log("right");
+             _count = 1;
+             _rb.velocity = new Vector2(_x, 0);
+        }
+        else//左にいたら
+        {
+            Debug.Log("left");
+            _count = 2;
+            _rb.velocity = new Vector2(_x, 0);
+        }
     }
 
-            IEnumerator Down()
+    IEnumerator Down()//下に行くやつ
+    {
+        yield return new WaitForSeconds(0.5f);
+        if (_isMove)
+        {
+             _y = _player.transform.position.y;
+            _rb.velocity = new Vector2(0, _y * 3);
+            yield return new WaitForSeconds(0.5f);
+
+            if (_player.transform.position.y >= transform.position.y)//プレイヤーの高さまで来たら
             {
-                yield return new WaitForSeconds(0.5f);
-                if (_isMove)
-                {
-                    _y = _player.transform.position.y;
-                    _rb.velocity = new Vector2(0, _y * 3);
-                    yield return new WaitForSeconds(0.5f);
+                _rb.velocity = new Vector2(0, 0);
+                yield return new WaitForSeconds(1);
+                Debug.Log("Up");
+                StartCoroutine(Up());
+            }
+            else if (transform.position.y <= -4)//下降制限まで来たら
+            {
+                _rb.velocity = new Vector2(0, 0);
+                yield return new WaitForSeconds(1);
+                //_isMove = false;
+                Debug.Log("Up");
+                StartCoroutine(Up());
+            }
+        }
 
-                    if (_player.transform.position.y >= transform.position.y)//プレイヤーの高さまで来たら
-                    {
-                        _rb.velocity = new Vector2(0, 0);
-                        yield return new WaitForSeconds(1);
-                        //_isMove = false;
-                        StartCoroutine(Up());
-                    }
-                    else if (transform.position.y <= -4)//下降制限まで来たら
-                    {
-                        _rb.velocity = new Vector2(0, 0);
-                        yield return new WaitForSeconds(1);
-                        //_isMove = false;
-                        StartCoroutine(Up());
-                    }
+        IEnumerator Up()//上に行くやつ
+        {
+            Debug.Log("Up");
+            _isMove = false;
+            _rb.velocity = new Vector2(0, 3);
+            yield return new WaitForSeconds(3);
+            _rb.velocity = new Vector2(0, 0);
+            yield return new WaitForSeconds(2);
+
+            if(transform.position.x >= 0)
+            {
+                _rb.velocity = new Vector2(-5, 0);
+                yield return new WaitForSeconds(1);
+                if(transform.position.x <= 0)
+                {
+                    _rb.velocity = Vector2.zero;
+                    yield return new WaitForSeconds(20);
                 }
-                IEnumerator Up()
+            }
+            else if(transform.position.x < 0)
+            {
+                _rb.velocity = new Vector2(5, 0);
+                yield return new WaitForSeconds(1);
+                if (transform.position.x >= 0)
                 {
-                    Debug.Log("Up");
-                    _isMove = false;
-                    _rb.velocity = new Vector2(0, 3);
-                    yield return new WaitForSeconds(3);
-                    _rb.velocity = new Vector2(0, 0);
-                    yield return new WaitForSeconds(2);
-
-                    if(transform.position.x >= 0)
-                    {
-                        _rb.velocity = new Vector2(-5, 0);
-                        yield return new WaitForSeconds(1);
-                        if(transform.position.x <= 0)
-                        {
-                            _rb.velocity = Vector2.zero;
-                            yield return new WaitForSeconds(20);
-                        }
-                    }
-                    else if(transform.position.x < 0)
-                    {
-                        _rb.velocity = new Vector2(5, 0);
-                        yield return new WaitForSeconds(1);
-                        if (transform.position.x >= 0)
-                        {
-                            _rb.velocity = Vector2.zero;
-                            yield return new WaitForSeconds(20);
-                        }
+                    _rb.velocity = Vector2.zero;
+                    yield return new WaitForSeconds(20);
+                }
             }
                     
                     //StartCoroutine(Vertical2());
@@ -135,11 +136,11 @@ public class BossEnemyMove03 : MonoBehaviour
                     //IEnumerator Vertical2()
                     {
                         {
-                            //Debug.Log("e");
+                            Debug.Log("e");
                             if (_isMove2)
                             {                      
                             _x2 = _player.transform.position.x;
-                            //Debug.Log(_x2);
+                            Debug.Log(_x2);
                                 if (_count2 == 0)
                                 {
                                 Debug.Log("haahahaha");
