@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossEnemyMove03 : MonoBehaviour
+public class BossEnemyMoveAttack : MonoBehaviour
 {
     Rigidbody2D _rb;
 
@@ -121,7 +121,7 @@ public class BossEnemyMove03 : MonoBehaviour
             _y = _player.transform.position.y;
             _rb.velocity = new Vector2(0, _y * 3);
 
-            if (_player.transform.position.y >= transform.position.y)//プレイヤーの高さまで来たら
+            if (_player.transform.position.y + 1 >= transform.position.y)//プレイヤーの高さまで来たら
             {
                 _rb.velocity = new Vector2(0, 0);
                 yield return new WaitForSeconds(1);
