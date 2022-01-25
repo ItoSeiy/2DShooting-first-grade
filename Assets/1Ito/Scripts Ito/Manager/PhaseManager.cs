@@ -4,27 +4,23 @@ using UnityEngine;
 
 public class PhaseManager : MonoBehaviour
 {
-    [SerializeField] StageState _stageState;
     [SerializeField] StageParamAsset paramAsset;
+
+    public Stage _stageState;
+    Phase _phaseState;
 
     private void Start()
     {
+        while(_stageState != Stage.End)
+        {
+            Debug.Log("Test");
+        }
     }
-    public void Test()
-    {
-    }
-}
-
-[System.Serializable]
-public class StageState
-{
-    Stage Stage;
-    Phase Phase;
 }
 
 public enum Stage
 {
-    Stage01,
+    Stage01, 
     Stage02,
     Stage03,
     Stage04,
