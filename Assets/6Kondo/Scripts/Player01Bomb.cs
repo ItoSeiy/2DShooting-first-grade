@@ -64,7 +64,7 @@ public class Player01Bomb : BulletBese
             Rb.velocity = Vector2.zero;
             for (int i = 0; i < _muzzle.Length; i++)
             {
-                var bombChild = PlayerBulletPool.Instance.UseBullet(_muzzle[i].position, PoolObjectType.Player01BombChild);
+                var bombChild = ObjectPool.Instance.UseBullet(_muzzle[i].position, PoolObjectType.Player01BombChild);
                 bombChild.transform.rotation = _muzzle[i].rotation;
                 yield return new WaitForSeconds(_childBulletDelay);
             }
