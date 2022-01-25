@@ -24,86 +24,85 @@ public class BossEnemyMove03 : MonoBehaviour
         _player = GameObject.FindGameObjectWithTag(_playerTag);
         _isMove = true;
         _isMove2 = true;
+
+        _x = _player.transform.position.x;
+
+            
     }
 
     private void Update()
     {
-        StartCoroutine(Vertical());
-    }
 
-    IEnumerator Vertical()
-    {
         transform.position = new Vector2(Mathf.Clamp(transform.position.x, -8f, 8f), Mathf.Clamp(transform.position.y, -4f, 4f));
+        //StartCoroutine(Vertical());
+
+        if (_isMove)
         {
-            //Debug.Log("e");
-            if (_isMove)
+            if (_count == 1)
             {
-                _x = _player.transform.position.x;
-                if (_count == 0)
+                if (_player.transform.position.x <= transform.position.x)
                 {
-                    if (_player.transform.position.x >= transform.position.x)
-                    {
-                        //Debug.Log("a");
-                        _count = 1;
-                        _rb.velocity = new Vector2(_x, 0);
-                        //yield return new WaitForSeconds();
-                    }
-                    else// if (_player.transform.position.x <= transform.position.x)
-                    {
-                        //Debug.Log("i");
-                        _count = 2;
-                        _rb.velocity = new Vector2(_x, 0);
-                        //yield return new WaitForSeconds();
-                    }
-                }
-
-
-                if (_count == 1)
-                {
-                    if (_player.transform.position.x <= transform.position.x)
-                    {
-                        _rb.velocity = new Vector2(0, 0);
-                        yield return new WaitForSeconds(0.5f);
-                        StartCoroutine(Down());
-                    }
-                }
-
-                if (_count == 2)
-                {
-                    if (_player.transform.position.x >= transform.position.x)
-                    {
-                        _rb.velocity = new Vector2(0, 0);
-                        yield return new WaitForSeconds(0.5f);
-                        StartCoroutine(Down());
-
-                    }
+                    _rb.velocity = new Vector2(0, 0);
+                    StartCoroutine(Down());
                 }
             }
+
+            if (_count == 2)
+            {
+                if (_player.transform.position.x >= transform.position.x)
+                {
+                    _rb.velocity = new Vector2(0, 0);
+                    StartCoroutine(Down());
+
+                }
+            }
+            
+        }
+    }
+
+    private void Veritical()//プレイヤーの位置によってどっちに移動するかを決める関数
+    {
+            if (_player.transform.position.x >= transform.position.x)//プレイヤーが右にいたら
+            {
+                Debug.Log("right");
+                _count = 1;
+                _rb.velocity = new Vector2(_x, 0);
+            }
+            else//左にいたら
+            {
+                Debug.Log("left");
+                _count = 2;
+                _rb.velocity = new Vector2(_x, 0);
+            }
+    }
+
             IEnumerator Down()
             {
+                yield return new WaitForSeconds(0.5f);
                 if (_isMove)
                 {
                     _y = _player.transform.position.y;
                     _rb.velocity = new Vector2(0, _y * 3);
                     yield return new WaitForSeconds(0.5f);
 
-                    if (_player.transform.position.y >= transform.position.y)
+                    if (_player.transform.position.y >= transform.position.y)//プレイヤーの高さまで来たら
                     {
-                        //_isMove = false;
                         _rb.velocity = new Vector2(0, 0);
                         yield return new WaitForSeconds(1);
+                        //_isMove = false;
                         StartCoroutine(Up());
                     }
-                    else if (transform.position.y <= -4)
+                    else if (transform.position.y <= -4)//下降制限まで来たら
                     {
-                        //_isMove = false;
                         _rb.velocity = new Vector2(0, 0);
                         yield return new WaitForSeconds(1);
+                        //_isMove = false;
                         StartCoroutine(Up());
                     }
                 }
                 IEnumerator Up()
                 {
+                    Debug.Log("Up");
                     _isMove = false;
                     _rb.velocity = new Vector2(0, 3);
                     yield return new WaitForSeconds(3);
@@ -129,11 +128,11 @@ public class BossEnemyMove03 : MonoBehaviour
                             _rb.velocity = Vector2.zero;
                             yield return new WaitForSeconds(20);
                         }
-                    }
+            }
                     
                     //StartCoroutine(Vertical2());
 
-                    IEnumerator Vertical2()
+                    //IEnumerator Vertical2()
                     {
                         {
                             //Debug.Log("e");
@@ -265,5 +264,3 @@ public class BossEnemyMove03 : MonoBehaviour
                 
             }
         }
-    }
-}
