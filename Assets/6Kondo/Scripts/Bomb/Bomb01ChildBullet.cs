@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BombChildBullet : BulletBese
+public class Bomb01ChildBullet : BulletBese
 {
     [SerializeField, Header("EnemyのBulletのタグ")] string _enemyBulletTag = "Bullet";
     protected override void OnTriggerEnter2D(Collider2D collision)

@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 9188340174714335777}
   - component: {fileID: 4508989130467046453}
   - component: {fileID: -8201632760338897031}
-  - component: {fileID: 8666166322165994676}
+  - component: {fileID: 8607801382470810776}
   m_Layer: 0
-  m_Name: Star
+  m_Name: Bomb02Child
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 3a53b1cee5433b14da19236a919394b2, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -122,7 +122,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &8666166322165994676
+--- !u!114 &8607801382470810776
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -131,10 +131,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1080062419905580683}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db360a3e3ab61ed4c91f21c00532da3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 729fb0258218e3044a46f5fe703f5252, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 1
+  _damage: 10
   _direction: {x: 0, y: 1}
   _speed: 2
   _bulletMoveMethod: 1
@@ -142,4 +142,6 @@ MonoBehaviour:
   _gameZoneTag: Finish
   _parentTag: Parent
   _playerTag: Player
-  _enemyBulletTag: EnemyBullet
+  _enemyBulletTag: Bullet
+  _followStartTime: 2
+  _followFnishTime: 5
