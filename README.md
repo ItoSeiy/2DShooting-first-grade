@@ -84,19 +84,21 @@ Issueの作成
 
 ## 制作人数
 
-バンタンゲームアカデミー高等部1年 6名
+バンタンゲームアカデミーゲーム制作専攻高等部1年 6名
 
 バンタンゲームアカデミーキャラクターデザイン専攻 1名
 
 プログラマー, プロジェクト管理　伊東聖矢
 
-ゲームイラストレーター　****
+イラストレーター　****
+
+サウンド neko.yanagii [Twitter](https://twitter.com/notreallyrook)
 
 プログラマー 神原琉成
 
 プログラマー 和田有矢 (ゲーム原案, 弾幕等の絵の作成, シナリオ [仕様書の作成](https://docs.google.com/spreadsheets/d/1pmrL_Shegj_XCRdpgxkk6T44g7faOuid/edit#gid=861402618))
 
-プログラマー 近藤倫太 (プレイヤーのボムの絵の作成)
+プログラマー 近藤倫太
 
 プログラマー 安達青　([キャラクター発注書の作成](https://docs.google.com/spreadsheets/d/1sF1S3a3Yge3sxgV-ppf4J7LAbr12b9YN/edit?rtpof=true&sd=true))
 
