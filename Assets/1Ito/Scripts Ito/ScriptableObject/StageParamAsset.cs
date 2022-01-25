@@ -8,7 +8,7 @@ public class StageParamAsset : ScriptableObject
 {
     public List<StageParam> StageParams { get => stageParams; }
 
-    [SerializeField] public List<StageParam> stageParams = new List<StageParam>();
+    [SerializeField] private List<StageParam> stageParams = new List<StageParam>();
 }
 
 
@@ -27,14 +27,14 @@ public class StageParam
 public class PhaseParm
 {
     public GameObject Prefab { get => phasePrefab;}
-    public float BoforeInterval { get => boforeInterval;}
+    public float BoforeInterval { get => beforeInterval;}
     public float Interval { get => interval;}
     public float AfterInterval { get => afterInterval;}
 
-    [SerializeField] private string PhaseName = "Phase";
+    [SerializeField] public string PhaseName = "Phase";
 
     [SerializeField] private GameObject phasePrefab;
-    [SerializeField] private float boforeInterval;
+    [SerializeField] private float beforeInterval;
     [SerializeField] private float interval;
     [SerializeField] private float afterInterval;
 }
