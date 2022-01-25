@@ -99,12 +99,13 @@ public class PlayerBase : MonoBehaviour
     public int PlayerScore => _playerScore;//プレイヤーのスコアを入れておくプロパティ
     public int PlayerPower => _playerPower;//パワーを入れておくプロパティ
     public int PlayerInvincible => _invincibleObjectCount;//InvincibleObjectの所持数を入れておくプロパティ
-
+    Cinemachine.CinemachineImpulseSource _chinema;
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
         _audioSource = GetComponent<AudioSource>();
         _anim = GetComponent<Animation>();
+        _chinema = GetComponent<Cinemachine.CinemachineImpulseSource>();
 
         transform.position = _playerRespawn.position;//リスポーン地点に移動
 
@@ -179,6 +180,7 @@ public class PlayerBase : MonoBehaviour
             if(_wasCharge)
             {
                 Debug.Log("canceled" + _wasCharge);
+                _chinema.GenerateImpulse();
                 PlayerChargeAttack();
                 _wasCharge = true;
                 _isBulletStop = true;
