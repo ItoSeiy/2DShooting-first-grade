@@ -54,7 +54,7 @@ public class PlayerBulletPool : MonoBehaviour
     /// <param name="position">Bulletの位置を指定する</param>
     /// <param name="bulletType">発射するBulletの種類</param>
     /// <returns></returns>
-    public GameObject UseBullet(Vector2 position, PlayerBulletType bulletType)
+    public GameObject UseBullet(Vector2 position, PoolObjectType bulletType)
     {
         foreach(var pool in _pool)
         {
@@ -76,11 +76,11 @@ public class PlayerBulletPool : MonoBehaviour
     private class ObjectPool
     {
         public GameObject Object { get; set; }
-        public PlayerBulletType Type { get; set; }
+        public PoolObjectType Type { get; set; }
     }
 }
 
-public enum PlayerBulletType
+public enum PoolObjectType
 {
     Player01Power1 = 0,
     Player01Power2,
