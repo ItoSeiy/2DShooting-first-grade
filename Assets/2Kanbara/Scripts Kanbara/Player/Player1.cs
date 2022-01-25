@@ -67,8 +67,9 @@ public class Player1 : PlayerBase
                 ObjectPool.Instance.UseBullet(_muzzle.position, PoolObjectType.Player01ChargePower3);
                 break;
         }
-
+        _audioSource.Stop();
         _audioSource.PlayOneShot(_chargeBulletShootingAudio, _musicVolume);
+        Debug.Log(_chargeBulletShootingAudio);
         base.PlayerChargeAttack();
     }
 }

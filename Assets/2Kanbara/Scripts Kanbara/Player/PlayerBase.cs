@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
 using UnityEngine.InputSystem;
+using Cinemachine;
+
 
 /// <summary>
 /// Playerの基底クラス
@@ -28,7 +30,7 @@ public class PlayerBase : MonoBehaviour
 
     [SerializeField, Header("この数値未満ならレベル１")] int _playerLevel1Denom = default;
     [SerializeField, Header("レベル１以上のとき、この数値未満ならレベル２")] int _playerLevel2Denom = default;
-    [SerializeField, Header("この数値以上ならレベル３")] int _playerLevel3Denom = default;
+    [SerializeField, Header("この数値までがレベル３")] int _playerLevel3Denom = default;
 
     [SerializeField, Header("Enemyのタグ")] string _enemyTag = default;
     [SerializeField, Header("EnemyのBulletのタグ")] string _enemyBulletTag = default;
@@ -57,6 +59,10 @@ public class PlayerBase : MonoBehaviour
     [SerializeField, Header("死亡時のアニメーション")] Animation _dead = default;
 
     [SerializeField, Header("音量を調節する変数")] protected float _musicVolume = default;
+
+    [SerializeField, Header("揺らすカメラ")] CinemachineVirtualCamera _cmvcam1 = default;
+
+    [SerializeField, Header("プレイヤーの被弾時に流れる音")] GameObject _playerDestroyAudio = default;
 
     protected const int _level1 = 1;
     protected const int _level2 = 2;
@@ -99,17 +105,18 @@ public class PlayerBase : MonoBehaviour
     public int PlayerScore => _playerScore;//プレイヤーのスコアを入れておくプロパティ
     public int PlayerPower => _playerPower;//パワーを入れておくプロパティ
     public int PlayerInvincible => _invincibleObjectCount;//InvincibleObjectの所持数を入れておくプロパティ
-    Cinemachine.CinemachineImpulseSource _chinema;
+
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
         _audioSource = GetComponent<AudioSource>();
         _anim = GetComponent<Animation>();
-        _chinema = GetComponent<Cinemachine.CinemachineImpulseSource>();
+
+        _cmvcam1.Priority = -1;
 
         transform.position = _playerRespawn.position;//リスポーン地点に移動
 
-        _playerResidue = GameManager.Instance.Residue;
+        _playerResidue = GameManager.Instance.PlayerResidue;
         _bombCount = GameManager.Instance.PlayerBombCount;
         _playerScore = GameManager.Instance.PlayerScore;
         _playerPower = GameManager.Instance.PlayerPower;
@@ -163,9 +170,11 @@ public class PlayerBase : MonoBehaviour
 
     public void InputChargeShotButton(InputAction.CallbackContext context)
     {
-        if (context.started && !_wasCharge)
+        if (context.started)
         {
             Debug.Log("canceled" + _wasCharge);
+            _cmvcam1.Priority = 10;
+            _audioSource.Stop();
             _audioSource.PlayOneShot(_chargeAudio, _musicVolume);
             Debug.Log("started");
         }
@@ -177,16 +186,17 @@ public class PlayerBase : MonoBehaviour
         }
         if(context.canceled)
         {
+            _cmvcam1.Priority = -1;
             if(_wasCharge)
             {
                 Debug.Log("canceled" + _wasCharge);
-                _chinema.GenerateImpulse();
                 PlayerChargeAttack();
                 _wasCharge = true;
                 _isBulletStop = true;
             }
             else
             {
+                _audioSource.Stop();
                 Debug.Log("canceled" + _wasCharge);
             }
             _wasCharge = false;
@@ -249,10 +259,11 @@ public class PlayerBase : MonoBehaviour
         {
             if (_godMode) return;
             _audioSource.PlayOneShot(_onBulletAudio, _musicVolume);
+            Instantiate(_playerDestroyAudio);
             GameManager.Instance.ResidueChange(_defaultDown);
-            _playerResidue = GameManager.Instance.Residue;
+            _playerResidue = GameManager.Instance.PlayerResidue;
 
-            if (PlayerResidue > _default)//残機が残っている場合はリスポーンを行う
+            if (PlayerResidue >= _defaultUp)//残機が残っている場合はリスポーンを行う
             {
                 Respawn();
                 Debug.Log("残り残機" + PlayerResidue);
@@ -267,7 +278,7 @@ public class PlayerBase : MonoBehaviour
         if (collision.gameObject.tag == _1upTag)//残機を増やす処理
         {
             GameManager.Instance.ResidueChange(_defaultUp);
-            _playerResidue = GameManager.Instance.Residue;
+            _playerResidue = GameManager.Instance.PlayerResidue;
             Debug.Log("残機ふえたよー" + PlayerResidue);
         }
 
