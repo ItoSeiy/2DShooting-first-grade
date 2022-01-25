@@ -110,24 +110,24 @@ public class BossEnemyMove03 : MonoBehaviour
                     _rb.velocity = new Vector2(0, 0);
                     yield return new WaitForSeconds(2);
 
-                    if(transform.position.x > 0)
+                    if(transform.position.x >= 0)
                     {
                         _rb.velocity = new Vector2(-5, 0);
-                        yield return new WaitForSeconds(2);
+                        yield return new WaitForSeconds(1);
                         if(transform.position.x <= 0)
                         {
-                            _rb.velocity = new Vector2(0, 0);
-                            yield return new WaitForSeconds(2);
+                            _rb.velocity = Vector2.zero;
+                            yield return new WaitForSeconds(20);
                         }
                     }
-                    else if(transform.position.x <0)
+                    else if(transform.position.x < 0)
                     {
                         _rb.velocity = new Vector2(5, 0);
-                        yield return new WaitForSeconds(2);
+                        yield return new WaitForSeconds(1);
                         if (transform.position.x >= 0)
                         {
-                            _rb.velocity = new Vector2(0, 0);
-                            yield return new WaitForSeconds(2);
+                            _rb.velocity = Vector2.zero;
+                            yield return new WaitForSeconds(20);
                         }
                     }
                     
