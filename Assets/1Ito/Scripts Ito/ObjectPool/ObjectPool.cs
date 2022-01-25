@@ -5,15 +5,15 @@ using UnityEngine;
 /// <summary>
 /// PlayerBulletのオブジェクトプールを管理するスクリプト
 /// </summary>
-public class PlayerBulletPool : MonoBehaviour
+public class ObjectPool : MonoBehaviour
 {
-    public static PlayerBulletPool Instance => _instance;
-    static PlayerBulletPool _instance;
+    public static global::ObjectPool Instance => _instance;
+    static global::ObjectPool _instance;
 
     //[SerializeField] GameObject[] _bullets = null;
     [SerializeField] PoolObjectParamAsset _poolObjParam = default;
 
-    List<ObjectPool> _pool = new List<ObjectPool>();
+    List<ObjPool> _pool = new List<ObjPool>();
 
     //[SerializeField] int[] _poolObjectMaxCount = default;
     int _poolCountIndex = 0;
@@ -41,7 +41,7 @@ public class PlayerBulletPool : MonoBehaviour
         {
             var bullet = Instantiate(_poolObjParam.Params[_poolCountIndex].Prefab /*_bullets[_poolObjCountIndex]*/, this.transform);
             bullet.SetActive(false);
-            _pool.Add(new ObjectPool { Object = bullet, Type = _poolObjParam.Params[_poolCountIndex].Type } );
+            _pool.Add(new ObjPool { Object = bullet, Type = _poolObjParam.Params[_poolCountIndex].Type } );
         }
 
         _poolCountIndex++;
@@ -69,11 +69,11 @@ public class PlayerBulletPool : MonoBehaviour
         var newBullet = Instantiate(_poolObjParam.Params.Find(x => x.Type == bulletType).Prefab /*_bullets[(int)bulletType]*/, this.transform);
         newBullet.transform.position = position;
         newBullet.SetActive(true);
-        _pool.Add(new ObjectPool { Object = newBullet, Type = bulletType});
+        _pool.Add(new ObjPool { Object = newBullet, Type = bulletType});
         return newBullet;
     }
 
-    private class ObjectPool
+    private class ObjPool
     {
         public GameObject Object { get; set; }
         public PoolObjectType Type { get; set; }
