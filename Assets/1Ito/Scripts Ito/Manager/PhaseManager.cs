@@ -18,12 +18,14 @@ public class PhaseManager : MonoBehaviour
     private int _stageIndex = default;
     private int _phaseIndex = default;
 
-    private bool _finishStage = false;
+    private bool _isFirstTime = true;
 
     private void Start()
     {
+        _isFirstTime = true;
         _timer = 0;
         _middleTimer = 0;
+        ChangeState();
     }
 
     private void Update()
@@ -42,36 +44,47 @@ public class PhaseManager : MonoBehaviour
                 EnemyGenerate();
                 break;
         }
-
-        EnemyGenerate();    
     }
 
     void EnemyGenerate()
     {
         _timer += Time.deltaTime;
+        Debug.Log("スタート待機");
 
-        if (_timer >= _paramAsset.StageParams[_stageIndex].phaseParms[_phaseIndex].BoforeInterval)
-            return;
-
-        _middleTimer += Time.deltaTime;
-        if(_middleTimer >= _paramAsset.StageParams[_stageIndex].phaseParms[_phaseIndex].Interval)
+        if (_timer >= _paramAsset.StageParams[_stageIndex].phaseParms[_phaseIndex].StartTime)
         {
-            Instantiate(_paramAsset.StageParams[_stageIndex].phaseParms[_phaseIndex].Prefab).transform.position = _generatePos.position;
-            Debug.Log(_paramAsset.StageParams[_stageIndex].phaseParms[_phaseIndex].PhaseName);
-            _middleTimer = 0;
+            Debug.Log("生成待機");
+            _middleTimer += Time.deltaTime;
+
+            if(_middleTimer >= _paramAsset.StageParams[_stageIndex].phaseParms[_phaseIndex].Interval || _isFirstTime)
+            {
+                Debug.Log("生成");
+                Instantiate(_paramAsset.StageParams[_stageIndex].phaseParms[_phaseIndex].Prefab).transform.position = _generatePos.position;
+                Debug.Log(_paramAsset.StageParams[_stageIndex].phaseParms[_phaseIndex].PhaseName);
+                _middleTimer = 0;
+                _isFirstTime = false;
+            }
+
+            if (_timer >= _paramAsset.StageParams[_stageIndex].phaseParms[_phaseIndex].FinishTime)
+            {
+                Debug.Log("生成終了");
+                _timer = 0;
+                _isFirstTime = true;
+                ChangeState((Phase)_phaseIndex + 1);
+            }
         }
 
-
-        if (_timer >= _paramAsset.StageParams[_stageIndex].phaseParms[_phaseIndex].AfterInterval)
-        {
-            _timer = 0;
-            ChangeState((Phase)_phaseIndex + 1);
-        }
     }
 
     void BossStage()
     {
+        Debug.Log("ボス");
+    }
 
+    void ChangeState()
+    {
+        _stageIndex = (int)_stageState;
+        _phaseIndex = (int)_phaseState;
     }
     
     void ChangeState(Phase phase)
@@ -93,7 +106,7 @@ public class PhaseManager : MonoBehaviour
 
 public enum Stage
 {
-    Stage01, 
+    Stage01 = 0, 
     Stage02,
     Stage03,
     Stage04,
@@ -102,7 +115,7 @@ public enum Stage
 
 public enum Phase
 {
-    Phase01,
+    Phase01 = 0,
     Phase02,
     Phase03,
     Phase04,

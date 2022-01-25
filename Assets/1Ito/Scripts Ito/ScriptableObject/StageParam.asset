@@ -12,19 +12,55 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca5155e546acb674aabe98df4851ddfd, type: 3}
   m_Name: StageParam
   m_EditorClassIdentifier: 
-  StageParams:
-  - Stage: Stage01
+  stageParams:
+  - StageName: Stage1
     phaseParms:
-    - Phase: 
+    - PhaseName: Phase1
+      phasePrefab: {fileID: 2829315167263510462, guid: 28fb3003815ae394895b0dcaf559a0be,
+        type: 3}
+      startTime: 0
+      interval: 5
+      finishTime: 30
+    - PhaseName: Phase2
+      phasePrefab: {fileID: 2829315167263510462, guid: 28fb3003815ae394895b0dcaf559a0be,
+        type: 3}
+      startTime: 5
+      interval: 5
+      finishTime: 30
+    - PhaseName: Phase3
+      phasePrefab: {fileID: 2829315167263510462, guid: 28fb3003815ae394895b0dcaf559a0be,
+        type: 3}
+      startTime: 30
+      interval: 5
+      finishTime: 30
+    - PhaseName: Phase4
+      phasePrefab: {fileID: 2829315167263510462, guid: 28fb3003815ae394895b0dcaf559a0be,
+        type: 3}
+      startTime: 5
+      interval: 5
+      finishTime: 30
+    - PhaseName: Phase5
+      phasePrefab: {fileID: 2829315167263510462, guid: 28fb3003815ae394895b0dcaf559a0be,
+        type: 3}
+      startTime: 5
+      interval: 5
+      finishTime: 30
+    - PhaseName: Boss
+      phasePrefab: {fileID: 2829315167263510462, guid: 28fb3003815ae394895b0dcaf559a0be,
+        type: 3}
+      startTime: 5
+      interval: 5
+      finishTime: 30
+  - StageName: Stage2
+    phaseParms:
+    - PhaseName: Phaese1
       phasePrefab: {fileID: 0}
-      boforeInterval: 0
+      startTime: 0
       interval: 0
-      afterInterval: 0
-  - Stage: Stage02
+      finishTime: 0
+  - StageName: Stage3
     phaseParms: []
-  - Stage: Stage03
+  - StageName: Stage4
     phaseParms: []
-  - Stage: Stage04
-    phaseParms: []
-  - Stage: Stage05
+  - StageName: Stage5
     phaseParms: []

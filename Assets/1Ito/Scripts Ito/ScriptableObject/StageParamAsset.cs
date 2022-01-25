@@ -27,15 +27,15 @@ public class StageParam
 public class PhaseParm
 {
     public GameObject Prefab { get => phasePrefab;}
-    public float BoforeInterval { get => beforeInterval;}
+    public float StartTime { get => startTime;}
     public float Interval { get => interval;}
-    public float AfterInterval { get => afterInterval;}
+    public float FinishTime { get => finishTime;}
 
     [SerializeField] public string PhaseName = "Phase";
 
     [SerializeField] private GameObject phasePrefab;
-    [SerializeField] private float beforeInterval;
+    [SerializeField] private float startTime;
     [SerializeField] private float interval;
-    [SerializeField] private float afterInterval;
+    [SerializeField] private float finishTime;
 }
 
