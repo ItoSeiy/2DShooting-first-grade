@@ -1,4 +1,5 @@
 using UnityEngine;
+using DG.Tweening;
 
 public class EnemyBullt : BulletBese
 {
@@ -45,7 +46,7 @@ void Update()
             case BulltMode.straightBullet:
                  break;
             case BulltMode.rotateBullet:
-                
+            
                 break;
 
 
