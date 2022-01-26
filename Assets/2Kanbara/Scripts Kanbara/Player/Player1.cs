@@ -31,7 +31,7 @@ public class Player1 : PlayerBase
             ObjectPool.Instance.UseBullet(_muzzle.position, PoolObjectType.Player01Power3);
                 break;
         }
-        
+        Play(_playerBulletAudio);
         base.PlayerAttack();
     }
 
@@ -49,7 +49,7 @@ public class Player1 : PlayerBase
                 ObjectPool.Instance.UseBullet(_muzzle.position, PoolObjectType.Player01SuperPower3);
                 break;
         }
-        _audioSource.PlayOneShot(_superBulletShootingAudio, _musicVolume);
+        Play(_playerSuperBulletAudio);
         base.PlayerSuperAttack();
     }
 
@@ -67,7 +67,8 @@ public class Player1 : PlayerBase
                 ObjectPool.Instance.UseBullet(_muzzle.position, PoolObjectType.Player01ChargePower3);
                 break;
         }
-        _audioSource.PlayOneShot(_chargeBulletShootingAudio, _musicVolume);
+        _audioSource.Stop();
+        Play(_playerChargeShotBulletAudio);
         base.PlayerChargeAttack();
     }
 }
