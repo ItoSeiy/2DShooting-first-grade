@@ -54,7 +54,6 @@ public class PlayerBase : MonoBehaviour
     [SerializeField, Header("チャージショットを撃つときの音")] protected AudioClip _chargeBulletShootingAudio = default;
     [SerializeField, Header("被弾したときの音")] protected AudioClip _onBulletAudio = default;
     [SerializeField, Header("ボムを撃ったときの音")] protected AudioClip _shootingBombAudio = default;
-    [SerializeField, Header("BGM")] protected AudioClip _bgm = default;
 
     [SerializeField, Header("死亡時のアニメーション")] Animation _dead = default;
 
@@ -172,34 +171,31 @@ public class PlayerBase : MonoBehaviour
     {
         if (context.started)
         {
-            Debug.Log("canceled" + _wasCharge);
+            Debug.Log("started" + _wasCharge);
             _cmvcam1.Priority = 10;
             _audioSource.Stop();
             _audioSource.PlayOneShot(_chargeAudio, _musicVolume);
-            Debug.Log("started");
         }
         if(context.performed)
         {
-            Debug.Log("canceled" + _wasCharge);
+            Debug.Log("performed" + _wasCharge);
             _wasCharge = true;
-            Debug.Log("performed");
         }
         if(context.canceled)
         {
-            _cmvcam1.Priority = -1;
             if(_wasCharge)
             {
                 Debug.Log("canceled" + _wasCharge);
                 PlayerChargeAttack();
-                _wasCharge = true;
                 _isBulletStop = true;
+                _wasCharge = false;
             }
             else
             {
                 _audioSource.Stop();
-                Debug.Log("canceled" + _wasCharge);
+                Debug.Log("canceled2" + _wasCharge);
             }
-            _wasCharge = false;
+            _cmvcam1.Priority = -1;
         }
     }
 
