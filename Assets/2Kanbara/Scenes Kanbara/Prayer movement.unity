@@ -774,6 +774,51 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &752846123
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 752846125}
+  - component: {fileID: 752846124}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &752846124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 752846123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59e13f34efc7dc448b6189a55541f6e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioData: []
+  _audioSource: {fileID: 0}
+--- !u!4 &752846125
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 752846123}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &888640652
 GameObject:
   m_ObjectHideFlags: 0
@@ -807,6 +852,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f093ca1abbb00d4aa5948d6574000fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _audioData: []
   _playerRespawn: {fileID: 8494302934883400905, guid: ea9957449aa2ce04681b61bcb9045a17,
     type: 3}
   _muzzle: {fileID: 1865002158}
@@ -831,16 +877,15 @@ MonoBehaviour:
   _playerPowerMax: 150
   _respawnTime: 2800
   _afterRespawnTime: 1400
-  _bulletShootingAudio: {fileID: 0}
-  _superBulletShootingAudio: {fileID: 0}
-  _chargeAudio: {fileID: 0}
-  _chargeBulletShootingAudio: {fileID: 0}
-  _onBulletAudio: {fileID: 0}
-  _shootingBombAudio: {fileID: 0}
   _dead: {fileID: 0}
   _musicVolume: 1
   _cmvcam1: {fileID: 0}
-  _playerDestroyAudio: {fileID: 0}
+  _playerBulletAudio: 
+  _playerSuperBulletAudio: 
+  _playerChargeBulletAudio: 
+  _playerChargeShotBulletAudio: 
+  _playerBombShotAudio: 
+  _playerDestroyAudio: 
 --- !u!58 &888640654
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1409,7 +1454,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1563847165}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
@@ -2113,6 +2158,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 939dc20eda0eb1f4f9f16bbc61d1e615, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _audioData:
+  - _key: Charge
+    _audio: {fileID: 8300000, guid: 964a8f42b3ae5104b8d7c2e98afb6770, type: 3}
+  - _key: ChargeShot
+    _audio: {fileID: 8300000, guid: 27073d1ce8499684c9a86aa8ee9d955e, type: 3}
+  - _key: Bullet
+    _audio: {fileID: 0}
+  - _key: SuperBullet
+    _audio: {fileID: 0}
+  - _key: Bomb
+    _audio: {fileID: 0}
+  - _key: PlayerDestroy
+    _audio: {fileID: 0}
   _playerRespawn: {fileID: 8494302934883400905, guid: ea9957449aa2ce04681b61bcb9045a17,
     type: 3}
   _muzzle: {fileID: 2018753175}
@@ -2137,18 +2195,15 @@ MonoBehaviour:
   _playerPowerMax: 150
   _respawnTime: 2800
   _afterRespawnTime: 1400
-  _bulletShootingAudio: {fileID: 0}
-  _superBulletShootingAudio: {fileID: 0}
-  _chargeAudio: {fileID: 8300000, guid: 964a8f42b3ae5104b8d7c2e98afb6770, type: 3}
-  _chargeBulletShootingAudio: {fileID: 8300000, guid: 27073d1ce8499684c9a86aa8ee9d955e,
-    type: 3}
-  _onBulletAudio: {fileID: 0}
-  _shootingBombAudio: {fileID: 0}
   _dead: {fileID: 0}
   _musicVolume: 1
   _cmvcam1: {fileID: 1840163312}
-  _playerDestroyAudio: {fileID: 2973727995864851679, guid: 3ddfe9c35118e084699d2e3424172dce,
-    type: 3}
+  _playerBulletAudio: Bullet
+  _playerSuperBulletAudio: SuperBullet
+  _playerChargeBulletAudio: Charge
+  _playerChargeShotBulletAudio: ChargeShot
+  _playerBombShotAudio: Bomb
+  _playerDestroyAudio: PlayerDestroy
 --- !u!114 &1915347102
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -14,6 +14,7 @@ using Cinemachine;
 
 public class PlayerBase : MonoBehaviour
 {
+    [SerializeField, Header("プレイヤーの音")] protected AudioData[] _audioData;
     Rigidbody2D _rb;
     protected AudioSource _audioSource;
     Animation _anim;
@@ -48,20 +49,18 @@ public class PlayerBase : MonoBehaviour
     [SerializeField, Header("リスポーン中の無敵時間")] protected int _respawnTime = default;
     [SerializeField, Header("リスポーン後の無敵時間")] int _afterRespawnTime = default;
 
-    [SerializeField, Header("弾を撃つときの音")] protected AudioClip _bulletShootingAudio = default;
-    [SerializeField, Header("精密操作時に弾を撃つときの音")] protected AudioClip _superBulletShootingAudio = default;
-    [SerializeField, Header("チャージ中の音")] protected AudioClip _chargeAudio = default;
-    [SerializeField, Header("チャージショットを撃つときの音")] protected AudioClip _chargeBulletShootingAudio = default;
-    [SerializeField, Header("被弾したときの音")] protected AudioClip _onBulletAudio = default;
-    [SerializeField, Header("ボムを撃ったときの音")] protected AudioClip _shootingBombAudio = default;
-
     [SerializeField, Header("死亡時のアニメーション")] Animation _dead = default;
 
     [SerializeField, Header("音量を調節する変数")] protected float _musicVolume = default;
 
     [SerializeField, Header("揺らすカメラ")] CinemachineVirtualCamera _cmvcam1 = default;
 
-    [SerializeField, Header("プレイヤーの被弾時に流れる音")] GameObject _playerDestroyAudio = default;
+    [SerializeField, Header("通常弾の音")] protected string _playerBulletAudio = default;
+    [SerializeField, Header("精密操作時の弾の音")] protected string _playerSuperBulletAudio = default;
+    [SerializeField, Header("チャージ中の音")] protected string _playerChargeBulletAudio = default;
+    [SerializeField, Header("チャージショットの音")] protected string _playerChargeShotBulletAudio = default;
+    [SerializeField, Header("ボムの音")] protected string _playerBombShotAudio = default;
+    [SerializeField, Header("プレイヤーの被弾時に流れる音")] protected string _playerDestroyAudio = default;
 
     protected const int _level1 = 1;
     protected const int _level2 = 2;
@@ -110,6 +109,7 @@ public class PlayerBase : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _audioSource = GetComponent<AudioSource>();
         _anim = GetComponent<Animation>();
+        _audioData = GetComponent<AudioData[]>();
 
         _cmvcam1.Priority = -1;
 
@@ -174,7 +174,7 @@ public class PlayerBase : MonoBehaviour
             Debug.Log("started" + _wasCharge);
             _cmvcam1.Priority = 10;
             _audioSource.Stop();
-            _audioSource.PlayOneShot(_chargeAudio, _musicVolume);
+            Play(_playerChargeBulletAudio);
         }
         if(context.performed)
         {
@@ -203,28 +203,28 @@ public class PlayerBase : MonoBehaviour
     {
         if (_isLateMode && context.started)//精密操作時の処理
         {
-            while(true)
+            while(context.performed)
             {
-                if(context.canceled)
-                {
-                    return;
-                }
                 PlayerSuperAttack();
                 _wasCharge = true;
                 _isBulletStop = true;
-            }
-        }
-        else if (!_isLateMode && context.performed)//通常時の処理
-        {
-            while(true)
-            {
                 if(context.canceled)
                 {
-                    return;
+                    break;
                 }
+            }
+        }
+        else if (!_isLateMode && context.started)//通常時の処理
+        {
+            while(context.performed)
+            {
                 PlayerAttack();
                 _wasCharge = true;
                 _isBulletStop = true;
+                if(context.canceled)
+                {
+                    break;
+                }
             }
         }
     }
@@ -257,7 +257,7 @@ public class PlayerBase : MonoBehaviour
     public virtual async void Bom()
     {
         Debug.Log("ボム撃ったよー");
-        _audioSource.PlayOneShot(_shootingBombAudio, _musicVolume);
+        Play(_playerBombShotAudio);
         await Task.Delay(_bombCoolTime);
         _isBomb = false;
     }
@@ -268,8 +268,7 @@ public class PlayerBase : MonoBehaviour
         if (!_godMode && collision.gameObject.tag == _enemyTag || collision.gameObject.tag == _enemyBulletTag)
         {
             if (_godMode) return;
-            _audioSource.PlayOneShot(_onBulletAudio, _musicVolume);
-            Instantiate(_playerDestroyAudio);
+            Play(_playerDestroyAudio);
             GameManager.Instance.ResidueChange(_defaultDown);
             _playerResidue = GameManager.Instance.PlayerResidue;
 
@@ -346,5 +345,19 @@ public class PlayerBase : MonoBehaviour
         GameManager.Instance.PlayerInvicibleObjectValueChange(_returnDefault);
         await Task.Delay(_invincibleCoolTime);
         _godMode = false;
+    }
+
+    public void Play(string key)
+    {
+        var data = System.Array.Find(_audioData, e => e._key == key);
+
+        if (data != null)
+        {
+            _audioSource.PlayOneShot(data._audio);
+        }
+        else
+        {
+            Debug.Log("AudioClipがありません");
+        }
     }
 }
