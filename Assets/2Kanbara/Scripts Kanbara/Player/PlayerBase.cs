@@ -100,7 +100,7 @@ public class PlayerBase : MonoBehaviour
     readonly int _returnDefault = -150;
 
     public int PlayerResidue => _playerResidue;//残機を入れておくプロパティ
-    public int BombCount => _bombCount;//ボムの数を入れておくプロパティ
+    public int BombCount => _bombCount;//ボムの数を入れておくプロパティ            
     public int PlayerScore => _playerScore;//プレイヤーのスコアを入れておくプロパティ
     public int PlayerPower => _playerPower;//パワーを入れておくプロパティ
     public int PlayerInvincible => _invincibleObjectCount;//InvincibleObjectの所持数を入れておくプロパティ
@@ -201,17 +201,31 @@ public class PlayerBase : MonoBehaviour
 
     public void OnFire(InputAction.CallbackContext context)//Mouceの左クリックまたは、GamePadのZRボタンで弾を出す
     {
-        if (_isLateMode && !context.canceled)//精密操作時の処理
+        if (_isLateMode && context.started)//精密操作時の処理
         {
-            PlayerSuperAttack();
-            _wasCharge = true;
-            _isBulletStop = true;
+            while(true)
+            {
+                if(context.canceled)
+                {
+                    return;
+                }
+                PlayerSuperAttack();
+                _wasCharge = true;
+                _isBulletStop = true;
+            }
         }
-        else if (!_isLateMode && !context.canceled)//通常時の処理
+        else if (!_isLateMode && context.performed)//通常時の処理
         {
-            PlayerAttack();
-            _wasCharge = true;
-            _isBulletStop = true;
+            while(true)
+            {
+                if(context.canceled)
+                {
+                    return;
+                }
+                PlayerAttack();
+                _wasCharge = true;
+                _isBulletStop = true;
+            }
         }
     }
 

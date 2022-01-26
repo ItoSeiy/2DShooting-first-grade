@@ -46,9 +46,17 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        _instance = this;
-        Init();
-        DontDestroyOnLoad(gameObject);
+        if(Instance)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            _instance = this;
+            Init();
+            DontDestroyOnLoad(gameObject);
+        }
+
     }
 
     /// <summary>
@@ -139,7 +147,6 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void GameOver()
     {
-        Init();
         _gameOverEvent.Invoke();
     }
 
