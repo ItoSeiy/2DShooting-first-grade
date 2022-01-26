@@ -12,31 +12,45 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance => _instance;
     static GameManager _instance;
 
+    const int _level1Index = 1;
+    const int _level2Index = 2;
+    const int _level3Index = 3;
+
 
     public int PlayerScore => _playerScore;
     public int PlayerPower => _playerPower;
+    public int PlayerLevel => _playerLevel;
     public int PlayerBombCount => _playerBombCount;
     ///<summary>一定数獲得すると無敵になるオブジェクトを獲得した数</summary>
     public int PlayerInvincibleObjectCount => _playerInvicibleObjectCount;
     ///<summary>プレイヤーの残基</summary>
     public int Residue => _residue;
+    public float PlayerLevel1 { get => _pb.PlayerLevel1; }
+    public float PlayerLevel2 { get => _pb.PlayerLevel2; }
+    public float PlayerLevel3 { get => _pb.PlayerLevel3; }
 
     private int _playerScore = default;
     private int _playerPower = default;
+    private int _playerLevel = default;
     private int _playerBombCount = default;
     ///<summary>一定数獲得すると無敵になるオブジェクトを獲得した数///</summary>
     private int _playerInvicibleObjectCount = default;
     /// <summary>プレイヤーの残基</summary>
     private int _residue =　default;
+
     [SerializeField] UnityEvent _gameOverEvent;
-    
+
+    PlayerBase _pb;
+
     private void Awake()
     {
         Init();
         _instance = this;
         DontDestroyOnLoad(gameObject);
+        _pb = GameObject.FindWithTag("Player").GetComponent<PlayerBase>();
+        PlayerLevelCheck();
     }
-
+    
     /// <summary>
     /// ゲームスタート時に呼び出される関数
     /// 変数のリセットを行う
@@ -47,6 +61,7 @@ public class GameManager : MonoBehaviour
         _playerPower = 0;
         _playerBombCount = 0;
         _playerInvicibleObjectCount = 0;
+        _playerLevel = _level1Index;
     }
 
     /// <summary>
@@ -66,6 +81,26 @@ public class GameManager : MonoBehaviour
     public void PlayerPowerChange(int power)
     {
         _playerPower += power;
+        PlayerLevelCheck();
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public  void PlayerLevelCheck()
+    {
+        if (PlayerPower < _pb.PlayerLevel1)//レベル1のとき
+        {
+            _playerLevel = _level1Index;
+        }
+        else if (_pb.PlayerLevel1 <= PlayerPower && PlayerPower < _pb.PlayerLevel3)//レベル2のとき
+        {
+            _playerLevel = _level2Index;
+        }
+        else if (_pb.PlayerLevel3 <= PlayerPower)//レベル3のとき
+        {
+            _playerLevel = _level3Index;
+        }
     }
 
     /// <summary>
