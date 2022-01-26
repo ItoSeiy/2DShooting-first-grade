@@ -5,38 +5,79 @@ using UnityEngine;
 public class BossEnemyMoveThunder : MonoBehaviour
 {
     Rigidbody2D _rb;
-    float _time;
+    int _back = 0;
+    int _thunder = 0;
+     float _xMove = 5f;
+     float _yMove = 6f;
     [SerializeField,Header("スピード")] float _speed;
     int sign;
-    bool _switch = false;
+    int _switch = 0;
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
     }
     void Update()
     {
-        _time += Time.deltaTime;
-        if (transform.position.x >= 0)
-        {
-            Thunder(-1);
-        }
-        else
-        {
-            Thunder(1);
-        }
-    }
+        transform.position = new Vector2(Mathf.Clamp(transform.position.x, -8f, 8f), (Mathf.Clamp(transform.position.y, -4f, 4f)));
 
-    IEnumerator Thunder()
-    {
-        if (!_switch)
+        if (_switch == 0)
         {
-            _rb.velocity = new Vector2(2 * sign, 1);
-            _switch = true;
+            if (transform.position.x <= -7.5f)
+            {
+                Debug.Log("nice!");
+                _switch = 1;
+                _rb.velocity = new Vector2(0,0);
+            }
+            else
+            {
+                Debug.Log("maane");
+                _rb.velocity = new Vector2(-4, 0);
+            }
         }
-        else
+        if (_switch == 1)
         {
-            _rb.velocity = new Vector2(-1 * sign, -1);
-            _switch = false;
+            Debug.Log("dayone");
+            if (transform.position.x <= 7.5f)
+            {
+                _rb.velocity = new Vector2(_xMove, _yMove);
+                _thunder++;
+
+                if (_thunder >= 100)
+                {
+                    _thunder = 0;
+                    _rb.velocity = new Vector2(_xMove, _yMove);
+                    _yMove *= -1;
+                }
+            }
+            else
+            {
+                _rb.velocity = new Vector2(0, 0);
+                _switch = 2;
+                _xMove *= -1;
+            }
+        }
+
+        if (_switch == 2)
+        {
+            Debug.Log("dayone");
+            if (transform.position.x >= -7.5f)
+            {
+                _rb.velocity = new Vector2(_xMove, _yMove);
+                _thunder++;
+
+                if (_thunder >= 100)
+                {
+                    _thunder = 0;
+                    _rb.velocity = new Vector2(_xMove, _yMove);
+                    _yMove *= -1;
+                }
+            }
+            else
+            {
+                _rb.velocity = new Vector2(0, 0);
+                _switch = 1;
+                _xMove *= -1;
+            }
         }
     }
 }
