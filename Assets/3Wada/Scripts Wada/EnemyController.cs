@@ -4,10 +4,11 @@ using UnityEngine;
 /// <summary>
 /// Enemyの派生クラス
 /// </summary>
-public class EnemyController : EnemyBese
+public class EnemyController : EnemyBese 
 {
     [SerializeField,Header("マズルの位置")] Transform[] _muzzle = null;
-    [SerializeField, Header("倒された時の音")] AudioSource _onDestroyAudio = null;
+    [SerializeField, Header("倒された時の音")] GameObject _Audio = default;
+    [SerializeField] GameObject _Bulet; 
     [SerializeField, Header("移動の向きの変えるY軸")] float _ybottomposition = 0;
     [SerializeField, Header("移動の向きの変えるx軸")] float _xbottomposition = 0;
     [SerializeField, Header("出た時の移動方向")] Vector2 _beforeDir;
@@ -17,6 +18,7 @@ public class EnemyController : EnemyBese
     [SerializeField] int _a = 2;
     bool _isBttomposition = false;
     [SerializeField, Header("何秒とどまるか")] float _stopcount = 0.0f;
+    
 
     //[SerializeField] float _testX = 0;
     //[SerializeField] float _testY = 0;
@@ -102,15 +104,16 @@ protected override void Attack()
     {
         for (int i = 0; i < _muzzle.Length; i++)
         {
-            //Instantiate(_bullet, _muzzle[i]);
+            Instantiate(_Bulet, _muzzle[i]);
         }
     }
+    
 
     protected override void OnGetDamage()
     {
         if (EnemyHp == 0) 
         {
-            AudioSource.PlayClipAtPoint(_onDestroyAudio.clip,transform.position);    
+            Instantiate(_Audio);
         }
     }
     enum MoveMode
