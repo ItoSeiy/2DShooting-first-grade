@@ -210,6 +210,7 @@ public class PlayerBase : MonoBehaviour
         if(context.canceled)
         {
             _audioSource.Stop();
+            _wasCharge = false;
             _cmvcam1.Priority = -1;
         }
     }
@@ -218,7 +219,7 @@ public class PlayerBase : MonoBehaviour
     {
         if (context.started)//攻撃時の処理
         {
-            //if (_wasCharge) return;
+            if (_wasCharge) return;
             _isAttackMode = true;
         }
         if(context.canceled)
