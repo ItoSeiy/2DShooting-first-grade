@@ -50,12 +50,11 @@ public class NovelManager : MonoBehaviour
     public void ControllText()
     {
 
-        if (_currentCharNum < _datas[_ggsRow][1].Length)
+        if (_currentCharNum < _datas[_ggsRow][MainTextColumn].Length)
         {
 
             if (_isClick)
             {
-                _oldTextInterval = _textInterval;
                 _textInterval = 0;
             }
 
@@ -97,6 +96,8 @@ public class NovelManager : MonoBehaviour
             {
                 Command();
             }
+
+            _isClick = false;
         }
     }
 
@@ -116,13 +117,9 @@ public class NovelManager : MonoBehaviour
                 _audioSource.mute = true;
                 _nameText.text = "";
                 break;
-            case "主人公":
-                _nameText.text = "巽";
-                //_nameText.text = GameManager.Instance.MainCharacterName;
-                break;
             default:
-                _nameText.text = _datas[_ggsRow][NameTextColumn];
                 _audioSource.mute = false;
+                _nameText.text = _datas[_ggsRow][NameTextColumn];
                 break;
         }
 
@@ -153,7 +150,7 @@ public class NovelManager : MonoBehaviour
                 SoundManager.Instance.UseSound(_soundType);
                 break;
             default:
-                Debug.LogError(command + "というコマンドは無効です");
+                Debug.LogError(command[0] + command[1] + "というコマンドは無効です");
                 break;
         }
         _ggsRow++;
@@ -165,15 +162,14 @@ public class NovelManager : MonoBehaviour
 
     public void OnClick(InputAction.CallbackContext context)
     {
-        if(context.started)
+        if(context.started && !_isClick)
         {
-            Debug.Log("click");
             _isClick = true;
+            Debug.Log(_isClick);
         }
 
         if(context.canceled)
         {
-            Debug.Log("click");
             _isClick = false;
         }
     }
