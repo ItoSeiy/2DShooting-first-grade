@@ -803,8 +803,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59e13f34efc7dc448b6189a55541f6e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _audioData: []
-  _audioSource: {fileID: 0}
 --- !u!4 &752846125
 Transform:
   m_ObjectHideFlags: 0
@@ -1428,6 +1426,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b784e7e6c4d7b0f428a3c90e849024df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _mainCharacterName: 
   _playerResidue: 3
   _bgm: []
   _gameOverEvent:
@@ -1456,7 +1455,8 @@ AudioSource:
   m_GameObject: {fileID: 1563847165}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 6709231543892393368, guid: ad5b1f8ac9843f546aae4eb1f456ea7f,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -1999,7 +1999,19 @@ MonoBehaviour:
     m_ActionId: 4e2d5ce8-0a09-45f4-94e6-4ecd4ddc6580
     m_ActionName: UI/Point[/Mouse/position]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 2bf666cf-3e20-4dd8-b31a-8a0613d8d737
     m_ActionName: UI/Click[/Mouse/leftButton]
   - m_PersistentCalls:
@@ -2026,7 +2038,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1915347101}
         m_TargetAssemblyTypeName: PlayerBase, Assembly-CSharp
-        m_MethodName: InputChargeShotButton
+        m_MethodName: OnInputChargeShotButton
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2174,9 +2186,9 @@ MonoBehaviour:
   _playerRespawn: {fileID: 8494302934883400905, guid: ea9957449aa2ce04681b61bcb9045a17,
     type: 3}
   _muzzle: {fileID: 2018753175}
-  _superAttackDelay: 300
-  _attackDelay: 300
-  _chargeAttackDelay: 2800
+  _superAttackDelay: 200
+  _attackDelay: 200
+  _chargeAttackDelay: 0
   _bombCoolTime: 0
   _invincibleCoolTime: 2800
   _playerLevel1Denom: 50
@@ -2255,7 +2267,8 @@ AudioSource:
   m_GameObject: {fileID: 1915347095}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -4737002959340295446, guid: ad5b1f8ac9843f546aae4eb1f456ea7f,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1

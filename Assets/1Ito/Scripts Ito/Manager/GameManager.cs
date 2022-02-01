@@ -9,6 +9,8 @@ using UnityEngine.Events;
 /// </summary>
 public class GameManager : MonoBehaviour
 {
+    public string MainCharacterName => _mainCharacterName;
+    [SerializeField, Header("メインキャラクターの名前")] string _mainCharacterName = default;
     public static GameManager Instance => _instance;
     static GameManager _instance;
 
