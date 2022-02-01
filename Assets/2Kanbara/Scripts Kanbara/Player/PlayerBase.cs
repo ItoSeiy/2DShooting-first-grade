@@ -183,11 +183,14 @@ public class PlayerBase : MonoBehaviour
     public void OnJump(InputAction.CallbackContext context)//SpaceKeyが押された瞬間の処理
     {
         if (_isNotControll) return;
-        if (BombCount >= _default)
+        if(context.started)
         {
-            Bom();
-            _isBomb = true;
-            GameManager.Instance.PlayerBombCountChange(_defaultDown);
+            if (BombCount > _default)
+            {
+                Bom();
+                _isBomb = true;
+                GameManager.Instance.PlayerBombCountChange(_defaultDown);
+            }
         }
     }
 
