@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
 using UnityEngine.InputSystem;
+using Cinemachine;
+
 
 /// <summary>
 /// Playerの基底クラス
@@ -12,6 +14,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerBase : MonoBehaviour
 {
+    [SerializeField, Header("プレイヤーの音")] protected AudioData[] _audioData;
     Rigidbody2D _rb;
     protected AudioSource _audioSource;
     Animation _anim;
@@ -28,7 +31,7 @@ public class PlayerBase : MonoBehaviour
 
     [SerializeField, Header("この数値未満ならレベル１")] int _playerLevel1Denom = default;
     [SerializeField, Header("レベル１以上のとき、この数値未満ならレベル２")] int _playerLevel2Denom = default;
-    [SerializeField, Header("この数値以上ならレベル３")] int _playerLevel3Denom = default;
+    [SerializeField, Header("この数値までがレベル３")] int _playerLevel3Denom = default;
 
     [SerializeField, Header("Enemyのタグ")] string _enemyTag = default;
     [SerializeField, Header("EnemyのBulletのタグ")] string _enemyBulletTag = default;
@@ -46,17 +49,18 @@ public class PlayerBase : MonoBehaviour
     [SerializeField, Header("リスポーン中の無敵時間")] protected int _respawnTime = default;
     [SerializeField, Header("リスポーン後の無敵時間")] int _afterRespawnTime = default;
 
-    [SerializeField, Header("弾を撃つときの音")] protected AudioClip _bulletShootingAudio = default;
-    [SerializeField, Header("精密操作時に弾を撃つときの音")] protected AudioClip _superBulletShootingAudio = default;
-    [SerializeField, Header("チャージ中の音")] protected AudioClip _chargeAudio = default;
-    [SerializeField, Header("チャージショットを撃つときの音")] protected AudioClip _chargeBulletShootingAudio = default;
-    [SerializeField, Header("被弾したときの音")] protected AudioClip _onBulletAudio = default;
-    [SerializeField, Header("ボムを撃ったときの音")] protected AudioClip _shootingBombAudio = default;
-    [SerializeField, Header("BGM")] protected AudioClip _bgm = default;
-
     [SerializeField, Header("死亡時のアニメーション")] Animation _dead = default;
 
     [SerializeField, Header("音量を調節する変数")] protected float _musicVolume = default;
+
+    [SerializeField, Header("揺らすカメラ")] CinemachineVirtualCamera _cmvcam1 = default;
+
+    [SerializeField, Header("通常弾の音")] protected string _playerBulletAudio = default;
+    [SerializeField, Header("精密操作時の弾の音")] protected string _playerSuperBulletAudio = default;
+    [SerializeField, Header("チャージ中の音")] protected string _playerChargeBulletAudio = default;
+    [SerializeField, Header("チャージショットの音")] protected string _playerChargeShotBulletAudio = default;
+    [SerializeField, Header("ボムの音")] protected string _playerBombShotAudio = default;
+    [SerializeField, Header("プレイヤーの被弾時に流れる音")] protected string _playerDestroyAudio = default;
 
     protected const int _level1 = 1;
     protected const int _level2 = 2;
@@ -84,6 +88,8 @@ public class PlayerBase : MonoBehaviour
     bool _isNotControll = default;
     /// <summary>チャージしているかどうか判定するフラグ</summary>
     bool _wasCharge = default;
+    /// <summary>アタックしているかどうか判定するフラグ</summary>
+    bool _isAttackMode = default;
 
     /// <summary>カウントアップする定数</summary>
     const int _defaultUp = 1;
@@ -95,7 +101,7 @@ public class PlayerBase : MonoBehaviour
     readonly int _returnDefault = -150;
 
     public int PlayerResidue => _playerResidue;//残機を入れておくプロパティ
-    public int BombCount => _bombCount;//ボムの数を入れておくプロパティ
+    public int BombCount => _bombCount;//ボムの数を入れておくプロパティ            
     public int PlayerScore => _playerScore;//プレイヤーのスコアを入れておくプロパティ
     public int PlayerPower => _playerPower;//パワーを入れておくプロパティ
     public int PlayerInvincible => _invincibleObjectCount;//InvincibleObjectの所持数を入れておくプロパティ
@@ -105,17 +111,20 @@ public class PlayerBase : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _audioSource = GetComponent<AudioSource>();
         _anim = GetComponent<Animation>();
+        _audioData = GetComponent<AudioData[]>();
+
+        _cmvcam1.Priority = -1;
 
         transform.position = _playerRespawn.position;//リスポーン地点に移動
 
-        _playerResidue = GameManager.Instance.Residue;
+        _playerResidue = GameManager.Instance.PlayerResidue;
         _bombCount = GameManager.Instance.PlayerBombCount;
         _playerScore = GameManager.Instance.PlayerScore;
         _playerPower = GameManager.Instance.PlayerPower;
         _invincibleObjectCount = GameManager.Instance.PlayerInvincibleObjectCount;
     }
 
-    private void Update()
+    private async void Update()
     {
         switch (_isLateMode)//移動時に精密操作モードかどうか判定する
         {
@@ -124,6 +133,28 @@ public class PlayerBase : MonoBehaviour
                 break;
             case true:
                 _rb.velocity = _dir * _lateMove;
+                break;
+        }
+        switch (_isAttackMode)
+        {
+            case false:
+                break;
+            case true:
+                switch (_isLateMode)
+                {
+                    case false:
+                        if (_isBulletStop) return;
+                        PlayerAttack();
+                        await Task.Delay(_attackDelay);
+                        _isBulletStop = false;
+                        break;
+                    case true:
+                        if (_isBulletStop) return;
+                        PlayerSuperAttack();
+                        await Task.Delay(_superAttackDelay);
+                        _isBulletStop = false;
+                        break;
+                }
                 break;
         }
     }
@@ -160,82 +191,67 @@ public class PlayerBase : MonoBehaviour
         }
     }
 
-    public void InputChargeShotButton(InputAction.CallbackContext context)
+    public void OnInputChargeShotButton(InputAction.CallbackContext context)//ChargeShotの処理
     {
-        if (context.started && !_wasCharge)
+        if (_isAttackMode) return;
+        if (context.started)
         {
-            Debug.Log("canceled" + _wasCharge);
-            _audioSource.PlayOneShot(_chargeAudio, _musicVolume);
-            Debug.Log("started");
+            _cmvcam1.Priority = 10;
+            _audioSource.Stop();
+            Play(_playerChargeBulletAudio);
+            _wasCharge = true;
         }
         if(context.performed)
         {
-            Debug.Log("canceled" + _wasCharge);
-            _wasCharge = true;
-            Debug.Log("performed");
+            PlayerChargeAttack();
+            _wasCharge = false;
+            _cmvcam1.Priority = -1;
         }
         if(context.canceled)
         {
-            if(_wasCharge)
-            {
-                Debug.Log("canceled" + _wasCharge);
-                PlayerChargeAttack();
-                _wasCharge = true;
-                _isBulletStop = true;
-            }
-            else
-            {
-                Debug.Log("canceled" + _wasCharge);
-            }
+            _audioSource.Stop();
             _wasCharge = false;
+            _cmvcam1.Priority = -1;
         }
     }
 
     public void OnFire(InputAction.CallbackContext context)//Mouceの左クリックまたは、GamePadのZRボタンで弾を出す
     {
-        if (_isLateMode && !context.canceled)//精密操作時の処理
+        if (context.started)//攻撃時の処理
         {
-            PlayerSuperAttack();
-            _wasCharge = true;
-            _isBulletStop = true;
+            if (_wasCharge) return;
+            _isAttackMode = true;
         }
-        else if (!_isLateMode && !context.canceled)//通常時の処理
+        if(context.canceled)
         {
-            PlayerAttack();
-            _wasCharge = true;
-            _isBulletStop = true;
+            _isAttackMode = false;
         }
     }
 
     /// <summary>通常の攻撃処理</summary>
-    public virtual async void PlayerAttack()
+    public virtual void PlayerAttack()
     {
-        await Task.Delay(_attackDelay);
-        _wasCharge = false;
-        _isBulletStop = false;
+        _isBulletStop = true;
     }
 
     /// <summary>精密操作時の攻撃処理</summary>
-    public virtual async void PlayerSuperAttack()
+    public virtual void PlayerSuperAttack()
     {
-        await Task.Delay(_superAttackDelay);
-        _wasCharge = false;
-        _isBulletStop = false;
+        _isBulletStop = true;
     }
 
     /// <summary>チャージショット時の攻撃処理</summary>
     public virtual async void PlayerChargeAttack()
     {
         await Task.Delay(_chargeAttackDelay);
-        _wasCharge = false;
-        _isBulletStop = false;
+        //_wasCharge = false;
     }
 
     /// <summary>ボム使用時の処理</summary>
     public virtual async void Bom()
     {
         Debug.Log("ボム撃ったよー");
-        _audioSource.PlayOneShot(_shootingBombAudio, _musicVolume);
+        Play(_playerBombShotAudio);
         await Task.Delay(_bombCoolTime);
         _isBomb = false;
     }
@@ -246,11 +262,11 @@ public class PlayerBase : MonoBehaviour
         if (!_godMode && collision.gameObject.tag == _enemyTag || collision.gameObject.tag == _enemyBulletTag)
         {
             if (_godMode) return;
-            _audioSource.PlayOneShot(_onBulletAudio, _musicVolume);
+            Play(_playerDestroyAudio);
             GameManager.Instance.ResidueChange(_defaultDown);
-            _playerResidue = GameManager.Instance.Residue;
+            _playerResidue = GameManager.Instance.PlayerResidue;
 
-            if (PlayerResidue > _default)//残機が残っている場合はリスポーンを行う
+            if (PlayerResidue >= _defaultUp)//残機が残っている場合はリスポーンを行う
             {
                 Respawn();
                 Debug.Log("残り残機" + PlayerResidue);
@@ -265,7 +281,7 @@ public class PlayerBase : MonoBehaviour
         if (collision.gameObject.tag == _1upTag)//残機を増やす処理
         {
             GameManager.Instance.ResidueChange(_defaultUp);
-            _playerResidue = GameManager.Instance.Residue;
+            _playerResidue = GameManager.Instance.PlayerResidue;
             Debug.Log("残機ふえたよー" + PlayerResidue);
         }
 
@@ -323,5 +339,19 @@ public class PlayerBase : MonoBehaviour
         GameManager.Instance.PlayerInvicibleObjectValueChange(_returnDefault);
         await Task.Delay(_invincibleCoolTime);
         _godMode = false;
+    }
+
+    public void Play(string key)
+    {
+        var data = System.Array.Find(_audioData, e => e._key == key);
+
+        if (data != null)
+        {
+            _audioSource.PlayOneShot(data._audio);
+        }
+        else
+        {
+            Debug.Log("AudioClipがありません");
+        }
     }
 }

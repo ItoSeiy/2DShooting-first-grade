@@ -27,7 +27,7 @@
                     "id": "e7c3672e-867c-45a1-987f-0ad8c63d25e3",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Hold(duration=0.1,pressPoint=0.3)"
+                    "interactions": ""
                 },
                 {
                     "name": "Jump",
@@ -235,7 +235,7 @@
                     "name": "",
                     "id": "05f6913d-c316-48b2-a6bb-e225f14c7960",
                     "path": "<Mouse>/leftButton",
-                    "interactions": "",
+                    "interactions": "Hold(duration=0.1,pressPoint=0.3)",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "Fire",
@@ -323,7 +323,7 @@
                     "name": "",
                     "id": "c1b11c82-fe9a-483e-97de-6b8f6e15e113",
                     "path": "<Keyboard>/x",
-                    "interactions": "Hold(duration=1.4)",
+                    "interactions": "SlowTap(duration=1.4,pressPoint=0.3)",
                     "processors": "",
                     "groups": "",
                     "action": "ChargeShot",
@@ -370,7 +370,7 @@
                 },
                 {
                     "name": "Click",
-                    "type": "PassThrough",
+                    "type": "Button",
                     "id": "2bf666cf-3e20-4dd8-b31a-8a0613d8d737",
                     "expectedControlType": "Button",
                     "processors": "",
@@ -773,10 +773,10 @@
                 {
                     "name": "",
                     "id": "bb9e6b34-44bf-4381-ac63-5aa15d19f677",
-                    "path": "<XRController>/trigger",
+                    "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
-                    "groups": "XR",
+                    "groups": "Gamepad",
                     "action": "Click",
                     "isComposite": false,
                     "isPartOfComposite": false
