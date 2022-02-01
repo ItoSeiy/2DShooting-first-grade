@@ -88,6 +88,8 @@ public class PlayerBase : MonoBehaviour
     bool _isNotControll = default;
     /// <summary>チャージしているかどうか判定するフラグ</summary>
     bool _wasCharge = default;
+    /// <summary>アタックしているかどうか判定するフラグ</summary>
+    bool _isAttackMode = default;
 
     /// <summary>カウントアップする定数</summary>
     const int _defaultUp = 1;
@@ -122,7 +124,7 @@ public class PlayerBase : MonoBehaviour
         _invincibleObjectCount = GameManager.Instance.PlayerInvincibleObjectCount;
     }
 
-    private void Update()
+    private async void Update()
     {
         switch (_isLateMode)//移動時に精密操作モードかどうか判定する
         {
@@ -131,6 +133,28 @@ public class PlayerBase : MonoBehaviour
                 break;
             case true:
                 _rb.velocity = _dir * _lateMove;
+                break;
+        }
+        switch (_isAttackMode)
+        {
+            case false:
+                break;
+            case true:
+                switch (_isLateMode)
+                {
+                    case false:
+                        if (_isBulletStop) return;
+                        PlayerAttack();
+                        await Task.Delay(_attackDelay);
+                        _isBulletStop = false;
+                        break;
+                    case true:
+                        if (_isBulletStop) return;
+                        PlayerSuperAttack();
+                        await Task.Delay(_superAttackDelay);
+                        _isBulletStop = false;
+                        break;
+                }
                 break;
         }
     }
@@ -167,90 +191,60 @@ public class PlayerBase : MonoBehaviour
         }
     }
 
-    public void InputChargeShotButton(InputAction.CallbackContext context)
+    public void OnInputChargeShotButton(InputAction.CallbackContext context)//ChargeShotの処理
     {
+        if (_isAttackMode) return;
         if (context.started)
         {
-            Debug.Log("started" + _wasCharge);
             _cmvcam1.Priority = 10;
             _audioSource.Stop();
             Play(_playerChargeBulletAudio);
+            _wasCharge = true;
         }
         if(context.performed)
         {
-            Debug.Log("performed" + _wasCharge);
-            _wasCharge = true;
+            PlayerChargeAttack();
+            _wasCharge = false;
+            _cmvcam1.Priority = -1;
         }
         if(context.canceled)
         {
-            if(_wasCharge)
-            {
-                Debug.Log("canceled" + _wasCharge);
-                PlayerChargeAttack();
-                _isBulletStop = true;
-                _wasCharge = false;
-            }
-            else
-            {
-                _audioSource.Stop();
-                Debug.Log("canceled2" + _wasCharge);
-            }
+            _audioSource.Stop();
+            _wasCharge = false;
             _cmvcam1.Priority = -1;
         }
     }
 
     public void OnFire(InputAction.CallbackContext context)//Mouceの左クリックまたは、GamePadのZRボタンで弾を出す
     {
-        if (_isLateMode && context.started)//精密操作時の処理
+        if (context.started)//攻撃時の処理
         {
-            while(context.performed)
-            {
-                PlayerSuperAttack();
-                _wasCharge = true;
-                _isBulletStop = true;
-                if(context.canceled)
-                {
-                    break;
-                }
-            }
+            if (_wasCharge) return;
+            _isAttackMode = true;
         }
-        else if (!_isLateMode && context.started)//通常時の処理
+        if(context.canceled)
         {
-            while(context.performed)
-            {
-                PlayerAttack();
-                _wasCharge = true;
-                _isBulletStop = true;
-                if(context.canceled)
-                {
-                    break;
-                }
-            }
+            _isAttackMode = false;
         }
     }
 
     /// <summary>通常の攻撃処理</summary>
-    public virtual async void PlayerAttack()
+    public virtual void PlayerAttack()
     {
-        await Task.Delay(_attackDelay);
-        _wasCharge = false;
-        _isBulletStop = false;
+        _isBulletStop = true;
     }
 
     /// <summary>精密操作時の攻撃処理</summary>
-    public virtual async void PlayerSuperAttack()
+    public virtual void PlayerSuperAttack()
     {
-        await Task.Delay(_superAttackDelay);
-        _wasCharge = false;
-        _isBulletStop = false;
+        _isBulletStop = true;
     }
 
     /// <summary>チャージショット時の攻撃処理</summary>
     public virtual async void PlayerChargeAttack()
     {
         await Task.Delay(_chargeAttackDelay);
-        _wasCharge = false;
-        _isBulletStop = false;
+        //_wasCharge = false;
     }
 
     /// <summary>ボム使用時の処理</summary>
