@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Threading.Tasks;
 using UnityEngine.InputSystem;
 using Cinemachine;
+using DG.Tweening;
 
 
 /// <summary>
@@ -16,6 +17,7 @@ public class PlayerBase : MonoBehaviour
 {
     [SerializeField, Header("プレイヤーの音")] protected AudioData[] _audioData;
     Rigidbody2D _rb;
+    SpriteRenderer _sp;
     protected AudioSource _audioSource;
     Animation _anim;
     Vector2 _dir;
@@ -60,6 +62,9 @@ public class PlayerBase : MonoBehaviour
     [SerializeField, Header("チャージショットの音")] protected string _playerChargeShotBulletAudio = "ChargeShot";
     [SerializeField, Header("ボムの音")] protected string _playerBombShotAudio = "Bomb";
     [SerializeField, Header("プレイヤーの被弾時に流れる音")] protected string _playerDestroyAudio = "PlayerDestroy";
+
+    [SerializeField] Color _color = default;
+    [SerializeField] float _changeValueInterval = default;
 
     protected const int _level1 = 1;
     protected const int _level2 = 2;
@@ -108,6 +113,7 @@ public class PlayerBase : MonoBehaviour
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _sp = GetComponent<SpriteRenderer>();
         _audioSource = GetComponent<AudioSource>();
         _anim = GetComponent<Animation>();
         _audioData = GetComponent<AudioData[]>();
@@ -155,6 +161,14 @@ public class PlayerBase : MonoBehaviour
                         break;
                 }
                 break;
+        }
+        if (_dir.x > _default)
+        {
+            _sp.flipX = false;
+        }
+        else if (_dir.x < _default)
+        {
+            _sp.flipX = true;
         }
     }
     public void OnMove(InputAction.CallbackContext context)//通常の移動
@@ -321,7 +335,16 @@ public class PlayerBase : MonoBehaviour
         _godMode = true;
         _isNotControll = true;
         //_anim = _dead;
-        //_anim.Play();
+        _anim.Play();
+        var sequence = DOTween.Sequence(DOTween.To(() => _grobalLight.color.g,
+            (x) =>
+            {
+                Color c = _grobalLight.color;
+                c.a = x;
+                _grobalLight.color = c;
+            },
+            _color,
+            _changeValueInterval));
         await Task.Delay(_respawnTime);
         _dir = Vector2.zero;
         transform.position = _playerRespawn.position;//ここでリスポーン地点に移動

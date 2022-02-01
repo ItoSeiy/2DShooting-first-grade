@@ -2253,7 +2253,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.08
+  m_Radius: 0.32
 --- !u!212 &1915347099
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2294,8 +2294,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 615d44e9946a4a24884c2fd887589cc6, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -2338,13 +2338,13 @@ MonoBehaviour:
   - _key: ChargeShot
     _audio: {fileID: 8300000, guid: 27073d1ce8499684c9a86aa8ee9d955e, type: 3}
   - _key: Bullet
-    _audio: {fileID: 0}
+    _audio: {fileID: 8300000, guid: 27073d1ce8499684c9a86aa8ee9d955e, type: 3}
   - _key: SuperBullet
-    _audio: {fileID: 0}
+    _audio: {fileID: 8300000, guid: 27073d1ce8499684c9a86aa8ee9d955e, type: 3}
   - _key: Bomb
-    _audio: {fileID: 0}
+    _audio: {fileID: 8300000, guid: 27073d1ce8499684c9a86aa8ee9d955e, type: 3}
   - _key: PlayerDestroy
-    _audio: {fileID: 0}
+    _audio: {fileID: 8300000, guid: 964a8f42b3ae5104b8d7c2e98afb6770, type: 3}
   _playerRespawn: {fileID: 8494302934883400905, guid: ea9957449aa2ce04681b61bcb9045a17,
     type: 3}
   _muzzle: {fileID: 2018753175}
