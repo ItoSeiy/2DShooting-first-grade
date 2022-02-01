@@ -75,5 +75,10 @@ public class BossEnemyMoveDown : MonoBehaviour
             _rb.velocity = new Vector2(-3, 0);
             Debug.Log("b");
         }
+
+        yield return new WaitForSeconds(2.5f);
+
+        _rb.velocity = new Vector2(0, 0);
+        yield break;
     }
 }
