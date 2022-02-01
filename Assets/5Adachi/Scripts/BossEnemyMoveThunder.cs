@@ -9,9 +9,12 @@ public class BossEnemyMoveThunder : MonoBehaviour
     int _thunder = 0;
      float _xMove = 5f;
      float _yMove = 6f;
+    bool _isMove = false;
     [SerializeField,Header("スピード")] float _speed;
     int sign;
     int _switch = 0;
+
+    
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -26,7 +29,7 @@ public class BossEnemyMoveThunder : MonoBehaviour
             {
                 Debug.Log("nice!");
                 _switch = 1;
-                _rb.velocity = new Vector2(0,0);
+                _rb.velocity = new Vector2(0, 0);
             }
             else
             {
