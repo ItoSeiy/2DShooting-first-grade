@@ -179,17 +179,15 @@ public class PlayerBase : MonoBehaviour
         }
     }
 
-    public void OnJump(InputAction.CallbackContext context)//SpaceKeyが押された瞬間の処理
+    public async void OnJump(InputAction.CallbackContext context)//SpaceKeyが押された瞬間の処理
     {
-        if (_isNotControll) return;
-        if(context.started)
+        if(context.started && BombCount > _default && !_isBomb && !_isNotControll)
         {
-            if (BombCount > _default && !_isBomb)
-            {
-                Bom();
-                _isBomb = true;
-                GameManager.Instance.PlayerBombCountChange(_defaultDown);
-            }
+            Bom();
+            await Task.Delay(_bombCoolTime);
+            _isBomb = false;
+            GameManager.Instance.PlayerBombCountChange(_defaultDown);
+            _bombCount = GameManager.Instance.PlayerBombCount;
         }
     }
 
@@ -248,12 +246,11 @@ public class PlayerBase : MonoBehaviour
     }
 
     /// <summary>ボム使用時の処理</summary>
-    public virtual async void Bom()
+    public virtual void Bom()
     {
+        _isBomb = true;
         Debug.Log("ボム撃ったよー");
         Play(_playerBombShotAudio);
-        await Task.Delay(_bombCoolTime);
-        _isBomb = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
