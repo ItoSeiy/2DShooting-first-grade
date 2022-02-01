@@ -311,8 +311,8 @@
                 {
                     "name": "",
                     "id": "a8fc9d40-1999-4d17-8703-069b097ac0f7",
-                    "path": "<Gamepad>/leftShoulder",
-                    "interactions": "",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "Hold",
                     "processors": "",
                     "groups": "",
                     "action": "IsLateMove",
@@ -326,6 +326,17 @@
                     "interactions": "SlowTap(duration=1.4,pressPoint=0.3)",
                     "processors": "",
                     "groups": "",
+                    "action": "ChargeShot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0c0cae40-3cb5-4b8c-b094-fa505e1e5b04",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "SlowTap(duration=1.4,pressPoint=0.3)",
+                    "processors": "",
+                    "groups": "Gamepad",
                     "action": "ChargeShot",
                     "isComposite": false,
                     "isPartOfComposite": false
