@@ -39,7 +39,7 @@ public class NovelManager : MonoBehaviour
 
     private void Update()
     {
-        if (_gssReader.IsLoading || NovelFinish) return;
+        if (_gssReader.IsLoading || CheckNovelFinish()) return;
         ControllText();
     }
     public void OnGSSLoadEnd()
@@ -49,32 +49,33 @@ public class NovelManager : MonoBehaviour
 
     public void ControllText()
     {
-
+        //テキストが最後まで読み込まれていなかったら
         if (_currentCharNum < _datas[_ggsRow][MainTextColumn].Length)
         {
-
-            if (_isClick)
+            if (_isClick)//クリックされたらテキストを飛ばす
             {
                 _textInterval = 0;
             }
 
             if (_datas[_ggsRow][MainTextColumn][_currentCharNum] == '&' && _isCommandFirstTime)
             {
+                //コマンド入力を検出する
                 Command();
                 _isCommandFirstTime = false;
             }
             else
             {
+                //テキストを出力する
                 DisplayText();
             }
         }
-        else
+        else//テキストが最後まで読み込まれたら
         {
+            //テキストの速さを戻す
             _textInterval = _oldTextInterval;
             _isDisplaying = false;
-            NextRow();
+            NextRow();//行の添え字をカウントアップ
         }
-
     }
 
     void NextRow()
@@ -91,13 +92,13 @@ public class NovelManager : MonoBehaviour
             {
                 Command();
             }
-
             _isClick = false;
         }
     }
 
     void DisplayText()
     {
+        //出力は一行につき一度のみ実行する
         if (_isDisplaying) return;
         StartCoroutine(MoveText());
     }
@@ -121,6 +122,9 @@ public class NovelManager : MonoBehaviour
         while(_isDisplaying)
         {
             _audioSource.Play();
+
+            if (_currentCharNum == _datas[_ggsRow][MainTextColumn].Length) yield break;
+
             _mainText.text += _datas[_ggsRow][MainTextColumn][_currentCharNum];
             _currentCharNum++;
             yield return new WaitForSeconds(_textInterval);
@@ -160,7 +164,7 @@ public class NovelManager : MonoBehaviour
 
     public void OnClick(InputAction.CallbackContext context)
     {
-        if(context.started && !_isClick)
+        if(context.started)
         {
             _isClick = true;
             Debug.Log(_isClick);
@@ -178,6 +182,8 @@ public class NovelManager : MonoBehaviour
         {
             Debug.Log("すべてのシナリオを読み込んだ");
             NovelFinish = true;
+            _mainText.text = "";
+            _nameText.text = "";
             return true;
         }
         else
