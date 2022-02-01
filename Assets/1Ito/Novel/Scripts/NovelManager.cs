@@ -85,12 +85,7 @@ public class NovelManager : MonoBehaviour
             _currentCharNum = 0;
             _mainText.text = "";
 
-            if (_ggsRow >= _datas.Length)
-            {
-                Debug.Log("すべてのシナリオを読み込んだ");
-                NovelFinish = true;
-                return;
-            }
+            if (CheckNovelFinish()) return;
 
             if (_datas[_ggsRow][MainTextColumn][_currentCharNum] == '&')
             {
@@ -154,6 +149,9 @@ public class NovelManager : MonoBehaviour
                 break;
         }
         _ggsRow++;
+
+        if (CheckNovelFinish()) return;
+
         if (_datas[_ggsRow][MainTextColumn][_currentCharNum] == '&')
         {
             Command();
@@ -171,6 +169,21 @@ public class NovelManager : MonoBehaviour
         if(context.canceled)
         {
             _isClick = false;
+        }
+    }
+
+    bool CheckNovelFinish()
+    {
+        if (_ggsRow >= _datas.Length)
+        {
+            Debug.Log("すべてのシナリオを読み込んだ");
+            NovelFinish = true;
+            return true;
+        }
+        else
+        {
+            NovelFinish = false;
+            return false;
         }
     }
 }
