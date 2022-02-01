@@ -184,7 +184,7 @@ public class PlayerBase : MonoBehaviour
         if (_isNotControll) return;
         if(context.started)
         {
-            if (BombCount > _default && _isBomb)
+            if (BombCount > _default && !_isBomb)
             {
                 Bom();
                 _isBomb = true;
@@ -275,6 +275,7 @@ public class PlayerBase : MonoBehaviour
             {
                 Debug.LogError("おめぇーの残機ねえから！" + PlayerResidue);
                 GameManager.Instance.GameOver();
+                gameObject.SetActive(false);
             }
         }
 
