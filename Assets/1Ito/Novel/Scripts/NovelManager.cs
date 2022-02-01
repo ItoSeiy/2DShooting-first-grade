@@ -14,7 +14,7 @@ public class NovelManager : MonoBehaviour
     float _oldTextInterval;
     [SerializeField] Animator _characterAnimator;
     [SerializeField] Animator _bossAnimator;
-    [SerializeField] AudioSource _audioSource;
+    [SerializeField] AudioSource _textAudioSource;
     [SerializeField] GSSReader _gssReader;
     string[][] _datas = null;
 
@@ -56,6 +56,8 @@ public class NovelManager : MonoBehaviour
             {
                 _textInterval = 0;
             }
+
+            _isClick = false;
 
             if (_datas[_ggsRow][MainTextColumn][_currentCharNum] == '&' && _isCommandFirstTime)
             {
@@ -110,18 +112,18 @@ public class NovelManager : MonoBehaviour
         switch (_datas[_ggsRow][NameTextColumn])
         {
             case "Œø‰Ê‰¹":
-                _audioSource.mute = true;
+                _textAudioSource.mute = true;
                 _nameText.text = "";
                 break;
             default:
-                _audioSource.mute = false;
+                _textAudioSource.mute = false;
                 _nameText.text = _datas[_ggsRow][NameTextColumn];
                 break;
         }
 
         while(_isDisplaying)
         {
-            _audioSource.Play();
+            _textAudioSource.Play();
 
             if (_currentCharNum == _datas[_ggsRow][MainTextColumn].Length) yield break;
 
@@ -167,7 +169,6 @@ public class NovelManager : MonoBehaviour
         if(context.started)
         {
             _isClick = true;
-            Debug.Log(_isClick);
         }
 
         if(context.canceled)

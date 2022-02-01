@@ -4,16 +4,15 @@ using UnityEngine;
 
 public class PhaseManager : MonoBehaviour
 {
-    [SerializeField] StageParamAsset _paramAsset;
+    [SerializeField] NovelManager _novelManager;
+    [SerializeField] Canvas _novelCanvas;
     [SerializeField] Transform _generatePos;
     [SerializeField] Stage _stageState;
     [SerializeField] Phase _phaseState;
+    [SerializeField] List<StageParam> _stageParam = new List<StageParam>();
 
     private float _timer = 0;
     private float _middleTimer = 0;
-
-    private float _beforeInterval = default;
-    private float _afterInterval = default;
 
     private int _stageIndex = default;
     private int _phaseIndex = default;
@@ -51,21 +50,21 @@ public class PhaseManager : MonoBehaviour
         _timer += Time.deltaTime;
         Debug.Log("スタート待機");
 
-        if (_timer >= _paramAsset.StageParams[_stageIndex].phaseParms[_phaseIndex].StartTime)
+        if (_timer >= _stageParam[_stageIndex].PhaseParms[_phaseIndex].StartTime)
         {
             Debug.Log("生成待機");
             _middleTimer += Time.deltaTime;
 
-            if(_middleTimer >= _paramAsset.StageParams[_stageIndex].phaseParms[_phaseIndex].Interval || _isFirstTime)
+            if (_middleTimer >= _stageParam[_stageIndex].PhaseParms[_phaseIndex].Interval || _isFirstTime)
             {
                 Debug.Log("生成");
-                Instantiate(_paramAsset.StageParams[_stageIndex].phaseParms[_phaseIndex].Prefab).transform.position = _generatePos.position;
-                Debug.Log(_paramAsset.StageParams[_stageIndex].phaseParms[_phaseIndex].PhaseName);
+                Instantiate(_stageParam[_stageIndex].PhaseParms[_phaseIndex].Prefab).transform.position = _generatePos.position;
+                Debug.Log(_stageParam[_stageIndex].PhaseParms[_phaseIndex].PhaseName);
                 _middleTimer = 0;
                 _isFirstTime = false;
             }
 
-            if (_timer >= _paramAsset.StageParams[_stageIndex].phaseParms[_phaseIndex].FinishTime)
+            if (_timer >= _stageParam[_stageIndex].PhaseParms[_phaseIndex].FinishTime)
             {
                 Debug.Log("生成終了");
                 _timer = 0;
@@ -78,7 +77,12 @@ public class PhaseManager : MonoBehaviour
 
     void BossStage()
     {
-        Debug.Log("ボス");
+        _novelManager.gameObject.SetActive(true);
+        _novelCanvas.gameObject.SetActive(true);
+        if(_novelManager.NovelFinish)
+        {
+
+        }
     }
 
     void ChangeState()
