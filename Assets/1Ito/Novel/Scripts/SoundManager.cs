@@ -29,7 +29,7 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
     {
         if(_poolCountIndex >= _soundObjParam.Params.Count)
         {
-            Debug.Log("すべてのオブジェクトを生成しました。");
+            Debug.Log("オーディオを生成しました。");
             return;
         }
 

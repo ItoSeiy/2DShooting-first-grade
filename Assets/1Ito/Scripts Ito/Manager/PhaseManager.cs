@@ -5,6 +5,7 @@ using UnityEngine;
 public class PhaseManager : MonoBehaviour
 {
     [SerializeField] NovelManager _novelManager;
+    [SerializeField] GSSReader _gssReader;
     [SerializeField] Canvas _novelCanvas;
     [SerializeField] Transform _generatePos;
     [SerializeField] Stage _stageState;
@@ -12,7 +13,7 @@ public class PhaseManager : MonoBehaviour
     [SerializeField] List<StageParam> _stageParam = new List<StageParam>();
 
     private float _timer = 0;
-    private float _middleTimer = 0;
+    private float _intervalTimer = 0;
 
     private int _stageIndex = default;
     private int _phaseIndex = default;
@@ -23,7 +24,7 @@ public class PhaseManager : MonoBehaviour
     {
         _isFirstTime = true;
         _timer = 0;
-        _middleTimer = 0;
+        _intervalTimer = 0;
         ChangeState();
     }
 
@@ -53,14 +54,14 @@ public class PhaseManager : MonoBehaviour
         if (_timer >= _stageParam[_stageIndex].PhaseParms[_phaseIndex].StartTime)
         {
             Debug.Log("ê∂ê¨ë“ã@");
-            _middleTimer += Time.deltaTime;
+            _intervalTimer += Time.deltaTime;
 
-            if (_middleTimer >= _stageParam[_stageIndex].PhaseParms[_phaseIndex].Interval || _isFirstTime)
+            if (_intervalTimer >= _stageParam[_stageIndex].PhaseParms[_phaseIndex].Interval || _isFirstTime)
             {
                 Debug.Log("ê∂ê¨");
                 Instantiate(_stageParam[_stageIndex].PhaseParms[_phaseIndex].Prefab).transform.position = _generatePos.position;
                 Debug.Log(_stageParam[_stageIndex].PhaseParms[_phaseIndex].PhaseName);
-                _middleTimer = 0;
+                _intervalTimer = 0;
                 _isFirstTime = false;
             }
 
@@ -79,8 +80,12 @@ public class PhaseManager : MonoBehaviour
     {
         _novelManager.gameObject.SetActive(true);
         _novelCanvas.gameObject.SetActive(true);
+
         if(_novelManager.NovelFinish)
         {
+            _novelManager.gameObject.SetActive(false);
+            _novelCanvas.gameObject.SetActive(false);
+
 
         }
     }
