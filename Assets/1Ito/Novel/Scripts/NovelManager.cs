@@ -194,3 +194,10 @@ public class NovelManager : MonoBehaviour
         }
     }
 }
+
+public enum NovelPhase
+{
+    Before,
+    After,
+    Lose
+}

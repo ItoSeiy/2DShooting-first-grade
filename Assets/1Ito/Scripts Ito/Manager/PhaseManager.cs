@@ -91,6 +91,9 @@ public class PhaseManager : SingletonMonoBehaviour<PhaseManager>
         _phaseState = Phase.End;
     }
 
+    /// <summary>
+    ///Å@
+    /// </summary>
     public void SetUp()
     {
         _isFirstTime = true;
