@@ -38,6 +38,7 @@ public class PhaseManager : MonoBehaviour
 
             case Phase.End:
                 Debug.Log("フェイズ終了");
+
                 break;
 
             default:
