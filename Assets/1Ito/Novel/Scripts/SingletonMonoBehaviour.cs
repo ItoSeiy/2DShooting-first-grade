@@ -1,6 +1,11 @@
 using UnityEngine;
 using System;
 
+/// <summary>
+/// シングルトンパターンの基底クラス
+/// DontDestroyOnLoadはつけたいもののみに各自で付ける
+/// </summary>
+/// <typeparam name="T"></typeparam>
 public abstract class SingletonMonoBehaviour<T> : MonoBehaviour where T : MonoBehaviour
 {
     private static T instance;
