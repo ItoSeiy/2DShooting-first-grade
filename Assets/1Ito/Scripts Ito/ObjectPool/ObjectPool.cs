@@ -5,22 +5,16 @@ using UnityEngine;
 /// <summary>
 /// PlayerBulletのオブジェクトプールを管理するスクリプト
 /// </summary>
-public class ObjectPool : MonoBehaviour
+public class ObjectPool : SingletonMonoBehaviour<ObjectPool>
 {
-    public static global::ObjectPool Instance => _instance;
-    static global::ObjectPool _instance;
-
-    //[SerializeField] GameObject[] _bullets = null;
     [SerializeField] PoolObjectParamAsset _poolObjParam = default;
 
     List<ObjPool> _pool = new List<ObjPool>();
-
-    //[SerializeField] int[] _poolObjectMaxCount = default;
     int _poolCountIndex = 0;
 
-    private void Awake()
+    protected override void Awake()
     {
-        _instance = this;
+        base.Awake();
         _poolCountIndex = 0;
         CreatePool();
         foreach(var pool in _pool)
