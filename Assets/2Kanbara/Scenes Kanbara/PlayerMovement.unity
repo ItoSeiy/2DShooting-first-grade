@@ -833,13 +833,14 @@ GameObject:
   - component: {fileID: 888640653}
   - component: {fileID: 888640660}
   - component: {fileID: 888640659}
+  - component: {fileID: 888640661}
   m_Layer: 0
   m_Name: Player2
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &888640653
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -882,7 +883,7 @@ MonoBehaviour:
   _1upTag: 1UP
   _bombItemTag: BombItem
   _invincibleTag: Invincible
-  _isDead: 
+  _isDead: IsDead
   _isAttack: IsAttack
   _isSuperAttack: IsSuperAttack
   _isChargeNow: IsChargeNow
@@ -916,7 +917,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.08
+  m_Radius: 0.32
 --- !u!50 &888640655
 Rigidbody2D:
   serializedVersion: 4
@@ -1298,6 +1299,25 @@ MonoBehaviour:
     m_DissipationMode: 2
     m_DissipationDistance: 1000
     m_PropagationSpeed: 343
+--- !u!95 &888640661
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 888640652}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3f14bc1cd5afc0f4f8d1959ce3c0ca32, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1320085632
 GameObject:
   m_ObjectHideFlags: 0
@@ -2051,7 +2071,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1915347096
 MonoBehaviour:
   m_ObjectHideFlags: 0
