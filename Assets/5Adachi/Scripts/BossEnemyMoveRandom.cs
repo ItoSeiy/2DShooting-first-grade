@@ -28,8 +28,6 @@ public class BossEnemyMoveRandom : MonoBehaviour
             Debug.Log(x);
             Debug.Log(y);
         }
-
-
     }
     void Start()
     {
