@@ -22,13 +22,13 @@ public class Player1 : PlayerBase
         switch (GameManager.Instance.PlayerLevel)
         {
             case _level1:
-            ObjectPool.Instance.UseBullet(_muzzle.position, PoolObjectType.Player01Power1);
+                ObjectPool.Instance.UseBullet(_muzzle.position, PoolObjectType.Player01Power1);
                 break;
             case _level2:
                 ObjectPool.Instance.UseBullet(_muzzle.position, PoolObjectType.Player01Power2);
                 break;
             case _level3:
-            ObjectPool.Instance.UseBullet(_muzzle.position, PoolObjectType.Player01Power3);
+                ObjectPool.Instance.UseBullet(_muzzle.position, PoolObjectType.Player01Power3);
                 break;
         }
         Play(_playerBulletAudio);

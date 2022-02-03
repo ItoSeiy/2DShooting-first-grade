@@ -182,11 +182,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 10
   _direction: {x: 0, y: 1}
-  _speed: 1
+  _speed: 20
   _bulletMoveMethod: 0
-  _enemyTag: Enemy
+  _opponentTag: 
   _gameZoneTag: Finish
   _parentTag: Parent
+  _playerTag: Player
 --- !u!1 &6967542652161134117
 GameObject:
   m_ObjectHideFlags: 0
@@ -323,11 +324,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 15
   _direction: {x: 0, y: 1}
-  _speed: 1
+  _speed: 15
   _bulletMoveMethod: 1
-  _enemyTag: Enemy
+  _opponentTag: 
   _gameZoneTag: Finish
   _parentTag: Parent
+  _playerTag: Player
   _followTime: 2
 --- !u!1 &9180116380697167995
 GameObject:
@@ -465,9 +467,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 15
   _direction: {x: 0, y: 1}
-  _speed: 1
+  _speed: 15
   _bulletMoveMethod: 1
-  _enemyTag: Enemy
+  _opponentTag: 
   _gameZoneTag: Finish
   _parentTag: Parent
+  _playerTag: Player
   _followTime: 2

@@ -9,7 +9,7 @@ public class ItemBase : MonoBehaviour
 {
     [SerializeField, Header("プレイヤーのタグ")] string _playerTag = "Player";
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.tag == _playerTag)
         {
@@ -17,8 +17,13 @@ public class ItemBase : MonoBehaviour
         }
     }
 
-    private void OnBecameInvisible()
+    protected virtual void OnBecameInvisible()
     {
         Destroy(this.gameObject);
+    }
+
+    protected virtual void UsingItem()
+    {
+
     }
 }

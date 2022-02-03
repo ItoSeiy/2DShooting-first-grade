@@ -59,6 +59,7 @@ public abstract class EnemyBese : MonoBehaviour, IDamage
     {
         if(EnemyHp <= 0)
         {
+            GameManager.Instance.StageClear();
             gameObject.SetActive(false);
         }
     }
