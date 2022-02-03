@@ -882,6 +882,11 @@ MonoBehaviour:
   _1upTag: 1UP
   _bombItemTag: BombItem
   _invincibleTag: Invincible
+  _isDead: 
+  _isAttack: IsAttack
+  _isSuperAttack: IsSuperAttack
+  _isChargeNow: IsChargeNow
+  _isChargeAttack: IsChargeAttack
   _moveSpeed: 10
   _lateMove: 5
   _invincibleMax: 150
@@ -1590,9 +1595,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerResidue: 3
-  _gameOverEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!4 &1563847167
 Transform:
   m_ObjectHideFlags: 0
@@ -2362,6 +2364,11 @@ MonoBehaviour:
   _1upTag: 1UP
   _bombItemTag: BombItem
   _invincibleTag: Invincible
+  _isDead: IsDead
+  _isAttack: IsAttack
+  _isSuperAttack: IsSuperAttack
+  _isChargeNow: IsChargeNow
+  _isChargeAttack: IsChargeAttack
   _moveSpeed: 8
   _lateMove: 3
   _invincibleMax: 150

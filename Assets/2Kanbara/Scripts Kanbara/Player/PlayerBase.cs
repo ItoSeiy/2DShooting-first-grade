@@ -41,6 +41,12 @@ public class PlayerBase : MonoBehaviour
     [SerializeField, Header("ボムを増やすアイテムのタグ")] string _bombItemTag = "BombItem";
     [SerializeField, Header("Invincibleのタグ")] string _invincibleTag = "Invincible";
 
+    [SerializeField, Header("被弾時に再生するアニメーション名")] string _isDead = "IsDead";
+    [SerializeField, Header("通常攻撃のアニメーション名")] string _isAttack = "IsAttack";
+    [SerializeField, Header("精密操作時の攻撃のアニメーション名")] string _isSuperAttack = "IsSuperAttack";
+    [SerializeField, Header("チャージショットのアニメーション名（溜め）")] string _isChargeNow = "IsChargeNow";
+    [SerializeField, Header("チャージショットのアニメーション名（攻撃）")] string _isChargeAttack = "IsChargeAttack";
+
     [SerializeField, Header("動くスピード")] float _moveSpeed = default;
     [SerializeField, Header("精密操作のスピード")] float _lateMove = default;
 
@@ -337,25 +343,25 @@ public class PlayerBase : MonoBehaviour
     {
         _godMode = true;
         _isNotControll = true;
-        _anim.SetBool("IsDead",true);
+        _anim.SetBool(_isDead, true);
         await Task.Delay(_respawnTime);
         _dir = Vector2.zero;
         transform.position = _playerRespawn.position;//ここでリスポーン地点に移動
         _isNotControll = false;
         await Task.Delay(_afterRespawnTime);
         _godMode = false;
-        _anim.SetBool("IsDead", false);
+        _anim.SetBool(_isDead, false);
     }
 
     public virtual async void InvincibleMode()//無敵モード
     {
         if (_godMode) return;
         _godMode = true;
-        _anim.SetBool("IsDead", true);
+        _anim.SetBool(_isDead, true);
         GameManager.Instance.PlayerInvicibleObjectValueChange(_returnDefault);
         await Task.Delay(_invincibleCoolTime);
         _godMode = false;
-        _anim.SetBool("IsDead", false);
+        _anim.SetBool(_isDead, false);
     }
 
     public void Play(string key)
