@@ -4,7 +4,6 @@ using UnityEngine;
 using System.Threading.Tasks;
 using UnityEngine.InputSystem;
 using Cinemachine;
-using DG.Tweening;
 
 
 /// <summary>
@@ -19,7 +18,7 @@ public class PlayerBase : MonoBehaviour
     Rigidbody2D _rb;
     SpriteRenderer _sp;
     protected AudioSource _audioSource;
-    Animation _anim;
+    Animator _anim;
     Vector2 _dir;
 
     [SerializeField, Header("リスポーンするポジション")] public Transform _playerRespawn = default;
@@ -50,8 +49,6 @@ public class PlayerBase : MonoBehaviour
     [SerializeField, Header("リスポーン中の無敵時間")] protected int _respawnTime = 2800;
     [SerializeField, Header("リスポーン後の無敵時間")] int _afterRespawnTime = 1400;
 
-    [SerializeField, Header("死亡時のアニメーション")] Animation _dead = default;
-
     [SerializeField, Header("音量を調節する変数")] protected float _musicVolume = default;
 
     [SerializeField, Header("揺らすカメラ")] CinemachineVirtualCamera _cmvcam1 = default;
@@ -62,9 +59,6 @@ public class PlayerBase : MonoBehaviour
     [SerializeField, Header("チャージショットの音")] protected string _playerChargeShotBulletAudio = "ChargeShot";
     [SerializeField, Header("ボムの音")] protected string _playerBombShotAudio = "Bomb";
     [SerializeField, Header("プレイヤーの被弾時に流れる音")] protected string _playerDestroyAudio = "PlayerDestroy";
-
-    [SerializeField] Color _color = default;
-    [SerializeField] float _changeValueInterval = default;
 
     protected const int _level1 = 1;
     protected const int _level2 = 2;
@@ -115,7 +109,7 @@ public class PlayerBase : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _sp = GetComponent<SpriteRenderer>();
         _audioSource = GetComponent<AudioSource>();
-        _anim = GetComponent<Animation>();
+        _anim = GetComponent<Animator>();
         _audioData = GetComponent<AudioData[]>();
 
         _cmvcam1.Priority = -1;
@@ -207,7 +201,7 @@ public class PlayerBase : MonoBehaviour
 
     public void OnInputChargeShotButton(InputAction.CallbackContext context)//ChargeShotの処理
     {
-        if (context.started && !_wasCharge && !_isAttackMode)
+        if (context.started && !_wasCharge && !_isAttackMode && !_isNotControll)
         {
             _cmvcam1.Priority = 10;
             _audioSource.Stop();
@@ -216,21 +210,23 @@ public class PlayerBase : MonoBehaviour
         }
         if(context.performed && _wasCharge)
         {
-            PlayerChargeAttack();
             _wasCharge = false;
+            if (_isNotControll) return;
+            PlayerChargeAttack();
             _cmvcam1.Priority = -1;
         }
         if(context.canceled)
         {
-            _audioSource.Stop();
             _wasCharge = false;
+            if (_isNotControll) return;
+            _audioSource.Stop();
             _cmvcam1.Priority = -1;
         }
     }
 
     public void OnFire(InputAction.CallbackContext context)//Mouceの左クリックまたは、GamePadのZRボタンで弾を出す
     {
-        if (context.started)//攻撃時の処理
+        if (context.started && !_isNotControll)//攻撃時の処理
         {
             if (_wasCharge) return;
             _isAttackMode = true;
@@ -334,32 +330,25 @@ public class PlayerBase : MonoBehaviour
     {
         _godMode = true;
         _isNotControll = true;
-        //_anim = _dead;
-        _anim.Play();
-        //var sequence = DOTween.Sequence(DOTween.To(() => _color,
-        //    (x) =>
-        //    {
-        //        Color c = _color;
-        //        c.a = x;
-        //        _color = c;
-        //    },
-        //    _color,
-        //    _changeValueInterval));
+        _anim.SetBool("Invicible",true);
         await Task.Delay(_respawnTime);
         _dir = Vector2.zero;
         transform.position = _playerRespawn.position;//ここでリスポーン地点に移動
         _isNotControll = false;
         await Task.Delay(_afterRespawnTime);
         _godMode = false;
+        _anim.SetBool("Invicible", false);
     }
 
     public virtual async void InvincibleMode()//無敵モード
     {
         if (_godMode) return;
         _godMode = true;
+        _anim.SetBool("invicible", true);
         GameManager.Instance.PlayerInvicibleObjectValueChange(_returnDefault);
         await Task.Delay(_invincibleCoolTime);
         _godMode = false;
+        _anim.SetBool("Invicible", false);
     }
 
     public void Play(string key)
