@@ -7,7 +7,6 @@ public class PhaseManager : SingletonMonoBehaviour<PhaseManager>
     public Phase PhaseState => _phaseState;
 
     [SerializeField] NovelRenderer _novelManager;
-    [SerializeField] GSSReader _gssReader;
     [SerializeField] Canvas _novelCanvas;
     [SerializeField] Transform _generatePos;
     [SerializeField] Phase _phaseState;
@@ -77,18 +76,20 @@ public class PhaseManager : SingletonMonoBehaviour<PhaseManager>
 
     void BossStage()
     {
-        _novelManager.gameObject.SetActive(true);
-        _novelCanvas.gameObject.SetActive(true);
+        if(_novelManager.gameObject.activeSelf == false || _novelCanvas.gameObject.activeSelf == false)
+        {
+            _novelManager.gameObject.SetActive(true);
+            _novelCanvas.gameObject.SetActive(true);
+        }
 
         if(_novelManager.NovelFinish)
         {
             _novelManager.gameObject.SetActive(false);
             _novelCanvas.gameObject.SetActive(false);
-
-
+            _phaseState = Phase.End;
         }
 
-        _phaseState = Phase.End;
+
     }
 
     /// <summary>
