@@ -24,10 +24,11 @@ public class GameManager : MonoBehaviour
     ///<summary>一定数獲得すると無敵になるオブジェクトを獲得した数</summary>
     public int PlayerInvincibleObjectCount => _playerInvicibleObjectCount;
     ///<summary>プレイヤーの残基</summary>
-    public int Residue => _residue;
-    public float PlayerLevel1 { get => _pb.PlayerLevel1; }
-    public float PlayerLevel2 { get => _pb.PlayerLevel2; }
-    public float PlayerLevel3 { get => _pb.PlayerLevel3; }
+    public int PlayerResidue => _playerResidue;
+    public float PlayerLevel1 { get => _player.PlayerLevel1; }
+    public float PlayerLevel2 { get => _player.PlayerLevel2; }
+    public float PlayerLevel3 { get => _player.PlayerLevel3; }
+    public bool IsGameOver => _isGameOver;
 
     private int _playerScore = default;
     private int _playerPower = default;
@@ -36,32 +37,43 @@ public class GameManager : MonoBehaviour
     ///<summary>一定数獲得すると無敵になるオブジェクトを獲得した数///</summary>
     private int _playerInvicibleObjectCount = default;
     /// <summary>プレイヤーの残基</summary>
-    private int _residue =　default;
+    [SerializeField] private int _playerResidue =　default;
 
     [SerializeField] UnityEvent _gameOverEvent;
-
-    PlayerBase _pb;
+    private bool _isGameOver = false;
+    PlayerBase _player;
 
     private void Awake()
     {
+        if(Instance)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            _instance = this;
+            Init();
+            DontDestroyOnLoad(gameObject);
+        }
+
+    }
+
+    /// <summary>
+    /// キャラクターを変えたときに呼び出される
+    /// </summary>
+    public void CharacterChange()
+    {
         Init();
-        _instance = this;
-        DontDestroyOnLoad(gameObject);
-        _pb = GameObject.FindWithTag("Player").GetComponent<PlayerBase>();
-        PlayerLevelCheck();
     }
     
     /// <summary>
     /// ゲームスタート時に呼び出される関数
-    /// 変数のリセットを行う
     /// </summary> 
     public void GameStart()
     {
-        _playerScore = 0;
-        _playerPower = 0;
-        _playerBombCount = 0;
-        _playerInvicibleObjectCount = 0;
-        _playerLevel = _level1Index;
+        _player = GameObject.FindWithTag("Player").GetComponent<PlayerBase>();
+        PlayerLevelCheck();
+        _isGameOver = false;
     }
 
     /// <summary>
@@ -89,15 +101,15 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public  void PlayerLevelCheck()
     {
-        if (PlayerPower < _pb.PlayerLevel1)//レベル1のとき
+        if (PlayerPower < _player.PlayerLevel1)//レベル1のとき
         {
             _playerLevel = _level1Index;
         }
-        else if (_pb.PlayerLevel1 <= PlayerPower && PlayerPower < _pb.PlayerLevel3)//レベル2のとき
+        else if (_player.PlayerLevel1 <= PlayerPower && PlayerPower < _player.PlayerLevel2)//レベル2のとき
         {
             _playerLevel = _level2Index;
         }
-        else if (_pb.PlayerLevel3 <= PlayerPower)//レベル3のとき
+        else if (_player.PlayerLevel2 <= PlayerPower)//レベル3のとき
         {
             _playerLevel = _level3Index;
         }
@@ -127,7 +139,7 @@ public class GameManager : MonoBehaviour
     /// <param name="residue">残基加算 -> 引数,正の数 : 残基減算 -> 引数,負の数</param>
     public void ResidueChange(int residue)
     {
-        _residue += residue;
+        _playerResidue += residue;
     }
 
     /// <summary>
@@ -135,7 +147,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void GameOver()
     {
-        Init();
+        _isGameOver = true;
         _gameOverEvent.Invoke();
     }
 
@@ -144,10 +156,11 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void Init()
     {
-        _playerScore = default;
-        _playerPower = default;
-        _playerBombCount = default;
-        _playerInvicibleObjectCount = default;
-        _residue = default;
+        _playerScore = 0;
+        _playerPower = 0;
+        _playerBombCount = 0;
+        _playerInvicibleObjectCount = 0;
+        _playerLevel = 1;
+        _isGameOver = false;
     }
 }
