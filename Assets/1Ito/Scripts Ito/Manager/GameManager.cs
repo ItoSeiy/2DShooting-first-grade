@@ -38,8 +38,6 @@ public class GameManager : MonoBehaviour
     /// <summary>プレイヤーの残基</summary>
     [SerializeField] private int _playerResidue =　default;
 
-    [SerializeField, Header("BGM"), Tooltip("BGM")] protected AudioClip[] _bgm = default;
-
     [SerializeField] UnityEvent _gameOverEvent;
 
     PlayerBase _player;

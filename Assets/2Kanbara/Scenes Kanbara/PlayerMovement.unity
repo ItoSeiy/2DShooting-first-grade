@@ -803,8 +803,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59e13f34efc7dc448b6189a55541f6e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _audioData: []
-  _audioSource: {fileID: 0}
 --- !u!4 &752846125
 Transform:
   m_ObjectHideFlags: 0
@@ -831,8 +829,10 @@ GameObject:
   - component: {fileID: 888640656}
   - component: {fileID: 888640655}
   - component: {fileID: 888640654}
-  - component: {fileID: 888640653}
   - component: {fileID: 888640658}
+  - component: {fileID: 888640653}
+  - component: {fileID: 888640660}
+  - component: {fileID: 888640659}
   m_Layer: 0
   m_Name: Player2
   m_TagString: Player
@@ -852,20 +852,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f093ca1abbb00d4aa5948d6574000fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _audioData: []
+  _audioData:
+  - _key: Charge
+    _audio: {fileID: 8300000, guid: 964a8f42b3ae5104b8d7c2e98afb6770, type: 3}
+  - _key: ChargeShot
+    _audio: {fileID: 8300000, guid: 27073d1ce8499684c9a86aa8ee9d955e, type: 3}
+  - _key: Bullet
+    _audio: {fileID: 0}
+  - _key: SuperBullet
+    _audio: {fileID: 0}
+  - _key: Bobm
+    _audio: {fileID: 0}
+  - _key: PlayerDestroy
+    _audio: {fileID: 0}
   _playerRespawn: {fileID: 8494302934883400905, guid: ea9957449aa2ce04681b61bcb9045a17,
     type: 3}
   _muzzle: {fileID: 1865002158}
-  _superAttackDelay: 300
-  _attackDelay: 300
-  _chargeAttackDelay: 2800
-  _bombCoolTime: 0
-  _invincibleCoolTime: 2800
-  _playerLevel1Denom: 0
-  _playerLevel2Denom: 0
-  _playerLevel3Denom: 0
+  _superAttackDelay: 200
+  _attackDelay: 200
+  _bombCoolTime: 2000
+  _invincibleCoolTime: 2400
+  _playerLevel1Denom: 50
+  _playerLevel2Denom: 100
+  _playerLevel3Denom: 150
   _enemyTag: Enemy
-  _enemyBulletTag: 
+  _enemyBulletTag: EnemyBullet
   _powerTag: Power
   _pointTag: Score
   _1upTag: 1UP
@@ -879,13 +890,13 @@ MonoBehaviour:
   _afterRespawnTime: 1400
   _dead: {fileID: 0}
   _musicVolume: 1
-  _cmvcam1: {fileID: 0}
-  _playerBulletAudio: 
-  _playerSuperBulletAudio: 
-  _playerChargeBulletAudio: 
-  _playerChargeShotBulletAudio: 
-  _playerBombShotAudio: 
-  _playerDestroyAudio: 
+  _cmvcam1: {fileID: 1840163312}
+  _playerBulletAudio: Bullet
+  _playerSuperBulletAudio: SuperBullet
+  _playerChargeBulletAudio: Charge
+  _playerChargeShotBulletAudio: ChargeShot
+  _playerBombShotAudio: Bomb
+  _playerDestroyAudio: PlayerDestroy
 --- !u!58 &888640654
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1124,7 +1135,19 @@ MonoBehaviour:
     m_ActionId: ceaf2839-1618-455a-94f2-dfb56b0f4af0
     m_ActionName: UI/TrackedDeviceOrientation
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 888640653}
+        m_TargetAssemblyTypeName: PlayerBase, Assembly-CSharp
+        m_MethodName: OnInputChargeShotButton
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 79e7131a-b7b6-490b-9183-5b9201c944b8
     m_ActionName: Player/ChargeShot[/Keyboard/x]
   m_NeverAutoSwitchControlSchemes: 0
@@ -1132,6 +1155,145 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!82 &888640659
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 888640652}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: -4737002959340295446, guid: ad5b1f8ac9843f546aae4eb1f456ea7f,
+    type: 2}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &888640660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 888640652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ImpulseDefinition:
+    m_ImpulseChannel: 1
+    m_RawSignal: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
+    m_AmplitudeGain: 1
+    m_FrequencyGain: 1
+    m_RepeatMode: 0
+    m_Randomize: 1
+    m_TimeEnvelope:
+      m_AttackShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_DecayShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_AttackTime: 0
+      m_SustainTime: 0.2
+      m_DecayTime: 0.7
+      m_ScaleWithImpact: 1
+      m_HoldForever: 0
+    m_ImpactRadius: 100
+    m_DirectionMode: 0
+    m_DissipationMode: 2
+    m_DissipationDistance: 1000
+    m_PropagationSpeed: 343
 --- !u!1 &1320085632
 GameObject:
   m_ObjectHideFlags: 0
@@ -1429,7 +1591,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerResidue: 3
-  _bgm: []
   _gameOverEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -1456,7 +1617,8 @@ AudioSource:
   m_GameObject: {fileID: 1563847165}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 6709231543892393368, guid: ad5b1f8ac9843f546aae4eb1f456ea7f,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -1999,7 +2161,19 @@ MonoBehaviour:
     m_ActionId: 4e2d5ce8-0a09-45f4-94e6-4ecd4ddc6580
     m_ActionName: UI/Point[/Mouse/position]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 2bf666cf-3e20-4dd8-b31a-8a0613d8d737
     m_ActionName: UI/Click[/Mouse/leftButton]
   - m_PersistentCalls:
@@ -2026,7 +2200,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1915347101}
         m_TargetAssemblyTypeName: PlayerBase, Assembly-CSharp
-        m_MethodName: InputChargeShotButton
+        m_MethodName: OnInputChargeShotButton
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2079,7 +2253,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.08
+  m_Radius: 0.32
 --- !u!212 &1915347099
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2120,8 +2294,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 615d44e9946a4a24884c2fd887589cc6, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -2164,21 +2338,20 @@ MonoBehaviour:
   - _key: ChargeShot
     _audio: {fileID: 8300000, guid: 27073d1ce8499684c9a86aa8ee9d955e, type: 3}
   - _key: Bullet
-    _audio: {fileID: 0}
+    _audio: {fileID: 8300000, guid: 27073d1ce8499684c9a86aa8ee9d955e, type: 3}
   - _key: SuperBullet
-    _audio: {fileID: 0}
+    _audio: {fileID: 8300000, guid: 27073d1ce8499684c9a86aa8ee9d955e, type: 3}
   - _key: Bomb
-    _audio: {fileID: 0}
+    _audio: {fileID: 8300000, guid: 27073d1ce8499684c9a86aa8ee9d955e, type: 3}
   - _key: PlayerDestroy
-    _audio: {fileID: 0}
+    _audio: {fileID: 8300000, guid: 964a8f42b3ae5104b8d7c2e98afb6770, type: 3}
   _playerRespawn: {fileID: 8494302934883400905, guid: ea9957449aa2ce04681b61bcb9045a17,
     type: 3}
   _muzzle: {fileID: 2018753175}
-  _superAttackDelay: 300
-  _attackDelay: 300
-  _chargeAttackDelay: 2800
-  _bombCoolTime: 0
-  _invincibleCoolTime: 2800
+  _superAttackDelay: 200
+  _attackDelay: 200
+  _bombCoolTime: 2000
+  _invincibleCoolTime: 2400
   _playerLevel1Denom: 50
   _playerLevel2Denom: 100
   _playerLevel3Denom: 150
@@ -2255,7 +2428,8 @@ AudioSource:
   m_GameObject: {fileID: 1915347095}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -4737002959340295446, guid: ad5b1f8ac9843f546aae4eb1f456ea7f,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
