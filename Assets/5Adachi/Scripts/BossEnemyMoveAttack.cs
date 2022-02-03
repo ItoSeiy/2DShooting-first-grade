@@ -9,7 +9,6 @@ public class BossEnemyMoveAttack : MonoBehaviour
     private GameObject _player;
     [SerializeField] private string _playerTag = null;
 
-
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -21,7 +20,7 @@ public class BossEnemyMoveAttack : MonoBehaviour
     {
         transform.position = new Vector2(Mathf.Clamp(transform.position.x, -8f, 8f), Mathf.Clamp(transform.position.y, -4f, 4f));
     }
-    private void Veritical()//プレイヤーの位置によって左右のどちらかに移動するかを決める関数
+    private void Veritical()//プレイヤーの位置によって左右のどちらかに移動するかを決める
     {
         Debug.Log("huuuu");
         _rb.velocity = new Vector2(0, 0);
@@ -31,7 +30,7 @@ public class BossEnemyMoveAttack : MonoBehaviour
             _rb.velocity = new Vector2(4, 0);
             StartCoroutine(Stop1());
         }
-        else//左にいたら
+        else                                                     //左にいたら
         {
             Debug.Log("left");
             _rb.velocity = new Vector2(4, 0);
@@ -40,7 +39,7 @@ public class BossEnemyMoveAttack : MonoBehaviour
     }
     
 
-    IEnumerator Stop1()//プレイヤーと同じx座標になると止まる関数
+    IEnumerator Stop1()//プレイヤーと同じx座標になると止まる
     {
             Debug.Log("1");
         while (true)
@@ -54,7 +53,7 @@ public class BossEnemyMoveAttack : MonoBehaviour
             }
         }
     }
-    IEnumerator Stop2()//プレイヤーと同じx座標になると止まる関数
+    IEnumerator Stop2()//プレイヤーと同じx座標になると止まる
     {
             Debug.Log("2");
         while (true)
