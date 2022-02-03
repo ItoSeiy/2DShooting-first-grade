@@ -336,15 +336,15 @@ public class PlayerBase : MonoBehaviour
         _isNotControll = true;
         //_anim = _dead;
         _anim.Play();
-        var sequence = DOTween.Sequence(DOTween.To(() => _grobalLight.color.g,
-            (x) =>
-            {
-                Color c = _grobalLight.color;
-                c.a = x;
-                _grobalLight.color = c;
-            },
-            _color,
-            _changeValueInterval));
+        //var sequence = DOTween.Sequence(DOTween.To(() => _color,
+        //    (x) =>
+        //    {
+        //        Color c = _color;
+        //        c.a = x;
+        //        _color = c;
+        //    },
+        //    _color,
+        //    _changeValueInterval));
         await Task.Delay(_respawnTime);
         _dir = Vector2.zero;
         transform.position = _playerRespawn.position;//ここでリスポーン地点に移動
