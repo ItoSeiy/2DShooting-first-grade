@@ -75,7 +75,7 @@ public class PlayerBase : MonoBehaviour
     protected int _invincibleObjectCount = default;//一定数集めると無敵モードになるアイテムの数を入れておく変数
 
     /// <summary>連続で弾を撃てないようにするフラグ</summary>
-    protected bool _isBulletStop = default;
+    bool _isBulletStop = default;
     /// <summary>精密操作時のフラグ</summary>
     bool _isLateMode = default;
     /// <summary>無敵モードのフラグ</summary>
@@ -139,6 +139,7 @@ public class PlayerBase : MonoBehaviour
             case false:
                 break;
             case true:
+                if (_isNotControll) return;
                 switch (_isLateMode)
                 {
                     case false:
@@ -189,7 +190,7 @@ public class PlayerBase : MonoBehaviour
 
     public async void OnJump(InputAction.CallbackContext context)//SpaceKeyが押された瞬間の処理
     {
-        if(context.started && BombCount > _default && !_isBomb && !_isNotControll)
+        if(context.started && BombCount > _default && !_isBomb && !_isNotControll && !_wasCharge)
         {
             Bom();
             await Task.Delay(_bombCoolTime);
@@ -201,7 +202,8 @@ public class PlayerBase : MonoBehaviour
 
     public void OnInputChargeShotButton(InputAction.CallbackContext context)//ChargeShotの処理
     {
-        if (context.started && !_wasCharge && !_isAttackMode && !_isNotControll)
+        if (_isNotControll) return;
+        if (context.started && !_wasCharge && !_isAttackMode)
         {
             _cmvcam1.Priority = 10;
             _audioSource.Stop();
@@ -226,14 +228,16 @@ public class PlayerBase : MonoBehaviour
 
     public void OnFire(InputAction.CallbackContext context)//Mouceの左クリックまたは、GamePadのZRボタンで弾を出す
     {
-        if (context.started && !_isNotControll)//攻撃時の処理
+        if (context.started)//攻撃時の処理
         {
             if (_wasCharge) return;
             _isAttackMode = true;
+            Debug.Log(_isAttackMode);
         }
-        if(context.canceled)
+        if(context.performed || context.canceled)
         {
             _isAttackMode = false;
+            Debug.Log(_isAttackMode);
         }
     }
 
@@ -269,6 +273,9 @@ public class PlayerBase : MonoBehaviour
         if (!_godMode && collision.gameObject.tag == _enemyTag || collision.gameObject.tag == _enemyBulletTag)
         {
             if (_godMode) return;
+            _cmvcam1.Priority = -1;
+            _wasCharge = false;
+            _isAttackMode = false;
             Play(_playerDestroyAudio);
             GameManager.Instance.ResidueChange(_defaultDown);
             _playerResidue = GameManager.Instance.PlayerResidue;
@@ -330,25 +337,25 @@ public class PlayerBase : MonoBehaviour
     {
         _godMode = true;
         _isNotControll = true;
-        _anim.SetBool("Invicible",true);
+        _anim.SetBool("IsDead",true);
         await Task.Delay(_respawnTime);
         _dir = Vector2.zero;
         transform.position = _playerRespawn.position;//ここでリスポーン地点に移動
         _isNotControll = false;
         await Task.Delay(_afterRespawnTime);
         _godMode = false;
-        _anim.SetBool("Invicible", false);
+        _anim.SetBool("IsDead", false);
     }
 
     public virtual async void InvincibleMode()//無敵モード
     {
         if (_godMode) return;
         _godMode = true;
-        _anim.SetBool("invicible", true);
+        _anim.SetBool("IsDead", true);
         GameManager.Instance.PlayerInvicibleObjectValueChange(_returnDefault);
         await Task.Delay(_invincibleCoolTime);
         _godMode = false;
-        _anim.SetBool("Invicible", false);
+        _anim.SetBool("IsDead", false);
     }
 
     public void Play(string key)
