@@ -6,11 +6,8 @@ public class EnemyBullt : BulletBese
     [SerializeField] BulltMode _bulletMode;
     GameObject _player;
     float _timer;
-    Vector2 _oldDir = Vector2.up;
-     
+    Vector2 _oldDir = Vector2.up;  
     [SerializeField, Header("í«è]Ç∑ÇÈéûä‘")] float _followTime = 2f;
-      public EnemyController _enemy;
-
     void Start()
     {
        
