@@ -6,7 +6,7 @@ public class PhaseManager : SingletonMonoBehaviour<PhaseManager>
 {
     public Phase PhaseState => _phaseState;
 
-    [SerializeField] NovelManager _novelManager;
+    [SerializeField] NovelRenderer _novelManager;
     [SerializeField] GSSReader _gssReader;
     [SerializeField] Canvas _novelCanvas;
     [SerializeField] Transform _generatePos;
