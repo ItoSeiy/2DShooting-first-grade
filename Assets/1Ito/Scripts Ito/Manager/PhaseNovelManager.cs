@@ -101,7 +101,7 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
             _isFirstTime = false;
         }
 
-
+        
     }
 
     /// <summary>
