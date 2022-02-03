@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossEnemyMovement03 : EnemyBese
+public class BossEnemyMovement05 : EnemyBese
 {
     [SerializeField, Header("Bombのタグ")] public string _bombTag = null;
 
@@ -15,9 +15,13 @@ public class BossEnemyMovement03 : EnemyBese
     int _count = 0;
     private GameObject _player;
     [SerializeField] private string _playerTag = null;
+    int _thunder = 0;
+    float _xMove = 5f;
+    float _yMove = 6f;
+
 
     private void Start()
-    {        
+    {
         _player = GameObject.FindGameObjectWithTag(_playerTag);
         _isMove = true;
         StartCoroutine(RandomMovement());
@@ -44,6 +48,15 @@ public class BossEnemyMovement03 : EnemyBese
         {
             transform.position = new Vector2(Mathf.Clamp(transform.position.x, -8f, 8f), Mathf.Clamp(transform.position.y, -4f, 4f));
         }
+        _thunder++;
+        if(transform.position.x >= 8)
+        {
+            transform.position = new Vector2(-x +0.1f, y);
+        }
+        else if(transform.position.x <= -8)
+        {
+            transform.position = new Vector2(x -0.1f, y);
+        }
     }
     IEnumerator RandomMovement()
     {
@@ -65,11 +78,106 @@ public class BossEnemyMovement03 : EnemyBese
             if (_count == 9)
             {
                 _isMove = false;
+                StartCoroutine(Down01());
+                break;
+            }
+            if (_count == 8)
+            {
+                _isMove = false;
                 Veritical();
                 break;
             }
+            if (_count == 7)
+            {
+                _isMove = false;
+                if (transform.position.x > 0)
+                {
+                    StartCoroutine(Left());
+                }
+                else
+                {
+                    StartCoroutine(Right());
+                }
+                break;
+            }
         }
+
     }
+
+    //下の方全体に突進
+    IEnumerator Down01()
+    {
+        _isMove02 = true;
+
+        //端に移動する
+        if (transform.position.x < 0)
+        {
+            Rb.velocity = new Vector2(-3, 0);
+            Debug.Log("a");
+        }
+        else
+        {
+            Rb.velocity = new Vector2(3, 0);
+            Debug.Log("b");
+        }
+
+        yield return new WaitForSeconds(4);
+
+        //端についたら下に移動する
+        if (transform.position.x <= -7.5f)
+        {
+            Debug.Log("c");
+            Rb.velocity = new Vector2(0, -3);
+
+        }
+        else if (transform.position.x >= 7.5f)
+        {
+            Debug.Log("d");
+            Rb.velocity = new Vector2(0, -3);
+        }
+
+        yield return new WaitForSeconds(Random.Range(2f, 4f));
+
+        //反対側に移動
+        if (transform.position.x <= -7.5f)
+        {
+            Debug.Log("e");
+            Rb.velocity = new Vector2(7, 0);
+        }
+        else if (transform.position.x >= -7.5f)
+        {
+            Debug.Log("f");
+            Rb.velocity = new Vector2(-7, 0);
+        }
+
+        yield return new WaitForSeconds(4);
+
+        //上に上がる
+        Rb.velocity = new Vector2(0, 5);
+
+        yield return new WaitForSeconds(3);
+
+        //真ん中あたりに戻る
+        if (transform.position.x < 0)
+        {
+            Rb.velocity = new Vector2(Random.Range(1, 6), 0);
+            Debug.Log("a");
+        }
+        else
+        {
+            Rb.velocity = new Vector2(Random.Range(-7, 0), 0);
+            Debug.Log("b");
+        }
+
+        yield return new WaitForSeconds(2.5f);
+
+        Rb.velocity = new Vector2(0, 0);
+        _isMove02 = false;
+        _count = 0;
+        StartCoroutine(RandomMovement());
+    }
+
+    //プレイヤーに接近
     private void Veritical()//プレイヤーの位置によって左右のどちらかに移動するかを決める
     {
         _isMove02 = true;
@@ -100,7 +208,7 @@ public class BossEnemyMovement03 : EnemyBese
             if (_player.transform.position.x <= transform.position.x)
             {
                 Rb.velocity = new Vector2(0, 0);
-                StartCoroutine(Down());
+                StartCoroutine(Down02());
                 break;
             }
         }
@@ -114,12 +222,12 @@ public class BossEnemyMovement03 : EnemyBese
             if (_player.transform.position.x >= transform.position.x)
             {
                 Rb.velocity = new Vector2(0, 0);
-                StartCoroutine(Down());
+                StartCoroutine(Down02());
                 break;
             }
         }
     }
-    IEnumerator Down()//下に行く
+    IEnumerator Down02()//下に行く
     {
         Debug.Log("Down");
         yield return new WaitForSeconds(0.5f);
@@ -180,6 +288,106 @@ public class BossEnemyMovement03 : EnemyBese
                 Debug.Log("left");
                 Rb.velocity = new Vector2(-4, 0);
                 yield return new WaitForSeconds(Random.Range(1, 3));
+                Rb.velocity = new Vector2(0, 0);
+                _isMove02 = false;
+                StartCoroutine(RandomMovement());
+                break;
+            }
+        }
+    }
+
+
+    //ジグザク動く
+    IEnumerator Left()
+    {
+        Debug.Log("Left");
+        _isMove02 = true;
+        while (true)
+        {
+            yield return new WaitForSeconds(0.1f);
+            if (transform.position.x <= -7.5f)
+            {
+                Debug.Log("nice!");
+                Rb.velocity = new Vector2(0, 0);
+                StartCoroutine(ThunderL());
+                break;
+            }
+            else//左に移動
+            {
+                Debug.Log("maane");
+                Rb.velocity = new Vector2(-4, 0);
+            }
+        }
+    }
+
+    IEnumerator Right()
+    {
+        Debug.Log("Rignt");
+
+        _isMove02 = true;
+        while (true)
+        {
+            yield return new WaitForSeconds(0.1f);
+            if (transform.position.x >= 7.5f)
+            {
+                Debug.Log("nice!");
+                Rb.velocity = new Vector2(0, 0);
+                StartCoroutine(ThunderR());
+                break;
+            }
+            else//右に移動
+            {
+                Debug.Log("maane");
+                Rb.velocity = new Vector2(4, 0);
+            }
+        }
+    }
+    IEnumerator ThunderL()
+    {
+        _thunder = 0;
+        Debug.Log("dayone");
+        while (true)
+        {
+            yield return new WaitForSeconds(0.1f);
+            if (transform.position.x <= 7.5f)
+            {
+                Rb.velocity = new Vector2(_xMove, _yMove);
+                if (_thunder >= 100)
+                {
+                    _thunder = 0;
+                    Rb.velocity = new Vector2(_xMove, _yMove);
+                    _yMove *= -1;
+                }
+            }
+            else
+            {
+                Rb.velocity = new Vector2(0, 0);
+                _isMove02 = false;
+                StartCoroutine(RandomMovement());
+                break;
+            }
+        }
+    }
+
+    IEnumerator ThunderR()
+    {
+        _thunder = 0;
+        Debug.Log("dayone");
+        while (true)
+        {
+            yield return new WaitForSeconds(0.1f);
+            if (transform.position.x >= -7.5f)
+            {
+                Rb.velocity = new Vector2(-_xMove, _yMove);
+                if (_thunder >= 100)
+                {
+                    _thunder = 0;
+                    Rb.velocity = new Vector2(-_xMove, _yMove);
+                    _yMove *= -1;
+                }
+            }
+            else
+            {
                 Rb.velocity = new Vector2(0, 0);
                 _isMove02 = false;
                 StartCoroutine(RandomMovement());
