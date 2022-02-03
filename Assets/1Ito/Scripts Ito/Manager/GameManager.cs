@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 /// <summary>
 /// ゲームマネージャー
@@ -29,6 +28,7 @@ public class GameManager : MonoBehaviour
     public float PlayerLevel2 { get => _player.PlayerLevel2; }
     public float PlayerLevel3 { get => _player.PlayerLevel3; }
     public bool IsGameOver => _isGameOver;
+    public bool IsStageClear => _isStageClear;
 
     private int _playerScore = default;
     private int _playerPower = default;
@@ -39,8 +39,8 @@ public class GameManager : MonoBehaviour
     /// <summary>プレイヤーの残基</summary>
     [SerializeField] private int _playerResidue =　default;
 
-    [SerializeField] UnityEvent _gameOverEvent;
     private bool _isGameOver = false;
+    private bool _isStageClear = false;
     PlayerBase _player;
 
     private void Awake()
@@ -74,6 +74,23 @@ public class GameManager : MonoBehaviour
         _player = GameObject.FindWithTag("Player").GetComponent<PlayerBase>();
         PlayerLevelCheck();
         _isGameOver = false;
+    }
+
+    /// <summary>
+    /// ゲームオーバー時に行いたいことを記述
+    /// </summary>
+    public void GameOver()
+    {
+        _isGameOver = true;
+        Init();
+    }
+
+    /// <summary>
+    /// ステージをクリアした際にボスから呼び出される
+    /// </summary>
+    public void StageClear()
+    {
+        _isStageClear = true;
     }
 
     /// <summary>
@@ -142,14 +159,6 @@ public class GameManager : MonoBehaviour
         _playerResidue += residue;
     }
 
-    /// <summary>
-    /// ゲームオーバー時に行いたいことを記述
-    /// </summary>
-    public void GameOver()
-    {
-        _isGameOver = true;
-        _gameOverEvent.Invoke();
-    }
 
     /// <summary>
     /// 変数を初期化する関数
