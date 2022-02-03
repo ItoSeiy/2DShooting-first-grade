@@ -17,8 +17,7 @@ public class BossEnemyMovement03 : EnemyBese
     [SerializeField] private string _playerTag = null;
 
     private void Start()
-    {
-        StartCoroutine(RandomMovement());
+    {        
         _player = GameObject.FindGameObjectWithTag(_playerTag);
         _isMove = true;
         StartCoroutine(RandomMovement());
@@ -49,7 +48,6 @@ public class BossEnemyMovement03 : EnemyBese
     }
     IEnumerator RandomMovement()
     {
-        //Rb.velocity = transform.up * 0;
         yield return new WaitForSeconds(0.5f);
         _isMove = true;
         while (true)
@@ -68,15 +66,125 @@ public class BossEnemyMovement03 : EnemyBese
             if (_count == 9)
             {
                 _isMove = false;
-                //StartCoroutine(Down());
+                Veritical();
                 break;
             }
         }
-
     }
-    /*IEnumerator Down()
+    private void Veritical()//プレイヤーの位置によって左右のどちらかに移動するかを決める
     {
-        
-        StartCoroutine(RandomMovement());
-    }*/
+        _isMove02 = true;
+        Debug.Log("huuuu");
+        Rb.velocity = new Vector2(0, 0);
+        if (_player.transform.position.x >= transform.position.x)//プレイヤーが右にいたら
+        {
+            Debug.Log("right");
+            Rb.velocity = new Vector2(4, 0);
+            StartCoroutine(Stop1());
+        }
+        else                                                     //左にいたら
+        {
+            Debug.Log("left");
+            Rb.velocity = new Vector2(4, 0);
+            StartCoroutine(Stop2());
+        }
+
+
+
+        IEnumerator Stop1()//プレイヤーと同じx座標になると止まる
+        {
+            Debug.Log("Step1");
+            while (true)
+            {
+                yield return new WaitForSeconds(0.1f);
+                if (_player.transform.position.x <= transform.position.x)
+                {
+                    Rb.velocity = new Vector2(0, 0);
+                    StartCoroutine(Down());
+                    break;
+                }
+            }
+        }
+        IEnumerator Stop2()//プレイヤーと同じx座標になると止まる
+        {
+            Debug.Log("Step2");
+            while (true)
+            {
+                yield return new WaitForSeconds(0.1f);
+                if (_player.transform.position.x >= transform.position.x)
+                {
+                    Rb.velocity = new Vector2(0, 0);
+                    StartCoroutine(Down());
+                    break;
+                }
+            }
+        }
+        IEnumerator Down()//下に行く
+        {
+            Debug.Log("Down");
+            yield return new WaitForSeconds(0.5f);
+            while (true)
+            {
+                yield return new WaitForSeconds(0.1f);
+                if (_isMove)
+                {
+                    Rb.velocity = new Vector2(0, -4);
+
+                    if (_player.transform.position.y + 1 >= transform.position.y)//プレイヤーの高さまで来たら
+                    {
+                        Rb.velocity = new Vector2(0, 0);
+                        yield return new WaitForSeconds(1);
+                        Debug.Log("Up");
+                        StartCoroutine(Up());
+                        break;
+                    }
+                    else if (transform.position.y <= -4)//下降制限まで来たら
+                    {
+                        Rb.velocity = new Vector2(0, 0);
+                        yield return new WaitForSeconds(1);
+                        //_isMove = false;
+                        Debug.Log("Up");
+                        StartCoroutine(Up());
+                        break;
+                    }
+                }
+            }
+        }
+        IEnumerator Up()//上に行く
+        {
+            Debug.Log("Up");
+            _isMove = false;
+            Rb.velocity = new Vector2(0, 3);
+            yield return new WaitForSeconds(3);
+            Rb.velocity = new Vector2(0, 0);
+            yield return new WaitForSeconds(2);
+            StartCoroutine(Back());
+        }
+
+        IEnumerator Back()//反対側に行く
+        {
+            Debug.Log("Back");
+
+            while (true)
+            {
+                yield return new WaitForSeconds(0.1f);
+                if (0 >= transform.position.x)//プレイヤーが右にいたら
+                {
+                    Debug.Log("right");
+                    Rb.velocity = new Vector2(4, 0);
+                    yield return new WaitForSeconds(Random.Range(1, 3));
+                    Rb.velocity = new Vector2(0, 0);
+                    break;
+                }
+                else                          //左にいたら
+                {
+                    Debug.Log("left");
+                    Rb.velocity = new Vector2(-4, 0);
+                    yield return new WaitForSeconds(Random.Range(1, 3));
+                    Rb.velocity = new Vector2(0, 0);
+                    break;
+                }
+            }
+        }
+    }
 }

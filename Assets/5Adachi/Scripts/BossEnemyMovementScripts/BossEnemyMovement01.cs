@@ -14,7 +14,6 @@ public class BossEnemyMovement01 : EnemyBese
 
     IEnumerator RandomMovement()
     {
-        Rb.velocity = transform.up * 0;
         yield return new WaitForSeconds(0.5f);
         _isMove = true;
         while (true)
