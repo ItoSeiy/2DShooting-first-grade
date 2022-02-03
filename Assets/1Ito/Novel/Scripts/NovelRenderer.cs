@@ -185,6 +185,7 @@ public class NovelRenderer : MonoBehaviour
             NovelFinish = true;
             _mainText.text = "";
             _nameText.text = "";
+            gameObject.SetActive(false);
             return true;
         }
         else
@@ -193,11 +194,4 @@ public class NovelRenderer : MonoBehaviour
             return false;
         }
     }
-}
-
-public enum NovelPhase
-{
-    Before,
-    After,
-    Lose
 }
