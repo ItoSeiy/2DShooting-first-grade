@@ -104,12 +104,6 @@ public class PlayerBase : MonoBehaviour
     /// <summary>InvincibleObjectを初期化する定数</summary>
     readonly int _returnDefault = -150;
 
-    public int PlayerResidue => _playerResidue;//残機を入れておくプロパティ
-    public int BombCount => _bombCount;//ボムの数を入れておくプロパティ            
-    public int PlayerScore => _playerScore;//プレイヤーのスコアを入れておくプロパティ
-    public int PlayerPower => _playerPower;//パワーを入れておくプロパティ
-    public int PlayerInvincible => _invincibleObjectCount;//InvincibleObjectの所持数を入れておくプロパティ
-
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -196,7 +190,7 @@ public class PlayerBase : MonoBehaviour
 
     public async void OnJump(InputAction.CallbackContext context)//SpaceKeyが押された瞬間の処理
     {
-        if(context.started && BombCount > _default && !_isBomb && !_isNotControll && !_wasCharge)
+        if(context.started && _bombCount > _default && !_isBomb && !_isNotControll && !_wasCharge)
         {
             Bom();
             await Task.Delay(_bombCoolTime);
@@ -286,14 +280,14 @@ public class PlayerBase : MonoBehaviour
             GameManager.Instance.ResidueChange(_defaultDown);
             _playerResidue = GameManager.Instance.PlayerResidue;
 
-            if (PlayerResidue >= _defaultUp)//残機が残っている場合はリスポーンを行う
+            if (_playerResidue >= _defaultUp)//残機が残っている場合はリスポーンを行う
             {
                 Respawn();
-                Debug.Log("残り残機" + PlayerResidue);
+                Debug.Log("残り残機" + _playerResidue);
             }
             else//残機が0であればゲームオーバー処理を呼び出す
             {
-                Debug.LogError("おめぇーの残機ねえから！" + PlayerResidue);
+                Debug.LogError("おめぇーの残機ねえから！" + _playerResidue);
                 GameManager.Instance.GameOver();
                 gameObject.SetActive(false);
             }
@@ -303,36 +297,36 @@ public class PlayerBase : MonoBehaviour
         {
             GameManager.Instance.ResidueChange(_defaultUp);
             _playerResidue = GameManager.Instance.PlayerResidue;
-            Debug.Log("残機ふえたよー" + PlayerResidue);
+            Debug.Log("残機ふえたよー" + _playerResidue);
         }
 
         if(collision.gameObject.tag == _bombItemTag)//ボムの所持数を増やす処理
         {
             GameManager.Instance.PlayerBombCountChange(_defaultUp);
             _bombCount = GameManager.Instance.PlayerBombCount;
-            Debug.Log("ボムふえたよー" + BombCount);
+            Debug.Log("ボムふえたよー" + _bombCount);
         }
 
         if (collision.gameObject.tag == _pointTag)//スコアを増やす処理
         {
             GameManager.Instance.PlayerScoreChange(_defaultUp);
             _playerScore = GameManager.Instance.PlayerScore;
-            Debug.Log("スコアふえたよー" + PlayerScore);
+            Debug.Log("スコアふえたよー" + _playerScore);
         }
 
         if (collision.gameObject.tag == _powerTag && _playerPower < _playerPowerMax)//パワーを増やす処理
         {
             GameManager.Instance.PlayerPowerChange(_defaultUp);
             _playerPower = GameManager.Instance.PlayerPower;
-            Debug.Log("パワーふえたよー" + PlayerPower);
+            Debug.Log("パワーふえたよー" + _playerPower);
         }
 
         if (collision.gameObject.tag == _invincibleTag)//一定数取得すると無敵になるアイテムの所持数を増やす処理
         {
             GameManager.Instance.PlayerInvicibleObjectValueChange(_defaultUp);
             _invincibleObjectCount = GameManager.Instance.PlayerInvincibleObjectCount;
-            Debug.Log("アイテム名決まってない怪しいやつふえたよー" + PlayerInvincible);
-            if (PlayerInvincible > _invincibleMax)//一定数アイテムを集めたら無敵モードに切り替わる
+            Debug.Log("アイテム名決まってない怪しいやつふえたよー" + _invincibleObjectCount);
+            if (_invincibleObjectCount > _invincibleMax)//一定数アイテムを集めたら無敵モードに切り替わる
             {
                 InvincibleMode();
             }
