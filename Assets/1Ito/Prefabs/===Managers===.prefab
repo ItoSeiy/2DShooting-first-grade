@@ -188,6 +188,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5720071663395627147, guid: 1bc361c593800fe4fb9c7a15e1230a0b,
         type: 3}
+      propertyPath: _scrollSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5720071663395627147, guid: 1bc361c593800fe4fb9c7a15e1230a0b,
+        type: 3}
       propertyPath: _winNovelRenderer
       value: 
       objectReference: {fileID: 5262463426296239621}
@@ -209,8 +214,154 @@ PrefabInstance:
     - target: {fileID: 5720071663395627147, guid: 1bc361c593800fe4fb9c7a15e1230a0b,
         type: 3}
       propertyPath: _stageParam.phaseParms.Array.size
-      value: 1
+      value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 5720071663395627147, guid: 1bc361c593800fe4fb9c7a15e1230a0b,
+        type: 3}
+      propertyPath: _stageParam.phaseParms.Array.data[0].interval
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5720071663395627147, guid: 1bc361c593800fe4fb9c7a15e1230a0b,
+        type: 3}
+      propertyPath: _stageParam.phaseParms.Array.data[1].interval
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5720071663395627147, guid: 1bc361c593800fe4fb9c7a15e1230a0b,
+        type: 3}
+      propertyPath: _stageParam.phaseParms.Array.data[2].interval
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5720071663395627147, guid: 1bc361c593800fe4fb9c7a15e1230a0b,
+        type: 3}
+      propertyPath: _stageParam.phaseParms.Array.data[3].interval
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5720071663395627147, guid: 1bc361c593800fe4fb9c7a15e1230a0b,
+        type: 3}
+      propertyPath: _stageParam.phaseParms.Array.data[4].interval
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5720071663395627147, guid: 1bc361c593800fe4fb9c7a15e1230a0b,
+        type: 3}
+      propertyPath: _stageParam.phaseParms.Array.data[0].PhaseName
+      value: Phase01
+      objectReference: {fileID: 0}
+    - target: {fileID: 5720071663395627147, guid: 1bc361c593800fe4fb9c7a15e1230a0b,
+        type: 3}
+      propertyPath: _stageParam.phaseParms.Array.data[0].startTime
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5720071663395627147, guid: 1bc361c593800fe4fb9c7a15e1230a0b,
+        type: 3}
+      propertyPath: _stageParam.phaseParms.Array.data[1].PhaseName
+      value: Phase02
+      objectReference: {fileID: 0}
+    - target: {fileID: 5720071663395627147, guid: 1bc361c593800fe4fb9c7a15e1230a0b,
+        type: 3}
+      propertyPath: _stageParam.phaseParms.Array.data[1].startTime
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5720071663395627147, guid: 1bc361c593800fe4fb9c7a15e1230a0b,
+        type: 3}
+      propertyPath: _stageParam.phaseParms.Array.data[2].PhaseName
+      value: Phase03
+      objectReference: {fileID: 0}
+    - target: {fileID: 5720071663395627147, guid: 1bc361c593800fe4fb9c7a15e1230a0b,
+        type: 3}
+      propertyPath: _stageParam.phaseParms.Array.data[2].startTime
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5720071663395627147, guid: 1bc361c593800fe4fb9c7a15e1230a0b,
+        type: 3}
+      propertyPath: _stageParam.phaseParms.Array.data[3].PhaseName
+      value: Phase04
+      objectReference: {fileID: 0}
+    - target: {fileID: 5720071663395627147, guid: 1bc361c593800fe4fb9c7a15e1230a0b,
+        type: 3}
+      propertyPath: _stageParam.phaseParms.Array.data[3].startTime
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5720071663395627147, guid: 1bc361c593800fe4fb9c7a15e1230a0b,
+        type: 3}
+      propertyPath: _stageParam.phaseParms.Array.data[4].PhaseName
+      value: Phase05
+      objectReference: {fileID: 0}
+    - target: {fileID: 5720071663395627147, guid: 1bc361c593800fe4fb9c7a15e1230a0b,
+        type: 3}
+      propertyPath: _stageParam.phaseParms.Array.data[4].startTime
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5720071663395627147, guid: 1bc361c593800fe4fb9c7a15e1230a0b,
+        type: 3}
+      propertyPath: _stageParam.phaseParms.Array.data[5].PhaseName
+      value: Boss
+      objectReference: {fileID: 0}
+    - target: {fileID: 5720071663395627147, guid: 1bc361c593800fe4fb9c7a15e1230a0b,
+        type: 3}
+      propertyPath: _stageParam.phaseParms.Array.data[5].startTime
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5720071663395627147, guid: 1bc361c593800fe4fb9c7a15e1230a0b,
+        type: 3}
+      propertyPath: _stageParam.phaseParms.Array.data[0].finishTime
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5720071663395627147, guid: 1bc361c593800fe4fb9c7a15e1230a0b,
+        type: 3}
+      propertyPath: _stageParam.phaseParms.Array.data[1].finishTime
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5720071663395627147, guid: 1bc361c593800fe4fb9c7a15e1230a0b,
+        type: 3}
+      propertyPath: _stageParam.phaseParms.Array.data[2].finishTime
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5720071663395627147, guid: 1bc361c593800fe4fb9c7a15e1230a0b,
+        type: 3}
+      propertyPath: _stageParam.phaseParms.Array.data[3].finishTime
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5720071663395627147, guid: 1bc361c593800fe4fb9c7a15e1230a0b,
+        type: 3}
+      propertyPath: _stageParam.phaseParms.Array.data[4].finishTime
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5720071663395627147, guid: 1bc361c593800fe4fb9c7a15e1230a0b,
+        type: 3}
+      propertyPath: _stageParam.phaseParms.Array.data[0].phasePrefab
+      value: 
+      objectReference: {fileID: 6464305295217432563, guid: 3945cee42e9ac4f43b2c2aaf8a18833c,
+        type: 3}
+    - target: {fileID: 5720071663395627147, guid: 1bc361c593800fe4fb9c7a15e1230a0b,
+        type: 3}
+      propertyPath: _stageParam.phaseParms.Array.data[1].phasePrefab
+      value: 
+      objectReference: {fileID: 6464305295217432563, guid: 3945cee42e9ac4f43b2c2aaf8a18833c,
+        type: 3}
+    - target: {fileID: 5720071663395627147, guid: 1bc361c593800fe4fb9c7a15e1230a0b,
+        type: 3}
+      propertyPath: _stageParam.phaseParms.Array.data[2].phasePrefab
+      value: 
+      objectReference: {fileID: 6464305295217432563, guid: 3945cee42e9ac4f43b2c2aaf8a18833c,
+        type: 3}
+    - target: {fileID: 5720071663395627147, guid: 1bc361c593800fe4fb9c7a15e1230a0b,
+        type: 3}
+      propertyPath: _stageParam.phaseParms.Array.data[3].phasePrefab
+      value: 
+      objectReference: {fileID: 6464305295217432563, guid: 3945cee42e9ac4f43b2c2aaf8a18833c,
+        type: 3}
+    - target: {fileID: 5720071663395627147, guid: 1bc361c593800fe4fb9c7a15e1230a0b,
+        type: 3}
+      propertyPath: _stageParam.phaseParms.Array.data[4].phasePrefab
+      value: 
+      objectReference: {fileID: 6464305295217432563, guid: 3945cee42e9ac4f43b2c2aaf8a18833c,
+        type: 3}
+    - target: {fileID: 5720071663395627147, guid: 1bc361c593800fe4fb9c7a15e1230a0b,
+        type: 3}
+      propertyPath: _stageParam.phaseParms.Array.data[5].phasePrefab
+      value: 
+      objectReference: {fileID: 6464305295217432563, guid: 3945cee42e9ac4f43b2c2aaf8a18833c,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1bc361c593800fe4fb9c7a15e1230a0b, type: 3}
 --- !u!4 &2277847898813919369 stripped

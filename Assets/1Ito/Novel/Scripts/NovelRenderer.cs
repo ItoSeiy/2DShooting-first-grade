@@ -27,8 +27,9 @@ public class NovelRenderer : MonoBehaviour
 
     SoundType _soundType;
 
-    const int MainTextColumn = 1;
-    const int NameTextColumn = 0;
+    const int NAME_TEXT_COLUMN = 0;
+    const int MAIN_TEXT_COLUMN = 1;
+    const int ACTION_TEXT_COLUMN = 2;
 
     private void Start()
     {
@@ -50,26 +51,16 @@ public class NovelRenderer : MonoBehaviour
     public void ControllText()
     {
         //テキストが最後まで読み込まれていなかったら
-        if (_currentCharNum < _datas[_ggsRow][MainTextColumn].Length)
+        if (_currentCharNum < _datas[_ggsRow][MAIN_TEXT_COLUMN].Length)
         {
+            CheckCommand();
+
             if (_isClick)//クリックされたらテキストを飛ばす
             {
                 _textInterval = 0;
             }
 
-            _isClick = false;
-
-            if (_datas[_ggsRow][MainTextColumn][_currentCharNum] == '&' && _isCommandFirstTime)
-            {
-                //コマンド入力を検出する
-                Command();
-                _isCommandFirstTime = false;
-            }
-            else
-            {
-                //テキストを出力する
-                DisplayText();
-            }
+            DisplayText();
         }
         else//テキストが最後まで読み込まれたら
         {
@@ -87,14 +78,8 @@ public class NovelRenderer : MonoBehaviour
             _ggsRow++;
             _currentCharNum = 0;
             _mainText.text = "";
-
-            if (CheckNovelFinish()) return;
-
-            if (_datas[_ggsRow][MainTextColumn][_currentCharNum] == '&')
-            {
-                Command();
-            }
             _isClick = false;
+            CheckCommand();
         }
     }
 
@@ -109,7 +94,7 @@ public class NovelRenderer : MonoBehaviour
     {
         _isDisplaying = true;
 
-        switch (_datas[_ggsRow][NameTextColumn])
+        switch (_datas[_ggsRow][NAME_TEXT_COLUMN])
         {
             case "効果音":
                 _textAudioSource.mute = true;
@@ -117,7 +102,7 @@ public class NovelRenderer : MonoBehaviour
                 break;
             default:
                 _textAudioSource.mute = false;
-                _nameText.text = _datas[_ggsRow][NameTextColumn];
+                _nameText.text = _datas[_ggsRow][NAME_TEXT_COLUMN];
                 break;
         }
 
@@ -125,9 +110,9 @@ public class NovelRenderer : MonoBehaviour
         {
             _textAudioSource.Play();
 
-            if (_currentCharNum == _datas[_ggsRow][MainTextColumn].Length) yield break;
+            if (_currentCharNum == _datas[_ggsRow][MAIN_TEXT_COLUMN].Length) yield break;
 
-            _mainText.text += _datas[_ggsRow][MainTextColumn][_currentCharNum];
+            _mainText.text += _datas[_ggsRow][MAIN_TEXT_COLUMN][_currentCharNum];
             _currentCharNum++;
             yield return new WaitForSeconds(_textInterval);
         }
@@ -135,33 +120,28 @@ public class NovelRenderer : MonoBehaviour
 
     void Command()
     {
-        string[] command = _datas[_ggsRow][MainTextColumn].Split(' ');
-        switch (command[0])
+        //string[] command = _datas[_ggsRow][MainTextColumn].Split(' ');
+        string command = _datas[_ggsRow][MAIN_TEXT_COLUMN];
+        string action = _datas[_ggsRow][ACTION_TEXT_COLUMN];
+        switch (command)
         {
             case "&MainCharacterAnim":
-                Debug.Log("メインキャラアニメーションアニメーション" + command[1]);
-                _characterAnimator.Play(command[1]);
+                Debug.Log("メインキャラアニメーションアニメーション" + action);
+                _characterAnimator.Play(action);
                 break;
             case "&BossAnim":
-                Debug.Log("ボスアニメーション" + command[1]);
-                _bossAnimator.Play(command[1]);
+                Debug.Log("ボスアニメーション" + action);
+                _bossAnimator.Play(action);
                 break;
             case "&Sound":
-                System.Enum.TryParse(command[1], out _soundType);
+                System.Enum.TryParse(action, out _soundType);
                 SoundManager.Instance.UseSound(_soundType);
                 break;
             default:
-                Debug.LogError(command[0] + command[1] + "というコマンドは無効です");
+                Debug.LogError(command + action + "というコマンドは無効です");
                 break;
         }
         _ggsRow++;
-
-        if (CheckNovelFinish()) return;
-
-        if (_datas[_ggsRow][MainTextColumn][_currentCharNum] == '&')
-        {
-            Command();
-        }
     }
 
     public void OnClick(InputAction.CallbackContext context)
@@ -192,6 +172,16 @@ public class NovelRenderer : MonoBehaviour
         {
             NovelFinish = false;
             return false;
+        }
+    }
+
+    void CheckCommand()
+    {
+        if (_datas[_ggsRow][MAIN_TEXT_COLUMN][_currentCharNum] == '&' && _isCommandFirstTime)
+        {
+            //コマンド入力を検出する
+            Command();
+            _isCommandFirstTime = false;
         }
     }
 }

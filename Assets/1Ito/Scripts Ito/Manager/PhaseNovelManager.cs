@@ -13,10 +13,17 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
 
     [SerializeField] Canvas _novelCanvas;
 
-    [SerializeField] Transform _generatePos;
+    [SerializeField] Transform _generateTransform;
+    [SerializeField] Transform _bossTransform;
 
     [SerializeField] GamePhase _gamePhaseState;
     [SerializeField] NovelPhase _novelPhaseState;
+
+    [SerializeField] SpriteRenderer _backGround;
+    SpriteRenderer _backGroundClone = null;
+    [SerializeField] Vector2 _backGroundDir = new Vector2(0, -1);
+    [SerializeField] float _scrollSpeed = 0.5f;
+    float _initialPosY;
 
     [SerializeField] StageParam _stageParam;
 
@@ -33,8 +40,17 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
         SetUp();
     }
 
+    void Start()
+    {
+        _initialPosY = _backGround.transform.position.y;
+
+        _backGroundClone = Instantiate(_backGround);
+        _backGroundClone.transform.Translate(0f, _backGround.bounds.size.y, 0f);
+    }
+
     private void Update()
     {
+        BackGround();
         switch (_gamePhaseState)
         {
             case GamePhase.Boss:
@@ -65,7 +81,7 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
             if (_intervalTimer >= _stageParam.PhaseParms[_phaseIndex].Interval || _isFirstTime)
             {
                 Debug.Log("生成");
-                Instantiate(_stageParam.PhaseParms[_phaseIndex].Prefab).transform.position = _generatePos.position;
+                Instantiate(_stageParam.PhaseParms[_phaseIndex].Prefab).transform.position = _generateTransform.position;
                 Debug.Log(_stageParam.PhaseParms[_phaseIndex].PhaseName);
                 _intervalTimer = 0;
                 _isFirstTime = false;
@@ -79,18 +95,23 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
                 ChangePhase((GamePhase)_phaseIndex + 1);
             }
         }
-
+ 
     }
 
     void BossStage()
     {
-        SetNovel();
-
-        if(_beforeNovelRenderer.NovelFinish && _isFirstTime)
+        _timer += Time.deltaTime;
+        if(_timer >= _stageParam.PhaseParms[_phaseIndex].StartTime)
         {
-            _novelCanvas.gameObject.SetActive(false);
-            Instantiate(_stageParam.PhaseParms[_phaseIndex].Prefab);
-            _isFirstTime = false;
+            SetNovel();
+
+            if(_beforeNovelRenderer.NovelFinish && _isFirstTime)
+            {
+                _novelCanvas.gameObject.SetActive(false);
+                _novelPhaseState = NovelPhase.None;
+                Instantiate(_stageParam.PhaseParms[_phaseIndex].Prefab).transform.position = _generateTransform.position;
+                _isFirstTime = false;
+            }
         }
     }
 
@@ -157,6 +178,26 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
                     _novelCanvas.gameObject.SetActive(true);
                 }
                 break;
+            default:
+                return;
+        }
+    }
+
+    void BackGround()
+    {
+        if (_gamePhaseState == GamePhase.Boss) return;
+
+        _backGround.transform.Translate(0f, _scrollSpeed * -Time.deltaTime, 0f);
+        _backGroundClone.transform.Translate(0f, _scrollSpeed * -Time.deltaTime, 0f);
+
+        if(_backGround.transform.position.y < _initialPosY - _backGround.bounds.size.y)
+        {
+            _backGround.transform.Translate(0f, _backGround.bounds.size.y * 2, 0f);
+        }
+
+        if(_backGroundClone.transform.position.y < _initialPosY - _backGroundClone.size.y)
+        {
+            _backGroundClone.transform.Translate(0f, _backGroundClone.size.y * 2, 0f);
         }
     }
 }
@@ -179,5 +220,7 @@ public enum NovelPhase
     /// <summary>戦闘後イベント</summary>
     After,
     /// <summary>負けイベント</summary>
-    Lose
+    Lose,
+    /// <summary></summary>
+    None
 }
