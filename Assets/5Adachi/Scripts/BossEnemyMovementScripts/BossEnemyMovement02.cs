@@ -6,7 +6,6 @@ public class BossEnemyMovement02 : EnemyBese
 {
     [SerializeField, Header("Bombのタグ")] public string _bombTag = null;
 
-    bool _isMove = false;
     bool _isMove02 = false;
     private float x = 0;
     private float y = 0;
@@ -14,6 +13,7 @@ public class BossEnemyMovement02 : EnemyBese
     [SerializeField, Header("待機時間")] public float _stopTime = default;
     int _count = 0;
     [SerializeField] Object attack = null; 
+    Vector2 _dir;
 
     
     private void Start()
@@ -34,10 +34,6 @@ public class BossEnemyMovement02 : EnemyBese
     protected override void Update()
     {
         base.Update();
-        if (_isMove == true)
-        {
-            transform.position = new Vector2(Mathf.Clamp(transform.position.x, -8f, 8f), Mathf.Clamp(transform.position.y, 0f, 4f));
-        }
         if(_isMove02 == true)
         {
             transform.position = new Vector2(Mathf.Clamp(transform.position.x, -8f, 8f), Mathf.Clamp(transform.position.y, -4f, 4f));
@@ -46,103 +42,140 @@ public class BossEnemyMovement02 : EnemyBese
     }
     IEnumerator RandomMovement()
     {
-        //Rb.velocity = transform.up * 0;
         yield return new WaitForSeconds(0.5f);
-        _isMove = true;
         while (true)
         {
-            Vector2 dir = new Vector2(Random.Range(-3.0f, 3.0f) - x, Random.Range(-1.0f, 1.0f) - y);
-            Rb.velocity = dir * _speed;
-            yield return new WaitForSeconds(0.5f);
             Rb.velocity = new Vector2(0, 0);
             yield return new WaitForSeconds(_stopTime);
-            x += dir.x;
-            y += dir.y;
+
+            if (transform.position.y > 2.5f)      //上に移動しすぎたら
+            {
+                y = Random.Range(-1.0f, -0.1f);
+            }
+            else if (transform.position.y < 1.5f)//下に移動しすぎたら
+            {
+                y = Random.Range(0.1f, 1.0f);
+            }
+            else　　　　　　　　　　　　　　      //上下どっちにも移動しすぎてないなら
+            {
+                y = Random.Range(-1.0f, 1.0f);
+            }
+            if (transform.position.x > 4)         //右に移動しすぎたら
+            {
+                x = (Random.Range(-3.0f, -1.0f));
+            }
+            else if (transform.position.x < -4)   //左に移動しぎたら
+            {
+                x = (Random.Range(1.0f, 3.0f));
+            }
+            else　　　　　　　　　　　　         //左右どっちにも移動しすぎてないなら
+            {
+                x = Random.Range(-3.0f, 3.0f);
+            }
+
+            _dir = new Vector2(x, y);
+
+            Rb.velocity = _dir * _speed;
+            yield return new WaitForSeconds(0.5f);
+
             Debug.Log(x);
             Debug.Log(y);
+
             _count = Random.Range(0, 10);
             Debug.Log(_count);
-            if(_count == 9)
-            {              
-                _isMove = false;
-                //StartCoroutine(Down());
-                object p = StartCoroutine(attack);
+            if (_count == 9)
+            {
+                StartCoroutine(Down());
+                //attack.Down();
                 break;
             }
-        }        
+        }
     }
 
-    /*IEnumerator Down()
-{
-   //int count = 0;
-   //count++;
-   _isMove02 = true;
+    public IEnumerator Down()
+    {
+        if (transform.position.x < 0)//左にいたら
+        {
+            Rb.velocity = new Vector2(-7, 0);
+            Debug.Log("a");
+        }
+        else                         //右にいたら
+        {
+            Rb.velocity = new Vector2(7, 0);
+            Debug.Log("b");
+        }
 
-   //端に移動する
-   if (transform.position.x < 0)
-   {
-       Rb.velocity = new Vector2(-3, 0);
-       Debug.Log("a");
-   }
-   else
-   {
-       Rb.velocity = new Vector2(3, 0);
-       Debug.Log("b");
-   }
 
-   yield return new WaitForSeconds(4);
 
-   //端についたら下に移動する
-   if (transform.position.x <= -7.5f)
-   {
-       Debug.Log("c");
-       Rb.velocity = new Vector2(0, -3);
+        while (true)//端に着くまで下がる
+        {
+            yield return new WaitForSeconds(0.1f);
+            if (transform.position.x <= -7.5f)
+            {
+                Debug.Log("c");
+                Rb.velocity = new Vector2(0, -3);
+                break;
+            }
+            else if (transform.position.x >= 7.5f)
+            {
+                Debug.Log("d");
+                Rb.velocity = new Vector2(0, -3);
+                break;
+            }
+        }
 
-   }
-   else if (transform.position.x >= 7.5f)
-   {
-       Debug.Log("d");
-       Rb.velocity = new Vector2(0,-3);
-   }
 
-   yield return new WaitForSeconds(Random.Range(2f,4f));
+        while (true)//反対側に着くまで移動する
+        {
+            yield return new WaitForSeconds(0.1f);
 
-   //反対側に移動
-   if (transform.position.x <= -7.5f)
-   {
-       Debug.Log("e");
-       Rb.velocity = new Vector2(7, 0);
-   }
-   else if (transform.position.x >= -7.5f)
-   {
-       Debug.Log("f");
-       Rb.velocity = new Vector2(-7, 0);
-   }
+            if (transform.position.y <= -3 && transform.position.x <= -7.5f)
+            {
+                Debug.Log("e");
+                Rb.velocity = new Vector2(7, 0);
+                break;
+            }
+            else if (transform.position.y <= -3 && transform.position.x >= 7.5f)
+            {
+                Debug.Log("f");
+                Rb.velocity = new Vector2(-7, 0);
+                break;
+            }
+        }
 
-   yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(2);
 
-   //上に上がる
-   Rb.velocity = new Vector2(0, 5);
+        while (true)//上に上がる
+        {
+            Debug.Log("g");
 
-   yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(0.1f);
+            Rb.velocity = new Vector2(0, 5);
 
-   //真ん中あたりに戻る
-   if (transform.position.x < 0)
-   {
-       Rb.velocity = new Vector2(Random.Range(1,6), 0);
-       Debug.Log("a");
-   }
-   else
-   {
-       Rb.velocity = new Vector2(Random.Range(-7, 0), 0);
-       Debug.Log("b");
-   }
+            if (transform.position.y >= 3.5f)
+            {
+                Debug.Log("h");
+                break;
+            }
 
-   yield return new WaitForSeconds(2.5f);
+        }
 
-   Rb.velocity = new Vector2(0, 0);
-   _isMove02 = false;
-   _count = 0;
-   StartCoroutine(RandomMovement());
-}*/
+        while (true)//いい感じの位置に
+        {
+            if (transform.position.x < 0)
+            {
+                Rb.velocity = new Vector2(3, 0);
+                Debug.Log("a");
+                break;
+            }
+            else
+            {
+                Rb.velocity = new Vector2(-3, 0);
+                Debug.Log("b");
+                break;
+            }
+        }
+        yield return new WaitForSeconds(Random.Range(1, 3));
+        Rb.velocity = new Vector2(0, 0);
+    }
 }

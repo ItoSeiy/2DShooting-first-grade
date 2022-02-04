@@ -6,19 +6,18 @@ public class BossEnemyMovement04 : EnemyBese
 {
     [SerializeField, Header("Bombのタグ")] public string _bombTag = null;
 
-    bool _isMove = false;
     bool _isMove02 = false;
     private float x = 0;
     private float y = 0;
     float _speed = 4f;
     [SerializeField, Header("待機時間")] public float _stopTime = default;
+    Vector2 _dir;
     int _count = 0;
     int _thunder = 0;
     float _xMove = 5f;
     float _yMove = 6f;
     private void Start()
     {
-        _isMove = true;
         StartCoroutine(RandomMovement());
     }
 
@@ -35,10 +34,7 @@ public class BossEnemyMovement04 : EnemyBese
     protected override void Update()
     {
         base.Update();
-        if (_isMove == true)
-        {
-            transform.position = new Vector2(Mathf.Clamp(transform.position.x, -8f, 8f), Mathf.Clamp(transform.position.y, 0f, 4f));
-        }
+
         if (_isMove02 == true)
         {
             transform.position = new Vector2(Mathf.Clamp(transform.position.x, -8f, 8f), Mathf.Clamp(transform.position.y, -4f, 4f));
@@ -48,23 +44,48 @@ public class BossEnemyMovement04 : EnemyBese
     IEnumerator RandomMovement()
     {
         yield return new WaitForSeconds(0.5f);
-        _isMove = true;
+
         while (true)
         {
-            Vector2 dir = new Vector2(Random.Range(-3.0f, 3.0f) - x, Random.Range(-1.0f, 1.0f) - y);
-            Rb.velocity = dir * _speed;
-            yield return new WaitForSeconds(0.5f);
             Rb.velocity = new Vector2(0, 0);
             yield return new WaitForSeconds(_stopTime);
-            x += dir.x;
-            y += dir.y;
+
+            if (transform.position.y > 2.5f)      //上に移動しすぎたら
+            {
+                y = Random.Range(-1.0f, -0.1f);
+            }
+            else if (transform.position.y < 1.5f)//下に移動しすぎたら
+            {
+                y = Random.Range(0.1f, 1.0f);
+            }
+            else　　　　　　　　　　　　　　      //上下どっちにも移動しすぎてないなら
+            {
+                y = Random.Range(-1.0f, 1.0f);
+            }
+            if (transform.position.x > 4)         //右に移動しすぎたら
+            {
+                x = (Random.Range(-3.0f, -1.0f));
+            }
+            else if (transform.position.x < -4)   //左に移動しぎたら
+            {
+                x = (Random.Range(1.0f, 3.0f));
+            }
+            else　　　　　　　　　　　　         //左右どっちにも移動しすぎてないなら
+            {
+                x = Random.Range(-3.0f, 3.0f);
+            }
+
+            _dir = new Vector2(x, y);
+
+            Rb.velocity = _dir * _speed;
+            yield return new WaitForSeconds(0.5f);
+
             Debug.Log(x);
             Debug.Log(y);
             _count = Random.Range(0, 10);
             Debug.Log(_count);
             if (_count == 9)
             {
-                _isMove = false;
                 if (transform.position.x > 0)
                 {
                     StartCoroutine(Left());

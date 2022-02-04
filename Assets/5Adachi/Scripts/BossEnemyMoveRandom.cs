@@ -8,23 +8,49 @@ public class BossEnemyMoveRandom : MonoBehaviour
     private float x = 0;
     private float y = 0;
     float _speed = 4f;
-    float _stopTime = 3;
+    [SerializeField] public float _stopTime = 2;
     Rigidbody2D _rb;
+    Vector2 _dir;
 
     IEnumerator StationA_Move()
     {       
-        _rb.velocity = transform.up * 0;
         yield return new WaitForSeconds(0.5f);
         _isMove = true;
         while (true)
         {
-            Vector2 dir = new Vector2(Random.Range(-3.0f, 3.0f) - x, Random.Range(-1.0f, 1.0f) - y);
-            _rb.velocity = dir * _speed;
-            yield return new WaitForSeconds(0.5f);
-            _rb.velocity = transform.up * 0;
+            _rb.velocity = new Vector2(0, 0);
             yield return new WaitForSeconds(_stopTime);
-            x += dir.x;
-            y += dir.y;
+
+            if(transform.position.y > 2.5f)      //上に移動しすぎたら
+            {
+                y = Random.Range(-1.0f, -0.1f);
+            }
+            else if (transform.position.y < 1.5f)//下に移動しすぎたら
+            {
+                y = Random.Range(0.1f, 1.0f);
+            }
+            else　　　　　　　　　　　　　　      //上下どっちにも移動しすぎてないなら
+            {
+                y = Random.Range(-1.0f, 1.0f);
+            }
+            if (transform.position.x > 4)         //右に移動しすぎたら
+            {
+                x = (Random.Range(-3.0f, -1.0f));
+            }
+            else if(transform.position.x < -4)   //左に移動しぎたら
+            {
+                x = (Random.Range(1.0f, 3.0f));
+            }
+            else　　　　　　　　　　　　         //左右どっちにも移動しすぎてないなら
+            {
+                x = Random.Range(-3.0f, 3.0f);               
+            }
+
+            _dir = new Vector2(x, y);
+
+            _rb.velocity = _dir * _speed;
+            yield return new WaitForSeconds(0.5f);
+            
             Debug.Log(x);
             Debug.Log(y);
         }
@@ -36,6 +62,6 @@ public class BossEnemyMoveRandom : MonoBehaviour
     }
     private void Update()
     {
-        transform.position = new Vector2(Mathf.Clamp(transform.position.x, -8f, 8f), Mathf.Clamp(transform.position.y, 0f, 4.5f));
+
     }
 }
