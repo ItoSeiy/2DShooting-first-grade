@@ -24,7 +24,7 @@ public class BossEnemyMovement05 : EnemyBese
     {
         _player = GameObject.FindGameObjectWithTag(_playerTag);
         _isMove = true;
-        StartCoroutine(RandomMovement());
+        //StartCoroutine(RandomMovement());
     }
 
     protected override void Attack()
@@ -42,20 +42,20 @@ public class BossEnemyMovement05 : EnemyBese
         base.Update();
         if (_isMove == true)
         {
-            transform.position = new Vector2(Mathf.Clamp(transform.position.x, -8f, 8f), Mathf.Clamp(transform.position.y, 0f, 4f));
+            //transform.position = new Vector2(Mathf.Clamp(transform.position.x, -8f, 8f), Mathf.Clamp(transform.position.y, 0f, 4f));
         }
         if (_isMove02 == true)
         {
             transform.position = new Vector2(Mathf.Clamp(transform.position.x, -8f, 8f), Mathf.Clamp(transform.position.y, -4f, 4f));
         }
         _thunder++;
-        if(transform.position.x >= 8)
+        if (transform.position.x >= 8)
         {
-            transform.position = new Vector2(-x +0.1f, y);
+            transform.position = new Vector2(-transform.position.x + 0.1f, y);
         }
-        else if(transform.position.x <= -8)
+        else if (transform.position.x <= -8)
         {
-            transform.position = new Vector2(x -0.1f, y);
+            transform.position = new Vector2(transform.position.x - 0.1f, y);
         }
     }
     IEnumerator RandomMovement()
@@ -75,7 +75,7 @@ public class BossEnemyMovement05 : EnemyBese
             Debug.Log(y);
             _count = Random.Range(0, 10);
             Debug.Log(_count);
-            if (_count == 9)
+            /*if (_count == 9)
             {
                 _isMove = false;
                 StartCoroutine(Down01());
@@ -99,7 +99,7 @@ public class BossEnemyMovement05 : EnemyBese
                     StartCoroutine(Right());
                 }
                 break;
-            }
+            }*/
         }
 
     }

@@ -8,14 +8,12 @@ public class BossEnemyMoveDown : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _rb = GetComponent<Rigidbody2D>();
+        //_rb = GetComponent<Rigidbody2D>();
         StartCoroutine(Down());
     }
-
-    // Update is called once per frame
     void Update()
     {
-        transform.position = new Vector2(Mathf.Clamp(transform.position.x, -8f, 8f), (Mathf.Clamp(transform.position.y, -4f, 4f)));        
+        transform.position = new Vector2(Mathf.Clamp(transform.position.x, -8f, 8f), (Mathf.Clamp(transform.position.y, -4f, 4f)));  
     }
     IEnumerator Down()
     {
