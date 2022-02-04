@@ -66,7 +66,6 @@ public class PlayerBase : MonoBehaviour
     [SerializeField, Header("ボムの音")] protected string _playerBombShotAudio = "Bomb";
     [SerializeField, Header("プレイヤーの被弾時に流れる音")] protected string _playerDestroyAudio = "PlayerDestroy";
 
-    [SerializeField, Header("攻撃時のパーティカルシステム")] GameObject _attackps = default;
     [SerializeField, Header("チャージショットのパーティカルシステム（溜め）")] GameObject _chargeps = default;
 
     protected const int _level1 = 1;
@@ -117,7 +116,6 @@ public class PlayerBase : MonoBehaviour
 
         _cmvcam1.Priority = -1;
 
-        _attackps.GetComponent<ParticleSystem>();
         _chargeps.GetComponent<ParticleSystem>();
 
         transform.position = _playerRespawn.position;//リスポーン地点に移動
@@ -153,7 +151,6 @@ public class PlayerBase : MonoBehaviour
                         PlayerAttack();
                         await Task.Delay(_attackDelay);
                         _isBulletStop = false;
-                        _attackps.SetActive(false);
                         break;
                     case true:
                         if (_isBulletStop) return;
@@ -255,7 +252,6 @@ public class PlayerBase : MonoBehaviour
     public virtual void PlayerAttack()
     {
         _isBulletStop = true;
-        _attackps.SetActive(true);
     }
 
     /// <summary>精密操作時の攻撃処理</summary>
