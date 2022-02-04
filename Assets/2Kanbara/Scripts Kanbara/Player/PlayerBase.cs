@@ -66,6 +66,9 @@ public class PlayerBase : MonoBehaviour
     [SerializeField, Header("ボムの音")] protected string _playerBombShotAudio = "Bomb";
     [SerializeField, Header("プレイヤーの被弾時に流れる音")] protected string _playerDestroyAudio = "PlayerDestroy";
 
+    [SerializeField, Header("攻撃時のパーティカルシステム")] GameObject _attackps = default;
+    [SerializeField, Header("チャージショットのパーティカルシステム（溜め）")] GameObject _chargeps = default;
+
     protected const int _level1 = 1;
     protected const int _level2 = 2;
     protected const int _level3 = 3;
@@ -114,6 +117,9 @@ public class PlayerBase : MonoBehaviour
 
         _cmvcam1.Priority = -1;
 
+        _attackps.GetComponent<ParticleSystem>();
+        _chargeps.GetComponent<ParticleSystem>();
+
         transform.position = _playerRespawn.position;//リスポーン地点に移動
 
         _playerResidue = GameManager.Instance.PlayerResidue;
@@ -147,6 +153,7 @@ public class PlayerBase : MonoBehaviour
                         PlayerAttack();
                         await Task.Delay(_attackDelay);
                         _isBulletStop = false;
+                        _attackps.SetActive(false);
                         break;
                     case true:
                         if (_isBulletStop) return;
@@ -209,6 +216,7 @@ public class PlayerBase : MonoBehaviour
             _audioSource.Stop();
             Play(_playerChargeBulletAudio);
             _wasCharge = true;
+            _chargeps.SetActive(true);
         }
         if(context.performed && _wasCharge)
         {
@@ -216,6 +224,7 @@ public class PlayerBase : MonoBehaviour
             if (_isNotControll) return;
             PlayerChargeAttack();
             _cmvcam1.Priority = -1;
+            _chargeps.SetActive(false);
         }
         if(context.canceled)
         {
@@ -223,6 +232,7 @@ public class PlayerBase : MonoBehaviour
             if (_isNotControll) return;
             _audioSource.Stop();
             _cmvcam1.Priority = -1;
+            _chargeps.SetActive(false);
         }
     }
 
@@ -245,6 +255,7 @@ public class PlayerBase : MonoBehaviour
     public virtual void PlayerAttack()
     {
         _isBulletStop = true;
+        _attackps.SetActive(true);
     }
 
     /// <summary>精密操作時の攻撃処理</summary>
@@ -338,6 +349,7 @@ public class PlayerBase : MonoBehaviour
         _godMode = true;
         _isNotControll = true;
         _anim.SetBool(_isDead, true);
+        _chargeps.SetActive(false);
         await Task.Delay(_respawnTime);
         _dir = Vector2.zero;
         transform.position = _playerRespawn.position;//ここでリスポーン地点に移動
