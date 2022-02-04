@@ -47,7 +47,7 @@ public class BossEnemyMovement05 : EnemyBese
         _thunder++;
         /*if (transform.position.x >= 8)//”½‘Î‘¤‚Éƒ[ƒv‚·‚é—\’è
         {
-            transform.position = new Vector2(-transform.position.x + 0.1f, y);
+            transform.position = new Vector2(transform.position.x * -1 + 0.1f, y);
         }
         else if (transform.position.x <= -8)
         {
