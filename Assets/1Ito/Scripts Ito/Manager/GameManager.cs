@@ -73,7 +73,7 @@ public class GameManager : MonoBehaviour
     public void GameStart()
     {
         _player = GameObject.FindWithTag("Player").GetComponent<PlayerBase>();
-        PlayerLevelCheck();
+        PlayerLevelSet();
         _isGameOver = false;
     }
 
@@ -111,13 +111,13 @@ public class GameManager : MonoBehaviour
     public void PlayerPowerChange(float power)
     {
         _playerPower += power;
-        PlayerLevelCheck();
+        PlayerLevelSet();
     }
 
     /// <summary>
-    /// 
+    /// プレイヤーのレベルを決定する関数
     /// </summary>
-    public  void PlayerLevelCheck()
+    public  void PlayerLevelSet()
     {
         if (PlayerPower < _player.PlayerPowerRequiredNumberLevel2)//レベル１のとき
         {

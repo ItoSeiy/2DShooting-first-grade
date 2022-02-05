@@ -21,13 +21,13 @@ public class PlayerBase : MonoBehaviour
     Animator _anim;
     Vector2 _dir;
 
-    [SerializeField, Header("リスポーンするポジション")] public Transform _playerRespawn = default;
-    [SerializeField, Header("弾を発射するポジション")] public Transform _muzzle = default;
+    [SerializeField, Header("リスポーンするポジション")] Transform _playerRespawn = default;
+    [SerializeField, Header("弾を発射するポジション")] protected Transform _muzzle = default;
 
-    [SerializeField, Header("精密操作時の発射する間隔(ミリ秒)")] public int _superAttackDelay = 200;
-    [SerializeField, Header("発射する間隔(ミリ秒)")] public int _attackDelay = 200;
-    [SerializeField, Header("ボムのクールタイム（ミリ秒）")] public int _bombCoolTime = default;
-    [SerializeField, Header("無敵モードのクールタイム")] public int _invincibleTime = 2800;
+    [SerializeField, Header("精密操作時の発射する間隔(ミリ秒)")] int _superAttackDelay = 200;
+    [SerializeField, Header("発射する間隔(ミリ秒)")] int _attackDelay = 200;
+    [SerializeField, Header("ボムのクールタイム（ミリ秒）")] int _bombCoolTime = default;
+    [SerializeField, Header("無敵モードのクールタイム(ミリ秒)")] int _invincibleTime = 2800;
 
     [SerializeField, Header("レベル2に上げるために必要なパワーアイテムの数")] float _playerPowerRequiredNumberLevel2 = 50f;
     [SerializeField, Header("レベル3に上げるために必要なパワーアイテムの数")] float _playerPowerRequiredNumberLevel3 = 100f;
@@ -45,7 +45,7 @@ public class PlayerBase : MonoBehaviour
     [SerializeField, Header("動くスピード")] float _moveSpeed = default;
     [SerializeField, Header("精密操作のスピード")] float _lateMove = default;
 
-    [SerializeField, Header("この数値以上なら、一定時間無敵モードになる変数")] float _invincibleMax = default;
+    [SerializeField, Header("この数値以上なら、一定時間無敵モードになる変数")] float _invincibleLimit = default;
     [SerializeField, Header("Playerのパワーの上限")] float _playerPowerMax = default;
     [SerializeField, Header("リスポーン中の無敵時間")] protected int _respawnTime = 2800;
     [SerializeField, Header("リスポーン後の無敵時間")] int _afterRespawnTime = 1400;
@@ -69,7 +69,7 @@ public class PlayerBase : MonoBehaviour
     public float PlayerPowerRequiredNumberLevel2 => _playerPowerRequiredNumberLevel2;
     public float PlayerPowerRequiredNumberLevel3 => _playerPowerRequiredNumberLevel3;
     /// <summary>無敵モードになるために必要なInvicibleアイテムの数が入ったプロパティ</summary>
-    public float InvicibleRequiredNumber => _invincibleMax;
+    public float InvicibleRequiredNumber => _invincibleLimit;
 
     protected float _playerResidue = default;//プレイヤーの残機を入れておく変数
     protected float _bombCount = default;//プレイヤーの所持するボムの数を入れておく変数
@@ -258,7 +258,7 @@ public class PlayerBase : MonoBehaviour
     /// <summary>チャージショット時の攻撃処理</summary>
     public virtual void PlayerChargeAttack()
     {
-
+        Debug.LogError("チャージアタックが実装されていません");
     }
 
     /// <summary>ボム使用時の処理</summary>
@@ -328,7 +328,7 @@ public class PlayerBase : MonoBehaviour
             GameManager.Instance.PlayerInvicibleObjectValueChange(_defaultUp);
             _invincibleObjectCount = GameManager.Instance.PlayerInvincibleObjectCount;
             Debug.Log("アイテム名決まってない怪しいやつふえたよー" + _invincibleObjectCount);
-            if (_invincibleObjectCount > _invincibleMax)//一定数アイテムを集めたら無敵モードに切り替わる
+            if (_invincibleObjectCount > _invincibleLimit)//一定数アイテムを集めたら無敵モードに切り替わる
             {
                 InvincibleMode();
             }
