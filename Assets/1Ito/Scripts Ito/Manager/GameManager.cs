@@ -16,28 +16,29 @@ public class GameManager : MonoBehaviour
     const int _level3Index = 3;
 
 
-    public int PlayerScore => _playerScore;
-    public int PlayerPower => _playerPower;
-    public int PlayerLevel => _playerLevel;
-    public int PlayerBombCount => _playerBombCount;
+    public float PlayerScore => _playerScore;
+    public float PlayerPower => _playerPower;
+    public float PlayerLevel => _playerLevel;
+    public float PlayerBombCount => _playerBombCount;
     ///<summary>一定数獲得すると無敵になるオブジェクトを獲得した数</summary>
-    public int PlayerInvincibleObjectCount => _playerInvicibleObjectCount;
+    public float PlayerInvincibleObjectCount => _playerInvicibleObjectCount;
     ///<summary>プレイヤーの残基</summary>
-    public int PlayerResidue => _playerResidue;
-    public float PlayerLevel1 { get => _player.PlayerLevel1; }
-    public float PlayerLevel2 { get => _player.PlayerLevel2; }
-    public float PlayerLevel3 { get => _player.PlayerLevel3; }
+    public float PlayerResidue => _playerResidue;
+    /// <summary>レベル2にするために必要なパワーアイテムの数</summary>//UIManagerから参照すべきプロパティ
+    public float PlayerPowerRequiredNumberLevel2 { get => _player.PlayerPowerRequiredNumberLevel2; }
+    /// <summary>レベル3にするために必要なパワーアイテムの数</summary>//UIManagerから参照すべきプロパティ
+    public float PlayerPowerRequiredNumberLevel3 { get => _player.PlayerPowerRequiredNumberLevel3; }
     public bool IsGameOver => _isGameOver;
     public bool IsStageClear => _isStageClear;
 
-    private int _playerScore = default;
-    private int _playerPower = default;
-    private int _playerLevel = default;
-    private int _playerBombCount = default;
+    private float _playerScore = default;
+    private float _playerPower = default;
+    private float _playerLevel = default;
+    private float _playerBombCount = default;
     ///<summary>一定数獲得すると無敵になるオブジェクトを獲得した数///</summary>
-    private int _playerInvicibleObjectCount = default;
+    private float _playerInvicibleObjectCount = default;
     /// <summary>プレイヤーの残基</summary>
-    [SerializeField] private int _playerResidue =　default;
+    [SerializeField] private float _playerResidue =　default;
 
     private bool _isGameOver = false;
     private bool _isStageClear = false;
@@ -97,7 +98,7 @@ public class GameManager : MonoBehaviour
     /// プレイヤースコアの値に変更を加える関数
     /// </summary>
     /// <param name="score">スコア加算 -> 引数,正の数 : スコア減算 -> 引数,負の数</param>
-    public void PlayerScoreChange(int score)
+    public void PlayerScoreChange(float score)
     {
         _playerScore += score;
     }
@@ -107,7 +108,7 @@ public class GameManager : MonoBehaviour
     /// パワーを変えることにより発射する弾幕が強化される
     /// </summary>
     /// <param name="power"> パワー加算 -> 引数,正の数 : パワー減算 -> 引数,負の数</param>
-    public void PlayerPowerChange(int power)
+    public void PlayerPowerChange(float power)
     {
         _playerPower += power;
         PlayerLevelCheck();
@@ -118,16 +119,19 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public  void PlayerLevelCheck()
     {
-        if (PlayerPower < _player.PlayerLevel1)//レベル1のとき
+        if (PlayerPower < _player.PlayerPowerRequiredNumberLevel2)//レベル１のとき
         {
+            //パワーアイテムの数が、レベル２になるために必要なパワーアイテム数よりも少なかったときの処理
             _playerLevel = _level1Index;
         }
-        else if (_player.PlayerLevel1 <= PlayerPower && PlayerPower < _player.PlayerLevel2)//レベル2のとき
+        else if (PlayerPower >= _player.PlayerPowerRequiredNumberLevel2 && PlayerPower < _player.PlayerPowerRequiredNumberLevel3)//レベル2のとき
         {
+            //パワーアイテムの数が、レベル２になるために必要なパワーアイテム数よりも多く、レベル３になるために必要なパワーアイテム数よりも少なかったときの処理
             _playerLevel = _level2Index;
         }
-        else if (_player.PlayerLevel2 <= PlayerPower)//レベル3のとき
+        else if (_player.PlayerPowerRequiredNumberLevel3 <= PlayerPower)//レベル3のとき
         {
+            //パワーアイテムの数が、レベル３になるために必要なパワーアイテム数よりも多かったときの処理
             _playerLevel = _level3Index;
         }
     }
@@ -136,7 +140,7 @@ public class GameManager : MonoBehaviour
     /// プレイヤーのボムの所有数に変更を加える関数
     /// </summary>
     /// <param name="bombCount"> ボム加算 -> 引数,正の数 : ボム減算 -> 引数,負の数</param>
-    public void PlayerBombCountChange(int bombCount)
+    public void PlayerBombCountChange(float bombCount)
     {
         _playerBombCount += bombCount;
     }
@@ -145,7 +149,7 @@ public class GameManager : MonoBehaviour
     /// 一定数獲得すると無敵になるオブジェクトを獲得した数に変更を加える関数
     /// </summary>
     /// <param name="invicibleObjectCount">無敵オブジェクト加算 -> 引数,正の数 : 無敵オブジェクト減算 -> 引数,負の数</param>
-    public void PlayerInvicibleObjectValueChange(int invicibleObjectCount)
+    public void PlayerInvicibleObjectValueChange(float invicibleObjectCount)
     {
         _playerInvicibleObjectCount += invicibleObjectCount;
     }
@@ -154,7 +158,7 @@ public class GameManager : MonoBehaviour
     /// 残基に変更を加える関数
     /// </summary>
     /// <param name="residue">残基加算 -> 引数,正の数 : 残基減算 -> 引数,負の数</param>
-    public void ResidueChange(int residue)
+    public void ResidueChange(float residue)
     {
         _playerResidue += residue;
     }
