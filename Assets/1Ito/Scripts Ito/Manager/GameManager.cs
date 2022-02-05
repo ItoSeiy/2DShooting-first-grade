@@ -28,6 +28,8 @@ public class GameManager : MonoBehaviour
     public float PlayerPowerRequiredNumberLevel2 { get => _player.PlayerPowerRequiredNumberLevel2; }
     /// <summary>レベル3にするために必要なパワーアイテムの数</summary>//UIManagerから参照すべきプロパティ
     public float PlayerPowerRequiredNumberLevel3 { get => _player.PlayerPowerRequiredNumberLevel3; }
+    /// <summary>Invicibleモードになるために必要なInvicibleアイテムの数</summary>
+    public float PlayerInvicibleLimit => _player.InvicibleLimit;
     public bool IsGameOver => _isGameOver;
     public bool IsStageClear => _isStageClear;
 

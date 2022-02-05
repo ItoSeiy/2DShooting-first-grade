@@ -69,7 +69,7 @@ public class PlayerBase : MonoBehaviour
     public float PlayerPowerRequiredNumberLevel2 => _playerPowerRequiredNumberLevel2;
     public float PlayerPowerRequiredNumberLevel3 => _playerPowerRequiredNumberLevel3;
     /// <summary>無敵モードになるために必要なInvicibleアイテムの数が入ったプロパティ</summary>
-    public float InvicibleRequiredNumber => _invincibleLimit;
+    public float InvicibleLimit => _invincibleLimit;
 
     protected float _playerResidue = default;//プレイヤーの残機を入れておく変数
     protected float _bombCount = default;//プレイヤーの所持するボムの数を入れておく変数
