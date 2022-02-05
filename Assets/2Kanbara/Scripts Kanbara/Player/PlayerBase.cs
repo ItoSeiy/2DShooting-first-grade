@@ -45,9 +45,9 @@ public class PlayerBase : MonoBehaviour
     [SerializeField, Header("動くスピード")] float _moveSpeed = default;
     [SerializeField, Header("精密操作のスピード")] float _lateMove = default;
 
-    [SerializeField, Header("この数値以上なら、一定時間無敵モードになる変数")] float _invincibleLimit = default;
+    [SerializeField, Header("この数値以上なら、一定時間無敵モードになる変数")] float _invincibleLimit = 150f;
     [SerializeField, Header("Playerのパワーの上限")] float _playerPowerMax = default;
-    [SerializeField, Header("リスポーン中の無敵時間")] protected int _respawnTime = 2800;
+    [SerializeField, Header("リスポーン中の無敵時間")] int _respawnTime = 2800;
     [SerializeField, Header("リスポーン後の無敵時間")] int _afterRespawnTime = 1400;
 
     [SerializeField, Header("音量を調節する変数")] protected float _musicVolume = default;
@@ -156,20 +156,13 @@ public class PlayerBase : MonoBehaviour
                 }
                 break;
         }
-        if (_dir.x > _default)
-        {
-            _sp.flipX = false;
-        }
-        else if (_dir.x < _default)
-        {
-            _sp.flipX = true;
-        }
     }
     public void OnMove(InputAction.CallbackContext context)//通常の移動
     {
         if (_isNotControll) return;
         Vector2 inputMoveMent = context.ReadValue<Vector2>();
         _dir = new Vector2(inputMoveMent.x, inputMoveMent.y);
+        Inversion();
     }
 
     public void OnLateMove(InputAction.CallbackContext context)//精密操作時の移動
@@ -359,6 +352,18 @@ public class PlayerBase : MonoBehaviour
         await Task.Delay(_invincibleTime);
         _godMode = false;
         _anim.SetBool(_isDead, false);
+    }
+
+    void Inversion()
+    {
+        if (_dir.x > _default)
+        {
+            _sp.flipX = false;
+        }
+        else if (_dir.x < _default)
+        {
+            _sp.flipX = true;
+        }
     }
 
     public void Play(string key)
