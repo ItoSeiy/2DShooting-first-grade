@@ -4,61 +4,75 @@ using UnityEngine;
 
 public class BossEnemyMoveRandom : MonoBehaviour
 {
-    bool _isMove = false;
-    private float x = 0;
-    private float y = 0;
-    float _speed = 4f;
-    [SerializeField] public float _stopTime = 2;
+    /// <summary>形状や大きさの概念を持った物質</summary>
     Rigidbody2D _rb;
+    /// <summary>方向</summary>
     Vector2 _dir;
+    /// <summary>水平、横方向</summary>
+    private float _horizontal = 0;
+    /// <summary>垂直、縦方向</summary>
+    private float _veritical = 0;
+    /// <summary>速度</summary>
+    float _speed = 4f;
+    /// <summary>停止時間</summary>
+    [SerializeField,Header("停止時間")] public float _stopTime = 2;
+    /// <summary>上限</summary>
+    [SerializeField,Header("上限")] float _upperLimit = 2.5f;
+    /// <summary>下限</summary>
+    [SerializeField,Header("下限")] float _lowerLimit = 1.5f;  
+    /// <summary>右限</summary>
+    [SerializeField,Header("右限")] float _rightLimit = 4f;
+    /// <summary>左限</summary>
+    [SerializeField,Header("左限")] float _leftLimit = -4f;
+    /// <summary>移動時間</summary>
+    [SerializeField,Header("移動時間")] float _moveTime = 0.5f;
 
-    IEnumerator StationA_Move()
+    IEnumerator RandomMovement()
     {       
         yield return new WaitForSeconds(0.5f);
-        _isMove = true;
         while (true)
         {
             _rb.velocity = new Vector2(0, 0);
             yield return new WaitForSeconds(_stopTime);
 
-            if(transform.position.y > 2.5f)      //上に移動しすぎたら
+            if(transform.position.y > _upperLimit)      //上に移動しすぎたら
             {
-                y = Random.Range(-1.0f, -0.1f);
+                _veritical = Random.Range(-1.0f, -0.1f);
             }
-            else if (transform.position.y < 1.5f)//下に移動しすぎたら
+            else if (transform.position.y < _lowerLimit)//下に移動しすぎたら
             {
-                y = Random.Range(0.1f, 1.0f);
+                _veritical = Random.Range(0.1f, 1.0f);
             }
             else　　　　　　　　　　　　　　      //上下どっちにも移動しすぎてないなら
             {
-                y = Random.Range(-1.0f, 1.0f);
+                _veritical = Random.Range(-1.0f, 1.0f);
             }
-            if (transform.position.x > 4)         //右に移動しすぎたら
+            if (transform.position.x > _rightLimit)         //右に移動しすぎたら
             {
-                x = (Random.Range(-3.0f, -1.0f));
+                _horizontal = (Random.Range(-3.0f, -1.0f));
             }
-            else if(transform.position.x < -4)   //左に移動しぎたら
+            else if(transform.position.x < _leftLimit)   //左に移動しぎたら
             {
-                x = (Random.Range(1.0f, 3.0f));
+                _horizontal = (Random.Range(1.0f, 3.0f));
             }
             else　　　　　　　　　　　　         //左右どっちにも移動しすぎてないなら
             {
-                x = Random.Range(-3.0f, 3.0f);               
+                _horizontal = Random.Range(-3.0f, 3.0f);               
             }
 
-            _dir = new Vector2(x, y);
+            _dir = new Vector2(_horizontal, _veritical);
 
             _rb.velocity = _dir * _speed;
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(_moveTime);
             
-            Debug.Log(x);
-            Debug.Log(y);
+            Debug.Log(_horizontal);
+            Debug.Log(_veritical);
         }
     }
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
-        StartCoroutine(StationA_Move());
+        StartCoroutine(RandomMovement());
     }
     private void Update()
     {

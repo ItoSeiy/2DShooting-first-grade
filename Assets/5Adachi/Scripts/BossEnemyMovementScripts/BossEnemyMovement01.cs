@@ -5,8 +5,8 @@ using UnityEngine;
 public class BossEnemyMovement01 : EnemyBese
 {
     [SerializeField, Header("Bombのタグ")] public string _bombTag = null;
-    private float x = 0;
-    private float y = 0;
+    float x = 0;
+    float y = 0;
     float _speed = 4f;
     [SerializeField,Header("待機時間")] public float _stopTime = default;
     Vector2 _dir;
@@ -33,6 +33,8 @@ public class BossEnemyMovement01 : EnemyBese
             {
                 y = Random.Range(-1.0f, 1.0f);
             }
+
+
             if (transform.position.x > 4)         //右に移動しすぎたら
             {
                 x = (Random.Range(-3.0f, -1.0f));

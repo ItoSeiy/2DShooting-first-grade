@@ -5,8 +5,6 @@ using UnityEngine;
 public class BossEnemyMovement02 : EnemyBese
 {
     [SerializeField, Header("Bomb‚Ìƒ^ƒO")] public string _bombTag = null;
-
-    bool _isMove02 = false;
     private float x = 0;
     private float y = 0;
     float _speed = 4f;
@@ -34,15 +32,11 @@ public class BossEnemyMovement02 : EnemyBese
     protected override void Update()
     {
         base.Update();
-        if(_isMove02 == true)
-        {
-            transform.position = new Vector2(Mathf.Clamp(transform.position.x, -8f, 8f), Mathf.Clamp(transform.position.y, -4f, 4f));
-        }
-        //int count = Random.Range(0, 2);
     }
     IEnumerator RandomMovement()
     {
         yield return new WaitForSeconds(0.5f);
+
         while (true)
         {
             Rb.velocity = new Vector2(0, 0);
@@ -92,7 +86,7 @@ public class BossEnemyMovement02 : EnemyBese
         }
     }
 
-    public IEnumerator Down()
+    IEnumerator Down()
     {
         if (transform.position.x < 0)//¶‚É‚¢‚½‚ç
         {
@@ -104,8 +98,6 @@ public class BossEnemyMovement02 : EnemyBese
             Rb.velocity = new Vector2(7, 0);
             Debug.Log("b");
         }
-
-
 
         while (true)//’[‚É’…‚­‚Ü‚Å‰º‚ª‚é
         {
@@ -177,5 +169,6 @@ public class BossEnemyMovement02 : EnemyBese
         }
         yield return new WaitForSeconds(Random.Range(1, 3));
         Rb.velocity = new Vector2(0, 0);
+        StartCoroutine(RandomMovement());
     }
 }
