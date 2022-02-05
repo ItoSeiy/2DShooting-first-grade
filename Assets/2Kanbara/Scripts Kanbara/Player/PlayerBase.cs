@@ -256,7 +256,7 @@ public class PlayerBase : MonoBehaviour
     /// <summary>チャージショット時の攻撃処理</summary>
     public virtual void PlayerChargeAttack()
     {
-        
+
     }
 
     /// <summary>ボム使用時の処理</summary>
