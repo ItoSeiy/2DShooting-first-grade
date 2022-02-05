@@ -118,6 +118,7 @@ public class BossEnemyMoveDescend : MonoBehaviour
             }
         }
         yield return new WaitForSeconds(Random.Range(1, 3));
+        //Ž~‚Ü‚é
         _direction = Vector2.zero;
     }
 }
