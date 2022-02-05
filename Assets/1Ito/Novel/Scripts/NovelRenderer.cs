@@ -53,34 +53,69 @@ public class NovelRenderer : MonoBehaviour
         //テキストが最後まで読み込まれていなかったら
         if (_currentCharNum < _datas[_ggsRow][MAIN_TEXT_COLUMN].Length)
         {
-            CheckCommand();
 
             if (_isClick)//クリックされたらテキストを飛ばす
             {
                 _textInterval = 0;
+                _isClick = false;
             }
 
-            DisplayText();
+            if (_datas[_ggsRow][MAIN_TEXT_COLUMN][_currentCharNum] == '&' && _isCommandFirstTime)
+            {
+                //コマンド入力を検出する
+                Command();
+                _isCommandFirstTime = false;
+            }
+            else
+            {
+                DisplayText();
+            }
         }
         else//テキストが最後まで読み込まれたら
         {
-            //テキストの速さを戻す
-            _textInterval = _oldTextInterval;
-            _isDisplaying = false;
-            NextRow();//行の添え字をカウントアップ
+            if (_isClick)
+            {
+                NextRow();//行の添え字をカウントアップ
+                _isClick = false;
+            }
         }
     }
 
     void NextRow()
     {
-        if(_isClick)
+        _ggsRow++;
+        _textInterval = _oldTextInterval;
+        _currentCharNum = 0;
+        _mainText.text = "";
+        _nameText.text = "";
+
+        _isCommandFirstTime = true;
+        _isDisplaying = false;
+    }
+
+    void Command()
+    {
+        string command = _datas[_ggsRow][MAIN_TEXT_COLUMN];
+        string action = _datas[_ggsRow][ACTION_TEXT_COLUMN];
+        switch (command)
         {
-            _ggsRow++;
-            _currentCharNum = 0;
-            _mainText.text = "";
-            _isClick = false;
-            CheckCommand();
+            case "&MainCharacterAnim":
+                Debug.Log("メインキャラアニメーションアニメーション" + action);
+                _characterAnimator.Play(action);
+                break;
+            case "&BossAnim":
+                Debug.Log("ボスアニメーション" + action);
+                _bossAnimator.Play(action);
+                break;
+            case "&Sound":
+                System.Enum.TryParse(action, out _soundType);
+                SoundManager.Instance.UseSound(_soundType);
+                break;
+            default:
+                Debug.LogError(command + action + "というコマンドは無効です");
+                break;
         }
+        NextRow();
     }
 
     void DisplayText()
@@ -118,31 +153,6 @@ public class NovelRenderer : MonoBehaviour
         }
     }
 
-    void Command()
-    {
-        //string[] command = _datas[_ggsRow][MainTextColumn].Split(' ');
-        string command = _datas[_ggsRow][MAIN_TEXT_COLUMN];
-        string action = _datas[_ggsRow][ACTION_TEXT_COLUMN];
-        switch (command)
-        {
-            case "&MainCharacterAnim":
-                Debug.Log("メインキャラアニメーションアニメーション" + action);
-                _characterAnimator.Play(action);
-                break;
-            case "&BossAnim":
-                Debug.Log("ボスアニメーション" + action);
-                _bossAnimator.Play(action);
-                break;
-            case "&Sound":
-                System.Enum.TryParse(action, out _soundType);
-                SoundManager.Instance.UseSound(_soundType);
-                break;
-            default:
-                Debug.LogError(command + action + "というコマンドは無効です");
-                break;
-        }
-        _ggsRow++;
-    }
 
     public void OnClick(InputAction.CallbackContext context)
     {
@@ -172,16 +182,6 @@ public class NovelRenderer : MonoBehaviour
         {
             NovelFinish = false;
             return false;
-        }
-    }
-
-    void CheckCommand()
-    {
-        if (_datas[_ggsRow][MAIN_TEXT_COLUMN][_currentCharNum] == '&' && _isCommandFirstTime)
-        {
-            //コマンド入力を検出する
-            Command();
-            _isCommandFirstTime = false;
         }
     }
 }
