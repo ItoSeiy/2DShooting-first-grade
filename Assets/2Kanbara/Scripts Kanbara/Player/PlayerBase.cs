@@ -62,6 +62,7 @@ public class PlayerBase : MonoBehaviour
     [SerializeField, Header("プレイヤーの被弾時に流れる音")] protected string _playerDestroyAudio = "PlayerDestroy";
 
     [SerializeField, Header("チャージショットのパーティカルシステム（溜め）")] GameObject _chargeps = default;
+    [SerializeField, Header("")] GameObject _superps = default;
 
     protected const float _level1 = 1f;
     protected const float _level2 = 2f;
@@ -112,6 +113,7 @@ public class PlayerBase : MonoBehaviour
         _cmvcam1.Priority = -1;
 
         _chargeps.GetComponent<ParticleSystem>();
+        _superps.GetComponent<ParticleSystem>();
 
         transform.position = _playerRespawn.position;//リスポーン地点に移動
 
@@ -171,12 +173,14 @@ public class PlayerBase : MonoBehaviour
         if (context.started)//LeftShiftKeyが押された瞬間の処理
         {
             _isLateMode = true;
+            _superps.SetActive(true);
             Debug.Log(_isLateMode);
         }
         if (context.canceled)//LeftShiftKeyが離された瞬間の処理
         {
             _isLateMode = false;
             Debug.Log(_isLateMode);
+            _superps.SetActive(false);
         }
     }
 
