@@ -40,7 +40,7 @@ public class PlayerBase : MonoBehaviour
     [SerializeField, Header("ボムを増やすアイテムのタグ")] string _bombItemTag = "BombItem";
     [SerializeField, Header("Invincibleのタグ")] string _invincibleTag = "Invincible";
 
-    [SerializeField, Header("被弾時に再生するアニメーション名")] string _isDead = "IsDead";
+    [SerializeField, Header("被弾時に再生するアニメーションのパラメータ名")] string _invicibleAnimParamName = "IsInvicible";
 
     [SerializeField, Header("動くスピード")] float _moveSpeed = default;
     [SerializeField, Header("精密操作のスピード")] float _lateMove = default;
@@ -118,7 +118,7 @@ public class PlayerBase : MonoBehaviour
         _playerResidue = GameManager.Instance.PlayerResidue;
         _bombCount = GameManager.Instance.PlayerBombCount;
         _playerScore = GameManager.Instance.PlayerScore;
-        _playerPower = GameManager.Instance.PlayerPower;
+        _playerPower = GameManager.Instance.PlayerPowerItemCount;
         _invincibleObjectCount = GameManager.Instance.PlayerInvincibleObjectCount;
     }
 
@@ -311,8 +311,8 @@ public class PlayerBase : MonoBehaviour
 
         if (collision.gameObject.tag == _powerTag && _playerPower < _playerPowerMax)//パワーを増やす処理
         {
-            GameManager.Instance.PlayerPowerChange(_defaultUp);
-            _playerPower = GameManager.Instance.PlayerPower;
+            GameManager.Instance.PlayerPowerItemCountChange(_defaultUp);
+            _playerPower = GameManager.Instance.PlayerPowerItemCount;
             Debug.Log("パワーふえたよー" + _playerPower);
         }
 
@@ -332,7 +332,7 @@ public class PlayerBase : MonoBehaviour
     {
         _godMode = true;
         _isNotControll = true;
-        _anim.SetBool(_isDead, true);
+        _anim.SetBool(_invicibleAnimParamName, true);
         _chargeps.SetActive(false);
         await Task.Delay(_respawnTime);
         _dir = Vector2.zero;
@@ -340,18 +340,18 @@ public class PlayerBase : MonoBehaviour
         _isNotControll = false;
         await Task.Delay(_afterRespawnTime);
         _godMode = false;
-        _anim.SetBool(_isDead, false);
+        _anim.SetBool(_invicibleAnimParamName, false);
     }
 
     public virtual async void InvincibleMode()//無敵モード
     {
         if (_godMode) return;
         _godMode = true;
-        _anim.SetBool(_isDead, true);
+        _anim.SetBool(_invicibleAnimParamName, true);
         GameManager.Instance.PlayerInvicibleObjectValueChange(_returnDefault);
         await Task.Delay(_invincibleTime);
         _godMode = false;
-        _anim.SetBool(_isDead, false);
+        _anim.SetBool(_invicibleAnimParamName, false);
     }
 
     void Inversion()

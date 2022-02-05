@@ -16,25 +16,34 @@ public class GameManager : MonoBehaviour
     const int _level3Index = 3;
 
 
-    public float PlayerScore => _playerScore;
-    public float PlayerPower => _playerPower;
     public float PlayerLevel => _playerLevel;
-    public float PlayerBombCount => _playerBombCount;
-    ///<summary>一定数獲得すると無敵になるオブジェクトを獲得した数</summary>
-    public float PlayerInvincibleObjectCount => _playerInvicibleObjectCount;
-    ///<summary>プレイヤーの残基</summary>
-    public float PlayerResidue => _playerResidue;
+    /// <summary>プレイヤーが持っているパワーアイテムの数</summary>
+    public float PlayerPowerItemCount => _playerPowerItemCount;
     /// <summary>レベル2にするために必要なパワーアイテムの数</summary>//UIManagerから参照すべきプロパティ
     public float PlayerPowerRequiredNumberLevel2 { get => _player.PlayerPowerRequiredNumberLevel2; }
     /// <summary>レベル3にするために必要なパワーアイテムの数</summary>//UIManagerから参照すべきプロパティ
     public float PlayerPowerRequiredNumberLevel3 { get => _player.PlayerPowerRequiredNumberLevel3; }
-    /// <summary>Invicibleモードになるために必要なInvicibleアイテムの数</summary>
+
+    /// <summary>プレイヤーのスコア</summary>
+    public float PlayerScore => _playerScore;
+
+    /// <summary>プレイヤーのボムの所持数</summary>
+    public float PlayerBombCount => _playerBombCount;
+
+    ///<summary>プレイヤーの残基</summary>
+    public float PlayerResidue => _playerResidue;
+
+
+    ///<summary>一定数獲得すると無敵になるオブジェクトを獲得した数</summary>
+    public float PlayerInvincibleObjectCount => _playerInvicibleObjectCount;
+    /// <summary>無敵になるために必要な無敵オブジェクトアイテムの数</summary>
     public float PlayerInvicibleLimit => _player.InvicibleLimit;
+
     public bool IsGameOver => _isGameOver;
     public bool IsStageClear => _isStageClear;
 
     private float _playerScore = default;
-    private float _playerPower = default;
+    private float _playerPowerItemCount = default;
     private float _playerLevel = default;
     private float _playerBombCount = default;
     ///<summary>一定数獲得すると無敵になるオブジェクトを獲得した数///</summary>
@@ -106,13 +115,12 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// プレイヤーのパワーの値に変更を加える関数
-    /// パワーを変えることにより発射する弾幕が強化される
+    /// プレイヤーのパワーアイテムの値に変更を加える関数
     /// </summary>
-    /// <param name="power"> パワー加算 -> 引数,正の数 : パワー減算 -> 引数,負の数</param>
-    public void PlayerPowerChange(float power)
+    /// <param name="itemCount"> パワーアイテム加算 -> 引数,正の数 : パワーアイテム減算 -> 引数,負の数</param>
+    public void PlayerPowerItemCountChange(float itemCount)
     {
-        _playerPower += power;
+        _playerPowerItemCount += itemCount;
         PlayerLevelSet();
     }
 
@@ -121,17 +129,17 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public  void PlayerLevelSet()
     {
-        if (PlayerPower < _player.PlayerPowerRequiredNumberLevel2)//レベル１のとき
+        if (PlayerPowerItemCount < _player.PlayerPowerRequiredNumberLevel2)//レベル１のとき
         {
             //パワーアイテムの数が、レベル２になるために必要なパワーアイテム数よりも少なかったときの処理
             _playerLevel = _level1Index;
         }
-        else if (PlayerPower >= _player.PlayerPowerRequiredNumberLevel2 && PlayerPower < _player.PlayerPowerRequiredNumberLevel3)//レベル2のとき
+        else if (PlayerPowerItemCount >= _player.PlayerPowerRequiredNumberLevel2 && PlayerPowerItemCount < _player.PlayerPowerRequiredNumberLevel3)//レベル2のとき
         {
             //パワーアイテムの数が、レベル２になるために必要なパワーアイテム数よりも多く、レベル３になるために必要なパワーアイテム数よりも少なかったときの処理
             _playerLevel = _level2Index;
         }
-        else if (_player.PlayerPowerRequiredNumberLevel3 <= PlayerPower)//レベル3のとき
+        else if (_player.PlayerPowerRequiredNumberLevel3 <= PlayerPowerItemCount)//レベル3のとき
         {
             //パワーアイテムの数が、レベル３になるために必要なパワーアイテム数よりも多かったときの処理
             _playerLevel = _level3Index;
@@ -172,7 +180,7 @@ public class GameManager : MonoBehaviour
     public void Init()
     {
         _playerScore = 0;
-        _playerPower = 0;
+        _playerPowerItemCount = 0;
         _playerBombCount = 0;
         _playerInvicibleObjectCount = 0;
         _playerLevel = 1;
