@@ -20,6 +20,7 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
     [SerializeField] NovelPhase _novelPhaseState;
 
     [SerializeField] SpriteRenderer _backGround;
+    [SerializeField] GameObject _backGroundParent;
     SpriteRenderer _backGroundClone = null;
     [SerializeField] Vector2 _backGroundDir = new Vector2(0, -1);
     [SerializeField] float _scrollSpeed = 0.5f;
@@ -44,7 +45,7 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
     {
         _initialPosY = _backGround.transform.position.y;
 
-        _backGroundClone = Instantiate(_backGround);
+        _backGroundClone = Instantiate(_backGround, _backGroundParent.transform);
         _backGroundClone.transform.Translate(0f, _backGround.bounds.size.y, 0f);
     }
 
