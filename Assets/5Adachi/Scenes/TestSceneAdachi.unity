@@ -1078,12 +1078,12 @@ GameObject:
   - component: {fileID: 601476268}
   - component: {fileID: 601476267}
   m_Layer: 0
-  m_Name: Down
+  m_Name: UShaped
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &601476264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1099,7 +1099,7 @@ MonoBehaviour:
   _speed: 5
   _horizontalLimit: 7.5
   _upperLimit: 3.5
-  _lowerLimit: 7.5
+  _lowerLimit: -3
 --- !u!212 &601476265
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1159,7 +1159,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 601476263}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3, y: 4, z: 0}
+  m_LocalPosition: {x: -7, y: 4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1932,29 +1932,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cefa21ac35c9934eadd616c1ca33133, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyHp: 10
-  _attackInterval: 1
-  _damageRatio: 1
-  _playerBulletTag: PlayerBullet
-  _timer: 0
-  _rb: {fileID: 0}
-  _bombTag: 
-  _random: 0
-  _object: {fileID: 0}
-  _x: 0
-  _y: 0
-  y2: 0
-  _radius: 10
-  _totalTime: 0
-  _speed: 3
-  x: 0
-  y: 0
-  _stopTime: 0
-  _player: {fileID: 0}
-  _isMove: 0
-  count2: 0
-  _playerTag: 
-  _test: 0
 --- !u!61 &1150983090
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2364,7 +2341,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1652562250
 MonoBehaviour:
   m_ObjectHideFlags: 0
