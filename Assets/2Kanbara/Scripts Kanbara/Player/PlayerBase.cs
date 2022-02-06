@@ -4,7 +4,6 @@ using UnityEngine;
 using System.Threading.Tasks;
 using UnityEngine.InputSystem;
 using Cinemachine;
-using DG.Tweening;
 
 
 /// <summary>
@@ -19,20 +18,19 @@ public class PlayerBase : MonoBehaviour
     Rigidbody2D _rb;
     SpriteRenderer _sp;
     protected AudioSource _audioSource;
-    Animation _anim;
+    Animator _anim;
     Vector2 _dir;
 
-    [SerializeField, Header("リスポーンするポジション")] public Transform _playerRespawn = default;
-    [SerializeField, Header("弾を発射するポジション")] public Transform _muzzle = default;
+    [SerializeField, Header("リスポーンするポジション")] Transform _playerRespawn = default;
+    [SerializeField, Header("弾を発射するポジション")] protected Transform _muzzle = default;
 
-    [SerializeField, Header("精密操作時の発射する間隔(ミリ秒)")] public int _superAttackDelay = 200;
-    [SerializeField, Header("発射する間隔(ミリ秒)")] public int _attackDelay = 200;
-    [SerializeField, Header("ボムのクールタイム（ミリ秒）")] public int _bombCoolTime = default;
-    [SerializeField, Header("無敵モードのクールタイム")] public int _invincibleCoolTime = 2800;
+    [SerializeField, Header("精密操作時の発射する間隔(ミリ秒)")] int _superAttackDelay = 200;
+    [SerializeField, Header("発射する間隔(ミリ秒)")] int _attackDelay = 200;
+    [SerializeField, Header("ボムのクールタイム（ミリ秒）")] int _bombCoolTime = default;
+    [SerializeField, Header("無敵モードのクールタイム(ミリ秒)")] int _invincibleTime = 2800;
 
-    [SerializeField, Header("この数値未満ならレベル１")] int _playerLevel1Denom = default;
-    [SerializeField, Header("レベル１以上のとき、この数値未満ならレベル２")] int _playerLevel2Denom = default;
-    [SerializeField, Header("この数値までがレベル３")] int _playerLevel3Denom = default;
+    [SerializeField, Header("レベル2に上げるために必要なパワーアイテムの数")] float _playerPowerRequiredNumberLevel2 = 50f;
+    [SerializeField, Header("レベル3に上げるために必要なパワーアイテムの数")] float _playerPowerRequiredNumberLevel3 = 100f;
 
     [SerializeField, Header("Enemyのタグ")] string _enemyTag = "Enemy";
     [SerializeField, Header("EnemyのBulletのタグ")] string _enemyBulletTag = "EnemyBullet";
@@ -42,15 +40,15 @@ public class PlayerBase : MonoBehaviour
     [SerializeField, Header("ボムを増やすアイテムのタグ")] string _bombItemTag = "BombItem";
     [SerializeField, Header("Invincibleのタグ")] string _invincibleTag = "Invincible";
 
+    [SerializeField, Header("被弾時に再生するアニメーションのパラメータ名")] string _invicibleAnimParamName = "IsInvicible";
+
     [SerializeField, Header("動くスピード")] float _moveSpeed = default;
     [SerializeField, Header("精密操作のスピード")] float _lateMove = default;
 
-    [SerializeField, Header("この数値以上なら、一定時間無敵モードになる変数")] int _invincibleMax = default;
-    [SerializeField, Header("Playerのパワーの上限")] int _playerPowerMax = default;
-    [SerializeField, Header("リスポーン中の無敵時間")] protected int _respawnTime = 2800;
+    [SerializeField, Header("この数値以上なら、一定時間無敵モードになる変数")] float _invincibleLimit = 150f;
+    [SerializeField, Header("Playerのパワーの上限")] float _playerPowerMax = default;
+    [SerializeField, Header("リスポーン中の無敵時間")] int _respawnTime = 2800;
     [SerializeField, Header("リスポーン後の無敵時間")] int _afterRespawnTime = 1400;
-
-    [SerializeField, Header("死亡時のアニメーション")] Animation _dead = default;
 
     [SerializeField, Header("音量を調節する変数")] protected float _musicVolume = default;
 
@@ -63,25 +61,25 @@ public class PlayerBase : MonoBehaviour
     [SerializeField, Header("ボムの音")] protected string _playerBombShotAudio = "Bomb";
     [SerializeField, Header("プレイヤーの被弾時に流れる音")] protected string _playerDestroyAudio = "PlayerDestroy";
 
-    [SerializeField] Color _color = default;
-    [SerializeField] float _changeValueInterval = default;
+    [SerializeField, Header("チャージショットのパーティカルシステム（溜め）")] GameObject _chargeps = default;
+    [SerializeField, Header("")] GameObject _superps = default;
 
-    protected const int _level1 = 1;
-    protected const int _level2 = 2;
-    protected const int _level3 = 3;
+    protected const float _level1 = 1f;
+    protected const float _level2 = 2f;
+    protected const float _level3 = 3f;
+    public float PlayerPowerRequiredNumberLevel2 => _playerPowerRequiredNumberLevel2;
+    public float PlayerPowerRequiredNumberLevel3 => _playerPowerRequiredNumberLevel3;
+    /// <summary>無敵モードになるために必要なInvicibleアイテムの数が入ったプロパティ</summary>
+    public float InvicibleLimit => _invincibleLimit;
 
-    public int PlayerLevel1 => _playerLevel1Denom;
-    public int PlayerLevel2 => _playerLevel2Denom;
-    public int PlayerLevel3 => _playerLevel3Denom;
-
-    protected int _playerResidue = default;//プレイヤーの残機を入れておく変数
-    protected int _bombCount = default;//プレイヤーの所持するボムの数を入れておく変数
-    protected int _playerScore = default;//プレイヤーのスコアを入れておく変数
-    protected int _playerPower = default;//プレイヤーのパワーを入れておく変数
-    protected int _invincibleObjectCount = default;//一定数集めると無敵モードになるアイテムの数を入れておく変数
+    protected float _playerResidue = default;//プレイヤーの残機を入れておく変数
+    protected float _bombCount = default;//プレイヤーの所持するボムの数を入れておく変数
+    protected float _playerScore = default;//プレイヤーのスコアを入れておく変数
+    protected float _playerPower = default;//プレイヤーのパワーの数を入れておく変数
+    protected float _invincibleObjectCount = default;//一定数集めると無敵モードになるアイテムの数を入れておく変数
 
     /// <summary>連続で弾を撃てないようにするフラグ</summary>
-    protected bool _isBulletStop = default;
+    bool _isBulletStop = default;
     /// <summary>精密操作時のフラグ</summary>
     bool _isLateMode = default;
     /// <summary>無敵モードのフラグ</summary>
@@ -96,36 +94,33 @@ public class PlayerBase : MonoBehaviour
     bool _isAttackMode = default;
 
     /// <summary>カウントアップする定数</summary>
-    const int _defaultUp = 1;
+    const float _defaultUp = 1f;
     /// <summary>カウントダウンする定数</summary>
-    const int _defaultDown = -1;
+    const float _defaultDown = -1f;
     /// <summary>0の入った定数</summary>
-    const int _default = 0;
+    const float _default = 0f;
     /// <summary>InvincibleObjectを初期化する定数</summary>
-    readonly int _returnDefault = -150;
-
-    public int PlayerResidue => _playerResidue;//残機を入れておくプロパティ
-    public int BombCount => _bombCount;//ボムの数を入れておくプロパティ            
-    public int PlayerScore => _playerScore;//プレイヤーのスコアを入れておくプロパティ
-    public int PlayerPower => _playerPower;//パワーを入れておくプロパティ
-    public int PlayerInvincible => _invincibleObjectCount;//InvincibleObjectの所持数を入れておくプロパティ
+    const float _returnDefault = -150f;
 
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
         _sp = GetComponent<SpriteRenderer>();
         _audioSource = GetComponent<AudioSource>();
-        _anim = GetComponent<Animation>();
+        _anim = GetComponent<Animator>();
         _audioData = GetComponent<AudioData[]>();
 
         _cmvcam1.Priority = -1;
+
+        _chargeps.GetComponent<ParticleSystem>();
+        _superps.GetComponent<ParticleSystem>();
 
         transform.position = _playerRespawn.position;//リスポーン地点に移動
 
         _playerResidue = GameManager.Instance.PlayerResidue;
         _bombCount = GameManager.Instance.PlayerBombCount;
         _playerScore = GameManager.Instance.PlayerScore;
-        _playerPower = GameManager.Instance.PlayerPower;
+        _playerPower = GameManager.Instance.PlayerPowerItemCount;
         _invincibleObjectCount = GameManager.Instance.PlayerInvincibleObjectCount;
     }
 
@@ -145,6 +140,7 @@ public class PlayerBase : MonoBehaviour
             case false:
                 break;
             case true:
+                if (_isNotControll) return;
                 switch (_isLateMode)
                 {
                     case false:
@@ -162,20 +158,13 @@ public class PlayerBase : MonoBehaviour
                 }
                 break;
         }
-        if (_dir.x > _default)
-        {
-            _sp.flipX = false;
-        }
-        else if (_dir.x < _default)
-        {
-            _sp.flipX = true;
-        }
     }
     public void OnMove(InputAction.CallbackContext context)//通常の移動
     {
         if (_isNotControll) return;
         Vector2 inputMoveMent = context.ReadValue<Vector2>();
         _dir = new Vector2(inputMoveMent.x, inputMoveMent.y);
+        Inversion();
     }
 
     public void OnLateMove(InputAction.CallbackContext context)//精密操作時の移動
@@ -184,18 +173,20 @@ public class PlayerBase : MonoBehaviour
         if (context.started)//LeftShiftKeyが押された瞬間の処理
         {
             _isLateMode = true;
+            _superps.SetActive(true);
             Debug.Log(_isLateMode);
         }
         if (context.canceled)//LeftShiftKeyが離された瞬間の処理
         {
             _isLateMode = false;
             Debug.Log(_isLateMode);
+            _superps.SetActive(false);
         }
     }
 
     public async void OnJump(InputAction.CallbackContext context)//SpaceKeyが押された瞬間の処理
     {
-        if(context.started && BombCount > _default && !_isBomb && !_isNotControll)
+        if(context.started && _bombCount > _default && !_isBomb && !_isNotControll && !_wasCharge && !_isAttackMode)
         {
             Bom();
             await Task.Delay(_bombCoolTime);
@@ -207,24 +198,30 @@ public class PlayerBase : MonoBehaviour
 
     public void OnInputChargeShotButton(InputAction.CallbackContext context)//ChargeShotの処理
     {
+        if (_isNotControll) return;
         if (context.started && !_wasCharge && !_isAttackMode)
         {
             _cmvcam1.Priority = 10;
             _audioSource.Stop();
             Play(_playerChargeBulletAudio);
             _wasCharge = true;
+            _chargeps.SetActive(true);
         }
         if(context.performed && _wasCharge)
         {
-            PlayerChargeAttack();
             _wasCharge = false;
+            if (_isNotControll) return;
+            PlayerChargeAttack();
             _cmvcam1.Priority = -1;
+            _chargeps.SetActive(false);
         }
         if(context.canceled)
         {
-            _audioSource.Stop();
             _wasCharge = false;
+            if (_isNotControll) return;
+            _audioSource.Stop();
             _cmvcam1.Priority = -1;
+            _chargeps.SetActive(false);
         }
     }
 
@@ -234,10 +231,12 @@ public class PlayerBase : MonoBehaviour
         {
             if (_wasCharge) return;
             _isAttackMode = true;
+            Debug.Log(_isAttackMode);
         }
-        if(context.canceled)
+        if(context.performed || context.canceled)
         {
             _isAttackMode = false;
+            Debug.Log(_isAttackMode);
         }
     }
 
@@ -256,7 +255,7 @@ public class PlayerBase : MonoBehaviour
     /// <summary>チャージショット時の攻撃処理</summary>
     public virtual void PlayerChargeAttack()
     {
-
+        Debug.LogError("チャージアタックが実装されていません");
     }
 
     /// <summary>ボム使用時の処理</summary>
@@ -273,18 +272,21 @@ public class PlayerBase : MonoBehaviour
         if (!_godMode && collision.gameObject.tag == _enemyTag || collision.gameObject.tag == _enemyBulletTag)
         {
             if (_godMode) return;
+            _cmvcam1.Priority = -1;
+            _wasCharge = false;
+            _isAttackMode = false;
             Play(_playerDestroyAudio);
             GameManager.Instance.ResidueChange(_defaultDown);
             _playerResidue = GameManager.Instance.PlayerResidue;
 
-            if (PlayerResidue >= _defaultUp)//残機が残っている場合はリスポーンを行う
+            if (_playerResidue >= _defaultUp)//残機が残っている場合はリスポーンを行う
             {
                 Respawn();
-                Debug.Log("残り残機" + PlayerResidue);
+                Debug.Log("残り残機" + _playerResidue);
             }
             else//残機が0であればゲームオーバー処理を呼び出す
             {
-                Debug.LogError("おめぇーの残機ねえから！" + PlayerResidue);
+                Debug.LogError("おめぇーの残機ねえから！" + _playerResidue);
                 GameManager.Instance.GameOver();
                 gameObject.SetActive(false);
             }
@@ -294,36 +296,36 @@ public class PlayerBase : MonoBehaviour
         {
             GameManager.Instance.ResidueChange(_defaultUp);
             _playerResidue = GameManager.Instance.PlayerResidue;
-            Debug.Log("残機ふえたよー" + PlayerResidue);
+            Debug.Log("残機ふえたよー" + _playerResidue);
         }
 
         if(collision.gameObject.tag == _bombItemTag)//ボムの所持数を増やす処理
         {
             GameManager.Instance.PlayerBombCountChange(_defaultUp);
             _bombCount = GameManager.Instance.PlayerBombCount;
-            Debug.Log("ボムふえたよー" + BombCount);
+            Debug.Log("ボムふえたよー" + _bombCount);
         }
 
         if (collision.gameObject.tag == _pointTag)//スコアを増やす処理
         {
             GameManager.Instance.PlayerScoreChange(_defaultUp);
             _playerScore = GameManager.Instance.PlayerScore;
-            Debug.Log("スコアふえたよー" + PlayerScore);
+            Debug.Log("スコアふえたよー" + _playerScore);
         }
 
         if (collision.gameObject.tag == _powerTag && _playerPower < _playerPowerMax)//パワーを増やす処理
         {
-            GameManager.Instance.PlayerPowerChange(_defaultUp);
-            _playerPower = GameManager.Instance.PlayerPower;
-            Debug.Log("パワーふえたよー" + PlayerPower);
+            GameManager.Instance.PlayerPowerItemCountChange(_defaultUp);
+            _playerPower = GameManager.Instance.PlayerPowerItemCount;
+            Debug.Log("パワーふえたよー" + _playerPower);
         }
 
         if (collision.gameObject.tag == _invincibleTag)//一定数取得すると無敵になるアイテムの所持数を増やす処理
         {
             GameManager.Instance.PlayerInvicibleObjectValueChange(_defaultUp);
             _invincibleObjectCount = GameManager.Instance.PlayerInvincibleObjectCount;
-            Debug.Log("アイテム名決まってない怪しいやつふえたよー" + PlayerInvincible);
-            if (PlayerInvincible > _invincibleMax)//一定数アイテムを集めたら無敵モードに切り替わる
+            Debug.Log("アイテム名決まってない怪しいやつふえたよー" + _invincibleObjectCount);
+            if (_invincibleObjectCount > _invincibleLimit)//一定数アイテムを集めたら無敵モードに切り替わる
             {
                 InvincibleMode();
             }
@@ -334,32 +336,38 @@ public class PlayerBase : MonoBehaviour
     {
         _godMode = true;
         _isNotControll = true;
-        //_anim = _dead;
-        _anim.Play();
-        //var sequence = DOTween.Sequence(DOTween.To(() => _color,
-        //    (x) =>
-        //    {
-        //        Color c = _color;
-        //        c.a = x;
-        //        _color = c;
-        //    },
-        //    _color,
-        //    _changeValueInterval));
+        _anim.SetBool(_invicibleAnimParamName, true);
+        _chargeps.SetActive(false);
         await Task.Delay(_respawnTime);
         _dir = Vector2.zero;
         transform.position = _playerRespawn.position;//ここでリスポーン地点に移動
         _isNotControll = false;
         await Task.Delay(_afterRespawnTime);
         _godMode = false;
+        _anim.SetBool(_invicibleAnimParamName, false);
     }
 
     public virtual async void InvincibleMode()//無敵モード
     {
         if (_godMode) return;
         _godMode = true;
+        _anim.SetBool(_invicibleAnimParamName, true);
         GameManager.Instance.PlayerInvicibleObjectValueChange(_returnDefault);
-        await Task.Delay(_invincibleCoolTime);
+        await Task.Delay(_invincibleTime);
         _godMode = false;
+        _anim.SetBool(_invicibleAnimParamName, false);
+    }
+
+    void Inversion()
+    {
+        if (_dir.x > _default)
+        {
+            _sp.flipX = false;
+        }
+        else if (_dir.x < _default)
+        {
+            _sp.flipX = true;
+        }
     }
 
     public void Play(string key)
