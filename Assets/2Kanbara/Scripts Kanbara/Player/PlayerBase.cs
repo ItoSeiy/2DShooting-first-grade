@@ -63,9 +63,9 @@ public class PlayerBase : MonoBehaviour
 
     [SerializeField, Header("チャージショットのパーティカルシステム（溜め）")] GameObject _chargeps = default;
 
-    [SerializeField, Header("精密操作時の演出R")] GameObject _pars1;
-    [SerializeField, Header("精密操作時の演出B")] GameObject _pars2;
-    [SerializeField, Header("精密操作時の演出G")] GameObject _pars3;
+    [SerializeField, Header("精密操作時の演出R")] GameObject _parsR;
+    [SerializeField, Header("精密操作時の演出B")] GameObject _parsB;
+    [SerializeField, Header("精密操作時の演出G")] GameObject _parsG;
 
     [SerializeField, Header("精密操作時のPlayerの色をゲーミングにする変数")] int _gameingPlayerColorTime = default;
 
@@ -121,9 +121,9 @@ public class PlayerBase : MonoBehaviour
 
         _chargeps.GetComponent<ParticleSystem>();
 
-        _pars1.GetComponent<ParticleSystem>();
-        _pars2.GetComponent<ParticleSystem>();
-        _pars3.GetComponent<ParticleSystem>();
+        _parsR.GetComponent<ParticleSystem>();
+        _parsB.GetComponent<ParticleSystem>();
+        _parsG.GetComponent<ParticleSystem>();
 
         _fullPowerModeEffect.GetComponent<ParticleSystem>();
 
@@ -407,19 +407,24 @@ public class PlayerBase : MonoBehaviour
     async void GamingPlayer()
     {
         if (!_isLateMode) return;
-        _pars1.SetActive(true);
+        _parsR.SetActive(true);
         await Task.Delay(_gameingPlayerColorTime);
         if (!_isLateMode) return;
-        _pars2.SetActive(true);
+        _parsB.SetActive(true);
         await Task.Delay(_gameingPlayerColorTime);
         if (!_isLateMode) return;
-        _pars3.SetActive(true);
+        _parsG.SetActive(true);
     }
 
     void GamingFalse()
     {
-        _pars1.SetActive(false);
-        _pars2.SetActive(false);
-        _pars3.SetActive(false);
+        _parsR.SetActive(false);
+        _parsB.SetActive(false);
+        _parsG.SetActive(false);
+    }
+    private void OnParticleCollision(GameObject other)
+    {
+        if (_isLateMode || _godMode) return;
+        Respawn();
     }
 }
