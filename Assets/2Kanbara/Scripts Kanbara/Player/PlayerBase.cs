@@ -46,7 +46,7 @@ public class PlayerBase : MonoBehaviour
     [SerializeField, Header("精密操作のスピード")] float _lateMove = default;
 
     [SerializeField, Header("この数値以上なら、一定時間無敵モードになる変数")] float _invincibleLimit = 150f;
-    [SerializeField, Header("Playerのパワーの上限")] float _playerPowerMax = default;
+    [SerializeField, Header("Playerのパワーの上限")] float _playerPowerMax = 150;
     [SerializeField, Header("リスポーン中の無敵時間")] int _respawnTime = 2800;
     [SerializeField, Header("リスポーン後の無敵時間")] int _afterRespawnTime = 1400;
 
@@ -62,7 +62,14 @@ public class PlayerBase : MonoBehaviour
     [SerializeField, Header("プレイヤーの被弾時に流れる音")] protected string _playerDestroyAudio = "PlayerDestroy";
 
     [SerializeField, Header("チャージショットのパーティカルシステム（溜め）")] GameObject _chargeps = default;
-    [SerializeField, Header("")] GameObject _superps = default;
+
+    [SerializeField, Header("精密操作時の演出R")] GameObject _pars1;
+    [SerializeField, Header("精密操作時の演出B")] GameObject _pars2;
+    [SerializeField, Header("精密操作時の演出G")] GameObject _pars3;
+
+    [SerializeField, Header("精密操作時のPlayerの色をゲーミングにする変数")] int _gameingPlayerColorTime = default;
+
+    [SerializeField, Header("パワーアイテムの数がカンストしたとき（レベルマックスのとき）の演出")] GameObject _fullPowerModeEffect = default;
 
     protected const float _level1 = 1f;
     protected const float _level2 = 2f;
@@ -113,7 +120,12 @@ public class PlayerBase : MonoBehaviour
         _cmvcam1.Priority = -1;
 
         _chargeps.GetComponent<ParticleSystem>();
-        _superps.GetComponent<ParticleSystem>();
+
+        _pars1.GetComponent<ParticleSystem>();
+        _pars2.GetComponent<ParticleSystem>();
+        _pars3.GetComponent<ParticleSystem>();
+
+        _fullPowerModeEffect.GetComponent<ParticleSystem>();
 
         transform.position = _playerRespawn.position;//リスポーン地点に移動
 
@@ -122,6 +134,8 @@ public class PlayerBase : MonoBehaviour
         _playerScore = GameManager.Instance.PlayerScore;
         _playerPower = GameManager.Instance.PlayerPowerItemCount;
         _invincibleObjectCount = GameManager.Instance.PlayerInvincibleObjectCount;
+
+        GamingFalse();
     }
 
     private async void Update()
@@ -173,16 +187,17 @@ public class PlayerBase : MonoBehaviour
         if (context.started)//LeftShiftKeyが押された瞬間の処理
         {
             _isLateMode = true;
-            _superps.SetActive(true);
+            GamingPlayer();
             Debug.Log(_isLateMode);
         }
         if (context.canceled)//LeftShiftKeyが離された瞬間の処理
         {
             _isLateMode = false;
+            GamingFalse();
             Debug.Log(_isLateMode);
-            _superps.SetActive(false);
         }
     }
+
 
     public async void OnJump(InputAction.CallbackContext context)//SpaceKeyが押された瞬間の処理
     {
@@ -313,8 +328,12 @@ public class PlayerBase : MonoBehaviour
             Debug.Log("スコアふえたよー" + _playerScore);
         }
 
-        if (collision.gameObject.tag == _powerTag && _playerPower < _playerPowerMax)//パワーを増やす処理
+        if (collision.gameObject.tag == _powerTag)//パワーを増やす処理
         {
+            if(_playerPower == _playerPowerMax)
+            {
+                _fullPowerModeEffect.SetActive(true);
+            }
             GameManager.Instance.PlayerPowerItemCountChange(_defaultUp);
             _playerPower = GameManager.Instance.PlayerPowerItemCount;
             Debug.Log("パワーふえたよー" + _playerPower);
@@ -338,6 +357,8 @@ public class PlayerBase : MonoBehaviour
         _isNotControll = true;
         _anim.SetBool(_invicibleAnimParamName, true);
         _chargeps.SetActive(false);
+        _fullPowerModeEffect.SetActive(false);
+        GamingFalse();
         await Task.Delay(_respawnTime);
         _dir = Vector2.zero;
         transform.position = _playerRespawn.position;//ここでリスポーン地点に移動
@@ -382,5 +403,23 @@ public class PlayerBase : MonoBehaviour
         {
             Debug.Log("AudioClipがありません");
         }
+    }
+    async void GamingPlayer()
+    {
+        if (!_isLateMode) return;
+        _pars1.SetActive(true);
+        await Task.Delay(_gameingPlayerColorTime);
+        if (!_isLateMode) return;
+        _pars2.SetActive(true);
+        await Task.Delay(_gameingPlayerColorTime);
+        if (!_isLateMode) return;
+        _pars3.SetActive(true);
+    }
+
+    void GamingFalse()
+    {
+        _pars1.SetActive(false);
+        _pars2.SetActive(false);
+        _pars3.SetActive(false);
     }
 }
