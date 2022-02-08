@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1382019886652712820}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.3, y: 0, z: 0}
+  m_LocalPosition: {x: -0.3, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7184597152217326832}
@@ -138,7 +138,7 @@ MonoBehaviour:
   _direction: {x: 0, y: 1}
   _speed: 20
   _bulletMoveMethod: 0
-  _opponentTag: 
+  _opponentTag: Enemy
   _gameZoneTag: Finish
   _parentTag: Parent
   _playerTag: Player
@@ -170,7 +170,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3279311902040150542}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.3, y: 0, z: 0}
+  m_LocalPosition: {x: 0.3, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7184597152217326832}
@@ -280,7 +280,7 @@ MonoBehaviour:
   _direction: {x: 0, y: 1}
   _speed: 20
   _bulletMoveMethod: 0
-  _opponentTag: 
+  _opponentTag: Enemy
   _gameZoneTag: Finish
   _parentTag: Parent
   _playerTag: Player

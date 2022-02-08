@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 /// <summary>
 /// ゲームマネージャー
@@ -17,29 +16,43 @@ public class GameManager : MonoBehaviour
     const int _level3Index = 3;
 
 
-    public int PlayerScore => _playerScore;
-    public int PlayerPower => _playerPower;
-    public int PlayerLevel => _playerLevel;
-    public int PlayerBombCount => _playerBombCount;
-    ///<summary>一定数獲得すると無敵になるオブジェクトを獲得した数</summary>
-    public int PlayerInvincibleObjectCount => _playerInvicibleObjectCount;
+    public float PlayerLevel => _playerLevel;
+    /// <summary>プレイヤーが持っているパワーアイテムの数</summary>
+    public float PlayerPowerItemCount => _playerPowerItemCount;
+    /// <summary>レベル2にするために必要なパワーアイテムの数</summary>//UIManagerから参照すべきプロパティ
+    public float PlayerPowerRequiredNumberLevel2 { get => _player.PlayerPowerRequiredNumberLevel2; }
+    /// <summary>レベル3にするために必要なパワーアイテムの数</summary>//UIManagerから参照すべきプロパティ
+    public float PlayerPowerRequiredNumberLevel3 { get => _player.PlayerPowerRequiredNumberLevel3; }
+
+    /// <summary>プレイヤーのスコア</summary>
+    public float PlayerScore => _playerScore;
+
+    /// <summary>プレイヤーのボムの所持数</summary>
+    public float PlayerBombCount => _playerBombCount;
+
     ///<summary>プレイヤーの残基</summary>
-    public int PlayerResidue => _playerResidue;
-    public float PlayerLevel1 { get => _player.PlayerLevel1; }
-    public float PlayerLevel2 { get => _player.PlayerLevel2; }
-    public float PlayerLevel3 { get => _player.PlayerLevel3; }
+    public float PlayerResidue => _playerResidue;
 
-    private int _playerScore = default;
-    private int _playerPower = default;
-    private int _playerLevel = default;
-    private int _playerBombCount = default;
+
+    ///<summary>一定数獲得すると無敵になるオブジェクトを獲得した数</summary>
+    public float PlayerInvincibleObjectCount => _playerInvicibleObjectCount;
+    /// <summary>無敵になるために必要な無敵オブジェクトアイテムの数</summary>
+    public float PlayerInvicibleLimit => _player.InvicibleLimit;
+
+    public bool IsGameOver => _isGameOver;
+    public bool IsStageClear => _isStageClear;
+
+    private float _playerScore = default;
+    private float _playerPowerItemCount = default;
+    private float _playerLevel = default;
+    private float _playerBombCount = default;
     ///<summary>一定数獲得すると無敵になるオブジェクトを獲得した数///</summary>
-    private int _playerInvicibleObjectCount = default;
+    private float _playerInvicibleObjectCount = default;
     /// <summary>プレイヤーの残基</summary>
-    [SerializeField] private int _playerResidue =　default;
+    [SerializeField] private float _playerResidue =　default;
 
-    [SerializeField] UnityEvent _gameOverEvent;
-
+    private bool _isGameOver = false;
+    private bool _isStageClear = false;
     PlayerBase _player;
 
     private void Awake()
@@ -71,44 +84,64 @@ public class GameManager : MonoBehaviour
     public void GameStart()
     {
         _player = GameObject.FindWithTag("Player").GetComponent<PlayerBase>();
-        PlayerLevelCheck();
+        PlayerLevelSet();
+        _isGameOver = false;
+    }
+
+    /// <summary>
+    /// ゲームオーバー時に行いたいことを記述
+    /// </summary>
+    public void GameOver()
+    {
+        _isGameOver = true;
+        Init();
+    }
+
+    /// <summary>
+    /// ステージをクリアした際にボスから呼び出される
+    /// </summary>
+    public void StageClear()
+    {
+        _isStageClear = true;
     }
 
     /// <summary>
     /// プレイヤースコアの値に変更を加える関数
     /// </summary>
     /// <param name="score">スコア加算 -> 引数,正の数 : スコア減算 -> 引数,負の数</param>
-    public void PlayerScoreChange(int score)
+    public void PlayerScoreChange(float score)
     {
         _playerScore += score;
     }
 
     /// <summary>
-    /// プレイヤーのパワーの値に変更を加える関数
-    /// パワーを変えることにより発射する弾幕が強化される
+    /// プレイヤーのパワーアイテムの値に変更を加える関数
     /// </summary>
-    /// <param name="power"> パワー加算 -> 引数,正の数 : パワー減算 -> 引数,負の数</param>
-    public void PlayerPowerChange(int power)
+    /// <param name="itemCount"> パワーアイテム加算 -> 引数,正の数 : パワーアイテム減算 -> 引数,負の数</param>
+    public void PlayerPowerItemCountChange(float itemCount)
     {
-        _playerPower += power;
-        PlayerLevelCheck();
+        _playerPowerItemCount += itemCount;
+        PlayerLevelSet();
     }
 
     /// <summary>
-    /// 
+    /// プレイヤーのレベルを決定する関数
     /// </summary>
-    public  void PlayerLevelCheck()
+    public  void PlayerLevelSet()
     {
-        if (PlayerPower < _player.PlayerLevel1)//レベル1のとき
+        if (PlayerPowerItemCount < _player.PlayerPowerRequiredNumberLevel2)//レベル１のとき
         {
+            //パワーアイテムの数が、レベル２になるために必要なパワーアイテム数よりも少なかったときの処理
             _playerLevel = _level1Index;
         }
-        else if (_player.PlayerLevel1 <= PlayerPower && PlayerPower < _player.PlayerLevel2)//レベル2のとき
+        else if (PlayerPowerItemCount >= _player.PlayerPowerRequiredNumberLevel2 && PlayerPowerItemCount < _player.PlayerPowerRequiredNumberLevel3)//レベル2のとき
         {
+            //パワーアイテムの数が、レベル２になるために必要なパワーアイテム数よりも多く、レベル３になるために必要なパワーアイテム数よりも少なかったときの処理
             _playerLevel = _level2Index;
         }
-        else if (_player.PlayerLevel2 <= PlayerPower)//レベル3のとき
+        else if (_player.PlayerPowerRequiredNumberLevel3 <= PlayerPowerItemCount)//レベル3のとき
         {
+            //パワーアイテムの数が、レベル３になるために必要なパワーアイテム数よりも多かったときの処理
             _playerLevel = _level3Index;
         }
     }
@@ -117,7 +150,7 @@ public class GameManager : MonoBehaviour
     /// プレイヤーのボムの所有数に変更を加える関数
     /// </summary>
     /// <param name="bombCount"> ボム加算 -> 引数,正の数 : ボム減算 -> 引数,負の数</param>
-    public void PlayerBombCountChange(int bombCount)
+    public void PlayerBombCountChange(float bombCount)
     {
         _playerBombCount += bombCount;
     }
@@ -126,7 +159,7 @@ public class GameManager : MonoBehaviour
     /// 一定数獲得すると無敵になるオブジェクトを獲得した数に変更を加える関数
     /// </summary>
     /// <param name="invicibleObjectCount">無敵オブジェクト加算 -> 引数,正の数 : 無敵オブジェクト減算 -> 引数,負の数</param>
-    public void PlayerInvicibleObjectValueChange(int invicibleObjectCount)
+    public void PlayerInvicibleObjectValueChange(float invicibleObjectCount)
     {
         _playerInvicibleObjectCount += invicibleObjectCount;
     }
@@ -135,18 +168,11 @@ public class GameManager : MonoBehaviour
     /// 残基に変更を加える関数
     /// </summary>
     /// <param name="residue">残基加算 -> 引数,正の数 : 残基減算 -> 引数,負の数</param>
-    public void ResidueChange(int residue)
+    public void ResidueChange(float residue)
     {
         _playerResidue += residue;
     }
 
-    /// <summary>
-    /// ゲームオーバー時に行いたいことを記述
-    /// </summary>
-    public void GameOver()
-    {
-        _gameOverEvent.Invoke();
-    }
 
     /// <summary>
     /// 変数を初期化する関数
@@ -154,9 +180,10 @@ public class GameManager : MonoBehaviour
     public void Init()
     {
         _playerScore = 0;
-        _playerPower = 0;
+        _playerPowerItemCount = 0;
         _playerBombCount = 0;
         _playerInvicibleObjectCount = 0;
         _playerLevel = 1;
+        _isGameOver = false;
     }
 }

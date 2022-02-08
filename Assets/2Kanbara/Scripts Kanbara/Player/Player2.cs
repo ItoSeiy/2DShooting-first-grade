@@ -69,6 +69,5 @@ public class Player2 : PlayerBase
         }
         _audioSource.Stop();
         Play(_playerChargeShotBulletAudio);
-        base.PlayerChargeAttack();
     }
 }
