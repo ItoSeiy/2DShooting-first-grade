@@ -83,9 +83,14 @@ public class GameManager : MonoBehaviour
     /// </summary> 
     public void GameStart()
     {
-        _player = GameObject.FindWithTag("Player").GetComponent<PlayerBase>();
-        PlayerLevelSet();
-        _isGameOver = false;
+        _player = GameObject.FindWithTag("Player")?.GetComponent<PlayerBase>();
+        Debug.Log("ゲームスタート");
+        if(_player)
+        {
+            Debug.Log("プレイヤーセット完了");
+            PlayerLevelSet();
+            _isGameOver = false;
+        }
     }
 
     /// <summary>
