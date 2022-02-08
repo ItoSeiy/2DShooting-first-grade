@@ -222,6 +222,6 @@ public enum NovelPhase
     After,
     /// <summary>負けイベント</summary>
     Lose,
-    /// <summary></summary>
+    /// <summary>ノベルを読み込まない状態</summary>
     None
 }
