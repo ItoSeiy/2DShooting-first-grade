@@ -6,8 +6,7 @@ public class BossEnemyMoveRandom : MonoBehaviour
 {
     /// <summary>形状や大きさの概念を持った物質</summary>
     Rigidbody2D _rb;
-    /// <summary>方向</summary>
-    Vector2 _dir;
+    
     /// <summary>水平、横方向</summary>
     private float _horizontal = 0f;
     /// <summary>垂直、縦方向</summary>
@@ -26,6 +25,8 @@ public class BossEnemyMoveRandom : MonoBehaviour
     [SerializeField,Header("左限")] float _leftLimit = -4f;
     /// <summary>移動時間</summary>
     [SerializeField,Header("移動時間")] float _moveTime = 0.5f;
+    /// <summary>方向</summary>
+    Vector2 _dir;
     /// <summary>左方向</summary>
     float _leftDir = -1f;
     /// <summary>右方向</summary>

@@ -6,18 +6,20 @@ public class BossEnemyMoveUShaped: MonoBehaviour
 {
     /// <summary>形状や大きさの概念を持った物質</summary>
     Rigidbody2D _rb;
-    [SerializeField] float _speed = 5f;    
-    /// <summary>横の限界</summary>
-    [SerializeField] float _horizontalLimit = 7.5f;
+    [SerializeField,Header("スピード")] float _speed = 5f;    
+    /// <summary>横限</summary>
+    [SerializeField,Header("横限")] float _horizontalLimit = 7.5f;
     /// <summary>上限</summary>
-    [SerializeField] float _upperLimit = 3.5f;
+    [SerializeField, Header("上限")] float _upperLimit = 3.5f;
     /// <summary>下限</summary>
-    [SerializeField] float _lowerLimit = -3;
+    [SerializeField, Header("下限")] float _lowerLimit = -3;
     /// <summary>中央位置</summary>
-    float _middlePosition = 0;
+    float _middlePos = 0;
     /// <summary>方向</summary>
     Vector2 _dir;
+    /// <summary>最短移動時間</summary>
     float _shortMoveTime = 1f;
+    /// <summary>最長移動時間</summary>
     float _longMoveTime = 3f;
     /// <summary>停止時間</summary>
     [SerializeField,Header("停止時間")] float _stopTime = 1f;
@@ -25,9 +27,9 @@ public class BossEnemyMoveUShaped: MonoBehaviour
     float _judgmentLimit = 0.1f;
     /// <summary>切り替え</summary>
     int _switch = 0;
-    /// <summary>パターン１</summary>
+    /// <summary>下にいる時に左にいるパターン</summary>
     int _pattern01 = 1;
-    /// <summary>パターン２</summary>
+    /// <summary>下にいる時に右にいるパターン</summary>
     int _pattern02 = 2;
     void Start()
     {
@@ -41,7 +43,7 @@ public class BossEnemyMoveUShaped: MonoBehaviour
     }
     public IEnumerator UShaped()
     {
-        if (transform.position.x < _middlePosition)//画面より左半分にいたら
+        if (transform.position.x < _middlePos)//画面より左半分にいたら
         {            
             _dir = Vector2.right;//右に動く
             Debug.Log("a");
@@ -115,7 +117,7 @@ public class BossEnemyMoveUShaped: MonoBehaviour
                 yield return new WaitForSeconds(_stopTime);//停止時間
                 Debug.Log("h");
 
-                if (transform.position.x < _middlePosition)//左にいたら
+                if (transform.position.x < _middlePos)//左にいたら
                 {                   
                     _dir = Vector2.right;//右に行く
                     Debug.Log("a");
