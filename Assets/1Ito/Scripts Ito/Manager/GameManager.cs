@@ -10,11 +10,10 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance => _instance;
     static GameManager _instance;
-    const int _level1Index = 1;
-    const int _level2Index = 2;
-    const int _level3Index = 3;
+    const int LEVEL1 = 1;
+    const int LEVEL2 = 2;
+    const int LEVEL3 = 3;
 
-    public int i;
     public float PlayerLevel => _playerLevel;
     /// <summary>プレイヤーが持っているパワーアイテムの数</summary>
     public float PlayerPowerItemCount => _playerPowerItemCount;
@@ -142,17 +141,17 @@ public class GameManager : MonoBehaviour
         if (PlayerPowerItemCount < _player.PlayerPowerRequiredNumberLevel2)//レベル１のとき
         {
             //パワーアイテムの数が、レベル２になるために必要なパワーアイテム数よりも少なかったときの処理
-            _playerLevel = _level1Index;
+            _playerLevel = LEVEL1;
         }
         else if (PlayerPowerItemCount >= _player.PlayerPowerRequiredNumberLevel2 && PlayerPowerItemCount < _player.PlayerPowerRequiredNumberLevel3)//レベル2のとき
         {
             //パワーアイテムの数が、レベル２になるために必要なパワーアイテム数よりも多く、レベル３になるために必要なパワーアイテム数よりも少なかったときの処理
-            _playerLevel = _level2Index;
+            _playerLevel = LEVEL2;
         }
         else if (_player.PlayerPowerRequiredNumberLevel3 <= PlayerPowerItemCount)//レベル3のとき
         {
             //パワーアイテムの数が、レベル３になるために必要なパワーアイテム数よりも多かったときの処理
-            _playerLevel = _level3Index;
+            _playerLevel = LEVEL3;
         }
     }
 

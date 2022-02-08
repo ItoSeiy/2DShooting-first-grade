@@ -6,11 +6,10 @@ public class GameManagerEditor : Editor
 {
     public override void OnInspectorGUI()
     {
-        base.OnHeaderGUI();
+        base.OnInspectorGUI();
         var gameManager = target as GameManager;
-        var t = "ゲームスタート";
         EditorGUI.BeginDisabledGroup(gameManager.IsGameStart);
-        if(GUILayout.Button(t))
+        if(GUILayout.Button("GameStart"))
         {
             gameManager.GameStart();
         }
