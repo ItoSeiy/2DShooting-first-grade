@@ -16,9 +16,19 @@ public class BossEnemyMoveUShaped: MonoBehaviour
     /// <summary>中央位置</summary>
     float _middlePosition = 0;
     /// <summary>方向</summary>
-    Vector2 _direction;
+    Vector2 _dir;
+    float _shortMoveTime = 1f;
+    float _longMoveTime = 3f;
+    /// <summary>停止時間</summary>
+    [SerializeField,Header("停止時間")] float _stopTime = 1f;
+    /// <summary>判定回数の制限</summary>
+    float _judgmentLimit = 0.1f;
     /// <summary>切り替え</summary>
-    bool _switch = false;
+    int _switch = 0;
+    /// <summary>パターン１</summary>
+    int _pattern01 = 1;
+    /// <summary>パターン２</summary>
+    int _pattern02 = 2;
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -27,40 +37,31 @@ public class BossEnemyMoveUShaped: MonoBehaviour
 
     void Update()
     {
-        _rb.velocity = _direction * _speed;
+        _rb.velocity = _dir.normalized * _speed;
     }
     public IEnumerator UShaped()
     {
-        if (transform.position.x < _middlePosition)
-        {
-            //画面より左半分にいたら右に動く
-            _direction = Vector2.right;
+        if (transform.position.x < _middlePosition)//画面より左半分にいたら
+        {            
+            _dir = Vector2.right;//右に動く
             Debug.Log("a");
         }
-        else                         //右にいたら
-        {
-            //画面より右半分にいたら右に動く
-            _direction = Vector2.left;
+        else//画面より右半分にいたら
+        {         
+            _dir = Vector2.left;//左に動く
             Debug.Log("b");
         }
 
-        
-
         while(true)//端に着くまで下がる
         {
-            yield return new WaitForSeconds(0.1f);
-            if (transform.position.x <= -_horizontalLimit)
+            yield return new WaitForSeconds(_judgmentLimit);
+            //反対側に着いたら
+            if (transform.position.x <= -_horizontalLimit || transform.position.x >= _horizontalLimit)
             {
                 Debug.Log("c");
-                //画面左端にいたら下がる
-                _direction = Vector2.down;
-                break;
-            }
-            else if (transform.position.x >= _horizontalLimit)
-            {
-                Debug.Log("d");
-                //画面右端にいたら下がる
-                _direction = Vector2.down;
+                _dir = Vector2.zero;//停止
+                yield return new WaitForSeconds(_stopTime);//停止時間
+                _dir = Vector2.down;//画面左端にいたら下がる
                 break;
             }
         }
@@ -68,63 +69,68 @@ public class BossEnemyMoveUShaped: MonoBehaviour
 
         while (true)//反対側に着くまで移動する
         {
-            yield return new WaitForSeconds(0.1f);
-
-            if (transform.position.y <= _lowerLimit && transform.position.x <= -_horizontalLimit)
+            yield return new WaitForSeconds(_judgmentLimit);
+            //反対側に着いたら
+            if (transform.position.x <= -_horizontalLimit && transform.position.y <= _lowerLimit)
             {
                 Debug.Log("e");
-                //画面下端にいたら右に行く
-                _direction = Vector2.right;
-                _switch = true;
+                _dir = Vector2.zero;//停止
+                yield return new WaitForSeconds(_stopTime);//停止時間
+                _dir = Vector2.right;//画面下端にいたら右に行く
+                _switch = _pattern01;//パターン1
                 break;
             }
-            else if (transform.position.y <= _lowerLimit && transform.position.x >= _horizontalLimit)
+            //反対側に着いたら
+            else if (transform.position.x >= _horizontalLimit　&& transform.position.y <= _lowerLimit)
             {
                 Debug.Log("f");
-                //画面下端にいたら左に行く
-                _direction = Vector2.left;
-                _switch = false;
+                _dir = Vector2.zero;//停止
+                yield return new WaitForSeconds(_stopTime);//停止時間
+                _dir = Vector2.left;//画面下端にいたら左に行く
+                _switch = _pattern02;//パターン2
                 break;
             }
         }
 
-
-        while (true)//上に上がる
+        while (true)//反対側に着くまで横移動する
         {
-            yield return new WaitForSeconds(0.1f);
-            if ((transform.position.x >= _horizontalLimit && _switch) || (transform.position.x >= -_horizontalLimit && !_switch))
+            yield return new WaitForSeconds(_judgmentLimit);
+            //反対側についたら上に行く(パターン1or2）
+            if ((transform.position.x >= _horizontalLimit && _switch == _pattern01) || (transform.position.x <= -_horizontalLimit && _switch == _pattern02))
             {
                 Debug.Log("g");
-                _direction = Vector2.up;
+                _dir = Vector2.zero;//停止
+                yield return new WaitForSeconds(_stopTime);//停止時間
+                _dir = Vector2.up;//上に上がる
                 break;
             }
         }
 
-        while (true)
+        while (true)//ある程度上にいくまで移動する
         {
-            yield return new WaitForSeconds(0.1f);
-            if (transform.position.y >= _upperLimit)
+            yield return new WaitForSeconds(_judgmentLimit);
+            if (transform.position.y >= _upperLimit)//ある程度上にいったら
             {
+                _dir = Vector2.zero;//停止
+                yield return new WaitForSeconds(_stopTime);//停止時間
                 Debug.Log("h");
-                if (transform.position.x < _middlePosition)
-                {
-                    //左にいたら右に行く
-                    _direction = Vector2.right;
+
+                if (transform.position.x < _middlePosition)//左にいたら
+                {                   
+                    _dir = Vector2.right;//右に行く
                     Debug.Log("a");
                     break;
                 }
-                else
-                {
-                    //右にいたら左に行く
-                    _direction = Vector2.left;
+                else//右にいたら
+                {    
+                    _dir = Vector2.left;//左に行く
                     Debug.Log("b");
                     break;
                 }
             }
         }
-
-        yield return new WaitForSeconds(Random.Range(1, 3));
-        //止まる
-        _direction = Vector2.zero;
+        //移動時間
+        yield return new WaitForSeconds(Random.Range(_shortMoveTime, _longMoveTime));      
+        _dir = Vector2.zero;//停止
     }
 }
