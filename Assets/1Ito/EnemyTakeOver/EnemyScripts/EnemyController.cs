@@ -4,28 +4,51 @@ using UnityEngine;
 /// <summary>
 /// Enemyの派生クラス
 /// </summary>
-public class EnemyController : EnemyBese
+public class EnemyController : EnemyBese 
 {
     [SerializeField,Header("マズルの位置")] Transform[] _muzzle = null;
-    [SerializeField, Header("倒された時の音")] AudioSource _onDestroyAudio = null;
+    [SerializeField, Header("倒された時の音")] GameObject _Audio = default;
+    [SerializeField] GameObject _bullet; 
     [SerializeField, Header("移動の向きの変えるY軸")] float _ybottomposition = 0;
     [SerializeField, Header("移動の向きの変えるx軸")] float _xbottomposition = 0;
     [SerializeField, Header("出た時の移動方向")] Vector2 _beforeDir;
     [SerializeField, Header("移動変わった後の移動方向")] Vector2 _afterDir;
     [SerializeField,Header("モブ敵を止める時の方向の切り替え")] MoveMode _moveMode;
+    [SerializeField, Header("")] MoveCurve _MoveCurve;
+    [SerializeField] int _a = 2;
     bool _isBttomposition = false;
     [SerializeField, Header("何秒とどまるか")] float _stopcount = 0.0f;
+    
 
+    //[SerializeField] float _testX = 0;
+    //[SerializeField] float _testY = 0;
+    //[SerializeField] float _testX2 = default;
+    //[SerializeField] float _testY2 = default;
+
+    //float _test =  default;
+    //Vector2 _dir;
 
     private void OnEnable()
     {
         Rb.velocity = _beforeDir;
     }
 
-     protected override void Update()
+    //public float geoLength(float x1, float y1,float x2, float y2)
+    //{
+    //    float ret = (float)System.Math.Sqrt(System.Math.Pow(x2 - x1, 2) +
+    //    System.Math.Pow(y2 - y1, 2));
+    //    return ret;
+    //}
+
+    protected override void Update()
      {
         base.Update();
         if (_isBttomposition) return;
+        //if (_MoveCurve == MoveCurve.curce)
+        //{
+        //    var Test = geoLength(_testX, _testY, _testX2, _testY2);
+        //    Rb.velocity = _dir * Test;
+        //}
 
         switch (_moveMode)
         {
@@ -53,8 +76,11 @@ public class EnemyController : EnemyBese
                     EnemyMove();
                 }
                 break;
+               
         }
+        
      }
+
 
 
     void EnemyMove()
@@ -71,21 +97,25 @@ public class EnemyController : EnemyBese
             _isBttomposition = true; 
         }
     }
-
    
-    protected override void Attack()
+
+
+protected override void Attack()
     {
         for (int i = 0; i < _muzzle.Length; i++)
         {
-            //Instantiate(_bullet, _muzzle[i]);
+            var bullet = Instantiate(_bullet);
+            bullet.transform.position = _muzzle[i].position;
+            bullet.transform.rotation = _muzzle[i].rotation;
         }
     }
+    
 
     protected override void OnGetDamage()
     {
         if (EnemyHp == 0) 
         {
-            AudioSource.PlayClipAtPoint(_onDestroyAudio.clip,transform.position);    
+            Instantiate(_Audio);
         }
     }
     enum MoveMode
@@ -106,5 +136,10 @@ public class EnemyController : EnemyBese
          /// 下
          /// </summary>
         down
+    }
+    enum MoveCurve
+    {
+        strate,
+        curce
     }
 }
