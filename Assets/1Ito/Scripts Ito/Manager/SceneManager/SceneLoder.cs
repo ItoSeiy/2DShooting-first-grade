@@ -43,10 +43,10 @@ public class SceneLoder : SingletonMonoBehaviour<SceneLoder>
             c = _fadeImage.color;
             _timer -= Time.deltaTime;
             c.a = _timer / _fadeTime;
-            c.a =  _timer / _fadeTime;
             _fadeImage.color = c;
             yield return new WaitForEndOfFrame();
         }
-        _isLoad = false;    
+        GameManager.Instance.GameStart();
+        _isLoad = false; 
     }
 }
