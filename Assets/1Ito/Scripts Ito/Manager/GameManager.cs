@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
     private float _playerBombCount = default;
     ///<summary>一定数獲得すると無敵になるオブジェクトを獲得した数///</summary>
     private float _playerInvicibleObjectCount = default;
-    /// <summary>プレイヤーの残基</summary>
+    /// <summary>プレイヤーの残機</summary>
     [SerializeField] private float _playerResidue =　default;
 
     private bool _isGameOver = false;
