@@ -9,6 +9,7 @@ public class BossEnemyMoveThunder : MonoBehaviour
     int _thunder = 0;
      float _xMove = 5f;
      float _yMove = 6f;
+    /// <summary>スピード</summary>
     [SerializeField,Header("スピード")] float _speed;
     /// <summary>方向</summary>
     Vector2 _dir;
@@ -27,32 +28,28 @@ public class BossEnemyMoveThunder : MonoBehaviour
     }
     IEnumerator Thunder()
     {
-        while (true)
-        {
             yield return new WaitForSeconds(0.1f);
             if (transform.position.x >= 0)//画面右側にいたら
             {
                 Debug.Log("left");
-                _rb.velocity = Vector2.left;
-                break;
+                _rb.velocity = Vector2.left;//左に移動
             }
-            else
+            else//左側にいたら
             {
                 Debug.Log("right");
-                _rb.velocity = Vector2.right;
-                break;
+                _rb.velocity = Vector2.right;//右に移動
             }
-            
-        }
+        
         while (true)
-        {
+        {   
+            yield return new WaitForSeconds(0.1f);
             if (transform.position.x <= -7.5f)
             {
                 Debug.Log("nice!");
                 _rb.velocity = Vector2.zero;
                 break;
             }
-            else//左に移動
+            else if (transform.position.x >= 7.5f)
             {
                 Debug.Log("nice!");
                 _rb.velocity = Vector2.zero;
@@ -78,7 +75,7 @@ public class BossEnemyMoveThunder : MonoBehaviour
             }
             else
             {
-                _rb.velocity = new Vector2(0, 0);
+                _rb.velocity = Vector2.zero;
                 _xMove *= -1;
             }
         }
