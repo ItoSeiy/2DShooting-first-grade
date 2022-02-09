@@ -22,10 +22,10 @@ public class BossEnemyMoveThunder : MonoBehaviour
     void Update()
     {
         //transform.position = new Vector2(Mathf.Clamp(transform.position.x, -8f, 8f), (Mathf.Clamp(transform.position.y, -4f, 4f)));
-        //_thunder++;
-        _rb.velocity = _dir * _speed;
+        _thunder++;
+        _rb.velocity = _dir.normalized * _speed;
     }
-    IEnumerator Left()
+    IEnumerator Thunder()
     {
         while (true)
         {
@@ -34,28 +34,33 @@ public class BossEnemyMoveThunder : MonoBehaviour
             {
                 Debug.Log("left");
                 _rb.velocity = Vector2.left;
+                break;
             }
             else
             {
                 Debug.Log("right");
-
+                _rb.velocity = Vector2.right;
+                break;
             }
+            
+        }
+        while (true)
+        {
             if (transform.position.x <= -7.5f)
             {
                 Debug.Log("nice!");
-                _rb.velocity = new Vector2(0, 0);
-                StartCoroutine(Thunder());
+                _rb.velocity = Vector2.zero;
                 break;
             }
             else//¶‚ÉˆÚ“®
             {
-                
+                Debug.Log("nice!");
+                _rb.velocity = Vector2.zero;
+                break;
             }
         }
-    }
 
-    IEnumerator Thunder()
-    {
+    
         Debug.Log("dayone");
         while (true)
         {
