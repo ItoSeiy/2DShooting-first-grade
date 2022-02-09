@@ -7,7 +7,7 @@ using System.Collections.Generic;
 [RequireComponent(typeof(GSSReader))]
 public class NovelRenderer : MonoBehaviour
 {
-    public bool NovelFinish { get; private set; }
+    public bool IsNovelFinish { get; private set; }
     [SerializeField] Text _mainText = null;
     [SerializeField] Text _nameText = null;
     [SerializeField, Range(0f, 0.5f)] float _textInterval = 0.1f;
@@ -172,7 +172,7 @@ public class NovelRenderer : MonoBehaviour
         if (_ggsRow >= _datas.Length)
         {
             Debug.Log("‚·‚×‚Ä‚ÌƒVƒiƒŠƒI‚ğ“Ç‚İ‚ñ‚¾");
-            NovelFinish = true;
+            IsNovelFinish = true;
             _mainText.text = "";
             _nameText.text = "";
             gameObject.SetActive(false);
@@ -180,7 +180,7 @@ public class NovelRenderer : MonoBehaviour
         }
         else
         {
-            NovelFinish = false;
+            IsNovelFinish = false;
             return false;
         }
     }

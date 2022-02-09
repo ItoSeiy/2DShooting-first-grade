@@ -13,6 +13,9 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
 
     [SerializeField] Canvas _novelCanvas;
 
+    [SerializeField] Canvas _gameOverCanavas;
+    [SerializeField] Canvas _gameClearCanvas;
+
     [SerializeField] Transform _generateTransform;
     [SerializeField] Transform _bossTransform;
 
@@ -60,7 +63,7 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
                 break;
 
             case GamePhase.End:
-                Debug.Log("フェイズ終了");
+                Debug.Log("ステージ終了");
                 break;
 
             default:
@@ -106,7 +109,7 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
         {
             SetNovel();
 
-            if(_beforeNovelRenderer.NovelFinish && _isFirstTime)
+            if(_beforeNovelRenderer.IsNovelFinish && _isFirstTime)
             {
                 _novelCanvas.gameObject.SetActive(false);
                 _novelPhaseState = NovelPhase.None;
@@ -178,6 +181,12 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
                     _loseNovelRenderer.gameObject.SetActive(true);
                     _novelCanvas.gameObject.SetActive(true);
                 }
+
+                if(_loseNovelRenderer.IsNovelFinish)
+                {
+
+                }
+
                 break;
             default:
                 return;
