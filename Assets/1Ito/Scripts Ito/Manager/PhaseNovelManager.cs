@@ -61,11 +61,6 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
                 Debug.Log("ボス開始");
                 BossStage();
                 break;
-
-            case GamePhase.End:
-                Debug.Log("ステージ終了");
-                break;
-
             default:
                 EnemyGenerate();
                 break;
@@ -99,7 +94,6 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
                 ChangePhase((GamePhase)_phaseIndex + 1);
             }
         }
- 
     }
 
     void BossStage()
@@ -172,6 +166,13 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
                     _winNovelRenderer.gameObject.SetActive(true);
                     _novelCanvas.gameObject.SetActive(true);
                 }
+
+                if(_winNovelRenderer.IsNovelFinish)
+                {
+                    _novelCanvas.gameObject.SetActive(false);
+                    _gameClearCanvas.gameObject.SetActive(true);
+                }
+
                 break;
 
             case NovelPhase.Lose:
@@ -184,7 +185,8 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
 
                 if(_loseNovelRenderer.IsNovelFinish)
                 {
-
+                    _novelCanvas.gameObject.SetActive(false);
+                    _gameOverCanavas.gameObject.SetActive(true);
                 }
 
                 break;
@@ -219,8 +221,7 @@ public enum GamePhase
     Phase03,
     Phase04,
     Phase05,
-    Boss,
-    End
+    Boss
 }
 
 public enum NovelPhase
