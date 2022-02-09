@@ -424,7 +424,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &17947702
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -437,7 +437,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c05b247eeb08ea14ab3f27ba12cbfebf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 2
+  _speed: 8
+  _stopTime: 2
+  _rightLimit: 7.5
+  _leftLimit: -7.5
 --- !u!50 &17947703
 Rigidbody2D:
   serializedVersion: 4
@@ -534,7 +537,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 17947701}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.67, z: 0}
+  m_LocalPosition: {x: 4, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1072,7 +1075,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &445858254
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1132,11 +1135,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 445858253}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4, y: -4, z: 0}
+  m_LocalPosition: {x: -2, y: -4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &445858256
 BoxCollider2D:
@@ -1218,7 +1221,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 5
-  _horizontalLimit: 7.5
+  _rightLimit: 7.5
+  _leftLimit: -7.5
   _upperLimit: 3.5
   _lowerLimit: -3
   _stopTime: 1
@@ -1281,7 +1285,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 601476263}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1, y: 4, z: 0}
+  m_LocalPosition: {x: 2, y: 4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2229,10 +2233,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stopTime: 2
-  _upperLimit: 2.5
-  _lowerLimit: 1.5
   _rightLimit: 4
   _leftLimit: -4
+  _upperLimit: 2.5
+  _lowerLimit: 1.5
   _moveTime: 0.5
 --- !u!212 &1330300338
 SpriteRenderer:
@@ -2547,12 +2551,12 @@ GameObject:
   - component: {fileID: 1743488891}
   - component: {fileID: 1743488890}
   m_Layer: 0
-  m_Name: Attack
+  m_Name: Rush
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1743488890
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2566,6 +2570,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerTag: Player
+  _speed: 5
+  _lowerLimit: -3
+  _stopTime: 2
+  _timeLimit: 4
 --- !u!50 &1743488891
 Rigidbody2D:
   serializedVersion: 4
@@ -2662,11 +2670,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1743488889}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 4, z: 0}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1770146251 stripped
 GameObject:

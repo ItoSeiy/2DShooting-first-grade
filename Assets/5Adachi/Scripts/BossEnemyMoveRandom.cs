@@ -15,14 +15,14 @@ public class BossEnemyMoveRandom : MonoBehaviour
     float _speed = 4f;
     /// <summary>’â~ŠÔ</summary>
     [SerializeField,Header("’â~ŠÔ")] float _stopTime = 2f;
-    /// <summary>ãŒÀ</summary>
-    [SerializeField,Header("ãŒÀ")] float _upperLimit = 2.5f;
-    /// <summary>‰ºŒÀ</summary>
-    [SerializeField,Header("‰ºŒÀ")] float _lowerLimit = 1.5f;  
     /// <summary>‰EŒÀ</summary>
     [SerializeField,Header("‰EŒÀ")] float _rightLimit = 4f;
     /// <summary>¶ŒÀ</summary>
     [SerializeField,Header("¶ŒÀ")] float _leftLimit = -4f;
+    /// <summary>ãŒÀ</summary>
+    [SerializeField,Header("ãŒÀ")] float _upperLimit = 2.5f;
+    /// <summary>‰ºŒÀ</summary>
+    [SerializeField,Header("‰ºŒÀ")] float _lowerLimit = 1.5f;     
     /// <summary>ˆÚ“®ŠÔ</summary>
     [SerializeField,Header("ˆÚ“®ŠÔ")] float _moveTime = 0.5f;
     /// <summary>•ûŒü</summary>
@@ -38,6 +38,10 @@ public class BossEnemyMoveRandom : MonoBehaviour
     /// <summary>•ûŒü‚È‚µ</summary>
     float _noDir = 0f;
 
+
+    /// <summary>
+    /// ƒ‰ƒ“ƒ_ƒ€•ûŒü‚É“®‚­
+    /// </summary>
     IEnumerator RandomMovement()
     {       
         while (true)
@@ -86,7 +90,7 @@ public class BossEnemyMoveRandom : MonoBehaviour
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
-        StartCoroutine(RandomMovement());
+        StartCoroutine("RandomMovement");
         
     }
     private void Update()

@@ -7,8 +7,10 @@ public class BossEnemyMoveUShaped: MonoBehaviour
     /// <summary>形状や大きさの概念を持った物質</summary>
     Rigidbody2D _rb;
     [SerializeField,Header("スピード")] float _speed = 5f;    
-    /// <summary>横限</summary>
-    [SerializeField,Header("横限")] float _horizontalLimit = 7.5f;
+    /// <summary>右限</summary>
+    [SerializeField, Header("右限")] float _rightLimit = 7.5f;
+    /// <summary>左限</summary>
+    [SerializeField, Header("左限")] float _leftLimit = -7.5f;
     /// <summary>上限</summary>
     [SerializeField, Header("上限")] float _upperLimit = 3.5f;
     /// <summary>下限</summary>
@@ -34,13 +36,17 @@ public class BossEnemyMoveUShaped: MonoBehaviour
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
-        StartCoroutine(UShaped());
+        StartCoroutine("UShaped");
     }
 
     void Update()
     {
         _rb.velocity = _dir.normalized * _speed;
     }
+
+    /// <summary>
+    /// U字型のような移動をする
+    /// </summary>
     public IEnumerator UShaped()
     {
         if (transform.position.x < _middlePos)//画面より左半分にいたら
@@ -54,16 +60,16 @@ public class BossEnemyMoveUShaped: MonoBehaviour
             Debug.Log("b");
         }
 
-        while(true)//端に着くまで下がる
+        while(true)//端に着くまで横に動く
         {
             yield return new WaitForSeconds(_judgmentLimit);
             //反対側に着いたら
-            if (transform.position.x <= -_horizontalLimit || transform.position.x >= _horizontalLimit)
+            if ((transform.position.x <= _leftLimit) || (transform.position.x >= _rightLimit))
             {
                 Debug.Log("c");
                 _dir = Vector2.zero;//停止
                 yield return new WaitForSeconds(_stopTime);//停止時間
-                _dir = Vector2.down;//画面左端にいたら下がる
+                _dir = Vector2.down;//下がる
                 break;
             }
         }
@@ -73,7 +79,7 @@ public class BossEnemyMoveUShaped: MonoBehaviour
         {
             yield return new WaitForSeconds(_judgmentLimit);
             //反対側に着いたら
-            if (transform.position.x <= -_horizontalLimit && transform.position.y <= _lowerLimit)
+            if (transform.position.x <= _leftLimit && transform.position.y <= _lowerLimit)
             {
                 Debug.Log("e");
                 _dir = Vector2.zero;//停止
@@ -83,7 +89,7 @@ public class BossEnemyMoveUShaped: MonoBehaviour
                 break;
             }
             //反対側に着いたら
-            else if (transform.position.x >= _horizontalLimit　&& transform.position.y <= _lowerLimit)
+            else if (transform.position.x >= _rightLimit && transform.position.y <= _lowerLimit)
             {
                 Debug.Log("f");
                 _dir = Vector2.zero;//停止
@@ -98,7 +104,7 @@ public class BossEnemyMoveUShaped: MonoBehaviour
         {
             yield return new WaitForSeconds(_judgmentLimit);
             //反対側についたら上に行く(パターン1or2）
-            if ((transform.position.x >= _horizontalLimit && _switch == _pattern01) || (transform.position.x <= -_horizontalLimit && _switch == _pattern02))
+            if ((transform.position.x >= _rightLimit && _switch == _pattern01) || (transform.position.x <= _leftLimit && _switch == _pattern02))
             {
                 Debug.Log("g");
                 _dir = Vector2.zero;//停止

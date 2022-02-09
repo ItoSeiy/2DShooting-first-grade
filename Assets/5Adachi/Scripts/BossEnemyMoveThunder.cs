@@ -4,79 +4,132 @@ using UnityEngine;
 
 public class BossEnemyMoveThunder : MonoBehaviour
 {
+    /// <summary>形状や大きさの概念を持った物質</summary>
     Rigidbody2D _rb;
-    /// <summary></summary>
-    int _thunder = 0;
-     float _xMove = 5f;
-     float _yMove = 6f;
+    /// <summary>カウント</summary>
+    int _count = 0;
+    /// <summary>カウントの限界数</summary>
+    int _limitCount = 5;
+    /// <summary>水平、横方向</summary>
+    float _horizontal = 1f;
+    /// <summary>垂直、縦方向</summary>
+    float _vertical = 1f;
     /// <summary>スピード</summary>
-    [SerializeField,Header("スピード")] float _speed;
+    [SerializeField, Header("スピード")] float _speed;
     /// <summary>方向</summary>
     Vector2 _dir;
-
+    /// <summary>中央位置</summary>
+    float _middlePos = 0;
+    /// <summary>判定回数の制限</summary>
+    float _judgmentLimit = 0.1f;
+    /// <summary>停止時間</summary>
+    [SerializeField, Header("停止時間")] float _stopTime = 2f;
+    /// <summary>右限</summary>
+    [SerializeField, Header("右限")] float _rightLimit = 7.5f;
+    /// <summary>左限</summary>
+    [SerializeField, Header("左限")] float _leftLimit = -7.5f;
+    /// <summary>逆の動き</summary>
+    int _reverseMovement = -1;
+    /// <summary>切り替え</summary>
+    int _switch = 0;
+    /// <summary>最初に左にいるパターン</summary>
+    int _pattern01 = 1;
+    /// <summary>最初に右にいるパターン</summary>
+    int _pattern02 = 2;
+    /// <summary>初期化</summary>
+    int _initialize = 0;
 
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
-        StartCoroutine(Thunder());
+        StartCoroutine("Thunder");
     }
     void Update()
     {
-        //transform.position = new Vector2(Mathf.Clamp(transform.position.x, -8f, 8f), (Mathf.Clamp(transform.position.y, -4f, 4f)));
-        _thunder++;
         _rb.velocity = _dir.normalized * _speed;
     }
+
+    /// <summary>
+    /// 端に移動してから反対側にジグザグ移動する
+    /// </summary>
+    /// <returns></returns>
     IEnumerator Thunder()
     {
-            yield return new WaitForSeconds(0.1f);
-            if (transform.position.x >= 0)//画面右側にいたら
-            {
-                Debug.Log("left");
-                _rb.velocity = Vector2.left;//左に移動
-            }
-            else//左側にいたら
-            {
-                Debug.Log("right");
-                _rb.velocity = Vector2.right;//右に移動
-            }
-        
+        if (transform.position.x >= _middlePos)//画面右側にいたら
+        {
+            Debug.Log("left");
+            _dir = Vector2.left;//左に移動
+        }
+        else//左側にいたら
+        {
+            Debug.Log("right");
+            _dir = Vector2.right;//右に移動
+        }
+
         while (true)
-        {   
-            yield return new WaitForSeconds(0.1f);
-            if (transform.position.x <= -7.5f)
+        {
+            yield return new WaitForSeconds(_judgmentLimit);
+
+            if (transform.position.x <= _leftLimit)//左についたら
             {
-                Debug.Log("nice!");
-                _rb.velocity = Vector2.zero;
+                Debug.Log("a");
+                _switch = _pattern01;//パターン1に切り替え
+                _dir = Vector2.zero;//停止
+                yield return new WaitForSeconds(_stopTime);//停止時間
                 break;
             }
-            else if (transform.position.x >= 7.5f)
+            else if (transform.position.x >= _rightLimit)//右についたら
             {
-                Debug.Log("nice!");
-                _rb.velocity = Vector2.zero;
+                Debug.Log("a");
+                _switch = _pattern02;//パターン2に切り替え
+                _dir = Vector2.zero;//停止
+                yield return new WaitForSeconds(_stopTime);//停止時間
                 break;
             }
         }
 
-    
-        Debug.Log("dayone");
-        while (true)
+        //左から右にジグザグ動く
+        while (true && _switch == _pattern01)
         {
-            yield return new WaitForSeconds(0.1f);
-            _thunder++;
-            if (transform.position.x <= 7.5f)
+            yield return new WaitForSeconds(_judgmentLimit);
+            _count++;//カウントを+1
+
+            if (transform.position.x <= _rightLimit)//端についていないなら繰り返す
             {
-                _rb.velocity = new Vector2(_xMove, _yMove);
-                if (_thunder >= 10)
+                _dir = new Vector2(_horizontal, _vertical);//右に動く
+
+                if (_count >= _limitCount)//一定のカウントになったら
                 {
-                    _thunder = 0;
-                    _rb.velocity = new Vector2(_xMove, _yMove);
-                    _yMove *= -1;
+                    _count = _initialize;//カウントを0に
+                    _vertical *= _reverseMovement;//上下の動きを逆にする                   
                 }
             }
             else
             {
-                _rb.velocity = Vector2.zero;
-                _xMove *= -1;
+                _dir = Vector2.zero;//停止
+                break;
+            }
+        }
+
+        //右から左にジグザグ動く
+        while (true && _switch == _pattern02)
+        {
+            yield return new WaitForSeconds(_judgmentLimit);
+            _count++;//カウントを+1
+            if (transform.position.x >= _leftLimit)//端についていないなら繰り返す
+            {
+                _dir = new Vector2(-_horizontal, _vertical);//左に動く
+
+                if (_count >= _limitCount)//一定のカウントになったら
+                {
+                    _count = _initialize;//カウントを０に                    
+                    _vertical *= _reverseMovement;//上下の動きを逆にする   
+                }
+            }
+            else//端についたら
+            {
+                _dir = Vector2.zero;//停止
+                break;
             }
         }
     }
