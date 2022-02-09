@@ -115,7 +115,6 @@ public class PlayerBase : MonoBehaviour
         _sp = GetComponent<SpriteRenderer>();
         _audioSource = GetComponent<AudioSource>();
         _anim = GetComponent<Animator>();
-        _audioData = GetComponent<AudioData[]>();
 
         _cmvcam1.Priority = -1;
 
@@ -246,12 +245,12 @@ public class PlayerBase : MonoBehaviour
         {
             if (_wasCharge) return;
             _isAttackMode = true;
-            Debug.Log(_isAttackMode);
+            //Debug.Log(_isAttackMode);
         }
         if(context.performed || context.canceled)
         {
             _isAttackMode = false;
-            Debug.Log(_isAttackMode);
+            //Debug.Log(_isAttackMode);
         }
     }
 
