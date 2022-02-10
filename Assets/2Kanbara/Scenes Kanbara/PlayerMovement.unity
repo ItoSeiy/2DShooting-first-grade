@@ -123,6 +123,53 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &232002831
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 232002832}
+  - component: {fileID: 232002833}
+  m_Layer: 0
+  m_Name: PlayerTriggerColider
+  m_TagString: PlayerTrigger
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &232002832
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 232002831}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1915347100}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &232002833
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 232002831}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 2
 --- !u!1 &232024988 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7027583029994822301, guid: e1adad11d1f560e4bba929f1e7c53444,
@@ -6354,6 +6401,7 @@ MonoBehaviour:
   _parsG: {fileID: 1444145230}
   _gameingPlayerColorTime: 100
   _fullPowerModeEffect: {fileID: 1382862640}
+  _playerTriggerTag: PlayerTrigger
 --- !u!58 &888640654
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -8056,6 +8104,7 @@ Transform:
   - {fileID: 1985180533}
   - {fileID: 1298911254}
   - {fileID: 2013385415}
+  - {fileID: 232002832}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8121,6 +8170,7 @@ MonoBehaviour:
   _parsG: {fileID: 2013385414}
   _gameingPlayerColorTime: 100
   _fullPowerModeEffect: {fileID: 232024988}
+  _playerTriggerTag: PlayerTrigger
 --- !u!114 &1915347102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9155,6 +9205,11 @@ PrefabInstance:
       propertyPath: m_GravityScale
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 5213495458450524648, guid: 78d5d0afd5a21114d80e63536e5afdac,
+        type: 3}
+      propertyPath: _itemSpeed
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 78d5d0afd5a21114d80e63536e5afdac, type: 3}
 --- !u!1001 &3434624148055336012
@@ -9229,6 +9284,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6907494864170572665, guid: c724f483e2d1d2a4198e08c3463c6b88,
+        type: 3}
+      propertyPath: _itemSpeed
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c724f483e2d1d2a4198e08c3463c6b88, type: 3}
 --- !u!1001 &3579933374582481411
@@ -9247,6 +9307,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TestBomItem
+      objectReference: {fileID: 0}
+    - target: {fileID: 3579933375197725498, guid: 97abb34054c02e54fa3c9760fb1ba7f4,
+        type: 3}
+      propertyPath: _itemSpeed
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3579933375197725499, guid: 97abb34054c02e54fa3c9760fb1ba7f4,
         type: 3}
@@ -9554,6 +9619,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3649100702119757539, guid: 7d814d0a5cd2a274aa163311910168df,
+        type: 3}
+      propertyPath: _itemSpeed
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 6718171741274842584, guid: 7d814d0a5cd2a274aa163311910168df,
         type: 3}
       propertyPath: m_RootOrder

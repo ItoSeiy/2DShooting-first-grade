@@ -71,6 +71,8 @@ public class PlayerBase : MonoBehaviour
 
     [SerializeField, Header("パワーアイテムの数がカンストしたとき（レベルマックスのとき）の演出")] GameObject _fullPowerModeEffect = default;
 
+    [SerializeField, Header("アイテムを回収するためのトリガーコライダー")] string _playerTriggerTag = "PlayerTrigger";
+
     protected const float _level1 = 1f;
     protected const float _level2 = 2f;
     protected const float _level3 = 3f;
