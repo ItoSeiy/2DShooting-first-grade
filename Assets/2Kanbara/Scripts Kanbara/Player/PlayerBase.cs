@@ -96,7 +96,7 @@ public class PlayerBase : MonoBehaviour
     /// <summary>ボムの使用時に立つフラグ</summary>
     protected bool _isBomb = default;
     /// <summary>コントロールが効かないようにするフラグ</summary>
-    bool _isControll = default;
+    bool _isControll = true;
     /// <summary>チャージしているかどうか判定するフラグ</summary>
     bool _wasCharge = default;
     /// <summary>アタックしているかどうか判定するフラグ</summary>
@@ -173,7 +173,7 @@ public class PlayerBase : MonoBehaviour
                 }
                 break;
         }
-        if(PhaseNovelManager.Instance.NovelePhaesState != NovelPhase.None)//もしノベルが再生されていなかったらコントロール不能にする
+        if(PhaseNovelManager.Instance.NovelePhaesState == NovelPhase.None)//もしノベルが再生されていなかったらコントロール不能にする
         {
             _isControll = false;
         }
