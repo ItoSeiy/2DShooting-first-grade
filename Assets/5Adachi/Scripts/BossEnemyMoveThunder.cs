@@ -5,13 +5,9 @@ using UnityEngine;
 public class BossEnemyMoveThunder : MonoBehaviour
 {
     /// <summary>形状や大きさの概念を持った物質</summary>
-    Rigidbody2D _rb;
-    /// <summary>カウント</summary>
-    int _count = 0;
-    /// <summary>カウントの限界数</summary>
-    int _limitCount = 5;
+    Rigidbody2D _rb;   
     /// <summary>水平、横方向</summary>
-    float _horizontal = 1f;
+    const float HORIZONTAL = 1f;
     /// <summary>垂直、縦方向</summary>
     float _vertical = 1f;
     /// <summary>スピード</summary>
@@ -20,8 +16,8 @@ public class BossEnemyMoveThunder : MonoBehaviour
     Vector2 _dir;
     /// <summary>中央位置</summary>
     float _middlePos = 0;
-    /// <summary>判定回数の制限</summary>
-    float _judgmentLimit = 0.1f;
+    /// <summary>判定の際に待ってほしい時間</summary>
+    float _judgmentTime = 0.1f;
     /// <summary>停止時間</summary>
     [SerializeField, Header("停止時間")] float _stopTime = 2f;
     /// <summary>右限</summary>
@@ -29,30 +25,33 @@ public class BossEnemyMoveThunder : MonoBehaviour
     /// <summary>左限</summary>
     [SerializeField, Header("左限")] float _leftLimit = -7.5f;
     /// <summary>逆の動き</summary>
-    int _reverseMovement = -1;
-    /// <summary>切り替え</summary>
-    int _switch = 0;
+    const float REVERSE_MOVEMENT = -1f;
+    /// <summary>現在のパターン</summary>
+    int _pattern = 0;
     /// <summary>最初に左にいるパターン</summary>
-    int _pattern01 = 1;
+    const  int PATTERN1 = 1;
     /// <summary>最初に右にいるパターン</summary>
-    int _pattern02 = 2;
-    /// <summary>初期化</summary>
-    int _initialize = 0;
-
+    const int PATTERN2 = 2;
+    /// <summary>パターン初期化</summary>
+    const int PATTERN_INIT = 0;
+    /// <summary>時間</summary>
+    float _time = 0f;
+    /// <summary>時間制限,上下移動を逆にする<summary>
+    [SerializeField,Header("上下移動を逆にする")] float _timeLimit = 0.5f;
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
-        StartCoroutine("Thunder");
+        StartCoroutine(Thunder());
     }
     void Update()
     {
-        _rb.velocity = _dir.normalized * _speed;
+        _rb.velocity = _dir.normalized * _speed;//その方向に移動
+        _time += Time.deltaTime;//時間
     }
 
     /// <summary>
     /// 端に移動してから反対側にジグザグ移動する
     /// </summary>
-    /// <returns></returns>
     IEnumerator Thunder()
     {
         if (transform.position.x >= _middlePos)//画面右側にいたら
@@ -66,14 +65,15 @@ public class BossEnemyMoveThunder : MonoBehaviour
             _dir = Vector2.right;//右に移動
         }
 
+        //端についたら停止
         while (true)
         {
-            yield return new WaitForSeconds(_judgmentLimit);
+            yield return new WaitForSeconds(_judgmentTime);//判定回数の制御
 
             if (transform.position.x <= _leftLimit)//左についたら
             {
                 Debug.Log("a");
-                _switch = _pattern01;//パターン1に切り替え
+                _pattern = PATTERN1;//パターン1に切り替え
                 _dir = Vector2.zero;//停止
                 yield return new WaitForSeconds(_stopTime);//停止時間
                 break;
@@ -81,27 +81,39 @@ public class BossEnemyMoveThunder : MonoBehaviour
             else if (transform.position.x >= _rightLimit)//右についたら
             {
                 Debug.Log("a");
-                _switch = _pattern02;//パターン2に切り替え
+                _pattern = PATTERN2;//パターン2に切り替え
                 _dir = Vector2.zero;//停止
                 yield return new WaitForSeconds(_stopTime);//停止時間
                 break;
             }
         }
 
+        _time = PATTERN_INIT;//タイムをリセット
+
         //左から右にジグザグ動く
-        while (true && _switch == _pattern01)
+        while (true && _pattern == PATTERN1)
         {
-            yield return new WaitForSeconds(_judgmentLimit);
-            _count++;//カウントを+1
+            Debug.Log("1");
+            yield return new WaitForSeconds(_judgmentTime);//判定回数の制御
 
             if (transform.position.x <= _rightLimit)//端についていないなら繰り返す
             {
-                _dir = new Vector2(_horizontal, _vertical);//右に動く
+                _dir = new Vector2(HORIZONTAL, _vertical);//右上or右下に動きながら
 
-                if (_count >= _limitCount)//一定のカウントになったら
+                if (_time >= _timeLimit)//制限時間になったら
                 {
-                    _count = _initialize;//カウントを0に
-                    _vertical *= _reverseMovement;//上下の動きを逆にする                   
+                    _time = PATTERN_INIT;//タイムをリセット
+                    _vertical *= REVERSE_MOVEMENT;//上下の動きを逆にする                   
+                }
+                else if (transform.position.y >= 4)
+                {
+                    _time = PATTERN_INIT;//タイムをリセット
+                    _vertical *= REVERSE_MOVEMENT;//上下の動きを逆にする   
+                }
+                else if (transform.position.y <= -4)
+                {
+                    _time = PATTERN_INIT;//タイムをリセット
+                    _vertical *= REVERSE_MOVEMENT;//上下の動きを逆にする   
                 }
             }
             else
@@ -112,18 +124,29 @@ public class BossEnemyMoveThunder : MonoBehaviour
         }
 
         //右から左にジグザグ動く
-        while (true && _switch == _pattern02)
+        while (true && _pattern == PATTERN2)
         {
-            yield return new WaitForSeconds(_judgmentLimit);
-            _count++;//カウントを+1
+            Debug.Log("2");
+            yield return new WaitForSeconds(_judgmentTime);//判定回数の制御
+
             if (transform.position.x >= _leftLimit)//端についていないなら繰り返す
             {
-                _dir = new Vector2(-_horizontal, _vertical);//左に動く
+                _dir = new Vector2(-HORIZONTAL, _vertical);//左上or左下に動きながら
 
-                if (_count >= _limitCount)//一定のカウントになったら
+                if (_time >= _timeLimit)//制限時間になったら
                 {
-                    _count = _initialize;//カウントを０に                    
-                    _vertical *= _reverseMovement;//上下の動きを逆にする   
+                    _time = PATTERN_INIT;//タイムをリセット
+                    _vertical *= REVERSE_MOVEMENT;//上下の動きを逆にする   
+                }
+                else if (transform.position.y >= 4)
+                {
+                    _time = PATTERN_INIT;//タイムをリセット
+                    _vertical *= REVERSE_MOVEMENT;//上下の動きを逆にする   
+                }
+                else if (transform.position.y <= -4)
+                {
+                    _time = PATTERN_INIT;//タイムをリセット
+                    _vertical *= REVERSE_MOVEMENT;//上下の動きを逆にする   
                 }
             }
             else//端についたら
