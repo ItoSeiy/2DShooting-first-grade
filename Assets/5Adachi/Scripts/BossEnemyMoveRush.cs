@@ -23,7 +23,7 @@ public class BossEnemyMoveRush : MonoBehaviour
     /// <summary>判定回数の制限</summary>
     const float UDGMENT_TIME = 0.1f;   
     /// <summary>修正値</summary>
-    const float _playerPostionOffset = 0.5f;
+    const float PAlYER_POSTION_OFFSET = 0.5f;
     /// <summary>時間</summary>
     float _time;
     /// <summary>時間の限界</summary>
@@ -55,13 +55,13 @@ public class BossEnemyMoveRush : MonoBehaviour
             yield return new WaitForSeconds(UDGMENT_TIME);
             
             //プレイヤーが右にいたら
-            if (_player.transform.position.x > transform.position.x +_playerPostionOffset)
+            if (_player.transform.position.x > transform.position.x + PAlYER_POSTION_OFFSET)
             {
                 Debug.Log("right");
                 _dir = Vector2.right;//右に移動
             }
             //プレイヤーが左にいたら
-            else if(_player.transform.position.x  < transform.position.x -_playerPostionOffset)
+            else if(_player.transform.position.x  < transform.position.x - PAlYER_POSTION_OFFSET)
             {
                 Debug.Log("left");  
                 _dir = Vector2.left;//左に移動
