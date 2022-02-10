@@ -6,6 +6,7 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
 {
     public GamePhase GamePhaseState => _gamePhaseState;
     public NovelPhase NovelePhaesState => _novelPhaseState;
+    public bool BeforeNovelRenderer => _beforeNovelRenderer.IsNovelFinish;
 
     [SerializeField] GSSReader _beforeGSSReader;
     [SerializeField] NovelRenderer _beforeNovelRenderer;
@@ -138,6 +139,7 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
     void SetNovel()
     {
 
+
         if (GameManager.Instance.IsStageClear)
         {
             _novelPhaseState = NovelPhase.Win;
@@ -165,6 +167,7 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
                 if(_beforeNovelRenderer.IsNovelFinish)
                 {
                     _novelCanvas.gameObject.SetActive(false);
+                    _beforeNovelRenderer.gameObject.SetActive(false);
                     _novelPhaseState = NovelPhase.None;
                     Instantiate(_stageParam.PhaseParms[_phaseIndex].Prefab).transform.position = _bossgenerateTransform.position;
                 }
@@ -187,6 +190,7 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
                 if(_winNovelRenderer.IsNovelFinish)
                 {
                     _novelCanvas.gameObject.SetActive(false);
+                    _winNovelRenderer.gameObject.SetActive(false);
                     _gameClearCanvas.gameObject.SetActive(true);
                 }
 
@@ -206,7 +210,8 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
 
                 if(_loseNovelRenderer.IsNovelFinish)
                 {
-                    _novelCanvas.gameObject.SetActive(false);   
+                    _novelCanvas.gameObject.SetActive(false);
+                    _loseNovelRenderer.gameObject.SetActive(false);
                     _gameOverCanavas.gameObject.SetActive(true);
                 }
 

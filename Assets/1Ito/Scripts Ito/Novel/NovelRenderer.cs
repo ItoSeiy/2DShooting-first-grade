@@ -175,7 +175,6 @@ public class NovelRenderer : MonoBehaviour
             IsNovelFinish = true;
             _mainText.text = "";
             _nameText.text = "";
-            gameObject.SetActive(false);
             return true;
         }
         else

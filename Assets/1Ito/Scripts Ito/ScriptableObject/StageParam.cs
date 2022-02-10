@@ -7,9 +7,6 @@ using System;
 public class StageParam
 {
     public List<PhaseParm> PhaseParms => phaseParms;
-
-    [SerializeField] string StageName = "Stage";
-
     [SerializeField] private List<PhaseParm> phaseParms = new List<PhaseParm>();
 
 }
