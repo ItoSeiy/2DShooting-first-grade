@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
 
     private float _playerScore = default;
     private float _playerPowerItemCount = default;
-    private float _playerLevel = default;
+    [SerializeField] private float _playerLevel = default;
     private float _playerBombCount = default;
     ///<summary>一定数獲得すると無敵になるオブジェクトを獲得した数///</summary>
     private float _playerInvicibleObjectCount = default;
