@@ -32,12 +32,12 @@ public class BossEnemyMoveThunder : MonoBehaviour
     const  int PATTERN1 = 1;
     /// <summary>最初に右にいるパターン</summary>
     const int PATTERN2 = 2;
-    /// <summary>パターン初期化</summary>
-    const int PATTERN_INIT = 0;
+    /// <summary>タイマーのリセット用</summary>
+    const float TIMER_RESET = 0f;
     /// <summary>時間</summary>
-    float _time = 0f;
-    /// <summary>時間制限,上下移動を逆にする<summary>
-    [SerializeField,Header("上下移動を逆にする")] float _timeLimit = 0.5f;
+    float _timer = 0f;
+    /// <summary>時間制限,上下移動を逆にする時間<summary>
+    [SerializeField,Header("上下移動を逆にする時間")] float _timeLimit = 0.5f;
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -46,7 +46,7 @@ public class BossEnemyMoveThunder : MonoBehaviour
     void Update()
     {
         _rb.velocity = _dir.normalized * _speed;//その方向に移動
-        _time += Time.deltaTime;//時間
+        _timer += Time.deltaTime;//時間
     }
 
     /// <summary>
@@ -88,7 +88,7 @@ public class BossEnemyMoveThunder : MonoBehaviour
             }
         }
 
-        _time = PATTERN_INIT;//タイムをリセット
+        _timer = TIMER_RESET;//タイムをリセット
 
         //左から右にジグザグ動く
         while (true && _pattern == PATTERN1)
@@ -100,19 +100,19 @@ public class BossEnemyMoveThunder : MonoBehaviour
             {
                 _dir = new Vector2(HORIZONTAL, _vertical);//右上or右下に動きながら
 
-                if (_time >= _timeLimit)//制限時間になったら
+                if (_timer >= _timeLimit)//制限時間になったら
                 {
-                    _time = PATTERN_INIT;//タイムをリセット
+                    _timer = TIMER_RESET;//タイムをリセット
                     _vertical *= REVERSE_MOVEMENT;//上下の動きを逆にする                   
                 }
                 else if (transform.position.y >= 4)
                 {
-                    _time = PATTERN_INIT;//タイムをリセット
+                    _timer = TIMER_RESET;//タイムをリセット
                     _vertical *= REVERSE_MOVEMENT;//上下の動きを逆にする   
                 }
                 else if (transform.position.y <= -4)
                 {
-                    _time = PATTERN_INIT;//タイムをリセット
+                    _timer = TIMER_RESET;//タイムをリセット
                     _vertical *= REVERSE_MOVEMENT;//上下の動きを逆にする   
                 }
             }
@@ -133,19 +133,19 @@ public class BossEnemyMoveThunder : MonoBehaviour
             {
                 _dir = new Vector2(-HORIZONTAL, _vertical);//左上or左下に動きながら
 
-                if (_time >= _timeLimit)//制限時間になったら
+                if (_timer >= _timeLimit)//制限時間になったら
                 {
-                    _time = PATTERN_INIT;//タイムをリセット
+                    _timer = TIMER_RESET;//タイムをリセット
                     _vertical *= REVERSE_MOVEMENT;//上下の動きを逆にする   
                 }
                 else if (transform.position.y >= 4)
                 {
-                    _time = PATTERN_INIT;//タイムをリセット
+                    _timer = TIMER_RESET;//タイムをリセット
                     _vertical *= REVERSE_MOVEMENT;//上下の動きを逆にする   
                 }
                 else if (transform.position.y <= -4)
                 {
-                    _time = PATTERN_INIT;//タイムをリセット
+                    _timer = TIMER_RESET;//タイムをリセット
                     _vertical *= REVERSE_MOVEMENT;//上下の動きを逆にする   
                 }
             }

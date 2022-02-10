@@ -12,28 +12,28 @@ public class BossEnemyMoveRush : MonoBehaviour
     [SerializeField,Header("プレイヤーのタグ")] private string _playerTag = null;
     /// <summary>スピード</summary>
     [SerializeField, Header("スピード")] float _speed = 5f;
+    /// <summary>上限</summary>
+    [SerializeField, Header("上限")] float _upperLimit = 3f;
     /// <summary>下限</summary>
     [SerializeField, Header("下限")] float _lowerLimit = -3f;
     /// <summary>停止時間</summary>
-    [SerializeField, Header("停止時間")] float _stopTime = 2f;
-    /// <summary>切り替え</summary>
-    bool _switch = false;
+    [SerializeField, Header("降りた後の停止時間")] float _stopTime = 2f;
     /// <summary>方向</summary>
     Vector2 _dir;
     /// <summary>判定回数の制限</summary>
-    float _judgmentLimit = 0.1f;   
+    const float UDGMENT_TIME = 0.1f;   
     /// <summary>修正値</summary>
-    float _correctionValue = 0.5f;
+    const float _playerPostionOffset = 0.5f;
     /// <summary>時間</summary>
     float _time;
     /// <summary>時間の限界</summary>
-    [SerializeField,Header("追尾時間")] float _timeLimit = 4f;
+    [SerializeField,Header("追尾時間(上に滞在している時間)")] float _stayingTime = 4f;
     
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
         _player = GameObject.FindGameObjectWithTag(_playerTag);
-        StartCoroutine("Rush");
+        StartCoroutine(Rush());
     }
 
     private void Update()
@@ -47,54 +47,21 @@ public class BossEnemyMoveRush : MonoBehaviour
     /// </summary>
     IEnumerator Rush()        
     {
-        //プレイヤーの位置によって左右のどちらかに移動するかを決める
-        /*//プレイヤーが右にいたら
-        if (_player.transform.position.x >= transform.position.x)
-        {
-            Debug.Log("right");
-            _switch = true;//パターン１に切り替え
-            _dir = Vector2.right;//右に移動
-        }
-        else//左にいたら
-        {
-            Debug.Log("left");
-            _switch = false;//パターン２に切り替え
-            _dir = Vector2.left;//左に移動
-        }
-      
-        while (true) //プレイヤーの辺りに着いたら
-        {
-            yield return new WaitForSeconds(_judgmentLimit);
-
-            //右に移動したときに
-            if (_switch && _player.transform.position.x <= transform.position.x)
-            {
-                _dir = Vector2.zero;//停止
-                break;
-            }
-            //左に移動したときに
-            else if (!_switch && _player.transform.position.x >= transform.position.x)
-            {
-               _dir = Vector2.zero;//停止
-                break;
-            }
-        }*/
-
         _time = 0;
 
         //x座標だけプレイヤーの近くに移動する
         while (true)
         {
-            yield return new WaitForSeconds(_judgmentLimit);
+            yield return new WaitForSeconds(UDGMENT_TIME);
             
             //プレイヤーが右にいたら
-            if (_player.transform.position.x > transform.position.x +_correctionValue)
+            if (_player.transform.position.x > transform.position.x +_playerPostionOffset)
             {
                 Debug.Log("right");
                 _dir = Vector2.right;//右に移動
             }
             //プレイヤーが左にいたら
-            else if(_player.transform.position.x  < transform.position.x -_correctionValue)
+            else if(_player.transform.position.x  < transform.position.x -_playerPostionOffset)
             {
                 Debug.Log("left");  
                 _dir = Vector2.left;//左に移動
@@ -104,7 +71,7 @@ public class BossEnemyMoveRush : MonoBehaviour
                 _dir = Vector2.zero;//停止
             }
             //限界に達したら
-            if ( _time >= _timeLimit)
+            if ( _time >= _stayingTime)
             {
                 break;
             }
@@ -112,7 +79,7 @@ public class BossEnemyMoveRush : MonoBehaviour
 
         while (true)//サガる
         {
-            yield return new WaitForSeconds(_judgmentLimit);
+            yield return new WaitForSeconds(UDGMENT_TIME);
             _dir = Vector2.down;//サガる
 
             if (transform.position.y <= _lowerLimit)//サガったら
@@ -126,9 +93,9 @@ public class BossEnemyMoveRush : MonoBehaviour
         
         while (true)//一定の場所まで上がる
         {
-            yield return new WaitForSeconds(_judgmentLimit);
+            yield return new WaitForSeconds(UDGMENT_TIME);
             
-            if (3 <= transform.position.y)//一定の場所まできたら
+            if (_upperLimit <= transform.position.y)//一定の場所まできたら
             {
                 Debug.Log("ラスト");
                 _dir = Vector2.zero;//停止

@@ -26,17 +26,17 @@ public class BossEnemyMoveUShaped: MonoBehaviour
     /// <summary>停止時間</summary>
     [SerializeField,Header("停止時間")] float _stopTime = 1f;
     /// <summary>判定回数の制限</summary>
-    float _judgmentLimit = 0.1f;
+    float _judgmentTime = 0.1f;
     /// <summary>切り替え</summary>
     int _switch = 0;
     /// <summary>下にいる時に左にいるパターン</summary>
-    int _pattern01 = 1;
+    const int PATTERN = 1;
     /// <summary>下にいる時に右にいるパターン</summary>
-    int _pattern02 = 2;
+    const int PATTERN2 = 2;
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
-        StartCoroutine("UShaped");
+        StartCoroutine(UShaped());
     }
 
     void Update()
@@ -62,7 +62,7 @@ public class BossEnemyMoveUShaped: MonoBehaviour
 
         while(true)//端に着くまで横に動く
         {
-            yield return new WaitForSeconds(_judgmentLimit);
+            yield return new WaitForSeconds(_judgmentTime);
             //反対側に着いたら
             if ((transform.position.x <= _leftLimit) || (transform.position.x >= _rightLimit))
             {
@@ -77,7 +77,7 @@ public class BossEnemyMoveUShaped: MonoBehaviour
 
         while (true)//反対側に着くまで移動する
         {
-            yield return new WaitForSeconds(_judgmentLimit);
+            yield return new WaitForSeconds(_judgmentTime);
             //反対側に着いたら
             if (transform.position.x <= _leftLimit && transform.position.y <= _lowerLimit)
             {
@@ -85,7 +85,7 @@ public class BossEnemyMoveUShaped: MonoBehaviour
                 _dir = Vector2.zero;//停止
                 yield return new WaitForSeconds(_stopTime);//停止時間
                 _dir = Vector2.right;//画面下端にいたら右に行く
-                _switch = _pattern01;//パターン1
+                _switch = PATTERN;//パターン1
                 break;
             }
             //反対側に着いたら
@@ -95,16 +95,16 @@ public class BossEnemyMoveUShaped: MonoBehaviour
                 _dir = Vector2.zero;//停止
                 yield return new WaitForSeconds(_stopTime);//停止時間
                 _dir = Vector2.left;//画面下端にいたら左に行く
-                _switch = _pattern02;//パターン2
+                _switch = PATTERN2;//パターン2
                 break;
             }
         }
 
         while (true)//反対側に着くまで横移動する
         {
-            yield return new WaitForSeconds(_judgmentLimit);
+            yield return new WaitForSeconds(_judgmentTime);
             //反対側についたら上に行く(パターン1or2）
-            if ((transform.position.x >= _rightLimit && _switch == _pattern01) || (transform.position.x <= _leftLimit && _switch == _pattern02))
+            if ((transform.position.x >= _rightLimit && _switch == PATTERN) || (transform.position.x <= _leftLimit && _switch == PATTERN2))
             {
                 Debug.Log("g");
                 _dir = Vector2.zero;//停止
@@ -116,7 +116,7 @@ public class BossEnemyMoveUShaped: MonoBehaviour
 
         while (true)//ある程度上にいくまで移動する
         {
-            yield return new WaitForSeconds(_judgmentLimit);
+            yield return new WaitForSeconds(_judgmentTime);
             if (transform.position.y >= _upperLimit)//ある程度上にいったら
             {
                 _dir = Vector2.zero;//停止
