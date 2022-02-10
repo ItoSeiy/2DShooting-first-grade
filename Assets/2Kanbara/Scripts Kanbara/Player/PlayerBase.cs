@@ -176,7 +176,7 @@ public class PlayerBase : MonoBehaviour
         {
             _isControll = false;
         }
-        else if(PhaseNovelManager.Instance.BeforeNovelRenderer)
+        else if(PhaseNovelManager.Instance.IsBeforeNovelFinish)
         {
             _isControll = true;
         }
