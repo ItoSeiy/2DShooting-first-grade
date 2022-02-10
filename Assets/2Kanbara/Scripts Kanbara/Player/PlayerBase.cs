@@ -94,7 +94,7 @@ public class PlayerBase : MonoBehaviour
     /// <summary>ボムの使用時に立つフラグ</summary>
     protected bool _isBomb = default;
     /// <summary>コントロールが効かないようにするフラグ</summary>
-    bool _isNotControll = default;
+    bool _isControll = default;
     /// <summary>チャージしているかどうか判定するフラグ</summary>
     bool _wasCharge = default;
     /// <summary>アタックしているかどうか判定するフラグ</summary>
@@ -154,7 +154,7 @@ public class PlayerBase : MonoBehaviour
             case false:
                 break;
             case true:
-                if (_isNotControll) return;
+                if (!_isControll) return;
                 switch (_isLateMode)
                 {
                     case false:
@@ -172,10 +172,18 @@ public class PlayerBase : MonoBehaviour
                 }
                 break;
         }
+        if(PhaseNovelManager.Instance.NovelePhaesState != NovelPhase.None)//もしノベルが再生されていなかったらコントロール不能にする
+        {
+            _isControll = false;
+        }
+        else if(PhaseNovelManager.Instance.BeforeNovelRenderer)
+        {
+            _isControll = true;
+        }
     }
     public void OnMove(InputAction.CallbackContext context)//通常の移動
     {
-        if (_isNotControll) return;
+        if (!_isControll) return;
         Vector2 inputMoveMent = context.ReadValue<Vector2>();
         _dir = new Vector2(inputMoveMent.x, inputMoveMent.y);
         Inversion();
@@ -183,7 +191,7 @@ public class PlayerBase : MonoBehaviour
 
     public void OnLateMove(InputAction.CallbackContext context)//精密操作時の移動
     {
-        if (_isNotControll) return;
+        if (!_isControll) return;
         if (context.started)//LeftShiftKeyが押された瞬間の処理
         {
             _isLateMode = true;
@@ -201,7 +209,7 @@ public class PlayerBase : MonoBehaviour
 
     public async void OnJump(InputAction.CallbackContext context)//SpaceKeyが押された瞬間の処理
     {
-        if(context.started && _bombCount > _default && !_isBomb && !_isNotControll && !_wasCharge && !_isAttackMode)
+        if(context.started && _bombCount > _default && !_isBomb && !_isControll && !_wasCharge && !_isAttackMode)
         {
             Bom();
             await Task.Delay(_bombCoolTime);
@@ -213,7 +221,7 @@ public class PlayerBase : MonoBehaviour
 
     public void OnInputChargeShotButton(InputAction.CallbackContext context)//ChargeShotの処理
     {
-        if (_isNotControll) return;
+        if (!_isControll) return;
         if (context.started && !_wasCharge && !_isAttackMode)
         {
             _cmvcam1.Priority = 10;
@@ -225,7 +233,7 @@ public class PlayerBase : MonoBehaviour
         if(context.performed && _wasCharge)
         {
             _wasCharge = false;
-            if (_isNotControll) return;
+            if (!_isControll) return;
             PlayerChargeAttack();
             _cmvcam1.Priority = -1;
             _chargeps.SetActive(false);
@@ -233,7 +241,7 @@ public class PlayerBase : MonoBehaviour
         if(context.canceled)
         {
             _wasCharge = false;
-            if (_isNotControll) return;
+            if (!_isControll) return;
             _audioSource.Stop();
             _cmvcam1.Priority = -1;
             _chargeps.SetActive(false);
@@ -354,7 +362,7 @@ public class PlayerBase : MonoBehaviour
     public async void Respawn()//リスポーンの処理
     {
         _godMode = true;
-        _isNotControll = true;
+        _isControll = false;
         _anim.SetBool(_invicibleAnimParamName, true);
         _chargeps.SetActive(false);
         _fullPowerModeEffect.SetActive(false);
@@ -362,7 +370,7 @@ public class PlayerBase : MonoBehaviour
         await Task.Delay(_respawnTime);
         _dir = Vector2.zero;
         transform.position = _playerRespawn.position;//ここでリスポーン地点に移動
-        _isNotControll = false;
+        _isControll = true;
         await Task.Delay(_afterRespawnTime);
         _godMode = false;
         _anim.SetBool(_invicibleAnimParamName, false);
