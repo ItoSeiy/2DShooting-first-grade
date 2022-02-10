@@ -5,7 +5,7 @@ using UnityEngine;
 public class BossEnemyMoveThunder : MonoBehaviour
 {
     /// <summary>形状や大きさの概念を持った物質</summary>
-    Rigidbody2D _rb;   
+    Rigidbody2D _rb;
     /// <summary>水平、横方向</summary>
     const float HORIZONTAL = 1f;
     /// <summary>垂直、縦方向</summary>
@@ -17,19 +17,23 @@ public class BossEnemyMoveThunder : MonoBehaviour
     /// <summary>中央位置</summary>
     float _middlePos = 0;
     /// <summary>判定の際に待ってほしい時間</summary>
-    float _judgmentTime = 0.1f;
+    const float DUDGMENT_TIME = 0.1f;
     /// <summary>停止時間</summary>
     [SerializeField, Header("停止時間")] float _stopTime = 2f;
     /// <summary>右限</summary>
     [SerializeField, Header("右限")] float _rightLimit = 7.5f;
     /// <summary>左限</summary>
     [SerializeField, Header("左限")] float _leftLimit = -7.5f;
+    /// <summary>上限</summary>
+    [SerializeField, Header("上限")] float _upperLimit = 4f;
+    /// <summary>下限</summary>
+    [SerializeField, Header("下限")] float _lowerLimit = -4f;
     /// <summary>逆の動き</summary>
     const float REVERSE_MOVEMENT = -1f;
     /// <summary>現在のパターン</summary>
     int _pattern = 0;
     /// <summary>最初に左にいるパターン</summary>
-    const  int PATTERN1 = 1;
+    const int PATTERN1 = 1;
     /// <summary>最初に右にいるパターン</summary>
     const int PATTERN2 = 2;
     /// <summary>タイマーのリセット用</summary>
@@ -37,11 +41,19 @@ public class BossEnemyMoveThunder : MonoBehaviour
     /// <summary>時間</summary>
     float _timer = 0f;
     /// <summary>時間制限,上下移動を逆にする時間<summary>
-    [SerializeField,Header("上下移動を逆にする時間")] float _timeLimit = 0.5f;
+    [SerializeField, Header("上下移動を逆にする時間")] float _timeLimit = 0.5f;
+    /// <summary>正常位置に軌道修正する</summary>
+    bool _fix = false;
+    /// <summary>上に上がる</summary>
+    const float MOVEUP = 1f;
+    /// <summary>下にサガる</summary>
+    const float MOVEDOWN = -1f;
+
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
         StartCoroutine(Thunder());
+        _fix = true;
     }
     void Update()
     {
@@ -50,7 +62,7 @@ public class BossEnemyMoveThunder : MonoBehaviour
     }
 
     /// <summary>
-    /// 端に移動してから反対側にジグザグ移動する
+    /// 端に一直線に移動した後、反対側に着くまでジグザグ移動する
     /// </summary>
     IEnumerator Thunder()
     {
@@ -68,7 +80,7 @@ public class BossEnemyMoveThunder : MonoBehaviour
         //端についたら停止
         while (true)
         {
-            yield return new WaitForSeconds(_judgmentTime);//判定回数の制御
+            yield return new WaitForSeconds(DUDGMENT_TIME);//判定回数の制御
 
             if (transform.position.x <= _leftLimit)//左についたら
             {
@@ -90,11 +102,13 @@ public class BossEnemyMoveThunder : MonoBehaviour
 
         _timer = TIMER_RESET;//タイムをリセット
 
+        //ジグザクする動き
+
         //左から右にジグザグ動く
         while (true && _pattern == PATTERN1)
         {
             Debug.Log("1");
-            yield return new WaitForSeconds(_judgmentTime);//判定回数の制御
+            yield return new WaitForSeconds(DUDGMENT_TIME);//判定回数の制御
 
             if (transform.position.x <= _rightLimit)//端についていないなら繰り返す
             {
@@ -105,15 +119,21 @@ public class BossEnemyMoveThunder : MonoBehaviour
                     _timer = TIMER_RESET;//タイムをリセット
                     _vertical *= REVERSE_MOVEMENT;//上下の動きを逆にする                   
                 }
-                else if (transform.position.y >= 4)
+
+                //画面外に行きそうになったら１度だけ軌道修正する
+                else if (transform.position.y >= _upperLimit && _fix)
                 {
+                    _vertical = MOVEDOWN;//下にサガる動きにする   
                     _timer = TIMER_RESET;//タイムをリセット
-                    _vertical *= REVERSE_MOVEMENT;//上下の動きを逆にする   
+                    _fix = false;//使えないようにする
+                    Debug.Log("3");
                 }
-                else if (transform.position.y <= -4)
+                else if (transform.position.y <= _lowerLimit && _fix)
                 {
+                    _vertical = MOVEUP;//上の動きにする   
                     _timer = TIMER_RESET;//タイムをリセット
-                    _vertical *= REVERSE_MOVEMENT;//上下の動きを逆にする   
+                    _fix = false;//使えないようにする
+                    Debug.Log("4");
                 }
             }
             else
@@ -127,7 +147,7 @@ public class BossEnemyMoveThunder : MonoBehaviour
         while (true && _pattern == PATTERN2)
         {
             Debug.Log("2");
-            yield return new WaitForSeconds(_judgmentTime);//判定回数の制御
+            yield return new WaitForSeconds(DUDGMENT_TIME);//判定回数の制御
 
             if (transform.position.x >= _leftLimit)//端についていないなら繰り返す
             {
@@ -135,25 +155,34 @@ public class BossEnemyMoveThunder : MonoBehaviour
 
                 if (_timer >= _timeLimit)//制限時間になったら
                 {
+                    Debug.Log("4");
                     _timer = TIMER_RESET;//タイムをリセット
                     _vertical *= REVERSE_MOVEMENT;//上下の動きを逆にする   
                 }
-                else if (transform.position.y >= 4)
+
+                //画面外に行きそうになったら１度だけ軌道修正する
+                else if (transform.position.y >= _upperLimit && _fix)
                 {
+                    _vertical = MOVEDOWN;//下にサガる動きにする   
                     _timer = TIMER_RESET;//タイムをリセット
-                    _vertical *= REVERSE_MOVEMENT;//上下の動きを逆にする   
+                    _fix = false;//使えないようにする
+                    Debug.Log("3");
                 }
-                else if (transform.position.y <= -4)
+                else if (transform.position.y <= _lowerLimit && _fix)
                 {
+                    _vertical = MOVEUP;//上に上がる動きにする   
                     _timer = TIMER_RESET;//タイムをリセット
-                    _vertical *= REVERSE_MOVEMENT;//上下の動きを逆にする   
+                    _fix = false;//使えないようにする
+                    Debug.Log("3");
                 }
             }
             else//端についたら
             {
-                _dir = Vector2.zero;//停止
+                _dir = Vector2.zero;//停止                
                 break;
             }
         }
+
+        _fix = true;//使えるようにする
     }
 }

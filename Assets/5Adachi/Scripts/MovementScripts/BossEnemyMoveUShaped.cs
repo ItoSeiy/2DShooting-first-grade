@@ -14,21 +14,21 @@ public class BossEnemyMoveUShaped: MonoBehaviour
     /// <summary>上限</summary>
     [SerializeField, Header("上限")] float _upperLimit = 3.5f;
     /// <summary>下限</summary>
-    [SerializeField, Header("下限")] float _lowerLimit = -3;
+    [SerializeField, Header("下限")] float _lowerLimit = -3f;
     /// <summary>中央位置</summary>
-    float _middlePos = 0;
+    const float MIDDLE_POS = 0;
     /// <summary>方向</summary>
     Vector2 _dir;
     /// <summary>最短移動時間</summary>
-    float _shortMoveTime = 1f;
+    [SerializeField, Header("最短移動時間")] float _shortMoveTime = 1f;
     /// <summary>最長移動時間</summary>
-    float _longMoveTime = 3f;
+    [SerializeField, Header("最長移動時間")] float _longMoveTime = 3f;
     /// <summary>停止時間</summary>
     [SerializeField,Header("停止時間")] float _stopTime = 1f;
     /// <summary>判定回数の制限</summary>
-    float _judgmentTime = 0.1f;
-    /// <summary>切り替え</summary>
-    int _switch = 0;
+    const float DUDGMENT_TIME = 0.1f;
+    /// <summary>現在のパターン</summary>
+    int _pattern = 0;
     /// <summary>下にいる時に左にいるパターン</summary>
     const int PATTERN = 1;
     /// <summary>下にいる時に右にいるパターン</summary>
@@ -49,12 +49,12 @@ public class BossEnemyMoveUShaped: MonoBehaviour
     /// </summary>
     public IEnumerator UShaped()
     {
-        if (transform.position.x < _middlePos)//画面より左半分にいたら
+        if (transform.position.x < MIDDLE_POS)//画面左半分にいたら
         {            
             _dir = Vector2.right;//右に動く
             Debug.Log("a");
         }
-        else//画面より右半分にいたら
+        else//画面右半分にいたら
         {         
             _dir = Vector2.left;//左に動く
             Debug.Log("b");
@@ -62,7 +62,7 @@ public class BossEnemyMoveUShaped: MonoBehaviour
 
         while(true)//端に着くまで横に動く
         {
-            yield return new WaitForSeconds(_judgmentTime);
+            yield return new WaitForSeconds(DUDGMENT_TIME);
             //反対側に着いたら
             if ((transform.position.x <= _leftLimit) || (transform.position.x >= _rightLimit))
             {
@@ -77,7 +77,7 @@ public class BossEnemyMoveUShaped: MonoBehaviour
 
         while (true)//反対側に着くまで移動する
         {
-            yield return new WaitForSeconds(_judgmentTime);
+            yield return new WaitForSeconds(DUDGMENT_TIME);
             //反対側に着いたら
             if (transform.position.x <= _leftLimit && transform.position.y <= _lowerLimit)
             {
@@ -85,7 +85,7 @@ public class BossEnemyMoveUShaped: MonoBehaviour
                 _dir = Vector2.zero;//停止
                 yield return new WaitForSeconds(_stopTime);//停止時間
                 _dir = Vector2.right;//画面下端にいたら右に行く
-                _switch = PATTERN;//パターン1
+                _pattern = PATTERN;//パターン1
                 break;
             }
             //反対側に着いたら
@@ -95,16 +95,16 @@ public class BossEnemyMoveUShaped: MonoBehaviour
                 _dir = Vector2.zero;//停止
                 yield return new WaitForSeconds(_stopTime);//停止時間
                 _dir = Vector2.left;//画面下端にいたら左に行く
-                _switch = PATTERN2;//パターン2
+                _pattern = PATTERN2;//パターン2
                 break;
             }
         }
 
         while (true)//反対側に着くまで横移動する
         {
-            yield return new WaitForSeconds(_judgmentTime);
+            yield return new WaitForSeconds(DUDGMENT_TIME);
             //反対側についたら上に行く(パターン1or2）
-            if ((transform.position.x >= _rightLimit && _switch == PATTERN) || (transform.position.x <= _leftLimit && _switch == PATTERN2))
+            if ((transform.position.x >= _rightLimit && _pattern == PATTERN) || (transform.position.x <= _leftLimit && _pattern == PATTERN2))
             {
                 Debug.Log("g");
                 _dir = Vector2.zero;//停止
@@ -116,14 +116,15 @@ public class BossEnemyMoveUShaped: MonoBehaviour
 
         while (true)//ある程度上にいくまで移動する
         {
-            yield return new WaitForSeconds(_judgmentTime);
+            yield return new WaitForSeconds(DUDGMENT_TIME);
+
             if (transform.position.y >= _upperLimit)//ある程度上にいったら
             {
                 _dir = Vector2.zero;//停止
                 yield return new WaitForSeconds(_stopTime);//停止時間
                 Debug.Log("h");
 
-                if (transform.position.x < _middlePos)//左にいたら
+                if (transform.position.x < MIDDLE_POS)//左にいたら
                 {                   
                     _dir = Vector2.right;//右に行く
                     Debug.Log("a");

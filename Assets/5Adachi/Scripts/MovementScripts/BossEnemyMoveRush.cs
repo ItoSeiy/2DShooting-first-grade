@@ -21,12 +21,12 @@ public class BossEnemyMoveRush : MonoBehaviour
     /// <summary>方向</summary>
     Vector2 _dir;
     /// <summary>判定回数の制限</summary>
-    const float UDGMENT_TIME = 0.1f;   
+    const float DUDGMENT_TIME = 0.1f;
     /// <summary>修正値</summary>
     const float PAlYER_POSTION_OFFSET = 0.5f;
     /// <summary>時間</summary>
-    float _time;
-    /// <summary>時間の限界</summary>
+    float _time = 0f;
+    /// <summary>上に滞在する時間、追尾時間</summary>
     [SerializeField,Header("追尾時間(上に滞在している時間)")] float _stayingTime = 4f;
     
     private void Start()
@@ -43,7 +43,7 @@ public class BossEnemyMoveRush : MonoBehaviour
     }
 
     /// <summary>
-    /// 一定時間プレイヤーをロックオンしたあと真下に突進する
+    /// 一定時間プレイヤーをロックオンしたあと真下にサガる。その後上に上がる。
     /// </summary>
     IEnumerator Rush()        
     {
@@ -52,7 +52,7 @@ public class BossEnemyMoveRush : MonoBehaviour
         //x座標だけプレイヤーの近くに移動する
         while (true)
         {
-            yield return new WaitForSeconds(UDGMENT_TIME);
+            yield return new WaitForSeconds(DUDGMENT_TIME);
             
             //プレイヤーが右にいたら
             if (_player.transform.position.x > transform.position.x + PAlYER_POSTION_OFFSET)
@@ -79,7 +79,7 @@ public class BossEnemyMoveRush : MonoBehaviour
 
         while (true)//サガる
         {
-            yield return new WaitForSeconds(UDGMENT_TIME);
+            yield return new WaitForSeconds(DUDGMENT_TIME);
             _dir = Vector2.down;//サガる
 
             if (transform.position.y <= _lowerLimit)//サガったら
@@ -93,7 +93,7 @@ public class BossEnemyMoveRush : MonoBehaviour
         
         while (true)//一定の場所まで上がる
         {
-            yield return new WaitForSeconds(UDGMENT_TIME);
+            yield return new WaitForSeconds(DUDGMENT_TIME);
             
             if (_upperLimit <= transform.position.y)//一定の場所まできたら
             {
