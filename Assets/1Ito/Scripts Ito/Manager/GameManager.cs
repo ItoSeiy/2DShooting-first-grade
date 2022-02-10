@@ -1,20 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 /// <summary>
 /// ゲームマネージャー
 /// ゲーム内に一つのみ存在しなければならない
 /// </summary>
 public class GameManager : MonoBehaviour
 {
+
     public static GameManager Instance => _instance;
     static GameManager _instance;
-
-    const int _level1Index = 1;
-    const int _level2Index = 2;
-    const int _level3Index = 3;
-
+    const int LEVEL1 = 1;
+    const int LEVEL2 = 2;
+    const int LEVEL3 = 3;
 
     public float PlayerLevel => _playerLevel;
     /// <summary>プレイヤーが持っているパワーアイテムの数</summary>
@@ -41,6 +39,7 @@ public class GameManager : MonoBehaviour
 
     public bool IsGameOver => _isGameOver;
     public bool IsStageClear => _isStageClear;
+    public bool IsGameStart => _isGameStart;
 
     private float _playerScore = default;
     private float _playerPowerItemCount = default;
@@ -48,10 +47,11 @@ public class GameManager : MonoBehaviour
     private float _playerBombCount = default;
     ///<summary>一定数獲得すると無敵になるオブジェクトを獲得した数///</summary>
     private float _playerInvicibleObjectCount = default;
-    /// <summary>プレイヤーの残基</summary>
+    /// <summary>プレイヤーの残機</summary>
     [SerializeField] private float _playerResidue =　default;
 
     private bool _isGameOver = false;
+    private bool _isGameStart = false;
     private bool _isStageClear = false;
     PlayerBase _player;
 
@@ -83,9 +83,16 @@ public class GameManager : MonoBehaviour
     /// </summary> 
     public void GameStart()
     {
-        _player = GameObject.FindWithTag("Player").GetComponent<PlayerBase>();
-        PlayerLevelSet();
-        _isGameOver = false;
+        _player = GameObject.FindWithTag("Player")?.GetComponent<PlayerBase>();
+        Debug.Log("ゲームスタート");
+        if(_player)
+        {
+            Debug.Log("プレイヤーセット完了");
+            PlayerLevelSet();
+            _isGameStart = true;
+            _isGameOver = false;
+            _isStageClear = false;
+        }
     }
 
     /// <summary>
@@ -94,6 +101,7 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         _isGameOver = true;
+        _isGameStart = false;
         Init();
     }
 
@@ -103,6 +111,7 @@ public class GameManager : MonoBehaviour
     public void StageClear()
     {
         _isStageClear = true;
+        _isGameStart = false;
     }
 
     /// <summary>
@@ -132,17 +141,17 @@ public class GameManager : MonoBehaviour
         if (PlayerPowerItemCount < _player.PlayerPowerRequiredNumberLevel2)//レベル１のとき
         {
             //パワーアイテムの数が、レベル２になるために必要なパワーアイテム数よりも少なかったときの処理
-            _playerLevel = _level1Index;
+            _playerLevel = LEVEL1;
         }
         else if (PlayerPowerItemCount >= _player.PlayerPowerRequiredNumberLevel2 && PlayerPowerItemCount < _player.PlayerPowerRequiredNumberLevel3)//レベル2のとき
         {
             //パワーアイテムの数が、レベル２になるために必要なパワーアイテム数よりも多く、レベル３になるために必要なパワーアイテム数よりも少なかったときの処理
-            _playerLevel = _level2Index;
+            _playerLevel = LEVEL2;
         }
         else if (_player.PlayerPowerRequiredNumberLevel3 <= PlayerPowerItemCount)//レベル3のとき
         {
             //パワーアイテムの数が、レベル３になるために必要なパワーアイテム数よりも多かったときの処理
-            _playerLevel = _level3Index;
+            _playerLevel = LEVEL3;
         }
     }
 
@@ -185,5 +194,7 @@ public class GameManager : MonoBehaviour
         _playerInvicibleObjectCount = 0;
         _playerLevel = 1;
         _isGameOver = false;
+        _isGameStart = false;
+        _isStageClear = false;
     }
 }
