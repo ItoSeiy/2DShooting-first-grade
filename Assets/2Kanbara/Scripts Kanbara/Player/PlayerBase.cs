@@ -71,6 +71,8 @@ public class PlayerBase : MonoBehaviour
 
     [SerializeField, Header("パワーアイテムの数がカンストしたとき（レベルマックスのとき）の演出")] GameObject _fullPowerModeEffect = default;
 
+    [SerializeField, Header("アイテムを回収するためのトリガーコライダー")] string _playerTriggerTag = "PlayerTrigger";
+
     protected const float _level1 = 1f;
     protected const float _level2 = 2f;
     protected const float _level3 = 3f;
@@ -115,7 +117,6 @@ public class PlayerBase : MonoBehaviour
         _sp = GetComponent<SpriteRenderer>();
         _audioSource = GetComponent<AudioSource>();
         _anim = GetComponent<Animator>();
-        _audioData = GetComponent<AudioData[]>();
 
         _cmvcam1.Priority = -1;
 
@@ -254,12 +255,12 @@ public class PlayerBase : MonoBehaviour
         {
             if (_wasCharge) return;
             _isAttackMode = true;
-            Debug.Log(_isAttackMode);
+            //Debug.Log(_isAttackMode);
         }
         if(context.performed || context.canceled)
         {
             _isAttackMode = false;
-            Debug.Log(_isAttackMode);
+            //Debug.Log(_isAttackMode);
         }
     }
 

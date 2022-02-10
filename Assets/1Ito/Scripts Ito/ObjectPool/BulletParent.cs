@@ -19,7 +19,7 @@ public class BulletParent : MonoBehaviour
     {
         for (int i = 0; i < _bulletsChildren.Length; i++)
         {
-            _bulletsChildren[i].transform.position = _initialBulletChildrenPos[i];
+            _bulletsChildren[i].transform.localPosition = _initialBulletChildrenPos[i];
         }
     }
 
@@ -28,7 +28,7 @@ public class BulletParent : MonoBehaviour
         foreach (var bulletsChildren in _bulletsChildren)
         {
              bulletsChildren.gameObject.SetActive(true);
-        }   
+        }
     }
 
     public bool AllBulletChildrenDisable()

@@ -56,7 +56,10 @@ public abstract class BulletBese : MonoBehaviour
         {
             BulletAttack(collision);
             //子オブジェクトがまだ残っていたら子オブジェクトを非アクティブにする
-            this.gameObject.SetActive(false);
+            if(gameObject.activeInHierarchy)
+            {
+                this.gameObject.SetActive(false);
+            }
 
             //子オブジェクトが残っていなかったら子オブジェクトをアクティブにし、親を非アクティブにする
             if (_bulletParent && _bulletParent.AllBulletChildrenDisable() && _bulletParent.tag == _parentTag)
