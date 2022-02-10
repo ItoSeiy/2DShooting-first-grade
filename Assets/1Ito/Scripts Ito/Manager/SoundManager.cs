@@ -35,9 +35,9 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 
         for (int i = 0; i < _soundObjParam.Params[_poolCountIndex].MaxCount; i++)
         {
-            var bullet = Instantiate(_soundObjParam.Params[_poolCountIndex].Prefab　, this.transform);
-            bullet.SetActive(false);
-            _pool.Add(new Pool { Object = bullet, Type = _soundObjParam.Params[_poolCountIndex].Type } );
+            var sound = Instantiate(_soundObjParam.Params[_poolCountIndex].Prefab　, this.transform);
+            sound.SetActive(false);
+            _pool.Add(new Pool { Object = sound, Type = _soundObjParam.Params[_poolCountIndex].Type } );
         }
 
         _poolCountIndex++;
@@ -45,7 +45,7 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
     }
 
     /// <summary>
-    /// Bulletを使いたいときに呼び出す関数
+    /// サウンドを使いたいときに呼び出す関数
     /// </summary>
     /// <param name="soundType">流したいサウンドの種類</param>
     /// <returns></returns>
@@ -75,8 +75,17 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 
 public enum SoundType
 {
+    /// <summary>風</summary>
     Wind,
-    Sword
+    /// <summary>剣</summary>
+    Sword,
+    /// <summary>キャッチ</summary>
+    Catch,
+    /// <summary>耳鳴り</summary>
+    Tinnitus,
+    /// <summary>銃</summary>
+    Gun,
+
 }
 
 [System.Serializable]

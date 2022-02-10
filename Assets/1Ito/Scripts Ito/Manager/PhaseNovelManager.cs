@@ -6,15 +6,24 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
 {
     public GamePhase GamePhaseState => _gamePhaseState;
     public NovelPhase NovelePhaesState => _novelPhaseState;
+    public bool BeforeNovelRenderer => _beforeNovelRenderer.IsNovelFinish;
 
+    [SerializeField] GSSReader _beforeGSSReader;
     [SerializeField] NovelRenderer _beforeNovelRenderer;
+
+    [SerializeField] GSSReader _winGSSReader;
     [SerializeField] NovelRenderer _winNovelRenderer;
+
+    [SerializeField] GSSReader _loseGSSReader;
     [SerializeField] NovelRenderer _loseNovelRenderer;
 
     [SerializeField] Canvas _novelCanvas;
 
+    [SerializeField] Canvas _gameOverCanavas;
+    [SerializeField] Canvas _gameClearCanvas;
+
     [SerializeField] Transform _generateTransform;
-    [SerializeField] Transform _bossTransform;
+    [SerializeField] Transform _bossgenerateTransform;
 
     [SerializeField] GamePhase _gamePhaseState;
     [SerializeField] NovelPhase _novelPhaseState;
@@ -58,11 +67,6 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
                 Debug.Log("ボス開始");
                 BossStage();
                 break;
-
-            case GamePhase.End:
-                Debug.Log("フェイズ終了");
-                break;
-
             default:
                 EnemyGenerate();
                 break;
@@ -96,23 +100,17 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
                 ChangePhase((GamePhase)_phaseIndex + 1);
             }
         }
- 
     }
 
+    /// <summary>
+    /// ボスステージの処理
+    /// </summary>
     void BossStage()
     {
         _timer += Time.deltaTime;
         if(_timer >= _stageParam.PhaseParms[_phaseIndex].StartTime)
         {
             SetNovel();
-
-            if(_beforeNovelRenderer.NovelFinish && _isFirstTime)
-            {
-                _novelCanvas.gameObject.SetActive(false);
-                _novelPhaseState = NovelPhase.None;
-                Instantiate(_stageParam.PhaseParms[_phaseIndex].Prefab).transform.position = _generateTransform.position;
-                _isFirstTime = false;
-            }
         }
     }
 
@@ -141,9 +139,10 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
     void SetNovel()
     {
 
+
         if (GameManager.Instance.IsStageClear)
         {
-            _novelPhaseState = NovelPhase.After;
+            _novelPhaseState = NovelPhase.Win;
         }
 
         if (GameManager.Instance.IsGameOver)
@@ -155,32 +154,70 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
         {
             case NovelPhase.Before:
 
-                if (_beforeNovelRenderer.gameObject.activeSelf == false || _novelCanvas.gameObject.activeSelf == false)
+                if (_beforeNovelRenderer.gameObject.activeSelf == false)
                 {
                     _beforeNovelRenderer.gameObject.SetActive(true);
+                }
+
+                if (!_beforeGSSReader.IsLoading)
+                {
                     _novelCanvas.gameObject.SetActive(true);
                 }
+
+                if(_beforeNovelRenderer.IsNovelFinish)
+                {
+                    _novelCanvas.gameObject.SetActive(false);
+                    _beforeNovelRenderer.gameObject.SetActive(false);
+                    _novelPhaseState = NovelPhase.None;
+                    Instantiate(_stageParam.PhaseParms[_phaseIndex].Prefab).transform.position = _bossgenerateTransform.position;
+                }
+
                 break;
 
-            case NovelPhase.After:
+            case NovelPhase.Win:
 
-                if(_winNovelRenderer.gameObject.activeSelf == false || _novelCanvas.gameObject.activeSelf == false)
+                if(_winNovelRenderer.gameObject.activeSelf == false)
                 {
                     _winNovelRenderer.gameObject.SetActive(true);
                     _novelCanvas.gameObject.SetActive(true);
                 }
+
+                if(!_winGSSReader.IsLoading)
+                {
+                    _novelCanvas.gameObject.SetActive(true);
+                }
+
+                if(_winNovelRenderer.IsNovelFinish)
+                {
+                    _novelCanvas.gameObject.SetActive(false);
+                    _winNovelRenderer.gameObject.SetActive(false);
+                    _gameClearCanvas.gameObject.SetActive(true);
+                }
+
                 break;
 
             case NovelPhase.Lose:
 
-                if(_loseNovelRenderer.gameObject.activeSelf == false || _novelCanvas.gameObject.activeSelf == false)
+                if(_loseNovelRenderer.gameObject.activeSelf == false)
                 {
                     _loseNovelRenderer.gameObject.SetActive(true);
+                }
+
+                if (!_loseGSSReader.IsLoading)
+                {
                     _novelCanvas.gameObject.SetActive(true);
                 }
+
+                if(_loseNovelRenderer.IsNovelFinish)
+                {
+                    _novelCanvas.gameObject.SetActive(false);
+                    _loseNovelRenderer.gameObject.SetActive(false);
+                    _gameOverCanavas.gameObject.SetActive(true);
+                }
+
                 break;
             default:
-                return;
+                break;
         }
     }
 
@@ -210,8 +247,7 @@ public enum GamePhase
     Phase03,
     Phase04,
     Phase05,
-    Boss,
-    End
+    Boss
 }
 
 public enum NovelPhase
@@ -219,9 +255,9 @@ public enum NovelPhase
     /// <summary>戦闘前イベント(デフォルト)</summary>
     Before,
     /// <summary>戦闘後イベント</summary>
-    After,
+    Win,
     /// <summary>負けイベント</summary>
     Lose,
-    /// <summary></summary>
+    /// <summary>ノベルを読み込まない状態</summary>
     None
 }
