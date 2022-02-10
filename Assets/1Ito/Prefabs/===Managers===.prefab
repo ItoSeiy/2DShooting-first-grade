@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 358381252}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 6.13, z: 0}
+  m_LocalPosition: {x: 0, y: 6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2277847898813919369}
@@ -635,6 +635,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _poolObjParam: {fileID: 11400000, guid: 1d4ccd9aba5b0854e96a70c106a1e9ef, type: 2}
+--- !u!1 &4704910972486895928
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8472335471207111458}
+  m_Layer: 0
+  m_Name: EnemyGeneretePos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8472335471207111458
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4704910972486895928}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2277847898813919369}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4710857687889372998
 GameObject:
   m_ObjectHideFlags: 0
@@ -1327,6 +1357,7 @@ Transform:
   - {fileID: 5262463426296239623}
   - {fileID: 1957432378263462445}
   - {fileID: 358381253}
+  - {fileID: 8472335471207111458}
   m_Father: {fileID: 4710857687889372999}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1342,12 +1373,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29de7fa8c33462a48913066cf7bcc02c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _beforeGSSReader: {fileID: 0}
   _beforeNovelRenderer: {fileID: 4710857688458052428}
+  _winGSSReader: {fileID: 0}
   _winNovelRenderer: {fileID: 5262463426296239621}
+  _loseGSSReader: {fileID: 0}
   _loseNovelRenderer: {fileID: 1957432378263462447}
   _novelCanvas: {fileID: 0}
+  _gameOverCanavas: {fileID: 0}
+  _gameClearCanvas: {fileID: 0}
   _generateTransform: {fileID: 358381253}
-  _bossTransform: {fileID: 358381253}
+  _bossgenerateTransform: {fileID: 0}
   _gamePhaseState: 0
   _novelPhaseState: 0
   _backGround: {fileID: 0}
