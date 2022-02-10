@@ -101,7 +101,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0.2
+  m_GravityScale: 0.1
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -135,9 +135,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ed34c0a7205d294eb8dfd1b44f5dc0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _itemSpeed: 10
+  _itemSpeed: 8
   _playerTag: Player
   _playerTriggerTag: PlayerTrigger
+  _childrenPS: {fileID: 585409725304615057}
+  _stratPS: 1
 --- !u!1001 &7456800040137349891
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -149,6 +151,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PowerItemParticleSystem
+      objectReference: {fileID: 0}
+    - target: {fileID: 8026587903143865234, guid: c9cdf597ca97ba84ebf9eff3230baa8f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8026587903143865235, guid: c9cdf597ca97ba84ebf9eff3230baa8f,
         type: 3}
@@ -207,6 +214,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c9cdf597ca97ba84ebf9eff3230baa8f, type: 3}
+--- !u!1 &585409725304615057 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8026587903143865234, guid: c9cdf597ca97ba84ebf9eff3230baa8f,
+    type: 3}
+  m_PrefabInstance: {fileID: 7456800040137349891}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &585409725304615056 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8026587903143865235, guid: c9cdf597ca97ba84ebf9eff3230baa8f,

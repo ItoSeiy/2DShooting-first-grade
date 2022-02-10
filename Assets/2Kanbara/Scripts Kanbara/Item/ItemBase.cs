@@ -12,35 +12,65 @@ public class ItemBase : MonoBehaviour
     [SerializeField, Header("プレイヤーのタグ")] string _playerTag = "Player";
     [SerializeField, Header("プレイヤーの持つアイテム回収用のコライダー")] string _playerTriggerTag = "PlayerTrigger";
 
-    GameObject _player;
+    [SerializeField, Header("再生する演出")] GameObject _childrenPS = default;
+
+    [SerializeField, Header("演出が再生されるタイミング")] StartPS _stratPS = StartPS.Contact;
+
     Rigidbody2D _rb;
+    GameObject _player;
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == _playerTag)
+        if(collision.tag == _playerTag)//プレイヤーに接触したら
         {
+            _childrenPS.SetActive(false);
             Destroy(this.gameObject);
         }
-        if(collision.tag == _playerTriggerTag)
+        if(collision.tag == _playerTriggerTag)//アイテム回収コライダーに接触したら
         {
             _player = GameObject.FindWithTag("Player");
+            if(_stratPS == StartPS.Contact)
+            {
+                _childrenPS.SetActive(true);
+            }
             ApproachPlayer();
         }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)//トリガー内にプレイヤーがいたら追い続ける
+    {
+        ApproachPlayer();
     }
 
     private void OnEnable()
     {
         _rb = GetComponent<Rigidbody2D>();
+        if(_stratPS == StartPS.FirstTime)
+        {
+            _childrenPS.SetActive(true);
+        }
     }
 
     protected virtual void OnBecameInvisible()
     {
         Destroy(this.gameObject);
     }
-
+    /// <summary>
+    /// プレイヤーに近づく関数
+    /// </summary>
     protected virtual void ApproachPlayer()
     {
         var dir = _player.transform.position - this.gameObject.transform.position;
         _rb.velocity = dir.normalized * _itemSpeed;
+    }
+    /// <summary>
+    /// 演出を再生させるタイミング
+    /// </summary>
+    enum StartPS
+    {
+        /// <summary>最初</summary>
+        FirstTime,
+        /// <summary>接触時</summary>
+        Contact
     }
 }
