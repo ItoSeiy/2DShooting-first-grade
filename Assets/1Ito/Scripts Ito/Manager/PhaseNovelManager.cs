@@ -6,7 +6,7 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
 {
     public GamePhase GamePhaseState => _gamePhaseState;
     public NovelPhase NovelePhaesState => _novelPhaseState;
-    public bool BeforeNovelRenderer => _beforeNovelRenderer.IsNovelFinish;
+    public bool IsBeforeNovelFinish => _beforeNovelRenderer.IsNovelFinish;
 
     [SerializeField] GSSReader _beforeGSSReader;
     [SerializeField] NovelRenderer _beforeNovelRenderer;
