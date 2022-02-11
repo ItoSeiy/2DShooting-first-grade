@@ -39,6 +39,7 @@ public class PlayerBase : MonoBehaviour
     [SerializeField, Header("1upのタグ")] string _1upTag = "1UP";
     [SerializeField, Header("ボムを増やすアイテムのタグ")] string _bombItemTag = "BombItem";
     [SerializeField, Header("Invincibleのタグ")] string _invincibleTag = "Invincible";
+    [SerializeField, Header("アイテムを回収するためのコライダーのタグ")] string _playerTriggerTag = "ItemGetLine";
 
     [SerializeField, Header("被弾時に再生するアニメーションのパラメータ名")] string _invicibleAnimParamName = "IsInvicible";
 
@@ -71,7 +72,6 @@ public class PlayerBase : MonoBehaviour
 
     [SerializeField, Header("パワーアイテムの数がカンストしたとき（レベルマックスのとき）の演出")] GameObject _fullPowerModeEffect = default;
 
-    [SerializeField, Header("アイテムを回収するためのトリガーコライダー")] string _playerTriggerTag = "PlayerTrigger";
 
     protected const float _level1 = 1f;
     protected const float _level2 = 2f;
@@ -357,6 +357,11 @@ public class PlayerBase : MonoBehaviour
             {
                 InvincibleMode();
             }
+        }
+
+        if(collision.tag == _playerTriggerTag)
+        {
+            
         }
     }
 

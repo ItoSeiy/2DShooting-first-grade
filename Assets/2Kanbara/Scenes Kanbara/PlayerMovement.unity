@@ -153,7 +153,7 @@ GameObject:
   - component: {fileID: 251214679}
   m_Layer: 0
   m_Name: ItemGetLineCollider
-  m_TagString: Untagged
+  m_TagString: ItemGetLine
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6242,6 +6242,7 @@ MonoBehaviour:
   _1upTag: 1UP
   _bombItemTag: BombItem
   _invincibleTag: Invincible
+  _playerTriggerTag: ItemGetLine
   _invicibleAnimParamName: IsInvicible
   _moveSpeed: 10
   _lateMove: 5
@@ -6263,7 +6264,6 @@ MonoBehaviour:
   _parsG: {fileID: 1444145230}
   _gameingPlayerColorTime: 100
   _fullPowerModeEffect: {fileID: 1382862640}
-  _playerTriggerTag: PlayerTrigger
 --- !u!58 &888640654
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -8006,6 +8006,7 @@ MonoBehaviour:
   _1upTag: 1UP
   _bombItemTag: BombItem
   _invincibleTag: Invincible
+  _playerTriggerTag: ItemGetLine
   _invicibleAnimParamName: IsInvicible
   _moveSpeed: 8
   _lateMove: 3
@@ -8027,7 +8028,6 @@ MonoBehaviour:
   _parsG: {fileID: 2013385414}
   _gameingPlayerColorTime: 100
   _fullPowerModeEffect: {fileID: 232024988}
-  _playerTriggerTag: PlayerTrigger
 --- !u!114 &1915347102
 MonoBehaviour:
   m_ObjectHideFlags: 0
