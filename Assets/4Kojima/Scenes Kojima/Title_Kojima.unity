@@ -489,7 +489,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &177983614
 RectTransform:
   m_ObjectHideFlags: 0
@@ -590,7 +590,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 0
       - m_Target: {fileID: 1788004305}
         m_TargetAssemblyTypeName: UnityEngine.Playables.PlayableDirector, UnityEngine
         m_MethodName: Play
@@ -2879,6 +2879,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2091347012}
+        m_TargetAssemblyTypeName: UnityEngine.Playables.PlayableDirector, UnityEngine
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &646477673
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4322,7 +4334,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &963833838
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5126,7 +5138,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1110586547
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6603,7 +6615,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1510398133
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8052,8 +8064,8 @@ PlayableDirector:
     value: {fileID: 646477669}
   - key: {fileID: -513119166895701483, guid: 3f9a16bd635b80447aec1d50dd051097, type: 2}
     value: {fileID: 742369568}
-  - key: {fileID: -3141031433176024855, guid: 3f9a16bd635b80447aec1d50dd051097, type: 2}
-    value: {fileID: 0}
+  - key: {fileID: 3845568210374796983, guid: 3f9a16bd635b80447aec1d50dd051097, type: 2}
+    value: {fileID: 963833837}
   m_ExposedReferences:
     m_References: []
 --- !u!1 &1797667348
@@ -8077,7 +8089,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1797667349
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9523,7 +9535,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2091407888
 RectTransform:
   m_ObjectHideFlags: 0
