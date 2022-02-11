@@ -46,7 +46,7 @@ public class PlayerBase : MonoBehaviour
     [SerializeField, Header("精密操作のスピード")] float _lateMove = default;
 
     [SerializeField, Header("この数値以上なら、一定時間無敵モードになる変数")] float _invincibleLimit = 150f;
-    [SerializeField, Header("Playerのパワーの上限")] float _playerPowerMax = default;
+    [SerializeField, Header("Playerのパワーの上限")] float _playerPowerMax = 150;
     [SerializeField, Header("リスポーン中の無敵時間")] int _respawnTime = 2800;
     [SerializeField, Header("リスポーン後の無敵時間")] int _afterRespawnTime = 1400;
 
@@ -62,7 +62,16 @@ public class PlayerBase : MonoBehaviour
     [SerializeField, Header("プレイヤーの被弾時に流れる音")] protected string _playerDestroyAudio = "PlayerDestroy";
 
     [SerializeField, Header("チャージショットのパーティカルシステム（溜め）")] GameObject _chargeps = default;
-    [SerializeField, Header("")] GameObject _superps = default;
+
+    [SerializeField, Header("精密操作時の演出R")] GameObject _parsR;
+    [SerializeField, Header("精密操作時の演出B")] GameObject _parsB;
+    [SerializeField, Header("精密操作時の演出G")] GameObject _parsG;
+
+    [SerializeField, Header("精密操作時のPlayerの色をゲーミングにする変数")] int _gameingPlayerColorTime = default;
+
+    [SerializeField, Header("パワーアイテムの数がカンストしたとき（レベルマックスのとき）の演出")] GameObject _fullPowerModeEffect = default;
+
+    [SerializeField, Header("アイテムを回収するためのトリガーコライダー")] string _playerTriggerTag = "PlayerTrigger";
 
     protected const float _level1 = 1f;
     protected const float _level2 = 2f;
@@ -87,7 +96,7 @@ public class PlayerBase : MonoBehaviour
     /// <summary>ボムの使用時に立つフラグ</summary>
     protected bool _isBomb = default;
     /// <summary>コントロールが効かないようにするフラグ</summary>
-    bool _isNotControll = default;
+    bool _isControll = default;
     /// <summary>チャージしているかどうか判定するフラグ</summary>
     bool _wasCharge = default;
     /// <summary>アタックしているかどうか判定するフラグ</summary>
@@ -108,12 +117,16 @@ public class PlayerBase : MonoBehaviour
         _sp = GetComponent<SpriteRenderer>();
         _audioSource = GetComponent<AudioSource>();
         _anim = GetComponent<Animator>();
-        _audioData = GetComponent<AudioData[]>();
 
         _cmvcam1.Priority = -1;
 
         _chargeps.GetComponent<ParticleSystem>();
-        _superps.GetComponent<ParticleSystem>();
+
+        _parsR.GetComponent<ParticleSystem>();
+        _parsB.GetComponent<ParticleSystem>();
+        _parsG.GetComponent<ParticleSystem>();
+
+        _fullPowerModeEffect.GetComponent<ParticleSystem>();
 
         transform.position = _playerRespawn.position;//リスポーン地点に移動
 
@@ -122,6 +135,8 @@ public class PlayerBase : MonoBehaviour
         _playerScore = GameManager.Instance.PlayerScore;
         _playerPower = GameManager.Instance.PlayerPowerItemCount;
         _invincibleObjectCount = GameManager.Instance.PlayerInvincibleObjectCount;
+
+        GamingFalse();
     }
 
     private async void Update()
@@ -140,7 +155,7 @@ public class PlayerBase : MonoBehaviour
             case false:
                 break;
             case true:
-                if (_isNotControll) return;
+                if (!_isControll) return;
                 switch (_isLateMode)
                 {
                     case false:
@@ -158,10 +173,18 @@ public class PlayerBase : MonoBehaviour
                 }
                 break;
         }
+        if(PhaseNovelManager.Instance.NovelePhaesState != NovelPhase.None)//もしノベルが再生されていなかったらコントロール不能にする
+        {
+            _isControll = false;
+        }
+        else if(PhaseNovelManager.Instance.IsBeforeNovelFinish)
+        {
+            _isControll = true;
+        }
     }
     public void OnMove(InputAction.CallbackContext context)//通常の移動
     {
-        if (_isNotControll) return;
+        if (!_isControll) return;
         Vector2 inputMoveMent = context.ReadValue<Vector2>();
         _dir = new Vector2(inputMoveMent.x, inputMoveMent.y);
         Inversion();
@@ -169,24 +192,25 @@ public class PlayerBase : MonoBehaviour
 
     public void OnLateMove(InputAction.CallbackContext context)//精密操作時の移動
     {
-        if (_isNotControll) return;
+        if (!_isControll) return;
         if (context.started)//LeftShiftKeyが押された瞬間の処理
         {
             _isLateMode = true;
-            _superps.SetActive(true);
+            GamingPlayer();
             Debug.Log(_isLateMode);
         }
         if (context.canceled)//LeftShiftKeyが離された瞬間の処理
         {
             _isLateMode = false;
+            GamingFalse();
             Debug.Log(_isLateMode);
-            _superps.SetActive(false);
         }
     }
 
+
     public async void OnJump(InputAction.CallbackContext context)//SpaceKeyが押された瞬間の処理
     {
-        if(context.started && _bombCount > _default && !_isBomb && !_isNotControll && !_wasCharge && !_isAttackMode)
+        if(context.started && _bombCount > _default && !_isBomb && !_isControll && !_wasCharge && !_isAttackMode)
         {
             Bom();
             await Task.Delay(_bombCoolTime);
@@ -198,7 +222,7 @@ public class PlayerBase : MonoBehaviour
 
     public void OnInputChargeShotButton(InputAction.CallbackContext context)//ChargeShotの処理
     {
-        if (_isNotControll) return;
+        if (!_isControll) return;
         if (context.started && !_wasCharge && !_isAttackMode)
         {
             _cmvcam1.Priority = 10;
@@ -210,7 +234,7 @@ public class PlayerBase : MonoBehaviour
         if(context.performed && _wasCharge)
         {
             _wasCharge = false;
-            if (_isNotControll) return;
+            if (!_isControll) return;
             PlayerChargeAttack();
             _cmvcam1.Priority = -1;
             _chargeps.SetActive(false);
@@ -218,7 +242,7 @@ public class PlayerBase : MonoBehaviour
         if(context.canceled)
         {
             _wasCharge = false;
-            if (_isNotControll) return;
+            if (!_isControll) return;
             _audioSource.Stop();
             _cmvcam1.Priority = -1;
             _chargeps.SetActive(false);
@@ -231,12 +255,12 @@ public class PlayerBase : MonoBehaviour
         {
             if (_wasCharge) return;
             _isAttackMode = true;
-            Debug.Log(_isAttackMode);
+            //Debug.Log(_isAttackMode);
         }
         if(context.performed || context.canceled)
         {
             _isAttackMode = false;
-            Debug.Log(_isAttackMode);
+            //Debug.Log(_isAttackMode);
         }
     }
 
@@ -313,8 +337,12 @@ public class PlayerBase : MonoBehaviour
             Debug.Log("スコアふえたよー" + _playerScore);
         }
 
-        if (collision.gameObject.tag == _powerTag && _playerPower < _playerPowerMax)//パワーを増やす処理
+        if (collision.gameObject.tag == _powerTag)//パワーを増やす処理
         {
+            if(_playerPower == _playerPowerMax)
+            {
+                _fullPowerModeEffect.SetActive(true);
+            }
             GameManager.Instance.PlayerPowerItemCountChange(_defaultUp);
             _playerPower = GameManager.Instance.PlayerPowerItemCount;
             Debug.Log("パワーふえたよー" + _playerPower);
@@ -335,13 +363,15 @@ public class PlayerBase : MonoBehaviour
     public async void Respawn()//リスポーンの処理
     {
         _godMode = true;
-        _isNotControll = true;
+        _isControll = false;
         _anim.SetBool(_invicibleAnimParamName, true);
         _chargeps.SetActive(false);
+        _fullPowerModeEffect.SetActive(false);
+        GamingFalse();
         await Task.Delay(_respawnTime);
         _dir = Vector2.zero;
         transform.position = _playerRespawn.position;//ここでリスポーン地点に移動
-        _isNotControll = false;
+        _isControll = true;
         await Task.Delay(_afterRespawnTime);
         _godMode = false;
         _anim.SetBool(_invicibleAnimParamName, false);
@@ -382,5 +412,28 @@ public class PlayerBase : MonoBehaviour
         {
             Debug.Log("AudioClipがありません");
         }
+    }
+    async void GamingPlayer()
+    {
+        if (!_isLateMode) return;
+        _parsR.SetActive(true);
+        await Task.Delay(_gameingPlayerColorTime);
+        if (!_isLateMode) return;
+        _parsB.SetActive(true);
+        await Task.Delay(_gameingPlayerColorTime);
+        if (!_isLateMode) return;
+        _parsG.SetActive(true);
+    }
+
+    void GamingFalse()
+    {
+        _parsR.SetActive(false);
+        _parsB.SetActive(false);
+        _parsG.SetActive(false);
+    }
+    private void OnParticleCollision(GameObject other)
+    {
+        if (_isLateMode || _godMode) return;
+        Respawn();
     }
 }
