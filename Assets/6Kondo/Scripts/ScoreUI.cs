@@ -1,18 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using DG.Tweening;
 
-public class UI : MonoBehaviour
+public class ScoreUI : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField, Header("ScoreText")] Text _scoreText;
+    float _score;
+
     void Start()
     {
-        
+        _scoreText = GetComponent<Text>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        _score += GameManager.Instance.PlayerScore;
+        _scoreText.text = _score.ToString("0000000000");
     }
 }
