@@ -5,9 +5,9 @@ using UnityEngine;
 public class TestSpecialAttack : EnemyBese
 {
     /// <summary>バレットのプレハブ</summary>
-    [SerializeField,Header("Bulletのプレハブ")] List<GameObject> _enemyBulletPrefab = new List<GameObject>();
+    [SerializeField, Header("Bulletのプレハブ")] List<GameObject> _enemyBulletPrefab = new List<GameObject>();
     /// <summary>バレットを発射するポジション</summary>
-    [SerializeField, Header("Bulletを発射するポジション")] Transform[] _muzzles = null;
+    [SerializeField, Header("Bulletを発射するポジション")] Transform _muzzles = null;
     /// <summary>スプライト(スクライトじゃないよ)</summary>
     SpriteRenderer _sr;
     /// <summary>中央位置</summary>
@@ -49,10 +49,10 @@ public class TestSpecialAttack : EnemyBese
     void Start()
     {
         _sr = GetComponent<SpriteRenderer>();
-        if (_muzzles == null || _muzzles.Length == 0)
+        /*if (_muzzles == null || _muzzles.Length == 0)
         {
             _muzzles = new Transform[1] { this.transform };
-        }
+        }*/
         StartCoroutine(RandomMovement());
     }
     protected override void Update()
@@ -68,15 +68,34 @@ public class TestSpecialAttack : EnemyBese
         }
         //0の時、停止時は何も行わない（前の状態のまま）
     }
- 
+
     protected override void Attack()
     {
-        foreach (Transform t in _muzzles)
+        //(弾の種類,muzzleの位置,良くわからん奴)
+        //Instantiate(_enemyBulletPrefab[0], _muzzles.position, Quaternion.identity);
+        //(muzzleの位置,enum.弾の種類)
+        ObjectPool.Instance.UseBullet(_muzzles.position, PoolObjectType.Player01Power1);
+    }
+
+    /// <summary>作業中だからマジックナンバーについては何も言うなよ神原</summary>
+    IEnumerator SpecialAttack()
+    {
+
+        int count = 0;
+        while (true)
         {
-            Instantiate(_enemyBulletPrefab[0], t.position, Quaternion.identity);
-            //ObjectPool.Instance.UseBullet(_muzzles, PoolObjectType.Player01Power1);
+            // 8秒毎に、間隔６度、速度１でmuzzleを中心として全方位弾発射。
+            for (float rad = 0f; rad < 360f; rad += 6f)
+            {
+                //TestSpecialAttack.Add(transform.position.x, transform.position.y, rad, 1);
+                //Instantiate(_enemyBulletPrefab[0] , _muzzles.position * rad, Quaternion.identity);
+            }
+            yield return new WaitForSeconds(8.0f);
+            count++;
+            
         }
     }
+
 
     protected override void OnGetDamage()
     {
