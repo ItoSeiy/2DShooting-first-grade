@@ -21,6 +21,14 @@ public class ItemBase : MonoBehaviour
     GameObject _player;
     PlayerBase _playerBase;
 
+    private void Update()
+    {
+        if(_playerBase.IsGetItem)
+        {
+            PlayerOnItemGetLine();
+        }
+    }
+
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == _playerTag)//プレイヤーに接触したら
@@ -61,13 +69,13 @@ public class ItemBase : MonoBehaviour
     /// <summary>
     /// プレイヤーに近づく関数
     /// </summary>
-    public void ApproachPlayer()
+    void ApproachPlayer()
     {
         var dir = _player.transform.position - this.gameObject.transform.position;
         _rb.velocity = dir.normalized * _itemSpeed;
     }
 
-    void PlayerOnItemGetLine()
+    public void PlayerOnItemGetLine()
     {
         var dir = _player.transform.position - this.gameObject.transform.position;
         _rb.velocity = dir.normalized * _getItemSpeed;

@@ -46,8 +46,11 @@ public class PlayerBase : MonoBehaviour
     [SerializeField, Header("動くスピード")] float _moveSpeed = default;
     [SerializeField, Header("精密操作のスピード")] float _lateMove = default;
 
+    [SerializeField, Header("Plaerの残機の上限")] int _playerResidueLimit = 99;
+    [SerializeField, Header("Playerのボムの上限")] int _playerBombLimit = 99;
+    [SerializeField, Header("Playerのスコアの上限")] int _playerScoreLimit = 999999999;
     [SerializeField, Header("この数値以上なら、一定時間無敵モードになる変数")] int _invincibleLimit = 150;
-    [SerializeField, Header("Playerのパワーの上限")] int _playerPowerMax = 150;
+    [SerializeField, Header("Playerのパワーの上限")] int _playerPowerLimit = 150;
     [SerializeField, Header("リスポーン中の無敵時間")] int _respawnTime = 2800;
     [SerializeField, Header("リスポーン後の無敵時間")] int _afterRespawnTime = 1400;
 
@@ -78,6 +81,11 @@ public class PlayerBase : MonoBehaviour
     protected const int _level3 = 3;
     public int PlayerPowerRequiredNumberLevel2 => _playerPowerRequiredNumberLevel2;
     public int PlayerPowerRequiredNumberLevel3 => _playerPowerRequiredNumberLevel3;
+
+    public int PlayerResidueLimit => _playerResidueLimit;
+    public int PlayerBombLimit => _playerBombLimit;
+    public int PlayerScoreLimit => _playerScoreLimit;
+    public int PlayerPowerLimit => _playerPowerLimit;
     /// <summary>無敵モードになるために必要なInvicibleアイテムの数が入ったプロパティ</summary>
     public int InvicibleLimit => _invincibleLimit;
 
@@ -111,6 +119,8 @@ public class PlayerBase : MonoBehaviour
     /// <summary>InvincibleObjectを初期化する定数</summary>
     const int _returnDefault = -150;
     ItemBase _itemBase;
+    bool _isGetItem = false;
+    public bool IsGetItem => _isGetItem;
 
     private void Start()
     {
@@ -128,6 +138,8 @@ public class PlayerBase : MonoBehaviour
         _parsG.GetComponent<ParticleSystem>();
 
         _fullPowerModeEffect.GetComponent<ParticleSystem>();
+
+        _itemBase = GetComponent<ItemBase>();
 
         transform.position = _playerRespawn.position;//リスポーン地点に移動
 
@@ -256,12 +268,10 @@ public class PlayerBase : MonoBehaviour
         {
             if (_wasCharge) return;
             _isAttackMode = true;
-            //Debug.Log(_isAttackMode);
         }
         if(context.performed || context.canceled)
         {
             _isAttackMode = false;
-            //Debug.Log(_isAttackMode);
         }
     }
 
@@ -340,7 +350,7 @@ public class PlayerBase : MonoBehaviour
 
         if (collision.gameObject.tag == _powerTag)//パワーを増やす処理
         {
-            if(_playerPower == _playerPowerMax)
+            if(_playerPower == _playerPowerLimit)
             {
                 _fullPowerModeEffect.SetActive(true);
             }
@@ -362,7 +372,15 @@ public class PlayerBase : MonoBehaviour
 
         if(collision.tag == _playerTriggerTag)
         {
-            //_itemBase.ApproachPlayer();
+            _isGetItem = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if(collision.tag == _playerTriggerTag)
+        {
+            _isGetItem = false;
         }
     }
 

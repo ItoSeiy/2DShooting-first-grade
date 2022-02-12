@@ -211,7 +211,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 620eeac95e5e6c341b10f1353a12040c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _itemTag: Item
+  _item:
+  - {fileID: 3268877965646950285, guid: 78d5d0afd5a21114d80e63536e5afdac, type: 3}
+  - {fileID: 3579933375197725495, guid: 97abb34054c02e54fa3c9760fb1ba7f4, type: 3}
+  - {fileID: 3434624149697856481, guid: c724f483e2d1d2a4198e08c3463c6b88, type: 3}
+  - {fileID: 6718171741274842588, guid: 7d814d0a5cd2a274aa163311910168df, type: 3}
   _playerTag: Player
 --- !u!1 &301656094 stripped
 GameObject:
@@ -6249,7 +6253,7 @@ MonoBehaviour:
   _bombCoolTime: 2000
   _invincibleTime: 2800
   _playerPowerRequiredNumberLevel2: 50
-  _playerPowerRequiredNumberLevel3: 150
+  _playerPowerRequiredNumberLevel3: 100
   _enemyTag: Enemy
   _enemyBulletTag: EnemyBullet
   _powerTag: Power
@@ -6261,8 +6265,11 @@ MonoBehaviour:
   _invicibleAnimParamName: IsInvicible
   _moveSpeed: 10
   _lateMove: 5
+  _playerResidueLimit: 99
+  _playerBombLimit: 0
+  _playerScoreLimit: 999999999
   _invincibleLimit: 150
-  _playerPowerMax: 150
+  _playerPowerLimit: 150
   _respawnTime: 2800
   _afterRespawnTime: 1400
   _musicVolume: 1
@@ -7152,8 +7159,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b784e7e6c4d7b0f428a3c90e849024df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerLevel: 1
-  _playerResidue: 3
+  _playerLevel: 0
+  _playerResidue: 0
 --- !u!4 &1563847167
 Transform:
   m_ObjectHideFlags: 0
@@ -8025,8 +8032,11 @@ MonoBehaviour:
   _invicibleAnimParamName: IsInvicible
   _moveSpeed: 8
   _lateMove: 3
+  _playerResidueLimit: 99
+  _playerBombLimit: 0
+  _playerScoreLimit: 999999999
   _invincibleLimit: 150
-  _playerPowerMax: 150
+  _playerPowerLimit: 150
   _respawnTime: 2800
   _afterRespawnTime: 1400
   _musicVolume: 1
