@@ -7,7 +7,7 @@ public class TestSpecialAttack : EnemyBese
     /// <summary>バレットのプレハブ</summary>
     [SerializeField, Header("Bulletのプレハブ")] List<GameObject> _enemyBulletPrefab = new List<GameObject>();
     /// <summary>バレットを発射するポジション</summary>
-    [SerializeField, Header("Bulletを発射するポジション")] Transform _muzzles = null;
+    [SerializeField, Header("Bulletを発射するポジション")] Rigidbody2D _muzzle = null;
     /// <summary>スプライト(スクライトじゃないよ)</summary>
     SpriteRenderer _sr;
     /// <summary>中央位置</summary>
@@ -71,10 +71,13 @@ public class TestSpecialAttack : EnemyBese
 
     protected override void Attack()
     {
-        //(弾の種類,muzzleの位置,良くわからん奴)
-        //Instantiate(_enemyBulletPrefab[0], _muzzles.position, Quaternion.identity);
+        //Quaternion.AngleAxis(_muzzle.rotation, Vector3.up);
+        //Quaternion.AngleAxis(_muzzle.rotation, Vector3.forward);
+        //(弾の種類,muzzleの位置,回転値)
+        Instantiate(_enemyBulletPrefab[0], _muzzle.position, Quaternion.AngleAxis(_muzzle.rotation, Vector3.forward));
+        _muzzle.rotation += 10f;
         //(muzzleの位置,enum.弾の種類)
-        ObjectPool.Instance.UseBullet(_muzzles.position, PoolObjectType.Player01Power1);
+        //ObjectPool.Instance.UseBullet(_muzzle.position, PoolObjectType.Player01Power1);
     }
 
     /// <summary>作業中だからマジックナンバーについては何も言うなよ神原</summary>
@@ -85,14 +88,13 @@ public class TestSpecialAttack : EnemyBese
         while (true)
         {
             // 8秒毎に、間隔６度、速度１でmuzzleを中心として全方位弾発射。
-            for (float rad = 0f; rad < 360f; rad += 6f)
+            for (int rad = 0; rad < 360; rad += 6)
             {
-                //TestSpecialAttack.Add(transform.position.x, transform.position.y, rad, 1);
+                
                 //Instantiate(_enemyBulletPrefab[0] , _muzzles.position * rad, Quaternion.identity);
             }
             yield return new WaitForSeconds(8.0f);
-            count++;
-            
+            count++;            
         }
     }
 
