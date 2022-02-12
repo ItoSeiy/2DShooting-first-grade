@@ -39,6 +39,7 @@ public class PlayerBase : MonoBehaviour
     [SerializeField, Header("1upのタグ")] string _1upTag = "1UP";
     [SerializeField, Header("ボムを増やすアイテムのタグ")] string _bombItemTag = "BombItem";
     [SerializeField, Header("Invincibleのタグ")] string _invincibleTag = "Invincible";
+    [SerializeField, Header("アイテムを回収するためのコライダーのタグ")] string _playerTriggerTag = "ItemGetLine";
 
     [SerializeField, Header("被弾時に再生するアニメーションのパラメータ名")] string _invicibleAnimParamName = "IsInvicible";
 
@@ -71,7 +72,6 @@ public class PlayerBase : MonoBehaviour
 
     [SerializeField, Header("パワーアイテムの数がカンストしたとき（レベルマックスのとき）の演出")] GameObject _fullPowerModeEffect = default;
 
-    [SerializeField, Header("アイテムを回収するためのトリガーコライダー")] string _playerTriggerTag = "PlayerTrigger";
 
     protected const float _level1 = 1f;
     protected const float _level2 = 2f;
@@ -96,7 +96,7 @@ public class PlayerBase : MonoBehaviour
     /// <summary>ボムの使用時に立つフラグ</summary>
     protected bool _isBomb = default;
     /// <summary>コントロールが効かないようにするフラグ</summary>
-    bool _isControll = default;
+    bool _isControll = true;
     /// <summary>チャージしているかどうか判定するフラグ</summary>
     bool _wasCharge = default;
     /// <summary>アタックしているかどうか判定するフラグ</summary>
@@ -110,6 +110,7 @@ public class PlayerBase : MonoBehaviour
     const float _default = 0f;
     /// <summary>InvincibleObjectを初期化する定数</summary>
     const float _returnDefault = -150f;
+    ItemBase _itemBase;
 
     private void Start()
     {
@@ -173,14 +174,14 @@ public class PlayerBase : MonoBehaviour
                 }
                 break;
         }
-        if(PhaseNovelManager.Instance.NovelePhaesState != NovelPhase.None)//もしノベルが再生されていなかったらコントロール不能にする
-        {
-            _isControll = false;
-        }
-        else if(PhaseNovelManager.Instance.IsBeforeNovelFinish)
-        {
-            _isControll = true;
-        }
+        //if(PhaseNovelManager.Instance.NovelePhaesState == NovelPhase.None)//もしノベルが再生されていなかったらコントロール不能にする
+        //{
+        //    _isControll = false;
+        //}
+        //else if(PhaseNovelManager.Instance.IsBeforeNovelFinish)
+        //{
+        //    _isControll = true;
+        //}
     }
     public void OnMove(InputAction.CallbackContext context)//通常の移動
     {
@@ -357,6 +358,11 @@ public class PlayerBase : MonoBehaviour
             {
                 InvincibleMode();
             }
+        }
+
+        if(collision.tag == _playerTriggerTag)
+        {
+            //_itemBase.ApproachPlayer();
         }
     }
 

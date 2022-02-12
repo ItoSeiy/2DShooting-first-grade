@@ -8,6 +8,7 @@ using UnityEngine;
 public class ItemBase : MonoBehaviour
 {
     [SerializeField, Header("アイテムがプレイヤーに近づく速度")] float _itemSpeed = 10f;
+    [SerializeField, Header("プレイヤーがアイテム回収ラインに触れたときにアイテムがプレイヤーに近づく速度")] float _getItemSpeed = 100f;
 
     [SerializeField, Header("プレイヤーのタグ")] string _playerTag = "Player";
     [SerializeField, Header("プレイヤーの持つアイテム回収用のコライダー")] string _playerTriggerTag = "PlayerTrigger";
@@ -18,18 +19,20 @@ public class ItemBase : MonoBehaviour
 
     Rigidbody2D _rb;
     GameObject _player;
+    PlayerBase _playerBase;
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == _playerTag)//プレイヤーに接触したら
+        if (collision.tag == _playerTag)//プレイヤーに接触したら
         {
             _childrenPS.SetActive(false);
             Destroy(this.gameObject);
         }
-        if(collision.tag == _playerTriggerTag)//アイテム回収コライダーに接触したら
+        if (collision.tag == _playerTriggerTag)//アイテム回収コライダーに接触したら
         {
             _player = GameObject.FindWithTag("Player");
-            if(_stratPS == StartPS.Contact)
+            _playerBase = _player.GetComponent<PlayerBase>();
+            if (_stratPS == StartPS.Contact)
             {
                 _childrenPS.SetActive(true);
             }
@@ -58,11 +61,18 @@ public class ItemBase : MonoBehaviour
     /// <summary>
     /// プレイヤーに近づく関数
     /// </summary>
-    protected virtual void ApproachPlayer()
+    public void ApproachPlayer()
     {
         var dir = _player.transform.position - this.gameObject.transform.position;
         _rb.velocity = dir.normalized * _itemSpeed;
     }
+
+    void PlayerOnItemGetLine()
+    {
+        var dir = _player.transform.position - this.gameObject.transform.position;
+        _rb.velocity = dir.normalized * _getItemSpeed;
+    }
+
     /// <summary>
     /// 演出を再生させるタイミング
     /// </summary>
