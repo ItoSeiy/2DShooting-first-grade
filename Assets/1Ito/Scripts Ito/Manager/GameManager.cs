@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     public int PlayerLevel => _playerLevel;
     /// <summary>プレイヤーが持っているパワーアイテムの数</summary>
     public int PlayerPowerItemCount => _playerPowerItemCount;
+    /// <summary>プレイヤーのパワーアイテムの上限</summary>
+    public int PlayerPowerLimit => _player.PlayerPowerLimit;
     /// <summary>レベル2にするために必要なパワーアイテムの数</summary>//UIManagerから参照すべきプロパティ
     public int PlayerPowerRequiredNumberLevel2 { get => _player.PlayerPowerRequiredNumberLevel2; }
     /// <summary>レベル3にするために必要なパワーアイテムの数</summary>//UIManagerから参照すべきプロパティ
@@ -24,12 +26,18 @@ public class GameManager : MonoBehaviour
 
     /// <summary>プレイヤーのスコア</summary>
     public int PlayerScore => _playerScore;
+    /// <summary>プレイヤーのスコアの上限</summary>
+    public int PlayerScoreLimit => _player.PlayerScoreLimit;
 
     /// <summary>プレイヤーのボムの所持数</summary>
     public int PlayerBombCount => _playerBombCount;
+    /// <summary>プレイヤーのボムの上限</summary>
+    public int PlayerBombLiit => _player.PlayerBombLimit;
 
-    ///<summary>プレイヤーの残基</summary>
+    ///<summary>プレイヤーの残機</summary>
     public int PlayerResidue => _playerResidue;
+    /// <summary>プレイヤーの残機の上限</summary>
+    public int PlayerResidueLimit => _player.PlayerResidueLimit;
 
 
     ///<summary>一定数獲得すると無敵になるオブジェクトを獲得した数</summary>
