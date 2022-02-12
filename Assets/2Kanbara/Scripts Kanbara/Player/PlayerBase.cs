@@ -118,7 +118,7 @@ public class PlayerBase : MonoBehaviour
     const int _default = 0;
     /// <summary>InvincibleObjectを初期化する定数</summary>
     const int _returnDefault = -150;
-    ItemBase _itemBase;
+
     bool _isGetItem = false;
     public bool IsGetItem => _isGetItem;
 
@@ -138,8 +138,6 @@ public class PlayerBase : MonoBehaviour
         _parsG.GetComponent<ParticleSystem>();
 
         _fullPowerModeEffect.GetComponent<ParticleSystem>();
-
-        _itemBase = GetComponent<ItemBase>();
 
         transform.position = _playerRespawn.position;//リスポーン地点に移動
 
