@@ -29,8 +29,8 @@ public class PlayerBase : MonoBehaviour
     [SerializeField, Header("ボムのクールタイム（ミリ秒）")] int _bombCoolTime = default;
     [SerializeField, Header("無敵モードのクールタイム(ミリ秒)")] int _invincibleTime = 2800;
 
-    [SerializeField, Header("レベル2に上げるために必要なパワーアイテムの数")] float _playerPowerRequiredNumberLevel2 = 50f;
-    [SerializeField, Header("レベル3に上げるために必要なパワーアイテムの数")] float _playerPowerRequiredNumberLevel3 = 100f;
+    [SerializeField, Header("レベル2に上げるために必要なパワーアイテムの数")] int _playerPowerRequiredNumberLevel2 = 50;
+    [SerializeField, Header("レベル3に上げるために必要なパワーアイテムの数")] int _playerPowerRequiredNumberLevel3 = 100;
 
     [SerializeField, Header("Enemyのタグ")] string _enemyTag = "Enemy";
     [SerializeField, Header("EnemyのBulletのタグ")] string _enemyBulletTag = "EnemyBullet";
@@ -39,14 +39,15 @@ public class PlayerBase : MonoBehaviour
     [SerializeField, Header("1upのタグ")] string _1upTag = "1UP";
     [SerializeField, Header("ボムを増やすアイテムのタグ")] string _bombItemTag = "BombItem";
     [SerializeField, Header("Invincibleのタグ")] string _invincibleTag = "Invincible";
+    [SerializeField, Header("アイテムを回収するためのコライダーのタグ")] string _playerTriggerTag = "ItemGetLine";
 
     [SerializeField, Header("被弾時に再生するアニメーションのパラメータ名")] string _invicibleAnimParamName = "IsInvicible";
 
     [SerializeField, Header("動くスピード")] float _moveSpeed = default;
     [SerializeField, Header("精密操作のスピード")] float _lateMove = default;
 
-    [SerializeField, Header("この数値以上なら、一定時間無敵モードになる変数")] float _invincibleLimit = 150f;
-    [SerializeField, Header("Playerのパワーの上限")] float _playerPowerMax = 150;
+    [SerializeField, Header("この数値以上なら、一定時間無敵モードになる変数")] int _invincibleLimit = 150;
+    [SerializeField, Header("Playerのパワーの上限")] int _playerPowerMax = 150;
     [SerializeField, Header("リスポーン中の無敵時間")] int _respawnTime = 2800;
     [SerializeField, Header("リスポーン後の無敵時間")] int _afterRespawnTime = 1400;
 
@@ -71,21 +72,20 @@ public class PlayerBase : MonoBehaviour
 
     [SerializeField, Header("パワーアイテムの数がカンストしたとき（レベルマックスのとき）の演出")] GameObject _fullPowerModeEffect = default;
 
-    [SerializeField, Header("アイテムを回収するためのトリガーコライダー")] string _playerTriggerTag = "PlayerTrigger";
 
-    protected const float _level1 = 1f;
-    protected const float _level2 = 2f;
-    protected const float _level3 = 3f;
-    public float PlayerPowerRequiredNumberLevel2 => _playerPowerRequiredNumberLevel2;
-    public float PlayerPowerRequiredNumberLevel3 => _playerPowerRequiredNumberLevel3;
+    protected const int _level1 = 1;
+    protected const int _level2 = 2;
+    protected const int _level3 = 3;
+    public int PlayerPowerRequiredNumberLevel2 => _playerPowerRequiredNumberLevel2;
+    public int PlayerPowerRequiredNumberLevel3 => _playerPowerRequiredNumberLevel3;
     /// <summary>無敵モードになるために必要なInvicibleアイテムの数が入ったプロパティ</summary>
-    public float InvicibleLimit => _invincibleLimit;
+    public int InvicibleLimit => _invincibleLimit;
 
-    protected float _playerResidue = default;//プレイヤーの残機を入れておく変数
-    protected float _bombCount = default;//プレイヤーの所持するボムの数を入れておく変数
-    protected float _playerScore = default;//プレイヤーのスコアを入れておく変数
-    protected float _playerPower = default;//プレイヤーのパワーの数を入れておく変数
-    protected float _invincibleObjectCount = default;//一定数集めると無敵モードになるアイテムの数を入れておく変数
+    protected int _playerResidue = default;//プレイヤーの残機を入れておく変数
+    protected int _bombCount = default;//プレイヤーの所持するボムの数を入れておく変数
+    protected int _playerScore = default;//プレイヤーのスコアを入れておく変数
+    protected int _playerPower = default;//プレイヤーのパワーの数を入れておく変数
+    protected int _invincibleObjectCount = default;//一定数集めると無敵モードになるアイテムの数を入れておく変数
 
     /// <summary>連続で弾を撃てないようにするフラグ</summary>
     bool _isBulletStop = default;
@@ -96,20 +96,21 @@ public class PlayerBase : MonoBehaviour
     /// <summary>ボムの使用時に立つフラグ</summary>
     protected bool _isBomb = default;
     /// <summary>コントロールが効かないようにするフラグ</summary>
-    bool _isControll = default;
+    bool _isControll = true;
     /// <summary>チャージしているかどうか判定するフラグ</summary>
     bool _wasCharge = default;
     /// <summary>アタックしているかどうか判定するフラグ</summary>
     bool _isAttackMode = default;
 
     /// <summary>カウントアップする定数</summary>
-    const float _defaultUp = 1f;
+    const int _defaultUp = 1;
     /// <summary>カウントダウンする定数</summary>
-    const float _defaultDown = -1f;
+    const int _defaultDown = -1;
     /// <summary>0の入った定数</summary>
-    const float _default = 0f;
+    const int _default = 0;
     /// <summary>InvincibleObjectを初期化する定数</summary>
-    const float _returnDefault = -150f;
+    const int _returnDefault = -150;
+    ItemBase _itemBase;
 
     private void Start()
     {
@@ -173,14 +174,14 @@ public class PlayerBase : MonoBehaviour
                 }
                 break;
         }
-        if(PhaseNovelManager.Instance.NovelePhaesState != NovelPhase.None)//もしノベルが再生されていなかったらコントロール不能にする
-        {
-            _isControll = false;
-        }
-        else if(PhaseNovelManager.Instance.IsBeforeNovelFinish)
-        {
-            _isControll = true;
-        }
+        //if(PhaseNovelManager.Instance.NovelePhaesState == NovelPhase.None)//もしノベルが再生されていなかったらコントロール不能にする
+        //{
+        //    _isControll = false;
+        //}
+        //else if(PhaseNovelManager.Instance.IsBeforeNovelFinish)
+        //{
+        //    _isControll = true;
+        //}
     }
     public void OnMove(InputAction.CallbackContext context)//通常の移動
     {
@@ -357,6 +358,11 @@ public class PlayerBase : MonoBehaviour
             {
                 InvincibleMode();
             }
+        }
+
+        if(collision.tag == _playerTriggerTag)
+        {
+            //_itemBase.ApproachPlayer();
         }
     }
 
