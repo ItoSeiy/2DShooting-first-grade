@@ -110,6 +110,7 @@ public class PlayerBase : MonoBehaviour
     const float _default = 0f;
     /// <summary>InvincibleObjectを初期化する定数</summary>
     const float _returnDefault = -150f;
+    ItemBase _itemBase;
 
     private void Start()
     {
@@ -173,14 +174,14 @@ public class PlayerBase : MonoBehaviour
                 }
                 break;
         }
-        if(PhaseNovelManager.Instance.NovelePhaesState == NovelPhase.None)//もしノベルが再生されていなかったらコントロール不能にする
-        {
-            _isControll = false;
-        }
-        else if(PhaseNovelManager.Instance.IsBeforeNovelFinish)
-        {
-            _isControll = true;
-        }
+        //if(PhaseNovelManager.Instance.NovelePhaesState == NovelPhase.None)//もしノベルが再生されていなかったらコントロール不能にする
+        //{
+        //    _isControll = false;
+        //}
+        //else if(PhaseNovelManager.Instance.IsBeforeNovelFinish)
+        //{
+        //    _isControll = true;
+        //}
     }
     public void OnMove(InputAction.CallbackContext context)//通常の移動
     {
@@ -361,7 +362,7 @@ public class PlayerBase : MonoBehaviour
 
         if(collision.tag == _playerTriggerTag)
         {
-            
+            //_itemBase.ApproachPlayer();
         }
     }
 
