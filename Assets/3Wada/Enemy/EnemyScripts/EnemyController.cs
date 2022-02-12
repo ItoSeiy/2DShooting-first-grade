@@ -20,35 +20,18 @@ public class EnemyController : EnemyBese
     [SerializeField, Header("何秒とどまるか")] float _stopcount = 0.0f;
     
 
-    //[SerializeField] float _testX = 0;
-    //[SerializeField] float _testY = 0;
-    //[SerializeField] float _testX2 = default;
-    //[SerializeField] float _testY2 = default;
 
-    //float _test =  default;
-    //Vector2 _dir;
 
     private void OnEnable()
     {
         Rb.velocity = _beforeDir;
     }
 
-    //public float geoLength(float x1, float y1,float x2, float y2)
-    //{
-    //    float ret = (float)System.Math.Sqrt(System.Math.Pow(x2 - x1, 2) +
-    //    System.Math.Pow(y2 - y1, 2));
-    //    return ret;
-    //}
-
     protected override void Update()
      {
         base.Update();
         if (_isBttomposition) return;
-        //if (_MoveCurve == MoveCurve.curce)
-        //{
-        //    var Test = geoLength(_testX, _testY, _testX2, _testY2);
-        //    Rb.velocity = _dir * Test;
-        //}
+       
 
         switch (_moveMode)
         {
