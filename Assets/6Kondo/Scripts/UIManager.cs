@@ -9,35 +9,38 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 {
     [SerializeField, Header("何秒かけて変化させるか")] float _scoreChangeInterval = default;
     [SerializeField] Text _scoreText;
-    [SerializeField] int _testScore;
+    
+    [SerializeField] int _score;
+    [SerializeField] int _maxScore;
 
-    void Awake()
+    public void Start()
     {
+        _maxScore = GameManager.Instance.PlayerScoreLimit;
     }
 
-    void Update()
+    public void TestScore()
     {
-
+        UIScoreChange(_score);
     }
 
     /// <summary>
-    /// 得点を加算し、表示を更新する
+    /// 得点の表示を更新する
     /// </summary>
     /// <param name="score">追加する点数</param>
-    public void UIScoreChange(int score, int maxScore)
+    public void UIScoreChange(int score)
     {
-        int tempScore = int.Parse(_scoreText.ToString());
+        int tempScore = int.Parse(_scoreText.text.ToString());
 
-        score = Mathf.Min(tempScore + score, maxScore);
+        tempScore = Mathf.Min(tempScore + score, _maxScore);
 
-        if (score <= maxScore)
+        if (tempScore <= _maxScore)
         {
-            DOTween.To(() => score,
-                x => score = x,
+            DOTween.To(() => tempScore,
+                x => tempScore = x,
                 score,
                 _scoreChangeInterval)
-                .OnComplete(() => _scoreText.text = _testScore.ToString());
+                .OnUpdate(() => _scoreText.text = tempScore.ToString("00000000"))
+                .OnComplete(() => _scoreText.text = GameManager.Instance.PlayerScore.ToString("00000000"));
         }
-
     }
 }
