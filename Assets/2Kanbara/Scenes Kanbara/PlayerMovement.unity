@@ -151,7 +151,6 @@ GameObject:
   m_Component:
   - component: {fileID: 251214680}
   - component: {fileID: 251214679}
-  - component: {fileID: 251214681}
   m_Layer: 0
   m_Name: ItemGetLineCollider
   m_TagString: ItemGetLine
@@ -199,24 +198,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &251214681
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 251214678}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 620eeac95e5e6c341b10f1353a12040c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _item:
-  - {fileID: 3268877965646950285, guid: 78d5d0afd5a21114d80e63536e5afdac, type: 3}
-  - {fileID: 3579933375197725495, guid: 97abb34054c02e54fa3c9760fb1ba7f4, type: 3}
-  - {fileID: 3434624149697856481, guid: c724f483e2d1d2a4198e08c3463c6b88, type: 3}
-  - {fileID: 6718171741274842588, guid: 7d814d0a5cd2a274aa163311910168df, type: 3}
-  _playerTag: Player
 --- !u!1 &301656094 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8792320935976078860, guid: e5eca3ab9d37bdb468ccbe26f2876ec4,
@@ -7703,7 +7684,7 @@ GameObject:
   - component: {fileID: 1915347102}
   - component: {fileID: 1915347103}
   - component: {fileID: 1915347104}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player1
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -7973,7 +7954,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1915347095}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.5, z: 0}
+  m_LocalPosition: {x: 0, y: -2.53, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2018753175}
@@ -8033,7 +8014,7 @@ MonoBehaviour:
   _moveSpeed: 8
   _lateMove: 3
   _playerResidueLimit: 99
-  _playerBombLimit: 0
+  _playerBombLimit: 99
   _playerScoreLimit: 999999999
   _invincibleLimit: 150
   _playerPowerLimit: 150
@@ -8943,6 +8924,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player1TriggerColider
       objectReference: {fileID: 0}
+    - target: {fileID: 1759505404639992453, guid: b11a4a1632714014bab7187432832382,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1759505404639992474, guid: b11a4a1632714014bab7187432832382,
         type: 3}
       propertyPath: m_RootOrder
@@ -9166,6 +9152,11 @@ PrefabInstance:
       propertyPath: _itemSpeed
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 5213495458450524648, guid: 78d5d0afd5a21114d80e63536e5afdac,
+        type: 3}
+      propertyPath: _getItemSpeed
+      value: 50
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 78d5d0afd5a21114d80e63536e5afdac, type: 3}
 --- !u!1001 &3434624148055336012
@@ -9255,6 +9246,11 @@ PrefabInstance:
       propertyPath: _itemSpeed
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 6907494864170572665, guid: c724f483e2d1d2a4198e08c3463c6b88,
+        type: 3}
+      propertyPath: _getItemSpeed
+      value: 50
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c724f483e2d1d2a4198e08c3463c6b88, type: 3}
 --- !u!1001 &3579933374582481411
@@ -9283,6 +9279,11 @@ PrefabInstance:
         type: 3}
       propertyPath: _itemSpeed
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3579933375197725498, guid: 97abb34054c02e54fa3c9760fb1ba7f4,
+        type: 3}
+      propertyPath: _getItemSpeed
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 3579933375197725499, guid: 97abb34054c02e54fa3c9760fb1ba7f4,
         type: 3}
@@ -9594,6 +9595,11 @@ PrefabInstance:
         type: 3}
       propertyPath: _itemSpeed
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3649100702119757539, guid: 7d814d0a5cd2a274aa163311910168df,
+        type: 3}
+      propertyPath: _getItemSpeed
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 6718171741274842584, guid: 7d814d0a5cd2a274aa163311910168df,
         type: 3}
