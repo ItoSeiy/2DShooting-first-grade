@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 358381253}
   m_Layer: 0
-  m_Name: GeneretePos
+  m_Name: EnemyGeneretePos
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 358381252}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 6.13, z: 0}
+  m_LocalPosition: {x: 0, y: 6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2277847898813919369}
@@ -183,7 +183,7 @@ GameObject:
   - component: {fileID: 1237229672}
   m_Layer: 0
   m_Name: GameZoneTrigger
-  m_TagString: Untagged
+  m_TagString: Finish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -353,7 +353,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SheetID: 1dN7tVZhGfNdPVOL3cQ3hdl_UC4Fd4LWJuO7xPghadbA
-  SheetName: "\u30DC\u30B901\u8CA0\u3051\u30A4\u30D9\u30F3\u30C8 \u4E3B\u4EBA\u516C1"
+  SheetName: 
   OnLoadEnd:
     m_PersistentCalls:
       m_Calls:
@@ -397,7 +397,8 @@ AudioSource:
   m_GameObject: {fileID: 1957432378263462448}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -4737002959340295446, guid: ad5b1f8ac9843f546aae4eb1f456ea7f,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 060de68edcc8c4a4b8fdc309327920a2, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -635,6 +636,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _poolObjParam: {fileID: 11400000, guid: 1d4ccd9aba5b0854e96a70c106a1e9ef, type: 2}
+--- !u!1 &4704910972486895928
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8472335471207111458}
+  m_Layer: 0
+  m_Name: BossGeneretePos
+  m_TagString: Untagged
+  m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8472335471207111458
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4704910972486895928}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2277847898813919369}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4710857687889372998
 GameObject:
   m_ObjectHideFlags: 0
@@ -725,6 +756,21 @@ MonoBehaviour:
       Prefab: {fileID: 2088313258231204459, guid: e103f90e6e6d8b34cbfcb7417480a97b,
         type: 3}
       MaxCount: 5
+    - Name: Catch
+      Type: 2
+      Prefab: {fileID: 1627059345262153424, guid: e26ffe6dee31f0645a0c3a8d344476bc,
+        type: 3}
+      MaxCount: 5
+    - Name: Tinnitus
+      Type: 3
+      Prefab: {fileID: 1627059345262153424, guid: b89762c89bcc7ad4689959a872c175b6,
+        type: 3}
+      MaxCount: 5
+    - Name: Gun
+      Type: 4
+      Prefab: {fileID: 1627059345262153424, guid: 04881618c3b92fd43a4fd737c68bf29d,
+        type: 3}
+      MaxCount: 5
 --- !u!1 &4710857688458052435
 GameObject:
   m_ObjectHideFlags: 0
@@ -772,7 +818,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SheetID: 1dN7tVZhGfNdPVOL3cQ3hdl_UC4Fd4LWJuO7xPghadbA
-  SheetName: "\u30DC\u30B901\u6226\u95D8\u524D \u4E3B\u4EBA\u516C1"
+  SheetName: 
   OnLoadEnd:
     m_PersistentCalls:
       m_Calls:
@@ -816,7 +862,8 @@ AudioSource:
   m_GameObject: {fileID: 4710857688458052435}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -4737002959340295446, guid: ad5b1f8ac9843f546aae4eb1f456ea7f,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 060de68edcc8c4a4b8fdc309327920a2, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -1057,7 +1104,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SheetID: 1dN7tVZhGfNdPVOL3cQ3hdl_UC4Fd4LWJuO7xPghadbA
-  SheetName: "\u30DC\u30B901\u6226\u95D8\u5F8C \u4E3B\u4EBA\u516C1"
+  SheetName: 
   OnLoadEnd:
     m_PersistentCalls:
       m_Calls:
@@ -1101,7 +1148,8 @@ AudioSource:
   m_GameObject: {fileID: 5262463426296239642}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -4737002959340295446, guid: ad5b1f8ac9843f546aae4eb1f456ea7f,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 060de68edcc8c4a4b8fdc309327920a2, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -1327,6 +1375,7 @@ Transform:
   - {fileID: 5262463426296239623}
   - {fileID: 1957432378263462445}
   - {fileID: 358381253}
+  - {fileID: 8472335471207111458}
   m_Father: {fileID: 4710857687889372999}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1342,12 +1391,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29de7fa8c33462a48913066cf7bcc02c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _beforeGSSReader: {fileID: 4710857688458052429}
   _beforeNovelRenderer: {fileID: 4710857688458052428}
+  _winGSSReader: {fileID: 5262463426296239620}
   _winNovelRenderer: {fileID: 5262463426296239621}
+  _loseGSSReader: {fileID: 1957432378263462446}
   _loseNovelRenderer: {fileID: 1957432378263462447}
   _novelCanvas: {fileID: 0}
+  _gameOverCanavas: {fileID: 0}
+  _gameClearCanvas: {fileID: 0}
   _generateTransform: {fileID: 358381253}
-  _bossTransform: {fileID: 358381253}
+  _bossgenerateTransform: {fileID: 8472335471207111458}
   _gamePhaseState: 0
   _novelPhaseState: 0
   _backGround: {fileID: 0}
@@ -1355,7 +1409,6 @@ MonoBehaviour:
   _backGroundDir: {x: 0, y: -1}
   _scrollSpeed: 1
   _stageParam:
-    StageName: Stage01
     phaseParms:
     - PhaseName: Phase01
       phasePrefab: {fileID: 6464305295217432563, guid: 3945cee42e9ac4f43b2c2aaf8a18833c,
