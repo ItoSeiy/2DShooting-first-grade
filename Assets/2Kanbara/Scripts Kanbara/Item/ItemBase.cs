@@ -77,7 +77,9 @@ public class ItemBase : MonoBehaviour
         var dir = _player.transform.position - this.gameObject.transform.position;
         _rb.velocity = dir.normalized * _itemSpeed;
     }
-
+    /// <summary>
+    /// アイテムを全回収する関数
+    /// </summary>
     public void PlayerOnItemGetLine()
     {
         var dir = _player.transform.position - this.gameObject.transform.position;
