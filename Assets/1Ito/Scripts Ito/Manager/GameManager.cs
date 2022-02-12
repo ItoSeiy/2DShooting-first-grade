@@ -5,11 +5,9 @@ using UnityEngine;
 /// ゲームマネージャー
 /// ゲーム内に一つのみ存在しなければならない
 /// </summary>
-public class GameManager : MonoBehaviour
+public class GameManager : SingletonMonoBehaviour<GameManager>
 {
 
-    public static GameManager Instance => _instance;
-    static GameManager _instance;
     const int LEVEL1 = 1;
     const int LEVEL2 = 2;
     const int LEVEL3 = 3;
@@ -63,19 +61,10 @@ public class GameManager : MonoBehaviour
     private bool _isStageClear = false;
     PlayerBase _player;
 
-    private void Awake()
+    protected override void Awake()
     {
-        if(Instance)
-        {
-            Destroy(this.gameObject);
-        }
-        else
-        {
-            _instance = this;
-            Init();
-            DontDestroyOnLoad(gameObject);
-        }
-
+        base.Awake();
+        DontDestroyOnLoad(gameObject);
     }
 
     /// <summary>
