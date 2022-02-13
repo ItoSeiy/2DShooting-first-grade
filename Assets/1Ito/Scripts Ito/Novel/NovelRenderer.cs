@@ -14,6 +14,7 @@ public class NovelRenderer : MonoBehaviour
     float _oldTextInterval;
     [SerializeField] Animator _characterAnimator;
     [SerializeField] Animator _bossAnimator;
+    [SerializeField] Animator _nextIconAnimator;
     [SerializeField] AudioSource _textAudioSource;
     [SerializeField] GSSReader _gssReader;
     string[][] _datas = null;
@@ -54,6 +55,8 @@ public class NovelRenderer : MonoBehaviour
         if (_currentCharNum < _datas[_ggsRow][MAIN_TEXT_COLUMN].Length)
         {
 
+            _nextIconAnimator.SetBool("Next", false);
+
             if (_isClick)//クリックされたらテキストを飛ばす
             {
                 _textInterval = 0;
@@ -73,6 +76,7 @@ public class NovelRenderer : MonoBehaviour
         }
         else//テキストが最後まで読み込まれたら
         {
+            _nextIconAnimator.SetBool("Next", true);
             if (_isClick)
             {
                 NextRow();//行の添え字をカウントアップ

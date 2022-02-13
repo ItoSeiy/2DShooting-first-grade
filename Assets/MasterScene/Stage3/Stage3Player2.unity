@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 178315202}
   - component: {fileID: 178315201}
   m_Layer: 0
-  m_Name: BGStage01
+  m_Name: BGStage3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -249,6 +249,11 @@ PrefabInstance:
       objectReference: {fileID: 6911044423429441966}
     - target: {fileID: 1957432378263462447, guid: 03ee70c6eee84834babf631082b1865f,
         type: 3}
+      propertyPath: _nextIconAnimator
+      value: 
+      objectReference: {fileID: 8131334347459405349}
+    - target: {fileID: 1957432378263462447, guid: 03ee70c6eee84834babf631082b1865f,
+        type: 3}
       propertyPath: _characterAnimator
       value: 
       objectReference: {fileID: 6911044422415549891}
@@ -329,6 +334,11 @@ PrefabInstance:
       objectReference: {fileID: 6911044423429441966}
     - target: {fileID: 4710857688458052428, guid: 03ee70c6eee84834babf631082b1865f,
         type: 3}
+      propertyPath: _nextIconAnimator
+      value: 
+      objectReference: {fileID: 8131334347459405349}
+    - target: {fileID: 4710857688458052428, guid: 03ee70c6eee84834babf631082b1865f,
+        type: 3}
       propertyPath: _characterAnimator
       value: 
       objectReference: {fileID: 6911044422415549891}
@@ -357,6 +367,11 @@ PrefabInstance:
       propertyPath: _bossAnimator
       value: 
       objectReference: {fileID: 6911044423429441966}
+    - target: {fileID: 5262463426296239621, guid: 03ee70c6eee84834babf631082b1865f,
+        type: 3}
+      propertyPath: _nextIconAnimator
+      value: 
+      objectReference: {fileID: 8131334347459405349}
     - target: {fileID: 5262463426296239621, guid: 03ee70c6eee84834babf631082b1865f,
         type: 3}
       propertyPath: _characterAnimator
@@ -750,27 +765,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
-  m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018,
+  m_ActionsAsset: {fileID: -944628639613478452, guid: f59e2dc9be2d97648b098d4f0cd5f664,
     type: 3}
-  m_PointAction: {fileID: 1054132383583890850, guid: ca9f5fa95ffab41fb9a615ab714db018,
+  m_PointAction: {fileID: -6393813883277793187, guid: f59e2dc9be2d97648b098d4f0cd5f664,
     type: 3}
-  m_MoveAction: {fileID: 3710738434707379630, guid: ca9f5fa95ffab41fb9a615ab714db018,
+  m_MoveAction: {fileID: 3039101292058125749, guid: f59e2dc9be2d97648b098d4f0cd5f664,
     type: 3}
-  m_SubmitAction: {fileID: 2064916234097673511, guid: ca9f5fa95ffab41fb9a615ab714db018,
+  m_SubmitAction: {fileID: -1947661484666500515, guid: f59e2dc9be2d97648b098d4f0cd5f664,
     type: 3}
-  m_CancelAction: {fileID: -1967631576421560919, guid: ca9f5fa95ffab41fb9a615ab714db018,
+  m_CancelAction: {fileID: 5257005336417336840, guid: f59e2dc9be2d97648b098d4f0cd5f664,
     type: 3}
-  m_LeftClickAction: {fileID: 8056856818456041789, guid: ca9f5fa95ffab41fb9a615ab714db018,
+  m_LeftClickAction: {fileID: -1079425455217381942, guid: f59e2dc9be2d97648b098d4f0cd5f664,
     type: 3}
-  m_MiddleClickAction: {fileID: 3279352641294131588, guid: ca9f5fa95ffab41fb9a615ab714db018,
+  m_MiddleClickAction: {fileID: 404257811238185821, guid: f59e2dc9be2d97648b098d4f0cd5f664,
     type: 3}
-  m_RightClickAction: {fileID: 3837173908680883260, guid: ca9f5fa95ffab41fb9a615ab714db018,
+  m_RightClickAction: {fileID: -4553219097238877367, guid: f59e2dc9be2d97648b098d4f0cd5f664,
     type: 3}
-  m_ScrollWheelAction: {fileID: 4502412055082496612, guid: ca9f5fa95ffab41fb9a615ab714db018,
+  m_ScrollWheelAction: {fileID: -3061337161233931890, guid: f59e2dc9be2d97648b098d4f0cd5f664,
     type: 3}
-  m_TrackedDevicePositionAction: {fileID: 4754684134866288074, guid: ca9f5fa95ffab41fb9a615ab714db018,
+  m_TrackedDevicePositionAction: {fileID: 1652603448582064937, guid: f59e2dc9be2d97648b098d4f0cd5f664,
     type: 3}
-  m_TrackedDeviceOrientationAction: {fileID: 1025543830046995696, guid: ca9f5fa95ffab41fb9a615ab714db018,
+  m_TrackedDeviceOrientationAction: {fileID: 6197841104763363483, guid: f59e2dc9be2d97648b098d4f0cd5f664,
     type: 3}
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
@@ -969,3 +984,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 21eb5cb4407dff14eb871ad0ab48a232, type: 3}
+--- !u!95 &8131334347459405349 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 7240995902156386996, guid: 21eb5cb4407dff14eb871ad0ab48a232,
+    type: 3}
+  m_PrefabInstance: {fileID: 8131334347459405348}
+  m_PrefabAsset: {fileID: 0}
