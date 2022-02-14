@@ -13,7 +13,7 @@ public class EnemyBullt : BulletBese
    
     void Start()
     {
-        
+        _enemyController = GetComponent<EnemyController>();
        
     }
     
