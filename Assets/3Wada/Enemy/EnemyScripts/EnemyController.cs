@@ -1,23 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 /// <summary>
 /// Enemyの派生クラス
 /// </summary>
 public class EnemyController : EnemyBese 
 {
-    public Transform[] _muzzle = null;
-    [SerializeField, Header("倒された時の音")] GameObject _Audio = default;
-    [SerializeField] GameObject _bullet; 
+    [SerializeField, Header("球の出る位置")] Transform[] _muzzle = null;
+    [SerializeField] Transform[] _rotateMuzzles = null;
+    [SerializeField] MuzzleTransform _muzzleTransform;
+
+    [SerializeField] GameObject _bullet;
+    
     [SerializeField, Header("移動の向きの変えるY軸")] float _ybottomposition = 0;
     [SerializeField, Header("移動の向きの変えるx軸")] float _xbottomposition = 0;
+    [SerializeField] float _rotateSecond = 2f;
     [SerializeField, Header("出た時の移動方向")] Vector2 _beforeDir;
     [SerializeField, Header("移動変わった後の移動方向")] Vector2 _afterDir;
-    [SerializeField,Header("モブ敵を止める時の方向の切り替え")] MoveMode _moveMode;
     bool _isBttomposition = false;
     [SerializeField, Header("何秒とどまるか")] float _stopcount = 0.0f;
-  
-    
+
+    [SerializeField, Header("倒された時の音")] GameObject _Audio = default;
+
+    [SerializeField,Header("モブ敵を止める時の方向の切り替え")] MoveMode _moveMode;
 
 
 
@@ -76,21 +82,48 @@ public class EnemyController : EnemyBese
         if (_stopcount <= 0)
         {
             Rb.velocity = _afterDir;
-            _isBttomposition = true; 
+            _isBttomposition = true;
         }
     }
-   
 
 
-protected override void Attack()
+
+    protected override void Attack()
     {
-        for (int i = 0; i < _muzzle.Length; i++)
+        switch (_muzzleTransform)
         {
-            var bullet = Instantiate(_bullet);
-            bullet.transform.position = _muzzle[i].position;
+            case MuzzleTransform.Normal:
+                for (int i = 0; i < _muzzle.Length; i++)
+                {
+                    var bullet = Instantiate(_bullet);
+                    bullet.transform.position = _muzzle[i].position;
+                    bullet.transform.rotation = _muzzle[i].rotation;
+                }
+                break;
+            case MuzzleTransform.Rotate:
+                for (int i = 0; i < _rotateMuzzles.Length; i++)
+                {
+                    var bullet = Instantiate(_bullet);
+                    bullet.transform.position = _rotateMuzzles[i].position;
+                    bullet.transform.rotation = _rotateMuzzles[i].rotation;
+                }
+
+                Rotate();
+                break;
         }
     }
-    
+
+    void Rotate()
+    {   
+        foreach(var rotateMuzzle in _rotateMuzzles)
+        {
+
+        rotateMuzzle.DOLocalRotate(new Vector3(0, 0, 360f), _rotateSecond, RotateMode.FastBeyond360)
+        .SetEase(Ease.Linear)
+        .SetLoops(-1, LoopType.Restart);
+
+        }
+    }
 
     protected override void OnGetDamage()
     {
@@ -99,6 +132,7 @@ protected override void Attack()
             Instantiate(_Audio);
         }
     }
+
     enum MoveMode
     {
         /// <summary>
@@ -117,5 +151,11 @@ protected override void Attack()
          /// 下
          /// </summary>
         down
+    }
+
+    enum MuzzleTransform
+    {
+        Normal,
+        Rotate
     }
 }
