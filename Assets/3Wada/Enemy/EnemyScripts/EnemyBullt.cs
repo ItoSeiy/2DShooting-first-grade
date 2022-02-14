@@ -8,27 +8,21 @@ public class EnemyBullt : BulletBese
     float _timer;
     Vector2 _oldDir = Vector2.up;  
     [SerializeField, Header("’Ç]‚·‚éŽžŠÔ")] float _followTime = 2f;
+    EnemyController _enemyController;
+
+   
     void Start()
     {
-       
         
+       
     }
     
 void Update()
     {
-        void Fllow()
-        {
-            _timer = 0;
-            _player = GameObject.FindWithTag(OpponenTag);
-            base.OnEnable();
-            _timer += Time.deltaTime;
-            if (_timer >= _followTime) return;
-
-        }
         switch (_bulletMode)
         {
             case BulltMode.FollowBullet:
-                
+               Fllow();
 
                 if (_player)
                 {
@@ -46,15 +40,36 @@ void Update()
             case BulltMode.straightBullet:
                  break;
             case BulltMode.rotateBullet:
-                transform.DOLocalRotate(new Vector3(0, 0, 360f), 6f, RotateMode.FastBeyond360)
-                .SetEase(Ease.Linear)
-                .SetLoops(-1, LoopType.Restart);
+                rotate();
                 break;
+
+
+
 
 
 
         }
             
+    }
+        void Fllow()
+        {
+            _timer = 0;
+            _player = GameObject.FindWithTag(OpponenTag);
+            base.OnEnable();
+            _timer += Time.deltaTime;
+            if (_timer >= _followTime) return;
+
+        }
+   public void rotate()
+    {
+        Transform[] _muzul;
+        _muzul = _enemyController._muzzle;
+        for(int i = 0; i < _muzul.Length; i++)
+        {
+            _muzul[i].DOLocalRotate(new Vector3(0, 0, 360f), 6f, RotateMode.FastBeyond360)
+            .SetEase(Ease.Linear)
+            .SetLoops(-1, LoopType.Restart);
+        }
     }
 
     enum BulltMode

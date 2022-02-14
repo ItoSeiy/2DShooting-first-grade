@@ -6,7 +6,7 @@ using UnityEngine;
 /// </summary>
 public class EnemyController : EnemyBese 
 {
-    [SerializeField,Header("マズルの位置")] Transform[] _muzzle = null;
+    public Transform[] _muzzle = null;
     [SerializeField, Header("倒された時の音")] GameObject _Audio = default;
     [SerializeField] GameObject _bullet; 
     [SerializeField, Header("移動の向きの変えるY軸")] float _ybottomposition = 0;
@@ -14,10 +14,9 @@ public class EnemyController : EnemyBese
     [SerializeField, Header("出た時の移動方向")] Vector2 _beforeDir;
     [SerializeField, Header("移動変わった後の移動方向")] Vector2 _afterDir;
     [SerializeField,Header("モブ敵を止める時の方向の切り替え")] MoveMode _moveMode;
-    [SerializeField, Header("")] MoveCurve _MoveCurve;
-    [SerializeField] int _a = 2;
     bool _isBttomposition = false;
     [SerializeField, Header("何秒とどまるか")] float _stopcount = 0.0f;
+  
     
 
 
@@ -89,7 +88,6 @@ protected override void Attack()
         {
             var bullet = Instantiate(_bullet);
             bullet.transform.position = _muzzle[i].position;
-            bullet.transform.rotation = _muzzle[i].rotation;
         }
     }
     
@@ -119,10 +117,5 @@ protected override void Attack()
          /// 下
          /// </summary>
         down
-    }
-    enum MoveCurve
-    {
-        strate,
-        curce
     }
 }
