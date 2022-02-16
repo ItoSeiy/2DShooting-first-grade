@@ -90,7 +90,7 @@ Issueの作成
 
 プログラマー, プロジェクト管理　伊東聖矢
 
-イラストレーター　****
+イラストレーター　Kokushi Kanta [Twitter](https://twitter.com/kibahachimonn)
 
 サウンド neko.yanagii [Twitter](https://twitter.com/notreallyrook)
 
