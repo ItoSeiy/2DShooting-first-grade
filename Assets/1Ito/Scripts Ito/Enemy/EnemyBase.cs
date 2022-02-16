@@ -23,8 +23,10 @@ public abstract class EnemyBase : MonoBehaviour, IDamage
     /// </summary>
     [SerializeField, Header("攻撃力を何割にするか"), Range(0f, 1f)] float _damageRatio = 1f;
     [SerializeField, Header("プレイヤーのBulletのタグ")] string _playerBulletTag = "PlayerBullet";
+    [SerializeField] string _finishTag = "Finish";
     private float _timer = default;
     Rigidbody2D _rb = null;
+　　protected bool _isDeleteAble = false;
 
     protected virtual void Awake()
     {
@@ -61,6 +63,17 @@ public abstract class EnemyBase : MonoBehaviour, IDamage
         {
             gameObject.SetActive(false);
         }
+        if(collision.tag == _finishTag)
+        {
+            if(!_isDeleteAble)
+            {
+                _isDeleteAble = true;
+            }
+            else
+            {
+                gameObject.SetActive(false);
+            }
+        }
     }
 
     /// <summary>
@@ -79,4 +92,6 @@ public abstract class EnemyBase : MonoBehaviour, IDamage
         _enemyHp -= damage;
         OnGetDamage();
     }
+   
+    
 }
