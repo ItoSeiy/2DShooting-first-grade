@@ -41,7 +41,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     ///<summary>一定数獲得すると無敵になるオブジェクトを獲得した数</summary>
     public int PlayerInvincibleObjectCount => _playerInvicibleObjectCount;
     /// <summary>無敵になるために必要な無敵オブジェクトアイテムの数</summary>
-    public int PlayerInvicibleLimit => _player.InvicibleLimit;
+    public int PlayerInvicibleObjectLimit => _player.InvicibleLimit;
 
     public bool IsGameOver => _isGameOver;
     public bool IsStageClear => _isStageClear;
