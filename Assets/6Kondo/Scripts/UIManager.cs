@@ -13,6 +13,10 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     [SerializeField] Text _residueText;
     [SerializeField, Header("‰½•b‚©‚¯‚Ä•Ï‰»‚³‚¹‚é‚©")] float _bombChangeInterval = default;
     [SerializeField] Text _bombText;
+    [SerializeField] Text _invisibleLimitText;
+    [SerializeField, Header("‰½•b‚©‚¯‚Ä•Ï‰»‚³‚¹‚é‚©")] float _invisibleCountChangeInterval = default;
+    [SerializeField] Text _invisibleCountText;
+
 
     int _score;
     int _residue;
@@ -20,12 +24,15 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     int _maxScore;
     int _maxResidue;
     int _maxBomb;
+    int _invisibleLimit;
+    int _invisibleCount;
 
     public void Start()
     {
         _maxScore = GameManager.Instance.PlayerScoreLimit;
         _maxResidue = GameManager.Instance.PlayerResidueLimit;
-        _maxBomb = GameManager.Instance.PlayerBombLiit;
+        _maxBomb = GameManager.Instance.PlayerBombCount;
+        _invisibleLimit = GameManager.Instance.PlayerInvicibleLimit;
     }
 
     /// <summary>
@@ -61,7 +68,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
                 residue,
                 _residuesChangeInterval)
                 .OnUpdate(() => _residueText.text = tempResidues.ToString("00"))
-                .OnComplete(() => _residueText.text = GameManager.Instance.PlayerResidue.ToString("00"));
+                .OnComplete(() => _residueText.text = GameManager.Instance.PlayerResidueCount.ToString("00"));
         }
     }
     public void UIBombChange(int bomb)
