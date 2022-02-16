@@ -27,12 +27,16 @@ public class TestSpecialAttack : EnemyBase
     float _hPBarCount = 0f;
     /// <summary>-1する</summary>
     const float _minus = -1f;
-    /// <summary>横の範囲</summary>
-    bool _horizontalRange;
-    /// <summary>縦の範囲</summary>
-    bool _verticalRange;
+    /// <summary>右の範囲</summary>
+    bool _rightRange;
+    /// <summary>左の範囲</summary>
+    bool _leftRange;
+    /// <summary>上の範囲</summary>
+    bool _upperRange;    
+    /// <summary>下の範囲</summary>
+    bool _downRange;
     /// <summary>必殺待機時間</summary>
-    [SerializeField,Header("必殺待機時間")]
+    [SerializeField,Header("必殺技待機時間")]
     float _waitTime = 5f;
     /// <summary>修正値</summary>
     const float PLAYER_POS_OFFSET = 0.5f;
@@ -125,10 +129,10 @@ public class TestSpecialAttack : EnemyBase
     IEnumerator SpecialAttack()
     {
         _time = 0f;//タイムリセット
-        //横の範囲
+        /*//横の範囲
         _horizontalRange = transform.position.x >= _spAttackPos.position.x - PLAYER_POS_OFFSET && transform.position.x <= _spAttackPos.position.x + PLAYER_POS_OFFSET;
         ///縦の範囲
-        _verticalRange = transform.position.y <= _spAttackPos.position.y + PLAYER_POS_OFFSET && transform.position.y >= _spAttackPos.position.y - PLAYER_POS_OFFSET;
+        _verticalRange = transform.position.y <= _spAttackPos.position.y + PLAYER_POS_OFFSET && transform.position.y >= _spAttackPos.position.y - PLAYER_POS_OFFSET;*/
 
         //必殺を放つときはBOSSは放つ前にｘを0、Ｙを2をの位置(笑)に、移動する
         while (true)
@@ -136,13 +140,16 @@ public class TestSpecialAttack : EnemyBase
             yield return new WaitForSeconds(JUDGMENT_TIME);//判定回数の制限
             //行きたいポジションに移動する
             //近くなったら
-            if (_horizontalRange && _verticalRange)
+            //if (_horizontalRange && _verticalRange)
+            if(transform.position.x >= _spAttackPos.position.x - PLAYER_POS_OFFSET && transform.position.x <= _spAttackPos.position.x + PLAYER_POS_OFFSET && transform.position.y <= _spAttackPos.position.y + PLAYER_POS_OFFSET && transform.position.y >= _spAttackPos.position.y - PLAYER_POS_OFFSET)
             {
+                Debug.Log("b");
                 Rb.velocity = new Vector2((_spAttackPos.position.x - transform.position.x), (_spAttackPos.position.y - transform.position.y)) * _speed;
             }
             //遠かったら
             else
             {
+                Debug.Log("a");
                Rb.velocity = new Vector2((_spAttackPos.position.x - transform.position.x), (_spAttackPos.position.y - transform.position.y)).normalized * _speed;
             }
 
