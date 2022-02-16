@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 [RequireComponent(typeof (Rigidbody2D))]
 [RequireComponent(typeof(Collider2D))]
-public abstract class EnemyBese : MonoBehaviour, IDamage
+public abstract class EnemyBase : MonoBehaviour, IDamage
 {
     public float EnemyHp { get => _enemyHp;}
     public float AddDamageRatio { get => _damageRatio;}
@@ -59,7 +59,6 @@ public abstract class EnemyBese : MonoBehaviour, IDamage
     {
         if(EnemyHp <= 0)
         {
-            GameManager.Instance.StageClear();
             gameObject.SetActive(false);
         }
     }
