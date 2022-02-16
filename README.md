@@ -109,6 +109,5 @@ Issueの作成
 Unity,
 Github,
 Sourcetree,
-Git Flow
 
 上記の3点を用いて制作しました
