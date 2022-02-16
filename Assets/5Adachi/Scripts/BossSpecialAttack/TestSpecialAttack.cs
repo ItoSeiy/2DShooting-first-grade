@@ -114,19 +114,23 @@ public class TestSpecialAttack : EnemyBase
         ObjectPool.Instance.UseBullet(_muzzle.position, PoolObjectType.Player01Power1);
     }
 
-    /// <summary>作業中だからマジックナンバーについては何も言うなよ神原</summary>
     IEnumerator SpecialAttack()
     {
         _time = 0;//タイムリセット
+
+        bool a = transform.position.x >= _spAttackPos.position.x - 0.5f && transform.position.x <= _spAttackPos.position.x + 0.5f;
+        bool b = transform.position.y <= _spAttackPos.position.y + 0.5f && transform.position.y >= _spAttackPos.position.y - 0.5f;
         //必殺を放つときはBOSSは放つ前にｘを0、Ｙを2をの位置(笑)に、移動する
         while (true)
         {
             yield return new WaitForSeconds(1/60f);
             //行きたいポジションに移動する
-            if (transform.position.x >= _spAttackPos.position.x - 0.5f && transform.position.x <= _spAttackPos.position.x + 0.5f && transform.position.y <= _spAttackPos.position.y + 0.5f && transform.position.y >= _spAttackPos.position.y  - 0.5f)
+            //近くなったら
+            if (a && b)
             {
                 Rb.velocity = new Vector2((_spAttackPos.position.x - transform.position.x), (_spAttackPos.position.y - transform.position.y)) * _speed;
             }
+            //遠かったら
             else
             {
                Rb.velocity = new Vector2((_spAttackPos.position.x - transform.position.x), (_spAttackPos.position.y - transform.position.y)).normalized * _speed;
