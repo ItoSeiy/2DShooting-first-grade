@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 799219325757732318}
   m_Layer: 0
-  m_Name: GameObject (1)
+  m_Name: muzzle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -58,7 +58,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 799219325823900578}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.46, y: -0.02, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 799219327604971111}
@@ -173,16 +173,17 @@ MonoBehaviour:
   _playerBulletTag: PlayerBullet
   _muzzle:
   - {fileID: 799219327604971111}
-  _Audio: {fileID: 8689257576827750080, guid: e95ea65c9df696f4f96864670d4fc4f4, type: 3}
-  _Bulet: {fileID: 4194989911196627173, guid: 4e4cf7b819c47004ebced0cd78fca1d9, type: 3}
+  _rotateMuzzles: []
+  _muzzleTransform: 0
+  _bullet: {fileID: 0}
   _ybottomposition: 0
   _xbottomposition: 0
+  _rotateSecond: 2
   _beforeDir: {x: -1, y: 0}
   _afterDir: {x: -1, y: 0}
-  _moveMode: 0
-  _MoveCurve: 0
-  _a: 2
   _stopcount: 0
+  _Audio: {fileID: 8689257576827750080, guid: e95ea65c9df696f4f96864670d4fc4f4, type: 3}
+  _moveMode: 0
 --- !u!1 &799219326690563633
 GameObject:
   m_ObjectHideFlags: 0
@@ -193,7 +194,7 @@ GameObject:
   m_Component:
   - component: {fileID: 799219326690563632}
   m_Layer: 0
-  m_Name: GameObject (2)
+  m_Name: muzzle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

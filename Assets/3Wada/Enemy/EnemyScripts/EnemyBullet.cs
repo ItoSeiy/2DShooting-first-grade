@@ -39,9 +39,13 @@ public class EnemyBullet : BulletBese
                     Rb.velocity = _oldDir.normalized * Speed;
                 }
                 break;
-            case BulltMode.straightBullet:
-                Straight();
+            case BulltMode.AutoBullet:
+                AutoStraight();
                 break;
+            case BulltMode.Straight:
+                
+                break;
+                
 
         }
     }
@@ -51,7 +55,7 @@ public class EnemyBullet : BulletBese
    
 
     
-    void Straight()
+    void AutoStraight()
     {
         Vector3 velocity = gameObject.transform.rotation * new Vector3(0, Speed, 0);
         Rb.velocity = velocity;
@@ -62,7 +66,8 @@ public class EnemyBullet : BulletBese
     {
 
         FollowBullet,
-        straightBullet,
-        
+        AutoBullet,
+        Straight,
+
     }
 }

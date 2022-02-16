@@ -21,7 +21,7 @@ public class EnemyController : EnemyBese
     bool _isBttomposition = false;
     [SerializeField, Header("何秒とどまるか")] float _stopcount = 0.0f;
 
-    [SerializeField, Header("倒された時の音")] GameObject _Audio = default;
+    [SerializeField, Header("倒された時の音")] GameObject _deathSFX = default;
 
     [SerializeField,Header("モブ敵を止める時の方向の切り替え")] MoveMode _moveMode;
 
@@ -118,18 +118,18 @@ public class EnemyController : EnemyBese
         foreach(var rotateMuzzle in _rotateMuzzles)
         {
 
-        rotateMuzzle.DORotate(new Vector3(0,0, 360f), _rotateSecond, RotateMode.FastBeyond360)
-        .SetEase(Ease.Unset)
-        .SetLoops(-1, LoopType.Restart);
+            rotateMuzzle.DORotate(new Vector3(0,0, 360f), _rotateSecond, RotateMode.WorldAxisAdd)
+            .SetEase(Ease.Linear)
+            .SetLoops(-1, LoopType.Restart);
 
         }
     }
-
+  
     protected override void OnGetDamage()
     {
-        if (EnemyHp == 0) 
+        if (EnemyHp <= 0)
         {
-            Instantiate(_Audio);
+            Instantiate(_deathSFX);
         }
     }
 
