@@ -2661,15 +2661,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fc5ae305c1cb5549b24376ecc2200d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyHp: 10
+  _enemyHp: 100
   _attackInterval: 1
   _damageRatio: 1
   _playerBulletTag: PlayerBullet
   _enemyBulletPrefab:
   - {fileID: 767627610}
   _muzzle: {fileID: 1930539044}
-  _specialAttackPos: {fileID: 1415339303}
-  _hPBarCount: 2
+  _spAttackPos: {fileID: 1415339303}
+  _hPBar: 10
   _speed: 4
   _stopTime: 2
   _moveTime: 0.5
@@ -2736,7 +2736,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1339267465}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.2, y: 3.4, z: 0}
+  m_LocalPosition: {x: -5.7, y: -2.4, z: 0}
   m_LocalScale: {x: 0.089628, y: 0.089628, z: 0.089628}
   m_Children:
   - {fileID: 1930539043}

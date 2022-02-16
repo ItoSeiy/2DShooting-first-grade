@@ -15,16 +15,19 @@ public class TestSpecialAttack : EnemyBase
     /// <summary>初期の攻撃割合</summary>
      float _initialDamageRatio;
     /// <summary>必殺前に移動するポジション</summary>
-    [SerializeField, Header("必殺前に移動するポジション")] Transform _specialAttackPos = null;
+    [SerializeField, Header("必殺前に移動するポジション")] Transform _spAttackPos = null;
     /// <summary>時間</summary>
     float _time = 0f;
-    /// <summary>HPバーの数</summary>
+    /// <summary>HPバーの本数</summary>
     [SerializeField,Header("HPバーの数")]
     float _hPBar = 0;
     /// <summary>HPバー１本分のHP</summary>
     float _hP = 0f;
-    float _a = 0f;
-    
+    /// <summary>HPバーのカウント</summary>
+    float _hPBarCount = 0f;
+    /// <summary>-1する</summary>
+    const float _minus = -1f;
+
     /// <summary>水平、横方向</summary>
     private float _horizontal = 0f;
     /// <summary>垂直、縦方向</summary>
@@ -60,6 +63,7 @@ public class TestSpecialAttack : EnemyBase
     void Start()
     {
         _sr = GetComponent<SpriteRenderer>();
+        _hPBarCount = _hPBar;
         _hP = EnemyHp / _hPBar;
         Debug.Log(_hPBar);
         /*if (_muzzles == null || _muzzles.Length == 0)
@@ -67,11 +71,14 @@ public class TestSpecialAttack : EnemyBase
             _muzzles = new Transform[1] { this.transform };
         }*/
         //StartCoroutine(RandomMovement());
-        StartCoroutine(SpecialAttack());
+        //StartCoroutine(SpecialAttack());
+
+        
     }
     protected override void Update()
     {
         base.Update();
+        //Rb.velocity = new Vector2((_spAttackPos.position.x - transform.position.x), (_spAttackPos.position.y - transform.position.y)).normalized * _speed;
         _time += Time.deltaTime;
         //行きたいポジションに移動する(自分の場所、行きたい場所、スピード)
         //Rb.MovePosition(Vector2.Lerp(transform.position, _specialAttackPos.position, Time.fixedDeltaTime * 0.1f));
@@ -85,11 +92,14 @@ public class TestSpecialAttack : EnemyBase
             _sr.flipX = false;//左を向く
         }
         //0の時、停止時は何も行わない（前の状態のまま）
-        /*if ( EnemyHp >= _hP * (_hPBarCount - 1f))
+
+        //ボスのHPがHPバー１本分のHPより少なくなったら
+        if (EnemyHp <= _hP * (_hPBarCount + _minus))
         {
-            StartCoroutine(SpecialAttack());
-            
-        }*/
+            Debug.Log("領域展開");
+            StartCoroutine(SpecialAttack());            
+            _hPBarCount--;           
+        }
     }
 
     
@@ -112,19 +122,27 @@ public class TestSpecialAttack : EnemyBase
         while (true)
         {
             yield return new WaitForSeconds(1/60f);
-            //行きたいポジションに移動する (自分の場所、行きたい場所、スピード)
-            Rb.MovePosition(Vector2.Lerp(transform.position, _specialAttackPos.position, Time.fixedDeltaTime * 5f));
-            //5秒経つ or 行きたいポジションについたら
-            if (_time >= 5 || transform.position == _specialAttackPos.position)
+            //行きたいポジションに移動する
+            if (transform.position.x >= _spAttackPos.position.x - 0.5f && transform.position.x <= _spAttackPos.position.x + 0.5f && transform.position.y <= _spAttackPos.position.y + 0.5f && transform.position.y >= _spAttackPos.position.y  - 0.5f)
+            {
+                Rb.velocity = new Vector2((_spAttackPos.position.x - transform.position.x), (_spAttackPos.position.y - transform.position.y)) * _speed;
+            }
+            else
+            {
+               Rb.velocity = new Vector2((_spAttackPos.position.x - transform.position.x), (_spAttackPos.position.y - transform.position.y)).normalized * _speed;
+            }
+
+            //5秒経ったら
+            if (_time >= 5f)
             {
                 Debug.Log("stop");
+                Rb.velocity = Vector2.zero;
                 transform.position = new Vector2(0f, 4f);
                 break;//終わる
             }
         }
         _initialDamageRatio = AddDamageRatio;//初期値を設定
         //AddDamageRatio = 0.5f;//必殺時は攻撃割合を変更
-
 
         /*while (true)
         {
@@ -140,7 +158,7 @@ public class TestSpecialAttack : EnemyBase
             }
         }*/
         //AddDamageRatio = _initialDamageRatio;//元に戻す
-
+        yield break;
     }
 
 
