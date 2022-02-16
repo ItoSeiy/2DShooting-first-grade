@@ -988,14 +988,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1817730154}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: TestScore
-        m_Mode: 1
+        m_MethodName: UIScoreChange
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1000
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -1254,10 +1254,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1efa3eab13570124c8d403e4603e73af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scoreChangeInterval: 0
-  _scoreText: {fileID: 0}
+  _scoreChangeInterval: 1
+  _scoreText: {fileID: 522767903}
   _score: 0
-  _maxScore: 0
+  _maxScore: 99999999
 --- !u!4 &1817730155
 Transform:
   m_ObjectHideFlags: 0
