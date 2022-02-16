@@ -11,11 +11,13 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     [SerializeField] Text _scoreText;
     
     [SerializeField] int _score;
-    [SerializeField] int _maxScore;
+    int _maxScore;
+    int _maxResidue;
 
     public void Start()
     {
         _maxScore = GameManager.Instance.PlayerScoreLimit;
+        _maxResidue = GameManager.Instance.PlayerResidueLimit;
     }
 
     public void TestScore()
@@ -42,5 +44,9 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
                 .OnUpdate(() => _scoreText.text = tempScore.ToString("00000000"))
                 .OnComplete(() => _scoreText.text = GameManager.Instance.PlayerScore.ToString("00000000"));
         }
+    }
+    public void UIResidueChange(int Residue)
+    {
+        
     }
 }
