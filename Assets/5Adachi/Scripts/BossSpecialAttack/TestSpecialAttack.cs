@@ -129,10 +129,12 @@ public class TestSpecialAttack : EnemyBase
     IEnumerator SpecialAttack()
     {
         _time = 0f;//タイムリセット
-        /*//横の範囲
-        _horizontalRange = transform.position.x >= _spAttackPos.position.x - PLAYER_POS_OFFSET && transform.position.x <= _spAttackPos.position.x + PLAYER_POS_OFFSET;
+        //横の範囲
+        _leftRange = transform.position.x >= _spAttackPos.position.x - PLAYER_POS_OFFSET;
+        _rightRange = transform.position.x <= _spAttackPos.position.x + PLAYER_POS_OFFSET;
         ///縦の範囲
-        _verticalRange = transform.position.y <= _spAttackPos.position.y + PLAYER_POS_OFFSET && transform.position.y >= _spAttackPos.position.y - PLAYER_POS_OFFSET;*/
+        _upperRange = transform.position.y <= _spAttackPos.position.y + PLAYER_POS_OFFSET;
+        _downRange = transform.position.y >= _spAttackPos.position.y - PLAYER_POS_OFFSET;
 
         //必殺を放つときはBOSSは放つ前にｘを0、Ｙを2をの位置(笑)に、移動する
         while (true)
