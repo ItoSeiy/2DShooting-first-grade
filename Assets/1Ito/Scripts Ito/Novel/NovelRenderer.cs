@@ -55,7 +55,7 @@ public class NovelRenderer : MonoBehaviour
         if (_currentCharNum < _datas[_ggsRow][MAIN_TEXT_COLUMN].Length)
         {
 
-            _nextIconAnimator.SetBool("Next", false);
+            _nextIconAnimator.gameObject.SetActive(false);
 
             if (_isClick)//クリックされたらテキストを飛ばす
             {
@@ -76,7 +76,7 @@ public class NovelRenderer : MonoBehaviour
         }
         else//テキストが最後まで読み込まれたら
         {
-            _nextIconAnimator.SetBool("Next", true);
+            _nextIconAnimator.gameObject.SetActive(true);
             if (_isClick)
             {
                 NextRow();//行の添え字をカウントアップ
