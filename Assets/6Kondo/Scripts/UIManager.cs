@@ -9,8 +9,11 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 {
     [SerializeField, Header("‰½•b‚©‚¯‚Ä•Ï‰»‚³‚¹‚é‚©")] float _scoreChangeInterval = default;
     [SerializeField] Text _scoreText;
-    
-    [SerializeField] int _score;
+    [SerializeField, Header("‰½•b‚©‚¯‚Ä•Ï‰»‚³‚¹‚é‚©")] float _residuesChangeInterval = default;
+    [SerializeField] Text _residueText;
+
+    int _score;
+    int _residue;
     int _maxScore;
     int _maxResidue;
 
@@ -45,8 +48,20 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
                 .OnComplete(() => _scoreText.text = GameManager.Instance.PlayerScore.ToString("00000000"));
         }
     }
-    public void UIResidueChange(int Residue)
+    public void UIResidueChange(int residue)
     {
-        
+        int tempResidues = int.Parse(_residueText.text.ToString());
+
+        tempResidues = Mathf.Min(tempResidues + residue, _maxResidue);
+
+        if (tempResidues <= _maxResidue)
+        {
+            DOTween.To(() => tempResidues,
+                x => tempResidues = x,
+                residue,
+                _residuesChangeInterval)
+                .OnUpdate(() => _residueText.text = tempResidues.ToString("00"))
+                .OnComplete(() => _residueText.text = GameManager.Instance.PlayerResidue.ToString("00"));
+        }
     }
 }
