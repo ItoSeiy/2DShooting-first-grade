@@ -42,7 +42,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         
         _nextLevelLimit = GameManager.Instance.PlayerPowerRequiredNumberLevel2;
 
-        _invisibleObjectLimit = GameManager.Instance.PlayerInvicibleLimit;
+        _invisibleObjectLimit = GameManager.Instance.PlayerInvicibleObjectLimit;
         _invisibleLimitText.text = _invisibleObjectLimit.ToString("000");
     }
 
