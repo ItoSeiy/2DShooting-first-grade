@@ -89,6 +89,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
             _isGameStart = true;
             _isGameOver = false;
             _isStageClear = false;
+            UIManager.Instance.UISet();
         }
     }
 
