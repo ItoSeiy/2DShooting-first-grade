@@ -15,7 +15,6 @@ public abstract class BulletBese : MonoBehaviour
     public Rigidbody2D Rb { get => _rb; set => _rb = value; }
     private BulletMoveMethod MoveMethod { get => _bulletMoveMethod; set => _bulletMoveMethod = value; }
     public string GameZoneTag { get => _gameZoneTag;}
-    public string PlayerTag { get => _playerTag; }
 
     [SerializeField, Header("Bulletが与えるダメージ")] private float _damage = 10f;
     [SerializeField, Header("Bulletの動く向き")] Vector2 _direction = Vector2.up;
