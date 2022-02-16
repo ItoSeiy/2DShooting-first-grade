@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestEnemy01 : EnemyBese
+public class TestEnemy01 : EnemyBase
 {
     [SerializeField] Vector2 _direction = default;
     protected override void Attack()

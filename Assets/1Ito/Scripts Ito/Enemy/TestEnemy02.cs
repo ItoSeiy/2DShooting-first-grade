@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestEnemy02 : EnemyBese
+public class TestEnemy02 : EnemyBase
 {
     protected override void Attack()
     {
