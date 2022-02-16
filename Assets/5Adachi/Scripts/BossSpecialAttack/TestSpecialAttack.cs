@@ -176,6 +176,9 @@ public class TestSpecialAttack : EnemyBase
         while (true)
         {
             // 8•b–ˆ‚ÉAŠÔŠu10“xA‘¬“x‚P‚Åmuzzle‚ð’†S‚Æ‚µ‚Ä‘S•ûˆÊ’e”­ŽË—\’è
+            Vector3 localAngle = _muzzle.localEulerAngles;
+            localAngle.z += 10.0f;
+            _muzzle.localEulerAngles = localAngle; // ‰ñ“]Šp“x‚ðÝ’è
             yield return new WaitForSeconds(JUDGMENT_TIME);
             if(_time >= 20f)
             {
