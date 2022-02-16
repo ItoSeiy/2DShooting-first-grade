@@ -141,7 +141,7 @@ public class PlayerBase : MonoBehaviour
 
         transform.position = _playerRespawn.position;//リスポーン地点に移動
 
-        _playerResidue = GameManager.Instance.PlayerResidue;
+        _playerResidue = GameManager.Instance.PlayerResidueCount;
         _bombCount = GameManager.Instance.PlayerBombCount;
         _playerScore = GameManager.Instance.PlayerScore;
         _playerPower = GameManager.Instance.PlayerPowerItemCount;
@@ -310,7 +310,7 @@ public class PlayerBase : MonoBehaviour
             _isAttackMode = false;
             Play(_playerDestroyAudio);
             GameManager.Instance.ResidueChange(_defaultDown);
-            _playerResidue = GameManager.Instance.PlayerResidue;
+            _playerResidue = GameManager.Instance.PlayerResidueCount;
 
             if (_playerResidue >= _defaultUp)//残機が残っている場合はリスポーンを行う
             {
@@ -328,7 +328,7 @@ public class PlayerBase : MonoBehaviour
         if (collision.gameObject.tag == _1upTag)//残機を増やす処理
         {
             GameManager.Instance.ResidueChange(_defaultUp);
-            _playerResidue = GameManager.Instance.PlayerResidue;
+            _playerResidue = GameManager.Instance.PlayerResidueCount;
             Debug.Log("残機ふえたよー" + _playerResidue);
         }
 
