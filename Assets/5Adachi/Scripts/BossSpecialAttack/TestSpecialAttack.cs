@@ -37,7 +37,7 @@ public class TestSpecialAttack : EnemyBase
     /// <summary>修正値</summary>
     const float PLAYER_POS_OFFSET = 0.5f;
     /// <summary>判定回数の制限</summary>
-    const float DUDGMENT_TIME = 1/60f;
+    const float JUDGMENT_TIME = 1/60f;
 
     /// <summary>水平、横方向</summary>
     private float _horizontal = 0f;
@@ -133,7 +133,7 @@ public class TestSpecialAttack : EnemyBase
         //必殺を放つときはBOSSは放つ前にｘを0、Ｙを2をの位置(笑)に、移動する
         while (true)
         {
-            yield return new WaitForSeconds(DUDGMENT_TIME);//判定回数の制限
+            yield return new WaitForSeconds(JUDGMENT_TIME);//判定回数の制限
             //行きたいポジションに移動する
             //近くなったら
             if (_horizontalRange && _verticalRange)

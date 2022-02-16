@@ -21,7 +21,7 @@ public class BossEnemyMoveRush : MonoBehaviour
     /// <summary>方向</summary>
     Vector2 _dir;
     /// <summary>判定回数の制限</summary>
-    const float DUDGMENT_TIME = 0.1f;
+    const float JUDGMENT_TIME = 0.1f;
     /// <summary>修正値</summary>
     const float PLAYER_POSTION_OFFSET = 0.5f;
     /// <summary>時間</summary>
@@ -52,7 +52,7 @@ public class BossEnemyMoveRush : MonoBehaviour
         //x座標だけプレイヤーの近くに移動する
         while (true)
         {
-            yield return new WaitForSeconds(DUDGMENT_TIME);
+            yield return new WaitForSeconds(JUDGMENT_TIME);
             
             //プレイヤーが右にいたら
             if (_player.transform.position.x > transform.position.x + PLAYER_POSTION_OFFSET)
@@ -79,7 +79,7 @@ public class BossEnemyMoveRush : MonoBehaviour
 
         while (true)//サガる
         {
-            yield return new WaitForSeconds(DUDGMENT_TIME);
+            yield return new WaitForSeconds(JUDGMENT_TIME);
             _dir = Vector2.down;//サガる
 
             if (transform.position.y <= _lowerLimit)//サガったら
@@ -93,7 +93,7 @@ public class BossEnemyMoveRush : MonoBehaviour
         
         while (true)//一定の場所まで上がる
         {
-            yield return new WaitForSeconds(DUDGMENT_TIME);
+            yield return new WaitForSeconds(JUDGMENT_TIME);
             
             if (_upperLimit <= transform.position.y)//一定の場所まできたら
             {
