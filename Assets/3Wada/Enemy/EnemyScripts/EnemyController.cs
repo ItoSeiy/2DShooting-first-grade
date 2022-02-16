@@ -5,7 +5,7 @@ using DG.Tweening;
 /// <summary>
 /// Enemyの派生クラス
 /// </summary>
-public class EnemyController : EnemyBese 
+public class EnemyController : EnemyBase 
 {
     [SerializeField, Header("球の出る位置")] Transform[] _muzzle = null;
     [SerializeField] Transform[] _rotateMuzzles = null;
