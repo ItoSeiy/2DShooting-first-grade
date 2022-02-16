@@ -30,10 +30,10 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     /// <summary>プレイヤーのボムの所持数</summary>
     public int PlayerBombCount => _playerBombCount;
     /// <summary>プレイヤーのボムの上限</summary>
-    public int PlayerBombLiit => _player.PlayerBombLimit;
+    public int PlayerBombLimit => _player.PlayerBombLimit;
 
     ///<summary>プレイヤーの残機</summary>
-    public int PlayerResidue => _playerResidue;
+    public int PlayerResidueCount => _playerResidue;
     /// <summary>プレイヤーの残機の上限</summary>
     public int PlayerResidueLimit => _player.PlayerResidueLimit;
 
