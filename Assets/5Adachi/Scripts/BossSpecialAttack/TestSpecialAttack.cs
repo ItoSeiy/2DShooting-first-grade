@@ -12,6 +12,10 @@ public class TestSpecialAttack : EnemyBese
     SpriteRenderer _sr;
     /// <summary>中央位置</summary>
     const float MIDDLE_POSITION = 0f;
+    /// <summary>初期の攻撃割合</summary>
+     float _initialDamageRatio;
+
+    [SerializeField, Header("必殺時に移動するポジション")] Transform _specialAttackPos = null;
 
 
     /// <summary>水平、横方向</summary>
@@ -53,11 +57,14 @@ public class TestSpecialAttack : EnemyBese
         {
             _muzzles = new Transform[1] { this.transform };
         }*/
-        StartCoroutine(RandomMovement());
+        //StartCoroutine(RandomMovement());
+
     }
     protected override void Update()
     {
         base.Update();
+        Rb.velocity = Vector3.MoveTowards(-transform.position, _specialAttackPos.position, 1f).normalized;
+
         if (Rb.velocity.x > MIDDLE_POSITION)//右に移動したら
         {
             _sr.flipX = true;//右を向く
@@ -74,28 +81,35 @@ public class TestSpecialAttack : EnemyBese
         //Quaternion.AngleAxis(_muzzle.rotation, Vector3.up);
         //Quaternion.AngleAxis(_muzzle.rotation, Vector3.forward);
         //(弾の種類,muzzleの位置,回転値)
-        Instantiate(_enemyBulletPrefab[0], _muzzle.position, Quaternion.AngleAxis(_muzzle.rotation, Vector3.forward));
+        //Instantiate(_enemyBulletPrefab[0], _muzzle.position, Quaternion.AngleAxis(_muzzle.rotation, Vector3.forward));
         _muzzle.rotation += 10f;
         //(muzzleの位置,enum.弾の種類)
-        //ObjectPool.Instance.UseBullet(_muzzle.position, PoolObjectType.Player01Power1);
+        ObjectPool.Instance.UseBullet(_muzzle.position, PoolObjectType.Player01Power1);
     }
 
     /// <summary>作業中だからマジックナンバーについては何も言うなよ神原</summary>
     IEnumerator SpecialAttack()
     {
-
         int count = 0;
+        _initialDamageRatio = AddDamageRatio;//初期値を設定
+        //AddDamageRatio = 0.5f;//必殺時は攻撃割合を変更
+        Rb.velocity = Vector2.MoveTowards(transform.position, new Vector2(0f,4f), _speed);
         while (true)
         {
             // 8秒毎に、間隔６度、速度１でmuzzleを中心として全方位弾発射。
             for (int rad = 0; rad < 360; rad += 6)
             {
-                
-                //Instantiate(_enemyBulletPrefab[0] , _muzzles.position * rad, Quaternion.identity);
+                _muzzle.rotation += 10f;
             }
             yield return new WaitForSeconds(8.0f);
-            count++;            
+            count++;
+            if(0 == 0)
+            {
+                break;
+            }
         }
+        //AddDamageRatio = _initialDamageRatio;//元に戻す
+
     }
 
 

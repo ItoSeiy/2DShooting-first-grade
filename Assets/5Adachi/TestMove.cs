@@ -17,6 +17,6 @@ public class TestMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _rb.velocity = new Vector2().normalized;
+        _rb.AddForce(-transform.up * _speed);
     }
 }
