@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// Enemyの派生クラス
 /// </summary>
-public class EnemyController : EnemyBese 
+public class EnemyController : EnemyBase 
 {
     [SerializeField,Header("マズルの位置")] Transform[] _muzzle = null;
     [SerializeField, Header("倒された時の音")] GameObject _Audio = default;
