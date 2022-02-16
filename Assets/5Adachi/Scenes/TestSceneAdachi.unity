@@ -159,6 +159,7 @@ MonoBehaviour:
   _attackInterval: 1
   _damageRatio: 1
   _playerBulletTag: PlayerBullet
+  _finishTag: Finish
   _bombTag: Bomb
   _stopTime: 2
   attack: {fileID: 11500000, guid: 5d0783c81980db045b7cfbc4e165b01a, type: 3}
@@ -300,6 +301,7 @@ MonoBehaviour:
   _attackInterval: 1
   _damageRatio: 1
   _playerBulletTag: PlayerBullet
+  _finishTag: Finish
   _bombTag: Bomb
   _stopTime: 2
   _playerTag: Player
@@ -1672,6 +1674,7 @@ MonoBehaviour:
   _attackInterval: 1
   _damageRatio: 1
   _playerBulletTag: PlayerBullet
+  _finishTag: Finish
   _bombTag: Bomb
   _stopTime: 2
 --- !u!58 &663521408
@@ -1842,6 +1845,7 @@ MonoBehaviour:
   _attackInterval: 1
   _damageRatio: 1
   _playerBulletTag: PlayerBullet
+  _finishTag: Finish
   _bombTag: Bomb
   _stopTime: 2
   _playerTag: Player
@@ -1978,6 +1982,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcfbbb34da785a1408a367b520fc5fa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _damage: 10
+  _direction: {x: 0, y: 1}
+  _speed: 5
+  _bulletMoveMethod: 0
+  _opponentTag: 
+  _gameZoneTag: Finish
+  _parentTag: Parent
+  _playerTag: Player
 --- !u!212 &767627612
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2018,15 +2030,15 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d973726faffc53943814d3b5ac98378d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 66809ba6f7da95d49822da92049879a0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.0181818, y: 1.0181818}
+  m_Size: {x: 1.3473685, y: 1.3473685}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &767627613
@@ -2665,11 +2677,13 @@ MonoBehaviour:
   _attackInterval: 1
   _damageRatio: 1
   _playerBulletTag: PlayerBullet
+  _finishTag: Finish
   _enemyBulletPrefab:
   - {fileID: 767627610}
   _muzzle: {fileID: 1930539044}
   _spAttackPos: {fileID: 1415339303}
   _hPBar: 10
+  _waitTime: 5
   _speed: 4
   _stopTime: 2
   _moveTime: 0.5
@@ -2736,7 +2750,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1339267465}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.7, y: -2.4, z: 0}
+  m_LocalPosition: {x: -0.5, y: -2.4, z: 0}
   m_LocalScale: {x: 0.089628, y: 0.089628, z: 0.089628}
   m_Children:
   - {fileID: 1930539043}
@@ -2918,6 +2932,7 @@ MonoBehaviour:
   _attackInterval: 1
   _damageRatio: 1
   _playerBulletTag: PlayerBullet
+  _finishTag: Finish
   _bombTag: Bomb
   _stopTime: 2
 --- !u!58 &1652562251

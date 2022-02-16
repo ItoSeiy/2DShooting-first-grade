@@ -2,21 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestMove : MonoBehaviour
+public class TestMove : BulletBese
 {
-    // Start is called before the first frame update
-    Rigidbody2D _rb;
-    float _speed = 5f;
-    float _horizontal;
-    float _veritical;
-    void Start()
+    protected override void BulletMove()
     {
-        _rb = GetComponent<Rigidbody2D>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        _rb.AddForce(-transform.up * _speed);
+        Vector3 velocity = gameObject.transform.rotation * new Vector3(0, Speed, 0);
+        Rb.velocity = velocity;
     }
 }
