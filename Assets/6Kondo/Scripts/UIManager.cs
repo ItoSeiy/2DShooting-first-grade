@@ -14,8 +14,8 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     [SerializeField, Header("‰½•b‚©‚¯‚Ä•Ï‰»‚³‚¹‚é‚©")] float _bombChangeInterval = default;
     [SerializeField] Text _bombText;
     [SerializeField] Text _invisibleLimitText;
-    [SerializeField, Header("‰½•b‚©‚¯‚Ä•Ï‰»‚³‚¹‚é‚©")] float _invisibleCountChangeInterval = default;
-    [SerializeField] Text _invisibleCountText;
+    [SerializeField, Header("‰½•b‚©‚¯‚Ä•Ï‰»‚³‚¹‚é‚©")] float _invisibleObjectCountChangeInterval = default;
+    [SerializeField] Text _invisibleObjectCountText;
 
 
     int _score;
@@ -25,7 +25,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     int _maxResidue;
     int _maxBomb;
     int _invisibleLimit;
-    int _invisibleCount;
+    int _invisibleObjectCount;
 
     public void Start()
     {
@@ -84,7 +84,23 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
                 bomb,
                 _bombChangeInterval)
                 .OnUpdate(() => _bombText.text = tempBomb.ToString("00"))
-                .OnStepComplete(() => _bombText.text = GameManager.Instance.PlayerBombCount.ToString("00"));
+                .OnComplete(() => _bombText.text = GameManager.Instance.PlayerBombCount.ToString("00"));
+        }
+    }
+    public void UIInvisibleChange(int invisible)
+    {
+        int tempInvisible = int.Parse(_invisibleObjectCountText.text.ToString());
+
+        tempInvisible = Mathf.Min(tempInvisible + invisible, _invisibleLimit);
+
+        if (tempInvisible <= _invisibleLimit)
+        {
+            DOTween.To(() => tempInvisible,
+                x => tempInvisible = x,
+                invisible,
+                _invisibleObjectCountChangeInterval)
+                .OnUpdate(() => _invisibleObjectCountText.text = tempInvisible.ToString("00"))
+                .OnComplete(() => _invisibleObjectCountText.text = GameManager.Instance.PlayerInvincibleObjectCount.ToString("00"));
         }
     }
 }
