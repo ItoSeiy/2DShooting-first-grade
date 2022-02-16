@@ -8,14 +8,14 @@ using DG.Tweening;
 public class EnemyController : EnemyBase 
 {
     [SerializeField, Header("球の出る位置")] Transform[] _muzzle = null;
-    [SerializeField] Transform[] _rotateMuzzles = null;
-    [SerializeField] MuzzleTransform _muzzleTransform;
+    [SerializeField,Header("Muzzleを回しながら球が出る位置")] Transform[] _rotateMuzzles = null;
+    [SerializeField,Header("Muzzleの切り替え")] MuzzleTransform _muzzleTransform;
 
-    [SerializeField] GameObject _bullet;
+    [SerializeField,Header("弾幕")] GameObject _bullet;
     
     [SerializeField, Header("移動の向きの変えるY軸")] float _ybottomposition = 0;
     [SerializeField, Header("移動の向きの変えるx軸")] float _xbottomposition = 0;
-    [SerializeField] float _rotateSecond = 2f;
+    [SerializeField,Header("Muzzleが一周するまでの秒数")] float _rotateSecond = 2f;
     [SerializeField, Header("出た時の移動方向")] Vector2 _beforeDir;
     [SerializeField, Header("移動変わった後の移動方向")] Vector2 _afterDir;
     bool _isBttomposition = false;
@@ -24,20 +24,27 @@ public class EnemyController : EnemyBase
     [SerializeField, Header("倒された時の音")] GameObject _deathSFX = default;
 
     [SerializeField,Header("モブ敵を止める時の方向の切り替え")] MoveMode _moveMode;
+    [SerializeField] float _bulletTimer = 2f;
+    float _timer = default;
+    bool _isMove = false;
 
 
 
     private void OnEnable()
     {
         Rb.velocity = _beforeDir;
+        _isMove = true;
     }
 
     protected override void Update()
      {
-        base.Update();
         if (_isBttomposition) return;
-       
-
+        _timer += Time.deltaTime;
+        if(_timer > _bulletTimer)
+        {
+            base.Update();
+        }
+      
         switch (_moveMode)
         {
             case MoveMode.right:
@@ -76,6 +83,7 @@ public class EnemyController : EnemyBase
         //途中で止まる時の処理
         Rb.velocity = Vector2.zero;
         _stopcount -= Time.deltaTime;
+        _isMove = false;
         /// <summary>
         /// また動き出す時の処理
         /// </summary>
@@ -83,6 +91,7 @@ public class EnemyController : EnemyBase
         {
             Rb.velocity = _afterDir;
             _isBttomposition = true;
+            _isMove = true;
         }
     }
 

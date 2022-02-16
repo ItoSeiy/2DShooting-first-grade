@@ -42,10 +42,9 @@ public class EnemyBullet : BulletBese
             case BulltMode.AutoBullet:
                 AutoStraight();
                 break;
-            case BulltMode.Straight:
-                
+            case BulltMode.Straight:                
+                base.BulletMove();   
                 break;
-                
 
         }
     }
