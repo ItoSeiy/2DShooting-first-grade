@@ -27,6 +27,17 @@ public class TestSpecialAttack : EnemyBase
     float _hPBarCount = 0f;
     /// <summary>-1する</summary>
     const float _minus = -1f;
+    /// <summary>横の範囲</summary>
+    bool _horizontalRange;
+    /// <summary>縦の範囲</summary>
+    bool _verticalRange;
+    /// <summary>必殺待機時間</summary>
+    [SerializeField,Header("必殺待機時間")]
+    float _waitTime = 5f;
+    /// <summary>修正値</summary>
+    const float PLAYER_POS_OFFSET = 0.5f;
+    /// <summary>判定回数の制限</summary>
+    const float DUDGMENT_TIME = 1/60f;
 
     /// <summary>水平、横方向</summary>
     private float _horizontal = 0f;
@@ -78,10 +89,7 @@ public class TestSpecialAttack : EnemyBase
     protected override void Update()
     {
         base.Update();
-        //Rb.velocity = new Vector2((_spAttackPos.position.x - transform.position.x), (_spAttackPos.position.y - transform.position.y)).normalized * _speed;
         _time += Time.deltaTime;
-        //行きたいポジションに移動する(自分の場所、行きたい場所、スピード)
-        //Rb.MovePosition(Vector2.Lerp(transform.position, _specialAttackPos.position, Time.fixedDeltaTime * 0.1f));
 
         if (Rb.velocity.x > MIDDLE_POSITION)//右に移動したら
         {
@@ -116,17 +124,19 @@ public class TestSpecialAttack : EnemyBase
 
     IEnumerator SpecialAttack()
     {
-        _time = 0;//タイムリセット
+        _time = 0f;//タイムリセット
+        //横の範囲
+        _horizontalRange = transform.position.x >= _spAttackPos.position.x - PLAYER_POS_OFFSET && transform.position.x <= _spAttackPos.position.x + PLAYER_POS_OFFSET;
+        ///縦の範囲
+        _verticalRange = transform.position.y <= _spAttackPos.position.y + PLAYER_POS_OFFSET && transform.position.y >= _spAttackPos.position.y - PLAYER_POS_OFFSET;
 
-        bool a = transform.position.x >= _spAttackPos.position.x - 0.5f && transform.position.x <= _spAttackPos.position.x + 0.5f;
-        bool b = transform.position.y <= _spAttackPos.position.y + 0.5f && transform.position.y >= _spAttackPos.position.y - 0.5f;
         //必殺を放つときはBOSSは放つ前にｘを0、Ｙを2をの位置(笑)に、移動する
         while (true)
         {
-            yield return new WaitForSeconds(1/60f);
+            yield return new WaitForSeconds(DUDGMENT_TIME);//判定回数の制限
             //行きたいポジションに移動する
             //近くなったら
-            if (a && b)
+            if (_horizontalRange && _verticalRange)
             {
                 Rb.velocity = new Vector2((_spAttackPos.position.x - transform.position.x), (_spAttackPos.position.y - transform.position.y)) * _speed;
             }
@@ -136,12 +146,12 @@ public class TestSpecialAttack : EnemyBase
                Rb.velocity = new Vector2((_spAttackPos.position.x - transform.position.x), (_spAttackPos.position.y - transform.position.y)).normalized * _speed;
             }
 
-            //5秒経ったら
-            if (_time >= 5f)
+            //数秒経ったら
+            if (_time >= _waitTime)
             {
                 Debug.Log("stop");
                 Rb.velocity = Vector2.zero;
-                transform.position = new Vector2(0f, 4f);
+                transform.position = new Vector2(_spAttackPos.position.x, _spAttackPos.position.y);
                 break;//終わる
             }
         }
@@ -150,7 +160,7 @@ public class TestSpecialAttack : EnemyBase
 
         /*while (true)
         {
-            // 8秒毎に、間隔６度、速度１でmuzzleを中心として全方位弾発射。
+            // 8秒毎に、間隔６度、速度１でmuzzleを中心として全方位弾発射予定
             for (int rad = 0; rad < 360; rad += 6)
             {
                 _muzzle.rotation += 10f;
@@ -161,6 +171,7 @@ public class TestSpecialAttack : EnemyBase
                 break;
             }
         }*/
+
         //AddDamageRatio = _initialDamageRatio;//元に戻す
         yield break;
     }
