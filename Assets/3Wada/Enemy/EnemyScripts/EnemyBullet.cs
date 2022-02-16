@@ -8,7 +8,15 @@ public class EnemyBullet : BulletBese
     Vector2 _oldDir = Vector2.up;  
     [SerializeField, Header("í«è]Ç∑ÇÈéûä‘")] float _followTime = 2f;
     float _timer = default;
-    
+
+
+
+    protected override void OnEnable()
+    {
+        _timer = 0;
+        _player = GameObject.FindWithTag(PlayerTag);
+        base.OnEnable();
+    }
     protected override void BulletMove()
     {
         switch (_bulletMode)

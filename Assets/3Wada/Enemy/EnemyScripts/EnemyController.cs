@@ -101,6 +101,7 @@ public class EnemyController : EnemyBese
                 }
                 break;
             case MuzzleTransform.Rotate:
+                Rotate();
                 for (int i = 0; i < _rotateMuzzles.Length; i++)
                 {
                     var bullet = Instantiate(_bullet);
@@ -108,7 +109,6 @@ public class EnemyController : EnemyBese
                     bullet.transform.rotation = _rotateMuzzles[i].rotation;
                 }
 
-                Rotate();
                 break;
         }
     }
@@ -118,8 +118,8 @@ public class EnemyController : EnemyBese
         foreach(var rotateMuzzle in _rotateMuzzles)
         {
 
-        rotateMuzzle.DOLocalRotate(new Vector3(0, 0, 360f), _rotateSecond, RotateMode.FastBeyond360)
-        .SetEase(Ease.Linear)
+        rotateMuzzle.DORotate(new Vector3(0,0, 360f), _rotateSecond, RotateMode.FastBeyond360)
+        .SetEase(Ease.Unset)
         .SetLoops(-1, LoopType.Restart);
 
         }
