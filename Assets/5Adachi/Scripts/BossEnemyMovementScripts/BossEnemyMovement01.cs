@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossEnemyMovement01 : EnemyBese
+public class BossEnemyMovement01 : EnemyBase
 {
     [SerializeField, Header("Bomb‚Ìƒ^ƒO")] public string _bombTag = null;
     float x = 0;

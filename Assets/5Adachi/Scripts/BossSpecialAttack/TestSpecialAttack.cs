@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestSpecialAttack : EnemyBese
+public class TestSpecialAttack : EnemyBase
 {
     /// <summary>バレットのプレハブ</summary>
     [SerializeField, Header("Bulletのプレハブ")] List<GameObject> _enemyBulletPrefab = new List<GameObject>();
@@ -20,9 +20,10 @@ public class TestSpecialAttack : EnemyBese
     float _time = 0f;
     /// <summary>HPバーの数</summary>
     [SerializeField,Header("HPバーの数")]
-    float _hPBarCount = 0;
+    float _hPBar = 0;
     /// <summary>HPバー１本分のHP</summary>
-    float _hPBar = 0f;
+    float _hP = 0f;
+    float _a = 0f;
     
     /// <summary>水平、横方向</summary>
     private float _horizontal = 0f;
@@ -59,7 +60,7 @@ public class TestSpecialAttack : EnemyBese
     void Start()
     {
         _sr = GetComponent<SpriteRenderer>();
-        _hPBar = EnemyHp / _hPBarCount;
+        _hP = EnemyHp / _hPBar;
         Debug.Log(_hPBar);
         /*if (_muzzles == null || _muzzles.Length == 0)
         {
@@ -84,10 +85,11 @@ public class TestSpecialAttack : EnemyBese
             _sr.flipX = false;//左を向く
         }
         //0の時、停止時は何も行わない（前の状態のまま）
-        if ( EnemyHp >= _hPBar * _hPBar)
+        /*if ( EnemyHp >= _hP * (_hPBarCount - 1f))
         {
             StartCoroutine(SpecialAttack());
-        }
+            
+        }*/
     }
 
     
