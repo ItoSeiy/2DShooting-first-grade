@@ -13,10 +13,13 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     [SerializeField] Text _residueText;
     [SerializeField, Header("‰½•b‚©‚¯‚Ä•Ï‰»‚³‚¹‚é‚©")] float _bombChangeInterval = default;
     [SerializeField] Text _bombText;
-    [SerializeField] Text _invisibleLimitText;
     [SerializeField, Header("‰½•b‚©‚¯‚Ä•Ï‰»‚³‚¹‚é‚©")] float _invisibleObjectCountChangeInterval = default;
+    [SerializeField] Text _invisibleLimitText;
     [SerializeField] Text _invisibleObjectCountText;
-
+    [SerializeField, Header("‰½•b‚©‚¯‚Ä•Ï‰»‚³‚¹‚é‚©")] float _levelCountChamgeInterval = default;
+    [SerializeField] Text _nextLevelCountText;
+    [SerializeField, Header("‰½•b‚©‚¯‚Ä•Ï‰»‚³‚¹‚é‚©")] float _levelLimitChangeInterval = default;
+    [SerializeField] Text _nextLevelLimitText;
 
     int _score;
     int _residue;
@@ -24,15 +27,23 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     int _maxScore;
     int _maxResidue;
     int _maxBomb;
-    int _invisibleLimit;
+    int _invisibleObjectLimit;
     int _invisibleObjectCount;
+    int _nextLevelCount;
+    int _nextLevelLimit;
 
-    public void Start()
+    public void UISet()
     {
         _maxScore = GameManager.Instance.PlayerScoreLimit;
+
         _maxResidue = GameManager.Instance.PlayerResidueLimit;
+
         _maxBomb = GameManager.Instance.PlayerBombCount;
-        _invisibleLimit = GameManager.Instance.PlayerInvicibleLimit;
+        
+        _nextLevelLimit = GameManager.Instance.PlayerPowerRequiredNumberLevel2;
+
+        _invisibleObjectLimit = GameManager.Instance.PlayerInvicibleLimit;
+        _invisibleLimitText.text = _invisibleObjectLimit.ToString("000");
     }
 
     /// <summary>
@@ -91,9 +102,9 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     {
         int tempInvisible = int.Parse(_invisibleObjectCountText.text.ToString());
 
-        tempInvisible = Mathf.Min(tempInvisible + invisible, _invisibleLimit);
+        tempInvisible = Mathf.Min(tempInvisible + invisible, _invisibleObjectLimit);
 
-        if (tempInvisible <= _invisibleLimit)
+        if (tempInvisible <= _invisibleObjectLimit)
         {
             DOTween.To(() => tempInvisible,
                 x => tempInvisible = x,
