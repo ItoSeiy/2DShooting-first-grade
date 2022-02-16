@@ -14,10 +14,16 @@ public class TestSpecialAttack : EnemyBese
     const float MIDDLE_POSITION = 0f;
     /// <summary>初期の攻撃割合</summary>
      float _initialDamageRatio;
-
-    [SerializeField, Header("必殺時に移動するポジション")] Transform _specialAttackPos = null;
-
-
+    /// <summary>必殺前に移動するポジション</summary>
+    [SerializeField, Header("必殺前に移動するポジション")] Transform _specialAttackPos = null;
+    /// <summary>時間</summary>
+    float _time = 0f;
+    /// <summary>HPバーの数</summary>
+    [SerializeField,Header("HPバーの数")]
+    float _hPBarCount = 0;
+    /// <summary>HPバー１本分のHP</summary>
+    float _hPBar = 0f;
+    
     /// <summary>水平、横方向</summary>
     private float _horizontal = 0f;
     /// <summary>垂直、縦方向</summary>
@@ -53,17 +59,21 @@ public class TestSpecialAttack : EnemyBese
     void Start()
     {
         _sr = GetComponent<SpriteRenderer>();
+        _hPBar = EnemyHp / _hPBarCount;
+        Debug.Log(_hPBar);
         /*if (_muzzles == null || _muzzles.Length == 0)
         {
             _muzzles = new Transform[1] { this.transform };
         }*/
         //StartCoroutine(RandomMovement());
-
+        StartCoroutine(SpecialAttack());
     }
     protected override void Update()
     {
         base.Update();
-        Rb.velocity = Vector3.MoveTowards(-transform.position, _specialAttackPos.position, 1f).normalized;
+        _time += Time.deltaTime;
+        //行きたいポジションに移動する(自分の場所、行きたい場所、スピード)
+        //Rb.MovePosition(Vector2.Lerp(transform.position, _specialAttackPos.position, Time.fixedDeltaTime * 0.1f));
 
         if (Rb.velocity.x > MIDDLE_POSITION)//右に移動したら
         {
@@ -74,8 +84,13 @@ public class TestSpecialAttack : EnemyBese
             _sr.flipX = false;//左を向く
         }
         //0の時、停止時は何も行わない（前の状態のまま）
+        if ( EnemyHp >= _hPBar * _hPBar)
+        {
+            StartCoroutine(SpecialAttack());
+        }
     }
 
+    
     protected override void Attack()
     {
         //Quaternion.AngleAxis(_muzzle.rotation, Vector3.up);
@@ -90,11 +105,26 @@ public class TestSpecialAttack : EnemyBese
     /// <summary>作業中だからマジックナンバーについては何も言うなよ神原</summary>
     IEnumerator SpecialAttack()
     {
-        int count = 0;
+        _time = 0;//タイムリセット
+        //必殺を放つときはBOSSは放つ前にｘを0、Ｙを2をの位置(笑)に、移動する
+        while (true)
+        {
+            yield return new WaitForSeconds(1/60f);
+            //行きたいポジションに移動する (自分の場所、行きたい場所、スピード)
+            Rb.MovePosition(Vector2.Lerp(transform.position, _specialAttackPos.position, Time.fixedDeltaTime * 5f));
+            //5秒経つ or 行きたいポジションについたら
+            if (_time >= 5 || transform.position == _specialAttackPos.position)
+            {
+                Debug.Log("stop");
+                transform.position = new Vector2(0f, 4f);
+                break;//終わる
+            }
+        }
         _initialDamageRatio = AddDamageRatio;//初期値を設定
         //AddDamageRatio = 0.5f;//必殺時は攻撃割合を変更
-        Rb.velocity = Vector2.MoveTowards(transform.position, new Vector2(0f,4f), _speed);
-        while (true)
+
+
+        /*while (true)
         {
             // 8秒毎に、間隔６度、速度１でmuzzleを中心として全方位弾発射。
             for (int rad = 0; rad < 360; rad += 6)
@@ -102,12 +132,11 @@ public class TestSpecialAttack : EnemyBese
                 _muzzle.rotation += 10f;
             }
             yield return new WaitForSeconds(8.0f);
-            count++;
             if(0 == 0)
             {
                 break;
             }
-        }
+        }*/
         //AddDamageRatio = _initialDamageRatio;//元に戻す
 
     }
