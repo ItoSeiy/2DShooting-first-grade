@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestMove : BulletBese
+public class BossEnemyBullet : BulletBese
 {
     protected override void BulletMove()
     {
