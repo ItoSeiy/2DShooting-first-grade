@@ -39,7 +39,7 @@ public class PlayerBase : MonoBehaviour
     [SerializeField, Header("1upのタグ")] string _1upTag = "1UP";
     [SerializeField, Header("ボムを増やすアイテムのタグ")] string _bombItemTag = "BombItem";
     [SerializeField, Header("Invincibleのタグ")] string _invincibleTag = "Invincible";
-    [SerializeField, Header("アイテムを回収するためのコライダーのタグ")] string _playerTriggerTag = "ItemGetLine";
+    [SerializeField, Header("アイテムを回収するためのコライダーのタグ")] string _playerItemGetLineTag = "ItemGetLine";
 
     [SerializeField, Header("被弾時に再生するアニメーションのパラメータ名")] string _invicibleAnimParamName = "IsInvicible";
 
@@ -327,6 +327,8 @@ public class PlayerBase : MonoBehaviour
 
         if (collision.gameObject.tag == _1upTag)//残機を増やす処理
         {
+            var item = collision.GetComponent<ItemBase>();
+            if (item.IsTaking) return;
             GameManager.Instance.ResidueChange(_defaultUp);
             _playerResidue = GameManager.Instance.PlayerResidueCount;
             Debug.Log("残機ふえたよー" + _playerResidue);
@@ -334,6 +336,8 @@ public class PlayerBase : MonoBehaviour
 
         if(collision.gameObject.tag == _bombItemTag)//ボムの所持数を増やす処理
         {
+            var item = collision.GetComponent<ItemBase>();
+            if (item.IsTaking) return;
             GameManager.Instance.PlayerBombCountChange(_defaultUp);
             _bombCount = GameManager.Instance.PlayerBombCount;
             Debug.Log("ボムふえたよー" + _bombCount);
@@ -341,6 +345,8 @@ public class PlayerBase : MonoBehaviour
 
         if (collision.gameObject.tag == _pointTag)//スコアを増やす処理
         {
+            var item = collision.GetComponent<ItemBase>();
+            if (item.IsTaking) return;
             GameManager.Instance.PlayerScoreChange(_defaultUp);
             _playerScore = GameManager.Instance.PlayerScore;
             Debug.Log("スコアふえたよー" + _playerScore);
@@ -348,7 +354,9 @@ public class PlayerBase : MonoBehaviour
 
         if (collision.gameObject.tag == _powerTag)//パワーを増やす処理
         {
-            if(_playerPower == _playerPowerLimit)
+            var item = collision.GetComponent<ItemBase>();
+            if (item.IsTaking) return;
+            if (_playerPower == _playerPowerLimit)
             {
                 _fullPowerModeEffect.SetActive(true);
             }
@@ -359,6 +367,8 @@ public class PlayerBase : MonoBehaviour
 
         if (collision.gameObject.tag == _invincibleTag)//一定数取得すると無敵になるアイテムの所持数を増やす処理
         {
+            var item = collision.GetComponent<ItemBase>();
+            if (item.IsTaking) return;
             GameManager.Instance.PlayerInvicibleObjectValueChange(_defaultUp);
             _invincibleObjectCount = GameManager.Instance.PlayerInvincibleObjectCount;
             Debug.Log("アイテム名決まってない怪しいやつふえたよー" + _invincibleObjectCount);
@@ -368,7 +378,7 @@ public class PlayerBase : MonoBehaviour
             }
         }
 
-        if(collision.tag == _playerTriggerTag)
+        if(collision.tag == _playerItemGetLineTag)
         {
             _isGetItem = true;
         }
@@ -376,7 +386,7 @@ public class PlayerBase : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if(collision.tag == _playerTriggerTag)
+        if(collision.tag == _playerItemGetLineTag)
         {
             _isGetItem = false;
         }

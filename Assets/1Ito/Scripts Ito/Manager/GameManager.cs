@@ -119,7 +119,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     public void PlayerScoreChange(int score)
     {
         _playerScore += score;
-        //UIManager.Instance.UIScoreChange(score);
+        UIManager.Instance.UIScoreChange(score);
     }
 
     /// <summary>
@@ -130,6 +130,8 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     {
         _playerPowerItemCount += itemCount;
         PlayerLevelSet();
+        UIManager.Instance.UIPowerCountChange(_playerPowerItemCount);
+
     }
 
     /// <summary>
@@ -146,6 +148,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         {
             //パワーアイテムの数が、レベル２になるために必要なパワーアイテム数よりも多く、レベル３になるために必要なパワーアイテム数よりも少なかったときの処理
             _playerLevel = LEVEL2;
+            UIManager.Instance.UIPowerLimitChange(_player.PlayerPowerRequiredNumberLevel3);
         }
         else if (_player.PlayerPowerRequiredNumberLevel3 <= PlayerPowerItemCount)//レベル3のとき
         {
@@ -161,6 +164,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     public void PlayerBombCountChange(int bombCount)
     {
         _playerBombCount += bombCount;
+        UIManager.Instance.UIBombChange(bombCount);
     }
 
     /// <summary>
@@ -170,6 +174,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     public void PlayerInvicibleObjectValueChange(int invicibleObjectCount)
     {
         _playerInvicibleObjectCount += invicibleObjectCount;
+        UIManager.Instance.UIInvisibleCountChange(invicibleObjectCount);
     }
 
     /// <summary>
@@ -179,6 +184,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     public void ResidueChange(int residue)
     {
         _playerResidue += residue;
+        UIManager.Instance.UIResidueChange(residue);
     }
 
 
