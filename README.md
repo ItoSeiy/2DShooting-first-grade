@@ -111,3 +111,6 @@ Github,
 Sourcetree,
 
 上記の3点を用いて制作しました
+
+平熱
+![image0](https://user-images.githubusercontent.com/89116872/154406344-c0719c4e-3838-4057-af0c-81c5821ede35.jpg)
