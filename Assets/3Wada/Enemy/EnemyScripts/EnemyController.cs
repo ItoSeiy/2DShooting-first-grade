@@ -24,8 +24,7 @@ public class EnemyController : EnemyBase
     [SerializeField, Header("倒された時の音")] GameObject _deathSFX = default;
 
     [SerializeField,Header("モブ敵を止める時の方向の切り替え")] MoveMode _moveMode;
-    [SerializeField] float _bulletTimer = 2f;
-    float _timer = default;
+    [SerializeField, Header("モブの攻撃するときを変える")] AttackMode _attackMode;
     bool _isMove = false;
 
 
@@ -38,11 +37,17 @@ public class EnemyController : EnemyBase
 
     protected override void Update()
      {
-        if (_isBttomposition) return;
-        _timer += Time.deltaTime;
-        if(_timer > _bulletTimer)
+        switch(_attackMode)
         {
-            base.Update();
+            case AttackMode.MoveAtrack:
+                base.Update();
+                break;
+            case AttackMode.StopAttack:
+            if (!_isMove)
+            {
+                base.Update();
+            }
+                break;
         }
       
         switch (_moveMode)
@@ -166,5 +171,10 @@ public class EnemyController : EnemyBase
     {
         Normal,
         Rotate
+    }
+    enum AttackMode
+    {
+        StopAttack,
+        MoveAtrack
     }
 }
