@@ -7,19 +7,21 @@ using System;
 
 public class UIManager : SingletonMonoBehaviour<UIManager>
 {
-    [SerializeField, Header("何秒かけて変化させるか")] float _scoreChangeInterval = default;
+    [SerializeField, Header("スコアを何秒かけて変化させるか")] float _scoreChangeInterval = default;
     [SerializeField] Text _scoreText;
-    [SerializeField, Header("何秒かけて変化させるか")] float _residuesChangeInterval = default;
+    [SerializeField, Header("残機数を何秒かけて変化させるか")] float _residuesChangeInterval = default;
     [SerializeField] Text _residueText;
-    [SerializeField, Header("何秒かけて変化させるか")] float _bombChangeInterval = default;
+    [SerializeField, Header("ボム数を何秒かけて変化させるか")] float _bombChangeInterval = default;
     [SerializeField] Text _bombText;
-    [SerializeField, Header("何秒かけて変化させるか")] float _invisibleObjectCountChangeInterval = default;
-    [SerializeField] Text _invisibleLimitText;
+    [SerializeField, Header("無敵オブジェクト所持数を何秒かけて変化させるか")] float _invisibleObjectLimitChangeInterval = default;
     [SerializeField] Text _invisibleObjectCountText;
-    [SerializeField, Header("何秒かけて変化させるか")] float _levelCountChamgeInterval = default;
-    [SerializeField] Text _nextLevelCountText;
-    [SerializeField, Header("何秒かけて変化させるか")] float _levelLimitChangeInterval = default;
-    [SerializeField] Text _nextLevelLimitText;
+    [SerializeField, Header("無敵オブジェクト必要数を何秒かけて変化させるか")] float _invisibleObjectCountChangeInterval = default;
+    [SerializeField] Text _invisibleObjectLimitText;
+    [SerializeField, Header("パワーアイテム所持数を何秒かけて変化させるか")] float _powerItemCountChamgeInterval = default;
+    [SerializeField] Text _powerItemCountText;
+    [SerializeField, Header("パワーアイテム必要数を何秒かけて変化させるか")] float _powerItemLimitChangeInterval = default;
+    [SerializeField] Text _powerItemLimitText;
+    [SerializeField] Text _levelText;
 
     int _score;
     int _residue;
@@ -29,8 +31,11 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     int _maxBomb;
     int _invisibleObjectLimit;
     int _invisibleObjectCount;
-    int _nextLevelCount;
-    int _nextLevelLimit;
+    int _powerItemLimit2;
+    int _powerItemLimit3;
+    int _powerItemCount;
+    int _level;
+    const int Level3 = 3; 
 
     public void UISet()
     {
@@ -40,10 +45,15 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 
         _maxBomb = GameManager.Instance.PlayerBombCount;
         
-        _nextLevelLimit = GameManager.Instance.PlayerPowerRequiredNumberLevel2;
+        _powerItemLimit2 = GameManager.Instance.PlayerPowerRequiredNumberLevel2;
+        _powerItemLimit3 = GameManager.Instance.PlayerPowerRequiredNumberLevel3;
+        _powerItemLimitText.text = _powerItemLimit2.ToString("000");
 
         _invisibleObjectLimit = GameManager.Instance.PlayerInvicibleObjectLimit;
-        _invisibleLimitText.text = _invisibleObjectLimit.ToString("000");
+        _invisibleObjectLimitText.text = _invisibleObjectLimit.ToString("000");
+
+        _level = GameManager.Instance.PlayerLevel;
+        _levelText.text = _level.ToString("1");
     }
 
     /// <summary>
@@ -98,9 +108,9 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
                 .OnComplete(() => _bombText.text = GameManager.Instance.PlayerBombCount.ToString("00"));
         }
     }
-    public void UIInvisibleChange(int invisible)
+    public void UIInvisibleLimitChange(int invisible)
     {
-        int tempInvisible = int.Parse(_invisibleObjectCountText.text.ToString());
+        int tempInvisible = int.Parse(_invisibleObjectLimitText.text.ToString());
 
         tempInvisible = Mathf.Min(tempInvisible + invisible, _invisibleObjectLimit);
 
@@ -109,9 +119,56 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
             DOTween.To(() => tempInvisible,
                 x => tempInvisible = x,
                 invisible,
+                _invisibleObjectLimitChangeInterval)
+                .OnUpdate(() => _invisibleObjectLimitText.text = tempInvisible.ToString("000"))
+                .OnComplete(() => _invisibleObjectLimitText.text = GameManager.Instance.PlayerInvicibleObjectLimit.ToString("00"));
+        }
+    }
+    public void UIInvisibleCountChange(int invisible)
+    {
+        int tempInvisible = int.Parse(_invisibleObjectCountText.text.ToString());
+
+        tempInvisible = Mathf.Min(tempInvisible + invisible, _invisibleObjectCount);
+
+        if (tempInvisible <= _invisibleObjectCount)
+        {
+            DOTween.To(() => tempInvisible,
+                x => tempInvisible = x,
+                invisible,
                 _invisibleObjectCountChangeInterval)
-                .OnUpdate(() => _invisibleObjectCountText.text = tempInvisible.ToString("00"))
-                .OnComplete(() => _invisibleObjectCountText.text = GameManager.Instance.PlayerInvincibleObjectCount.ToString("00"));
+                .OnUpdate(() => _invisibleObjectCountText.text = tempInvisible.ToString("000"))
+                .OnComplete(() => _invisibleObjectCountText.text = GameManager.Instance.PlayerInvincibleObjectCount.ToString("000"));
+        }
+    }
+    public void UIPowerLimitChange(int power)
+    {
+        if (GameManager.Instance.PlayerLevel == Level3)
+        {
+            int tempPower = int.Parse(_powerItemLimitText.text.ToString());
+
+            tempPower = Mathf.Min(tempPower + power, _powerItemLimit3);
+            DOTween.To(() => tempPower,
+                x => tempPower = x,
+                power,
+                _powerItemLimitChangeInterval)
+                .OnUpdate(() => _powerItemCountText.text = tempPower.ToString("000"))
+                .OnComplete(() => _powerItemLimitText.text = _powerItemLimit3.ToString("000"));
+        }
+    }
+    public void UIPowerCountChange(int power)
+    {
+        int tempPower = int.Parse(_powerItemCountText.text.ToString());
+
+        tempPower = Mathf.Min(tempPower + power, _powerItemCount);
+
+        if (tempPower <= _powerItemCount)
+        {
+            DOTween.To(() => tempPower,
+                x => tempPower = x,
+                power,
+                _powerItemCountChamgeInterval)
+                .OnUpdate(() => _powerItemCountText.text = tempPower.ToString("000"))
+                .OnComplete(() => _powerItemCountText.text = GameManager.Instance.PlayerInvincibleObjectCount.ToString("000"));
         }
     }
 }
