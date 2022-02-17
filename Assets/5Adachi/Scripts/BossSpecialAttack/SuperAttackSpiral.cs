@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SuperAttackFirework : MonoBehaviour
+public class SuperAttackSpiral : MonoBehaviour
 {
+    /// <summary>形状や大きさの概念を持った物質</summary>
     Rigidbody2D _rb;
     /// <summary>必殺前に移動するポジション</summary>
     [SerializeField, Header("必殺前に移動するポジション")] Transform _superAttackPos = null;
@@ -11,10 +12,8 @@ public class SuperAttackFirework : MonoBehaviour
     [SerializeField, Header("Bulletを発射するポジション")] Transform[] _muzzles = null;
     /// <summary>速度</summary>
     [SerializeField, Header("スピード")] float _speed = 4f;
-    /// <summary>弾を飛ばす間隔</summary>
-    [SerializeField, Header("弾を飛ばす間隔")] float _superAttackInterval = 1f;
     /// <summary>初期の攻撃割合</summary>
-    float _initialDamageRatio;
+    float _initialDamageRatio;    
     /// <summary>タイマー</summary>
     float _timer = 0f;
     /// <summary>右側の範囲</summary>
@@ -44,7 +43,7 @@ public class SuperAttackFirework : MonoBehaviour
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();//《スタート》でゲットコンポーネント
-        StartCoroutine(Firework()); //コルーチンを発動    
+        StartCoroutine(Spiral()); //コルーチンを発動    
     }
 
     void Update()
@@ -52,7 +51,7 @@ public class SuperAttackFirework : MonoBehaviour
         _timer += Time.deltaTime;
     }
 
-    IEnumerator Firework()
+    IEnumerator Spiral()
     {
         _timer = RESET_TIME;//タイムリセット
 
@@ -100,28 +99,23 @@ public class SuperAttackFirework : MonoBehaviour
         _timer = 0f;//タイムリセット
         while (true)
         {
-            //360度全方位に発射
-            for (float i = 0f; i <= 360f; i += 10)//下半分だけ→(float i = -270f; i <= -90f; i += 10)
-            {
-                Vector3 localAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
-                localAngle.z = i;// 角度を設定
-                _muzzles[0].localEulerAngles = localAngle;//回転する
-                                                          //弾を発射（仮でBombにしてます）
-                var bossEnemyBullet = ObjectPool.Instance.UseBullet(_muzzles[0].position, PoolObjectType.Player01BombChild);
-                //弾をマズルの向きに合わせる
-                bossEnemyBullet.transform.rotation = _muzzles[0].rotation;
-            }
-
-            yield return new WaitForSeconds(_superAttackInterval);//判定回数の調整
+            Vector3 localAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
+            localAngle.z += 10.0f;// 角度を設定
+            _muzzles[0].localEulerAngles = localAngle;//回転する
+            //弾を発射（仮でBombにしてます）
+            var bossEnemyBullet = ObjectPool.Instance.UseBullet(_muzzles[0].position, PoolObjectType.Player01BombChild);
+            //弾をマズルの向きに合わせる
+            bossEnemyBullet.transform.rotation = _muzzles[0].rotation;
+            yield return new WaitForSeconds(JUDGMENT_TIME);//判定回数の調整
             //数秒経ったら
             if (_timer >= _activationTime)
             {
-                /*localAngle.z = ZERO_DEGREE_ANGLE;// 角度を0度に設定
-                _muzzles[0].localEulerAngles = localAngle;//停止*/
+                localAngle.z = ZERO_DEGREE_ANGLE;// 角度を0度に設定
+                _muzzles[0].localEulerAngles = localAngle;//停止
                 break;//終了
             }
         }
-
+                
         //AddDamageRatio = _initialDamageRatio;//攻撃割合を元に戻す
         yield break;//終了
     }

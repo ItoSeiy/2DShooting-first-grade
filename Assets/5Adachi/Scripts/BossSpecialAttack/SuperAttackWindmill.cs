@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SuperAttack02 : MonoBehaviour
+public class SuperAttackWindmill : MonoBehaviour
 {
     /// <summary>形状や大きさの概念を持った物質</summary>
     Rigidbody2D _rb;
@@ -32,6 +32,8 @@ public class SuperAttack02 : MonoBehaviour
     [SerializeField, Header("必殺技待機時間")] float _waitTime = 5f;
     /// <summary>必殺技発動時間</summary>
     [SerializeField, Header("必殺技発動時間")] float _activationTime = 30f;
+    /// <summary>弾を飛ばす間隔</summary>
+    [SerializeField, Header("弾を飛ばす間隔")] float _superAttackInterval = 0.2f;
     /// <summary>修正値</summary>
     const float PLAYER_POS_OFFSET = 0.5f;
     /// <summary>判定回数の制限</summary>
@@ -99,19 +101,44 @@ public class SuperAttack02 : MonoBehaviour
         _timer = 0f;//タイムリセット
         while (true)
         {
-            Vector3 localAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
-            localAngle.z = -180f;// 角度を設定
-            _muzzles[0].localEulerAngles = localAngle;//回転する
-                                                      //弾を発射（仮でBombにしてます）
-            var bossEnemyBullet = ObjectPool.Instance.UseBullet(_muzzles[0].position, PoolObjectType.Player01BombChild);
+            //親オブジェクト
+
+            //1つ目のマズル
+            Vector3 firstLocalAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
+            firstLocalAngle.z += 10f;// 角度を設定
+            _muzzles[0].localEulerAngles = firstLocalAngle;//回転する
+            //弾を発射（仮でBombにしてます）
+            var firstBossEnemyBullet = ObjectPool.Instance.UseBullet(_muzzles[0].position, PoolObjectType.Player01BombChild);
             //弾をマズルの向きに合わせる
-            bossEnemyBullet.transform.rotation = _muzzles[0].rotation;
-            yield return new WaitForSeconds(JUDGMENT_TIME);//判定回数の調整
-                                                           //数秒経ったら
+            firstBossEnemyBullet.transform.rotation = _muzzles[0].rotation;
+
+            //子オブジェクト
+
+            //2つ目のマズル
+            //弾を発射（仮でBombにしてます）
+            var secondBossEnemyBullet = ObjectPool.Instance.UseBullet(_muzzles[1].position, PoolObjectType.Player01BombChild);
+            //弾をマズルの向きに合わせる
+            secondBossEnemyBullet.transform.rotation = _muzzles[1].rotation;
+
+            //3つ目のマズル
+            //弾を発射（仮でBombにしてます）
+            var thirdBossEnemyBullet = ObjectPool.Instance.UseBullet(_muzzles[2].position, PoolObjectType.Player01BombChild);
+            //弾をマズルの向きに合わせる
+            thirdBossEnemyBullet.transform.rotation = _muzzles[2].rotation;
+
+            //4つ目のマズル
+            //弾を発射（仮でBombにしてます）
+            var forceBossEnemyBullet = ObjectPool.Instance.UseBullet(_muzzles[3].position, PoolObjectType.Player01BombChild);
+            //弾をマズルの向きに合わせる
+            forceBossEnemyBullet.transform.rotation = _muzzles[3].rotation;
+
+            yield return new WaitForSeconds(_superAttackInterval);//判定回数の調整
+
+            //数秒経ったら
             if (_timer >= _activationTime)
             {
-                localAngle.z = ZERO_DEGREE_ANGLE;// 角度を0度に設定
-                _muzzles[0].localEulerAngles = localAngle;//停止
+                firstLocalAngle.z = ZERO_DEGREE_ANGLE;// 角度を0度に設定
+                _muzzles[0].localEulerAngles = firstLocalAngle;//停止
                 break;//終了
             }
         }
