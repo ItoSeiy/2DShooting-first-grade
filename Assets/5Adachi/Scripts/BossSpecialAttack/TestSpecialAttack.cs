@@ -10,8 +10,7 @@ public class TestSpecialAttack : EnemyBase
     [SerializeField, Header("Bulletを発射するポジション")] Transform _muzzle = null;
     /// <summary>スプライト(スクライトじゃないよ)</summary>
     SpriteRenderer _sr;
-    /// <summary>中央位置</summary>
-    const float MIDDLE_POSITION = 0f;
+    
     /// <summary>初期の攻撃割合</summary>
      float _initialDamageRatio;
     /// <summary>必殺前に移動するポジション</summary>
@@ -20,13 +19,11 @@ public class TestSpecialAttack : EnemyBase
     float _time = 0f;
     /// <summary>HPバーの本数</summary>
     [SerializeField,Header("HPバーの数")]
-    float _hPBar = 0;
+    float _hPBarMaxCount = 0f;
     /// <summary>HPバー１本分のHP</summary>
     float _hP = 0f;
     /// <summary>HPバーのカウント</summary>
-    float _hPBarCount = 0f;
-    /// <summary>-1する</summary>
-    const float _minus = -1f;
+    float _currentHPBarCount = 0f;
     /// <summary>右側の範囲</summary>
     bool _rightRange;
     /// <summary>左側の範囲</summary>
@@ -42,10 +39,8 @@ public class TestSpecialAttack : EnemyBase
     /// <summary>必殺待機時間</summary>
     [SerializeField,Header("必殺技待機時間")]
     float _waitTime = 5f;
-    /// <summary>修正値</summary>
-    const float PLAYER_POS_OFFSET = 0.5f;
-    /// <summary>判定回数の制限</summary>
-    const float JUDGMENT_TIME = 1/60f;
+
+   
 
     /// <summary>水平、横方向</summary>
     private float _horizontal = 0f;
@@ -76,20 +71,25 @@ public class TestSpecialAttack : EnemyBase
     /// <summary>下方向</summary>
     const float DOWN_DIR = -1;
     /// <summary>方向なし</summary>
-    const float NO_DIR = 0f;
+    const float NO_DIR = 0f; 
+    /// <summary>修正値</summary>
+    const float PLAYER_POS_OFFSET = 0.5f;
+    /// <summary>判定回数の制限</summary>
+    const float JUDGMENT_TIME = 1/60f;
+    /// <summary>中央位置</summary>
+    const float MIDDLE_POSITION = 0f;
 
 
     void Start()
-    {
+    {       
         _sr = GetComponent<SpriteRenderer>();
-        _hPBarCount = _hPBar;
-        _hP = EnemyHp / _hPBar;
-        Debug.Log(_hPBar);
+        _currentHPBarCount = _hPBarMaxCount;
+        _hP = EnemyHp / _hPBarMaxCount;
+        Debug.Log(_hPBarMaxCount);
 
         //StartCoroutine(RandomMovement());
         //StartCoroutine(SpecialAttack());
         Attack();
-       
     }
     protected override void Update()
     {
@@ -107,12 +107,12 @@ public class TestSpecialAttack : EnemyBase
         //0の時、停止時は何も行わない（前の状態のまま）
 
         //HPバー１本分無くなったら
-        if (EnemyHp <= _hP * (_hPBarCount + _minus))
+        /*if (EnemyHp <= _hP * (_currentHPBarCount + _minus))
         {
             Debug.Log("領域展開");
             StartCoroutine(SpecialAttack());            
-            _hPBarCount--;           
-        }
+            _currentHPBarCount--;           
+        }*/
     }
 
     
