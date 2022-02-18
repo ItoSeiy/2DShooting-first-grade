@@ -588,6 +588,36 @@ PlayableDirector:
     value: {fileID: 17947707}
   m_ExposedReferences:
     m_References: []
+--- !u!1 &46600668
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 46600669}
+  m_Layer: 0
+  m_Name: LeftMuzzle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &46600669
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 46600668}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1339267468}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &77306085
 GameObject:
   m_ObjectHideFlags: 0
@@ -2991,6 +3021,7 @@ GameObject:
   - component: {fileID: 1339267471}
   - component: {fileID: 1339267473}
   - component: {fileID: 1339267475}
+  - component: {fileID: 1339267476}
   m_Layer: 0
   m_Name: TestBoss00SpeciaAttack
   m_TagString: Untagged
@@ -3005,7 +3036,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1339267465}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8cf2dee84ad366246bc84785263ad95e, type: 3}
   m_Name: 
@@ -3084,6 +3115,7 @@ Transform:
   - {fileID: 453597992}
   - {fileID: 393988657}
   - {fileID: 2085429352}
+  - {fileID: 46600669}
   m_Father: {fileID: 0}
   m_RootOrder: 28
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3224,6 +3256,27 @@ MonoBehaviour:
   _waitTime: 5
   _activationTime: 30
   _attackInterval: 0.4
+--- !u!114 &1339267476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1339267465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2800cbf523e9fe84aab1e905848dc22c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerTag: 
+  _muzzles:
+  - {fileID: 1930539043}
+  - {fileID: 46600669}
+  _speed: 4
+  _superAttackPos: {fileID: 1415339303}
+  _waitTime: 5
+  _activationTime: 30
+  _attackInterval: 0.6
 --- !u!1 &1415339302
 GameObject:
   m_ObjectHideFlags: 0

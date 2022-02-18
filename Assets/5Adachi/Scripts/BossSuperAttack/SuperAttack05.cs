@@ -6,11 +6,6 @@ public class SuperAttack05 : MonoBehaviour
 {
     /// <summary>形状や大きさの概念を持った物質</summary>
     Rigidbody2D _rb;
-    /// <summary>方向</summary>
-    Vector3 _dir;
-    /// <summary>プレイヤーのオブジェクト</summary>
-    private GameObject _player;
-    [SerializeField, Header("playerのtag")] string _playerTag = null;
     /// <summary>バレットを発射するポジション</summary>
     [SerializeField, Header("Bulletを発射するポジション")] Transform[] _muzzles = null;
     /// <summary>速度</summary>
