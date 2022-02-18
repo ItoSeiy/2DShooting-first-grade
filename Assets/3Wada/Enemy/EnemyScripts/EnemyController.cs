@@ -13,8 +13,8 @@ public class EnemyController : EnemyBase
 
     [SerializeField,Header("弾幕")] GameObject _bullet;
     
-    [SerializeField, Header("移動の向きの変えるY軸")] float _ybottomposition = 0;
-    [SerializeField, Header("移動の向きの変えるx軸")] float _xbottomposition = 0;
+    [SerializeField,Header("モブ敵の出現位置")] GeneratePos _generatePos;
+    [SerializeField, Header("移動方向が変わるXまたはYの座標")] float _limitPos = 0;
     [SerializeField,Header("Muzzleが一周するまでの秒数")] float _rotateSecond = 2f;
     [SerializeField, Header("出た時の移動方向")] Vector2 _beforeDir;
     [SerializeField, Header("移動変わった後の移動方向")] Vector2 _afterDir;
@@ -23,15 +23,15 @@ public class EnemyController : EnemyBase
 
     [SerializeField, Header("倒された時の音")] GameObject _deathSFX = default;
 
-    [SerializeField,Header("モブ敵を止める時の方向の切り替え")] MoveMode _moveMode;
     [SerializeField, Header("モブの攻撃するときを変える")] AttackMode _attackMode;
     bool _isMove = false;
+    
 
 
 
     private void OnEnable()
     {
-        Rb.velocity = _beforeDir;
+        Rb.velocity = _beforeDir * Speed;
         _isMove = true;
     }
 
@@ -50,28 +50,28 @@ public class EnemyController : EnemyBase
                 break;
         }
       
-        switch (_moveMode)
+        switch (_generatePos)
         {
-            case MoveMode.right:
-                if (this.transform.position.x <= _xbottomposition)
+            case GeneratePos.Right:
+                if (this.transform.position.x <= _limitPos)
                 {
                     EnemyMove();
                 }
                 break;
-            case MoveMode.left:
-                if (this.transform.position.x >= _xbottomposition)
+            case GeneratePos.Left:
+                if (this.transform.position.x >= _limitPos)
                 {
                     EnemyMove();
                 }
                 break;
-            case MoveMode.up:
-                if (this.transform.position.y <= _ybottomposition)
+            case GeneratePos.Up:
+                if (this.transform.position.y <= _limitPos)
                 {
                     EnemyMove();
                 }
                 break;
-            case MoveMode.down:
-                if (this.transform.position.y >= _ybottomposition)
+            case GeneratePos.Down:
+                if (this.transform.position.y >= _limitPos)
                 {
                     EnemyMove();
                 }
@@ -94,7 +94,7 @@ public class EnemyController : EnemyBase
         /// </summary>
         if (_stopcount <= 0)
         {
-            Rb.velocity = _afterDir;
+            Rb.velocity = _afterDir * Speed;
             _isBttomposition = true;
             _isMove = true;
         }
@@ -112,7 +112,9 @@ public class EnemyController : EnemyBase
                     var bullet = Instantiate(_bullet);
                     bullet.transform.position = _muzzle[i].position;
                     bullet.transform.rotation = _muzzle[i].rotation;
+                    
                 }
+                
                 break;
             case MuzzleTransform.Rotate:
                 Rotate();
@@ -147,24 +149,24 @@ public class EnemyController : EnemyBase
         }
     }
 
-    enum MoveMode
+    enum GeneratePos
     {
         /// <summary>
         ///右
         /// </summary>
-        right,
+        Right,
         /// <summary>
         /// 左
         /// </summary>
-        left,
+        Left,
         /// <summary>
         ///上 
         /// </summary>
-        up,
+        Up,
          /// <summary>
          /// 下
          /// </summary>
-        down
+        Down
     }
 
     enum MuzzleTransform

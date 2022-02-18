@@ -167,23 +167,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a49bbbf0860d5342ac83781515106c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _speed: 5
   _enemyHp: 1
   _attackInterval: 1
   _damageRatio: 1
   _playerBulletTag: PlayerBullet
+  _finishTag: Finish
   _muzzle:
   - {fileID: 6727972774543689314}
   _rotateMuzzles: []
   _muzzleTransform: 0
   _bullet: {fileID: 0}
-  _ybottomposition: 0
-  _xbottomposition: 0
+  _generatePos: 3
+  _limitPos: 0
   _rotateSecond: 2
-  _beforeDir: {x: 0, y: -1}
-  _afterDir: {x: 0, y: -1}
-  _stopcount: 0
-  _Audio: {fileID: 8689257576827750080, guid: e95ea65c9df696f4f96864670d4fc4f4, type: 3}
-  _moveMode: 2
+  _beforeDir: {x: 0, y: 1}
+  _afterDir: {x: 0, y: 1}
+  _stopcount: 2
+  _deathSFX: {fileID: 0}
+  _attackMode: 0
 --- !u!1 &6727972775513466672
 GameObject:
   m_ObjectHideFlags: 0
