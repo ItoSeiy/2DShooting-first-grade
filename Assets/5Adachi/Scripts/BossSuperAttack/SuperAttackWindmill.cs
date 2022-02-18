@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SuperAttackSpiral : MonoBehaviour
+public class SuperAttackWindmill : MonoBehaviour
 {
     /// <summary>形状や大きさの概念を持った物質</summary>
     Rigidbody2D _rb;
@@ -13,7 +13,7 @@ public class SuperAttackSpiral : MonoBehaviour
     /// <summary>速度</summary>
     [SerializeField, Header("スピード")] float _speed = 4f;
     /// <summary>初期の攻撃割合</summary>
-    float _initialDamageRatio;    
+    float _initialDamageRatio;
     /// <summary>タイマー</summary>
     float _timer = 0f;
     /// <summary>右側の範囲</summary>
@@ -32,6 +32,8 @@ public class SuperAttackSpiral : MonoBehaviour
     [SerializeField, Header("必殺技待機時間")] float _waitTime = 5f;
     /// <summary>必殺技発動時間</summary>
     [SerializeField, Header("必殺技発動時間")] float _activationTime = 30f;
+    /// <summary>攻撃頻度</summary>
+    [SerializeField, Header("攻撃頻度(秒)")] float _attackInterval = 0.2f;
     /// <summary>修正値</summary>
     const float PLAYER_POS_OFFSET = 0.5f;
     /// <summary>判定回数の制限</summary>
@@ -40,10 +42,11 @@ public class SuperAttackSpiral : MonoBehaviour
     const float ZERO_DEGREE_ANGLE = 0f;
     /// <summary>リセットタイマー</summary>
     const float RESET_TIME = 0f;
+
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();//《スタート》でゲットコンポーネント
-        StartCoroutine(Spiral()); //コルーチンを発動    
+        StartCoroutine(Windmill()); //コルーチンを発動    
     }
 
     void Update()
@@ -51,7 +54,9 @@ public class SuperAttackSpiral : MonoBehaviour
         _timer += Time.deltaTime;
     }
 
-    IEnumerator Spiral()
+
+    /// <summary>風車のような軌道</summary>
+    IEnumerator Windmill()
     {
         _timer = RESET_TIME;//タイムリセット
 
@@ -59,7 +64,7 @@ public class SuperAttackSpiral : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(JUDGMENT_TIME);//判定回数の制限
-            //横方向
+                                                           //横方向
             _horizontalDir = _superAttackPos.position.x - transform.position.x;
             //縦方向
             _verticalDir = _superAttackPos.position.y - transform.position.y;
@@ -96,26 +101,53 @@ public class SuperAttackSpiral : MonoBehaviour
         }
         //_initialDamageRatio = AddDamageRatio;//初期値を設定
         //AddDamageRatio = 0.5f;//必殺時は攻撃割合を変更
-        _timer = 0f;//タイムリセット
+        _timer = RESET_TIME;//タイムリセット
+
+        //必殺技発動
         while (true)
         {
-            Vector3 localAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
-            localAngle.z += 10.0f;// 角度を設定
-            _muzzles[0].localEulerAngles = localAngle;//回転する
+            //親オブジェクト
+
+            //1つ目のマズル
+            Vector3 firstLocalAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
+            firstLocalAngle.z += 10f;// 角度を設定
+            _muzzles[0].localEulerAngles = firstLocalAngle;//回転する
             //弾を発射（仮でBombにしてます）
-            var bossEnemyBullet = ObjectPool.Instance.UseBullet(_muzzles[0].position, PoolObjectType.Player01BombChild);
+            var firstBossEnemyBullet = ObjectPool.Instance.UseBullet(_muzzles[0].position, PoolObjectType.Player01BombChild);
             //弾をマズルの向きに合わせる
-            bossEnemyBullet.transform.rotation = _muzzles[0].rotation;
-            yield return new WaitForSeconds(JUDGMENT_TIME);//判定回数の調整
+            firstBossEnemyBullet.transform.rotation = _muzzles[0].rotation;
+
+            //子オブジェクト
+
+            //2つ目のマズル
+            //弾を発射（仮でBombにしてます）
+            var secondBossEnemyBullet = ObjectPool.Instance.UseBullet(_muzzles[1].position, PoolObjectType.Player01BombChild);
+            //弾をマズルの向きに合わせる
+            secondBossEnemyBullet.transform.rotation = _muzzles[1].rotation;
+
+            //3つ目のマズル
+            //弾を発射（仮でBombにしてます）
+            var thirdBossEnemyBullet = ObjectPool.Instance.UseBullet(_muzzles[2].position, PoolObjectType.Player01BombChild);
+            //弾をマズルの向きに合わせる
+            thirdBossEnemyBullet.transform.rotation = _muzzles[2].rotation;
+
+            //4つ目のマズル
+            //弾を発射（仮でBombにしてます）
+            var forceBossEnemyBullet = ObjectPool.Instance.UseBullet(_muzzles[3].position, PoolObjectType.Player01BombChild);
+            //弾をマズルの向きに合わせる
+            forceBossEnemyBullet.transform.rotation = _muzzles[3].rotation;
+
+            yield return new WaitForSeconds(_attackInterval);//攻撃頻度(秒)
+
             //数秒経ったら
             if (_timer >= _activationTime)
             {
-                localAngle.z = ZERO_DEGREE_ANGLE;// 角度を0度に設定
-                _muzzles[0].localEulerAngles = localAngle;//停止
+                firstLocalAngle.z = ZERO_DEGREE_ANGLE;// 角度を0度に設定
+                _muzzles[0].localEulerAngles = firstLocalAngle;//停止
                 break;//終了
             }
         }
-                
+
         //AddDamageRatio = _initialDamageRatio;//攻撃割合を元に戻す
         yield break;//終了
     }
