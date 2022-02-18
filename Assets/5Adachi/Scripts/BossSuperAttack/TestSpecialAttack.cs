@@ -7,10 +7,11 @@ public class TestSpecialAttack : EnemyBase
     /// <summary>バレットのプレハブ</summary>
     [SerializeField, Header("Bulletのプレハブ")] List<GameObject> _enemyBulletPrefab = new List<GameObject>();
     /// <summary>バレットを発射するポジション</summary>
-    [SerializeField, Header("Bulletを発射するポジション")] Transform _muzzle = null;
+    [SerializeField, Header("Bulletを発射するポジション")] Rigidbody2D _muzzle = null;
     /// <summary>スプライト(スクライトじゃないよ)</summary>
     SpriteRenderer _sr;
-    
+    /// <summary>中央位置</summary>
+    const float MIDDLE_POSITION = 0f;
     /// <summary>初期の攻撃割合</summary>
      float _initialDamageRatio;
     /// <summary>必殺前に移動するポジション</summary>
@@ -19,35 +20,33 @@ public class TestSpecialAttack : EnemyBase
     float _time = 0f;
     /// <summary>HPバーの本数</summary>
     [SerializeField,Header("HPバーの数")]
-    float _hPBarMaxCount = 0f;
+    float _hPBar = 0;
     /// <summary>HPバー１本分のHP</summary>
     float _hP = 0f;
     /// <summary>HPバーのカウント</summary>
-    float _currentHPBarCount = 0f;
-    /// <summary>右側の範囲</summary>
+    float _hPBarCount = 0f;
+    /// <summary>-1する</summary>
+    const float _minus = -1f;
+    /// <summary>右の範囲</summary>
     bool _rightRange;
-    /// <summary>左側の範囲</summary>
+    /// <summary>左の範囲</summary>
     bool _leftRange;
-    /// <summary>上側の範囲</summary>
+    /// <summary>上の範囲</summary>
     bool _upperRange;    
-    /// <summary>下側の範囲</summary>
+    /// <summary>下の範囲</summary>
     bool _downRange;
-    /// <summary>横方向</summary>
-    float _horizontalDir = 0f;
-    /// <summary>縦方向</summary>
-    float _verticalDir = 0f;
     /// <summary>必殺待機時間</summary>
     [SerializeField,Header("必殺技待機時間")]
     float _waitTime = 5f;
-
-   
+    /// <summary>修正値</summary>
+    const float PLAYER_POS_OFFSET = 0.5f;
+    /// <summary>判定回数の制限</summary>
+    const float JUDGMENT_TIME = 1/60f;
 
     /// <summary>水平、横方向</summary>
     private float _horizontal = 0f;
     /// <summary>垂直、縦方向</summary>
     private float _veritical = 0f;
-    /// <summary>速度</summary>
-    [SerializeField, Header("スピード")] float _speed = 4f;
     /// <summary>停止時間</summary>
     [SerializeField, Header("停止時間")] float _stopTime = 2f;
     /// <summary>移動時間</summary>
@@ -71,25 +70,23 @@ public class TestSpecialAttack : EnemyBase
     /// <summary>下方向</summary>
     const float DOWN_DIR = -1;
     /// <summary>方向なし</summary>
-    const float NO_DIR = 0f; 
-    /// <summary>修正値</summary>
-    const float PLAYER_POS_OFFSET = 0.5f;
-    /// <summary>判定回数の制限</summary>
-    const float JUDGMENT_TIME = 1/60f;
-    /// <summary>中央位置</summary>
-    const float MIDDLE_POSITION = 0f;
+    const float NO_DIR = 0f;
 
 
     void Start()
-    {       
+    {
         _sr = GetComponent<SpriteRenderer>();
-        _currentHPBarCount = _hPBarMaxCount;
-        _hP = EnemyHp / _hPBarMaxCount;
-        Debug.Log(_hPBarMaxCount);
-
+        _hPBarCount = _hPBar;
+        _hP = EnemyHp / _hPBar;
+        Debug.Log(_hPBar);
+        /*if (_muzzles == null || _muzzles.Length == 0)
+        {
+            _muzzles = new Transform[1] { this.transform };
+        }*/
         //StartCoroutine(RandomMovement());
         //StartCoroutine(SpecialAttack());
-        Attack();
+
+        
     }
     protected override void Update()
     {
@@ -106,22 +103,23 @@ public class TestSpecialAttack : EnemyBase
         }
         //0の時、停止時は何も行わない（前の状態のまま）
 
-        //HPバー１本分無くなったら
-        /*if (EnemyHp <= _hP * (_currentHPBarCount + _minus))
+        //ボスのHPがHPバー１本分のHPより少なくなったら
+        if (EnemyHp <= _hP * (_hPBarCount + _minus))
         {
             Debug.Log("領域展開");
             StartCoroutine(SpecialAttack());            
-            _currentHPBarCount--;           
-        }*/
+            _hPBarCount--;           
+        }
     }
 
     
     protected override void Attack()
     {
+        //Quaternion.AngleAxis(_muzzle.rotation, Vector3.up);
         //Quaternion.AngleAxis(_muzzle.rotation, Vector3.forward);
         //(弾の種類,muzzleの位置,回転値)
         //Instantiate(_enemyBulletPrefab[0], _muzzle.position, Quaternion.AngleAxis(_muzzle.rotation, Vector3.forward));
-        //_muzzle.rotation += 10f;
+        _muzzle.rotation += 10f;
         //(muzzleの位置,enum.弾の種類)
         ObjectPool.Instance.UseBullet(_muzzle.position, PoolObjectType.Player01Power1);
     }
@@ -129,62 +127,55 @@ public class TestSpecialAttack : EnemyBase
     IEnumerator SpecialAttack()
     {
         _time = 0f;//タイムリセット
-        
+        /*//横の範囲
+        _horizontalRange = transform.position.x >= _spAttackPos.position.x - PLAYER_POS_OFFSET && transform.position.x <= _spAttackPos.position.x + PLAYER_POS_OFFSET;
+        ///縦の範囲
+        _verticalRange = transform.position.y <= _spAttackPos.position.y + PLAYER_POS_OFFSET && transform.position.y >= _spAttackPos.position.y - PLAYER_POS_OFFSET;*/
+
         //必殺を放つときはBOSSは放つ前にｘを0、Ｙを2をの位置(笑)に、移動する
         while (true)
         {
             yield return new WaitForSeconds(JUDGMENT_TIME);//判定回数の制限
-            //横方向
-            _horizontalDir = _spAttackPos.position.x - transform.position.x;
-            //縦方向
-            _verticalDir = _spAttackPos.position.y - transform.position.y;           
-            //横の範囲の条件式      
-            _rightRange = transform.position.x < _spAttackPos.position.x + PLAYER_POS_OFFSET;
-            _leftRange = transform.position.x > _spAttackPos.position.x - PLAYER_POS_OFFSET;
-            //縦の範囲の条件式
-            _upperRange = transform.position.y < _spAttackPos.position.y + PLAYER_POS_OFFSET;
-            _downRange = transform.position.y > _spAttackPos.position.y - PLAYER_POS_OFFSET;
             //行きたいポジションに移動する
-            //近かったら
-            if (_rightRange && _leftRange && _upperRange && _downRange)
+            //近くなったら
+            //if (_horizontalRange && _verticalRange)
+            if(transform.position.x >= _spAttackPos.position.x - PLAYER_POS_OFFSET && transform.position.x <= _spAttackPos.position.x + PLAYER_POS_OFFSET && transform.position.y <= _spAttackPos.position.y + PLAYER_POS_OFFSET && transform.position.y >= _spAttackPos.position.y - PLAYER_POS_OFFSET)
             {
-                Debug.Log("結果は" + _rightRange + _leftRange + _upperRange + _downRange);
-                //スムーズに移動
-                Rb.velocity = new Vector2(_horizontalDir, _verticalDir) * _speed;
+                Debug.Log("b");
+                Rb.velocity = new Vector2((_spAttackPos.position.x - transform.position.x), (_spAttackPos.position.y - transform.position.y)) * Speed;
             }
             //遠かったら
             else
             {
-                Debug.Log("結果は" + _rightRange + _leftRange + _upperRange + _downRange);
-                //安定して移動
-                Rb.velocity = new Vector2(_horizontalDir, _verticalDir).normalized * _speed;
+                Debug.Log("a");
+               Rb.velocity = new Vector2((_spAttackPos.position.x - transform.position.x), (_spAttackPos.position.y - transform.position.y)).normalized * Speed;
             }
 
             //数秒経ったら
             if (_time >= _waitTime)
             {
                 Debug.Log("stop");
-                Rb.velocity = Vector2.zero;//停止
-                transform.position = _spAttackPos.position;//ボスの位置を修正
-                break;//終わり
+                Rb.velocity = Vector2.zero;
+                transform.position = new Vector2(_spAttackPos.position.x, _spAttackPos.position.y);
+                break;//終わる
             }
         }
         _initialDamageRatio = AddDamageRatio;//初期値を設定
         //AddDamageRatio = 0.5f;//必殺時は攻撃割合を変更
-        _time = 0f;//タイムリセット
 
-        while (true)
+        /*while (true)
         {
-            // 8秒毎に、間隔10度、速度１でmuzzleを中心として全方位弾発射予定
-            Vector3 localAngle = _muzzle.localEulerAngles;
-            localAngle.z += 10.0f;
-            _muzzle.localEulerAngles = localAngle; // 回転角度を設定
-            yield return new WaitForSeconds(JUDGMENT_TIME);
-            if(_time >= 20f)
+            // 8秒毎に、間隔６度、速度１でmuzzleを中心として全方位弾発射予定
+            for (int rad = 0; rad < 360; rad += 6)
+            {
+                _muzzle.rotation += 10f;
+            }
+            yield return new WaitForSeconds(8.0f);
+            if(0 == 0)
             {
                 break;
             }
-        }
+        }*/
 
         //AddDamageRatio = _initialDamageRatio;//元に戻す
         yield break;
@@ -237,7 +228,7 @@ public class TestSpecialAttack : EnemyBase
 
             _dir = new Vector2(_horizontal, _veritical);//ランダムに移動
             //一定時間移動する
-            Rb.velocity = _dir.normalized * _speed;
+            Rb.velocity = _dir.normalized * Speed;
             yield return new WaitForSeconds(_moveTime);
 
             Debug.Log("x" + _horizontal);
