@@ -95,5 +95,13 @@ public abstract class EnemyBase : MonoBehaviour, IDamage
         OnGetDamage();
     }
    
-    
+    public void ChangeAttackInterval(float interval)
+    {
+        _attackInterval = interval;
+    }
+
+    public void ChangeAttackIntervalRandom(float min, float max)
+    {
+        _attackInterval = Random.Range(min, max);
+    }
 }
