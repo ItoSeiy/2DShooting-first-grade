@@ -153,7 +153,7 @@ RectTransform:
   m_GameObject: {fileID: 240392898}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 1}
   m_Children:
   - {fileID: 1139904100}
   m_Father: {fileID: 1335214658}
@@ -161,7 +161,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 665, y: -330}
+  m_AnchoredPosition: {x: 340, y: -236}
   m_SizeDelta: {x: 1919.9999, y: 1080.2637}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &240392900
@@ -176,7 +176,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1355c8b4308345840bee84ed6b6b97c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sceneName: Stage5Player1
+  _sceneName: Stage5Player2
 --- !u!114 &240392901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,6 +239,18 @@ MonoBehaviour:
       - m_Target: {fileID: 240392900}
         m_TargetAssemblyTypeName: SceneLoadForString, Assembly-CSharp
         m_MethodName: LoadScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 379852195}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: Play
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -347,11 +359,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 5c72cf515d482af48a9705f583f35007, type: 3}
-    m_FontSize: 80
+    m_FontSize: 300
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
-    m_MaxSize: 88
+    m_MaxSize: 300
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -382,6 +394,133 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
+--- !u!1 &379852194
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 379852196}
+  - component: {fileID: 379852195}
+  m_Layer: 0
+  m_Name: Audio Source
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!82 &379852195
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 379852194}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: ae1ae6693115e894395cea7951aea255, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!4 &379852196
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 379852194}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.40099546, y: -0.0068814196, z: 575.16254}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &708574002
 GameObject:
   m_ObjectHideFlags: 0
@@ -396,6 +535,7 @@ GameObject:
   - component: {fileID: 708574007}
   - component: {fileID: 708574006}
   - component: {fileID: 708574004}
+  - component: {fileID: 708574009}
   m_Layer: 5
   m_Name: Stage1SelectButton
   m_TagString: Untagged
@@ -412,7 +552,7 @@ RectTransform:
   m_GameObject: {fileID: 708574002}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 1}
   m_Children:
   - {fileID: 344518104}
   m_Father: {fileID: 1335214658}
@@ -420,7 +560,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 685, y: -330}
+  m_AnchoredPosition: {x: 340, y: -236}
   m_SizeDelta: {x: 1919.9999, y: 1080.2637}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &708574004
@@ -435,7 +575,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1355c8b4308345840bee84ed6b6b97c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sceneName: Stage1Player1
+  _sceneName: Stage1Player2
 --- !u!114 &708574005
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -538,6 +678,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 379852195}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!222 &708574008
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -546,6 +698,102 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 708574002}
   m_CullTransparentMesh: 1
+--- !u!82 &708574009
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 708574002}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: ae1ae6693115e894395cea7951aea255, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &749824695
 GameObject:
   m_ObjectHideFlags: 0
@@ -576,7 +824,7 @@ RectTransform:
   m_GameObject: {fileID: 749824695}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 1}
   m_Children:
   - {fileID: 1727963870}
   m_Father: {fileID: 1335214658}
@@ -584,7 +832,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 665, y: -330}
+  m_AnchoredPosition: {x: 340, y: -236}
   m_SizeDelta: {x: 1919.9999, y: 1080.2637}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &749824697
@@ -599,7 +847,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1355c8b4308345840bee84ed6b6b97c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sceneName: Stage3Player1
+  _sceneName: Stage3Player2
 --- !u!114 &749824698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -662,6 +910,18 @@ MonoBehaviour:
       - m_Target: {fileID: 749824697}
         m_TargetAssemblyTypeName: SceneLoadForString, Assembly-CSharp
         m_MethodName: LoadScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 379852195}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: Play
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -769,11 +1029,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: cacf655d701994e469938b6df3aa7dee, type: 3}
-    m_FontSize: 66
+    m_FontSize: 127
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
-    m_MaxSize: 80
+    m_MaxSize: 144
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -904,7 +1164,7 @@ RectTransform:
   m_GameObject: {fileID: 1102707280}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 1}
   m_Children:
   - {fileID: 1162433962}
   m_Father: {fileID: 1335214658}
@@ -912,7 +1172,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 665, y: -330}
+  m_AnchoredPosition: {x: 340, y: -236}
   m_SizeDelta: {x: 1919.9999, y: 1080.2637}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1102707282
@@ -927,7 +1187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1355c8b4308345840bee84ed6b6b97c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sceneName: Stage4Player1
+  _sceneName: Stage4Player2
 --- !u!114 &1102707283
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -990,6 +1250,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1102707282}
         m_TargetAssemblyTypeName: SceneLoadForString, Assembly-CSharp
         m_MethodName: LoadScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 379852195}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: Play
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1098,11 +1370,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: a0ee249dfd30a1d45bc88a4dedac217c, type: 3}
-    m_FontSize: 80
+    m_FontSize: 300
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 8
-    m_MaxSize: 80
+    m_MaxSize: 300
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -1193,11 +1465,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: d8fc15f62d481ee40ab6076f9f34e7b0, type: 3}
-    m_FontSize: 80
+    m_FontSize: 300
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 8
-    m_MaxSize: 80
+    m_MaxSize: 300
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -1258,7 +1530,7 @@ RectTransform:
   m_GameObject: {fileID: 1211019908}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 837945821}
   m_Father: {fileID: 1335214658}
@@ -1266,7 +1538,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 665, y: -330}
+  m_AnchoredPosition: {x: 340, y: -239}
   m_SizeDelta: {x: 960, y: 540}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1211019910
@@ -1344,6 +1616,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1211019910}
         m_TargetAssemblyTypeName: SceneLoadForString, Assembly-CSharp
         m_MethodName: LoadScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 379852195}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: Play
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1626,7 +1910,7 @@ RectTransform:
   m_GameObject: {fileID: 1514549977}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 0.5}
   m_Children:
   - {fileID: 2083453210}
   m_Father: {fileID: 1335214658}
@@ -1634,7 +1918,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 665, y: -330}
+  m_AnchoredPosition: {x: 340, y: -236}
   m_SizeDelta: {x: 1919.9999, y: 1080.2637}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1514549979
@@ -1649,7 +1933,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1355c8b4308345840bee84ed6b6b97c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sceneName: Stage2Player1
+  _sceneName: Stage2Player2
 --- !u!114 &1514549980
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1712,6 +1996,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1514549979}
         m_TargetAssemblyTypeName: SceneLoadForString, Assembly-CSharp
         m_MethodName: LoadScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 379852195}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: Play
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1820,11 +2116,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 86ab7011eeb8eb74c8632c5adfa38036, type: 3}
-    m_FontSize: 80
+    m_FontSize: 300
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 8
-    m_MaxSize: 80
+    m_MaxSize: 300
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -2100,11 +2396,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 08e27a9a08708254399d8b411ef78f42, type: 3}
-    m_FontSize: 80
+    m_FontSize: 300
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 8
-    m_MaxSize: 80
+    m_MaxSize: 300
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
