@@ -105,22 +105,22 @@ public class SuperAttack05 : MonoBehaviour
         while (true)
         {
             Vector3 rightLocalAngle = _muzzles[0].localEulerAngles;// ƒ[ƒJƒ‹À•W‚ðŠî€‚ÉŽæ“¾
-            rightLocalAngle.z += 10.0f;// Šp“x‚ðÝ’è
+            rightLocalAngle.z += 22.0f;// Šp“x‚ðÝ’è
             _muzzles[0].localEulerAngles = rightLocalAngle;//‰ñ“]‚·‚é
             //’e‚ð”­ŽËi‰¼‚ÅBomb‚É‚µ‚Ä‚Ü‚·j
             var firstBossEnemyBullet = ObjectPool.Instance.UseBullet(_muzzles[0].position, PoolObjectType.Player01BombChild);
             //’e‚ðƒ}ƒYƒ‹‚ÌŒü‚«‚É‡‚í‚¹‚é
             firstBossEnemyBullet.transform.rotation = _muzzles[0].rotation;
 
-            Vector3 leftLocalAngle = _muzzles[0].localEulerAngles;// ƒ[ƒJƒ‹À•W‚ðŠî€‚ÉŽæ“¾
-            leftLocalAngle.z -= 10.0f;// Šp“x‚ðÝ’è
-            _muzzles[0].localEulerAngles = leftLocalAngle;//‰ñ“]‚·‚é
+            Vector3 leftLocalAngle = _muzzles[1].localEulerAngles;// ƒ[ƒJƒ‹À•W‚ðŠî€‚ÉŽæ“¾
+            leftLocalAngle.z -= 22.0f;// Šp“x‚ðÝ’è
+            _muzzles[1].localEulerAngles = leftLocalAngle;//‰ñ“]‚·‚é
             //’e‚ð”­ŽËi‰¼‚ÅBomb‚É‚µ‚Ä‚Ü‚·j
             var secondBossEnemyBullet = ObjectPool.Instance.UseBullet(_muzzles[1].position, PoolObjectType.Player01BombChild);
             //’e‚ðƒ}ƒYƒ‹‚ÌŒü‚«‚É‡‚í‚¹‚é
             secondBossEnemyBullet.transform.rotation = _muzzles[1].rotation;
 
-            yield return new WaitForSeconds(_attackInterval);//UŒ‚•p“x(•b)
+            yield return new WaitForSeconds(JUDGMENT_TIME);//UŒ‚•p“x(•b)
             //”•bŒo‚Á‚½‚ç
             if (_timer >= _activationTime)
             {

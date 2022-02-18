@@ -155,6 +155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e09751e85238cd49aada95c3795e18e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _speed: 4
   _enemyHp: 10
   _attackInterval: 1
   _damageRatio: 1
@@ -297,6 +298,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d56cfb27eae4af47a65fa33ca2457e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _speed: 4
   _enemyHp: 10
   _attackInterval: 1
   _damageRatio: 1
@@ -611,13 +613,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 46600668}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: -1, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1339267468}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -180}
 --- !u!1 &77306085
 GameObject:
   m_ObjectHideFlags: 0
@@ -1772,6 +1774,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5beec9b6482f509419901d06104d1edc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _speed: 4
   _enemyHp: 10
   _attackInterval: 1
   _damageRatio: 1
@@ -1943,6 +1946,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fc7ad82783cad74a8f861332e4704de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _speed: 4
   _enemyHp: 10
   _attackInterval: 1
   _damageRatio: 1
@@ -3268,7 +3272,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2800cbf523e9fe84aab1e905848dc22c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerTag: 
   _muzzles:
   - {fileID: 1930539043}
   - {fileID: 46600669}
@@ -3411,6 +3414,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6eb125884120d1408b94f610f137547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _speed: 4
   _enemyHp: 10
   _attackInterval: 1
   _damageRatio: 1
