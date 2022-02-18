@@ -17,7 +17,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamage
     public float AttackInterval { get => _attackInterval; }
     public string PlayerBulletTag { get => _playerBulletTag; }
 
-    [SerializeField, Header("動きのスピード")] private float _speed = 5f:
+    [SerializeField, Header("動きのスピード")] private float _speed = 5f;
     [SerializeField, Header("体力")] private float _enemyHp = 10f;
     [SerializeField, Header("攻撃頻度(秒)")] private float _attackInterval = 1f;
     /// <summary>
