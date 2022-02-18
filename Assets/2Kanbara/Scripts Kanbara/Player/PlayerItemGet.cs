@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerItemGet : MonoBehaviour
 {
     [SerializeField, Header("アイテムがプレイヤーに近づく速度")] float _itemSpeed = 10f;
-    [SerializeField, Header("プレイヤーがアイテム回収ラインに触れたときにアイテムがプレイヤーに近づく速度")] float _getItemSpeed = 50f;
 
     [SerializeField, Header("アイテムのタグ")] string[] _itemTags = default;
 
@@ -22,7 +21,10 @@ public class PlayerItemGet : MonoBehaviour
         {
             if (collision.tag == itemTag)//アイテムに接触したら
             {
-                _itemObjectrb = collision.GetComponent<Rigidbody2D>();
+                if(_itemObjectrb == null)
+                {
+                    _itemObjectrb = collision.GetComponent<Rigidbody2D>();
+                }
                 ApproachPlayer();
             }
         }
@@ -34,6 +36,25 @@ public class PlayerItemGet : MonoBehaviour
         {
             if (collision.tag == itemTag)
             {
+                if (_itemObjectrb == null)
+                {
+                    _itemObjectrb = collision.GetComponent<Rigidbody2D>();
+                }
+                ApproachPlayer();
+            }
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        foreach(var itemTag in _itemTags)
+        {
+            if (collision.tag == itemTag)
+            {
+                if (_itemObjectrb == null)
+                {
+                    _itemObjectrb = collision.GetComponent<Rigidbody2D>();
+                }
                 ApproachPlayer();
             }
         }
@@ -44,14 +65,10 @@ public class PlayerItemGet : MonoBehaviour
     /// </summary>
     void ApproachPlayer()
     {
-        var dir = _playerRb.transform.position - _itemObjectrb.transform.position;
-        _itemObjectrb.velocity = dir.normalized * _itemSpeed;
-    }
-    /// <summary>
-    /// アイテムを全回収する関数
-    /// </summary>
-    void PlayerOnItemGetLine()
-    {
+        if(_playerRb == null)
+        {
+            _playerRb = GetComponentInParent<Rigidbody2D>();
+        }
         var dir = _playerRb.transform.position - _itemObjectrb.transform.position;
         _itemObjectrb.velocity = dir.normalized * _itemSpeed;
     }

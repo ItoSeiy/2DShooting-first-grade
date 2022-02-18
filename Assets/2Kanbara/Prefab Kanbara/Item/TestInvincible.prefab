@@ -137,8 +137,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerTag: Player
   _itemGetColiderTag: PlayerTrigger
+  _itemSpeed: 10
   _childrenPS: {fileID: 7215296348193069637}
-  _stratPS: 0
+  _stratPS: 1
 --- !u!1001 &1290278778955199145
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -150,6 +151,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: InvisibleItemParticleSystem
+      objectReference: {fileID: 0}
+    - target: {fileID: 8486501860283377900, guid: d137d88752c40bc48bab128121c324c4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8486501860283377901, guid: d137d88752c40bc48bab128121c324c4,
         type: 3}

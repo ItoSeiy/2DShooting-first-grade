@@ -20,6 +20,7 @@ public class PlayerBase : MonoBehaviour
     protected AudioSource _audioSource;
     Animator _anim;
     Vector2 _dir;
+    List<Rigidbody2D> _itemRbs = new List<Rigidbody2D>();
 
     [SerializeField, Header("リスポーンするポジション")] Transform _playerRespawn = default;
     [SerializeField, Header("弾を発射するポジション")] protected Transform _muzzle = default;
@@ -45,6 +46,7 @@ public class PlayerBase : MonoBehaviour
 
     [SerializeField, Header("動くスピード")] float _moveSpeed = default;
     [SerializeField, Header("精密操作のスピード")] float _lateMove = default;
+    [SerializeField, Header("アイテムを回収するときにアイテムが集まる速度")] float _itemGetSpeed = default;
 
     [SerializeField, Header("Plaerの残機の上限")] int _playerResidueLimit = 99;
     [SerializeField, Header("Playerのボムの上限")] int _playerBombLimit = 99;
@@ -118,9 +120,6 @@ public class PlayerBase : MonoBehaviour
     const int _default = 0;
     /// <summary>InvincibleObjectを初期化する定数</summary>
     const int _returnDefault = -150;
-
-    bool _isGetItem = false;
-    public bool IsGetItem => _isGetItem;
 
     private void Start()
     {
@@ -380,15 +379,21 @@ public class PlayerBase : MonoBehaviour
 
         if(collision.tag == _playerItemGetLineTag)
         {
-            _isGetItem = true;
+            string[] itemTags = new string[] {_1upTag, _bombItemTag, _pointTag, _powerTag, _invincibleTag};
+            foreach(var itemTag in itemTags)
+            {
+                OnItemGetLine(itemTag);
+            }
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    void OnItemGetLine(string itemTag)
     {
-        if(collision.tag == _playerItemGetLineTag)
+        GameObject[]? items = GameObject.FindGameObjectsWithTag(itemTag);
+        foreach(var item in items)
         {
-            _isGetItem = false;
+            var itemBase = item.GetComponent<ItemBase>();
+            itemBase.OnItemGetLine();
         }
     }
 
