@@ -9,9 +9,8 @@ public class SuperAttackFirework : MonoBehaviour
     [SerializeField, Header("必殺前に移動するポジション")] Transform _superAttackPos = null;
     /// <summary>バレットを発射するポジション</summary>
     [SerializeField, Header("Bulletを発射するポジション")] Transform[] _muzzles = null;
-    /// <summary>速度</summary>
-    [SerializeField, Header("スピード")] float _speed = 4f;
-    
+    /// <summary>必殺前に移動するときのスピード</summary>
+    [SerializeField, Header("必殺前に移動するときのスピード")] float _speed = 4f;
     /// <summary>初期の攻撃割合</summary>
     float _initialDamageRatio;
     /// <summary>タイマー</summary>
@@ -53,6 +52,7 @@ public class SuperAttackFirework : MonoBehaviour
         _timer += Time.deltaTime;
     }
 
+    /// <summary>花火のような軌道、全方位に発射</summary>
     IEnumerator Firework()
     {
         _timer = RESET_TIME;//タイムリセット
@@ -104,10 +104,10 @@ public class SuperAttackFirework : MonoBehaviour
         while (true)
         {
             //360度全方位に発射
-            for (float i = 0f; i <= 360f; i += 10)//下半分だけ→(float i = -270f; i <= -90f; i += 10)
+            for (float angle = 0f; angle <= 360f; angle += 10)//下半分だけ→(float i = -270f; i <= -90f; i += 10)
             {
                 Vector3 localAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
-                localAngle.z = i;// 角度を設定
+                localAngle.z = angle;// 角度を設定
                 _muzzles[0].localEulerAngles = localAngle;//回転する
                                                           //弾を発射（仮でBombにしてます）
                 var bossEnemyBullet = ObjectPool.Instance.UseBullet(_muzzles[0].position, PoolObjectType.Player01BombChild);

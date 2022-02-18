@@ -10,8 +10,8 @@ public class SuperAttackSpiral : MonoBehaviour
     [SerializeField, Header("必殺前に移動するポジション")] Transform _superAttackPos = null;
     /// <summary>バレットを発射するポジション</summary>
     [SerializeField, Header("Bulletを発射するポジション")] Transform[] _muzzles = null;
-    /// <summary>速度</summary>
-    [SerializeField, Header("スピード")] float _speed = 4f;
+    /// <summary>必殺前に移動するときのスピード</summary>
+    [SerializeField, Header("必殺前に移動するときのスピード")] float _speed = 4f;
     /// <summary>初期の攻撃割合</summary>
     float _initialDamageRatio;    
     /// <summary>タイマー</summary>
@@ -27,11 +27,13 @@ public class SuperAttackSpiral : MonoBehaviour
     /// <summary>横方向</summary>
     float _horizontalDir = 0f;
     /// <summary>縦方向</summary>
-    float _verticalDir = 0f;
+    float _verticalDir = 0f;    
     /// <summary>必殺技待機時間</summary>
     [SerializeField, Header("必殺技待機時間")] float _waitTime = 5f;
     /// <summary>必殺技発動時間</summary>
     [SerializeField, Header("必殺技発動時間")] float _activationTime = 30f;
+    /// <summary>マズルの角度間隔</summary>
+    [SerializeField,Header("マズルの角度間隔")]　float _angle = 10f;
     /// <summary>修正値</summary>
     const float PLAYER_POS_OFFSET = 0.5f;
     /// <summary>判定回数の制限</summary>
@@ -51,7 +53,7 @@ public class SuperAttackSpiral : MonoBehaviour
         _timer += Time.deltaTime;
     }
 
-    /// <summary>渦巻のような軌道</summary>
+    /// <summary>渦巻のような軌道、反時計回りに発射</summary>
     IEnumerator Spiral()
     {
         _timer = RESET_TIME;//タイムリセット
@@ -103,7 +105,7 @@ public class SuperAttackSpiral : MonoBehaviour
         while (true)
         {
             Vector3 localAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
-            localAngle.z += 10.0f;// 角度を設定
+            localAngle.z += _angle;// 角度を設定
             _muzzles[0].localEulerAngles = localAngle;//回転する
             //弾を発射（仮でBombにしてます）
             var bossEnemyBullet = ObjectPool.Instance.UseBullet(_muzzles[0].position, PoolObjectType.Player01BombChild);

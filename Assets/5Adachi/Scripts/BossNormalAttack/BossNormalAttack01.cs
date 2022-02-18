@@ -13,8 +13,6 @@ public class BossNormalAttack01 : MonoBehaviour
     [SerializeField,Header("playerのtag")] string _playerTag = null;
     /// <summary>バレットを発射するポジション</summary>
     [SerializeField, Header("Bulletを発射するポジション")] Transform[] _muzzles = null;
-    /// <summary>速度</summary>
-    [SerializeField, Header("スピード")] float _speed = 4f;
     /// <summary>攻撃頻度</summary>
     [SerializeField, Header("攻撃頻度(秒)")] private float _attackInterval = 0.6f;
 

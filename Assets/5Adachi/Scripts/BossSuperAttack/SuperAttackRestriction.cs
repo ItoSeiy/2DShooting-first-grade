@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SuperAttackWindmill : MonoBehaviour
+public class SuperAttackRestriction: MonoBehaviour
 {
     /// <summary>形状や大きさの概念を持った物質</summary>
     Rigidbody2D _rb;
-    /// <summary>必殺前に移動するポジション</summary>
-    [SerializeField, Header("必殺前に移動するポジション")] Transform _superAttackPos = null;
     /// <summary>バレットを発射するポジション</summary>
     [SerializeField, Header("Bulletを発射するポジション")] Transform[] _muzzles = null;
     /// <summary>必殺前に移動するときのスピード</summary>
     [SerializeField, Header("必殺前に移動するときのスピード")] float _speed = 4f;
+    /// <summary>必殺前に移動するポジション</summary>
+    [SerializeField, Header("必殺前に移動するポジション")] Transform _superAttackPos = null;
     /// <summary>初期の攻撃割合</summary>
     float _initialDamageRatio;
     /// <summary>タイマー</summary>
@@ -28,37 +28,35 @@ public class SuperAttackWindmill : MonoBehaviour
     float _horizontalDir = 0f;
     /// <summary>縦方向</summary>
     float _verticalDir = 0f;
+    float a = 0f;
     /// <summary>必殺技待機時間</summary>
     [SerializeField, Header("必殺技待機時間")] float _waitTime = 5f;
     /// <summary>必殺技発動時間</summary>
     [SerializeField, Header("必殺技発動時間")] float _activationTime = 30f;
     /// <summary>攻撃頻度</summary>
-    [SerializeField, Header("攻撃頻度(秒)")] float _attackInterval = 0.2f;
-    /// <summary>マズルの角度間隔</summary>
-    [SerializeField, Header("マズルの角度間隔")] float _angle = 10f;
+    [SerializeField, Header("攻撃頻度(秒)")] private float _attackInterval = 0.6f;
     /// <summary>修正値</summary>
     const float PLAYER_POS_OFFSET = 0.5f;
     /// <summary>判定回数の制限</summary>
     const float JUDGMENT_TIME = 1 / 60f;
-    /// <summary>0度の角度</summary>
-    const float ZERO_DEGREE_ANGLE = 0f;
     /// <summary>リセットタイマー</summary>
     const float RESET_TIME = 0f;
-
+    /// <summary>修正値</summary>
+    const float MUZZLE_ROT_OFFSET = 4.9f;
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();//《スタート》でゲットコンポーネント
-        StartCoroutine(Windmill()); //コルーチンを発動    
+        StartCoroutine(Restriction()); //コルーチンを発動    
     }
-
     void Update()
     {
-        _timer += Time.deltaTime;
+        _timer += Time.deltaTime;//タイマー
     }
 
-
-    /// <summary>風車のような軌道、反時計回りに発射</summary>
-    IEnumerator Windmill()
+    /// <summary>Firework×Windmillのような軌道、必殺技残り時間が半分を切ると逆回転になる
+    /// <para>Firework＝花火のような軌道,全方位に発射</para>
+    /// <para>Windmill＝渦巻のような軌道,反時計回りに発射</para></summary>
+    IEnumerator Restriction()
     {
         _timer = RESET_TIME;//タイムリセット
 
@@ -66,7 +64,7 @@ public class SuperAttackWindmill : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(JUDGMENT_TIME);//判定回数の制限
-                                                           //横方向
+            //横方向
             _horizontalDir = _superAttackPos.position.x - transform.position.x;
             //縦方向
             _verticalDir = _superAttackPos.position.y - transform.position.y;
@@ -108,44 +106,45 @@ public class SuperAttackWindmill : MonoBehaviour
         //必殺技発動
         while (true)
         {
-            //親オブジェクト
+            //必殺技発動時間の後半になったら反時計回りに全方位発射
+            if (_timer >= _activationTime / 2f)
+            {
+                //360度全方位に発射
+                for (float angle = 0 + a + MUZZLE_ROT_OFFSET; angle <= 360f + a + MUZZLE_ROT_OFFSET; angle += 10f)
+                {
+                    Vector3 localAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
+                    localAngle.z = -angle;// 角度を設定
+                    _muzzles[0].localEulerAngles = localAngle;//回転する
+                    //弾を発射（仮でBombにしてます）
+                    var bossEnemyBullet = ObjectPool.Instance.UseBullet(_muzzles[0].position, PoolObjectType.Player01BombChild);
+                    //弾をマズルの向きに合わせる
+                    bossEnemyBullet.transform.rotation = _muzzles[0].rotation;
+                }
 
-            //1つ目のマズル
-            Vector3 firstLocalAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
-            firstLocalAngle.z += _angle;// 角度を設定
-            _muzzles[0].localEulerAngles = firstLocalAngle;//回転する
-            //弾を発射（仮でBombにしてます）
-            var firstBossEnemyBullet = ObjectPool.Instance.UseBullet(_muzzles[0].position, PoolObjectType.Player01BombChild);
-            //弾をマズルの向きに合わせる
-            firstBossEnemyBullet.transform.rotation = _muzzles[0].rotation;
-
-            //子オブジェクト
-
-            //2つ目のマズル
-            //弾を発射（仮でBombにしてます）
-            var secondBossEnemyBullet = ObjectPool.Instance.UseBullet(_muzzles[1].position, PoolObjectType.Player01BombChild);
-            //弾をマズルの向きに合わせる
-            secondBossEnemyBullet.transform.rotation = _muzzles[1].rotation;
-
-            //3つ目のマズル
-            //弾を発射（仮でBombにしてます）
-            var thirdBossEnemyBullet = ObjectPool.Instance.UseBullet(_muzzles[2].position, PoolObjectType.Player01BombChild);
-            //弾をマズルの向きに合わせる
-            thirdBossEnemyBullet.transform.rotation = _muzzles[2].rotation;
-
-            //4つ目のマズル
-            //弾を発射（仮でBombにしてます）
-            var forceBossEnemyBullet = ObjectPool.Instance.UseBullet(_muzzles[3].position, PoolObjectType.Player01BombChild);
-            //弾をマズルの向きに合わせる
-            forceBossEnemyBullet.transform.rotation = _muzzles[3].rotation;
+            }
+            //必殺技発動時間の前半までは反時計回りに全方位発射
+            else
+            {
+                //360度全方位に発射
+                for (float angle = 0 + a; angle <= 360f + a; angle += 10)
+                {
+                    Vector3 localAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
+                    localAngle.z = angle;// 角度を設定
+                    _muzzles[0].localEulerAngles = localAngle;//回転する
+                                                              //弾を発射（仮でBombにしてます）
+                    var bossEnemyBullet = ObjectPool.Instance.UseBullet(_muzzles[0].position, PoolObjectType.Player01BombChild);
+                    //弾をマズルの向きに合わせる
+                    bossEnemyBullet.transform.rotation = _muzzles[0].rotation;
+                }
+            }
+            a++;
 
             yield return new WaitForSeconds(_attackInterval);//攻撃頻度(秒)
-
             //数秒経ったら
             if (_timer >= _activationTime)
             {
-                firstLocalAngle.z = ZERO_DEGREE_ANGLE;// 角度を0度に設定
-                _muzzles[0].localEulerAngles = firstLocalAngle;//停止
+                /*localAngle.z = ZERO_DEGREE_ANGLE;// 角度を0度に設定
+                _muzzles[0].localEulerAngles = localAngle;//停止*/
                 break;//終了
             }
         }
