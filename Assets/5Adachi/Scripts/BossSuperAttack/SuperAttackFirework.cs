@@ -37,8 +37,6 @@ public class SuperAttackFirework : MonoBehaviour
     const float PLAYER_POS_OFFSET = 0.5f;
     /// <summary>判定回数の制限</summary>
     const float JUDGMENT_TIME = 1 / 60f;
-    /// <summary>0度の角度</summary>
-    const float ZERO_DEGREE_ANGLE = 0f;
     /// <summary>リセットタイマー</summary>
     const float RESET_TIME = 0f;
     void Start()
@@ -46,10 +44,9 @@ public class SuperAttackFirework : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();//《Start》でゲットコンポーネント
         StartCoroutine(Firework()); //コルーチンを発動    
     }
-
     void Update()
     {
-        _timer += Time.deltaTime;
+        _timer += Time.deltaTime;//タイマー
     }
 
     /// <summary>花火のような軌道、全方位に発射</summary>
@@ -108,19 +105,15 @@ public class SuperAttackFirework : MonoBehaviour
             {
                 Vector3 localAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
                 localAngle.z = rotation;// 角度を設定
-                _muzzles[0].localEulerAngles = localAngle;//回転する
-                                                          //弾を発射（仮でBombにしてます）
-                var bossEnemyBullet = ObjectPool.Instance.UseBullet(_muzzles[0].position, PoolObjectType.Player01BombChild);
-                //弾をマズルの向きに合わせる
-                bossEnemyBullet.transform.rotation = _muzzles[0].rotation;
+                _muzzles[0].localEulerAngles = localAngle;//回転する                                                       
+                //弾をマズルの向きに合わせて弾を発射（仮でBombにしてます）
+                ObjectPool.Instance.UseBullet(_muzzles[0].position, PoolObjectType.Player01BombChild).transform.rotation = _muzzles[0].rotation;
             }
 
             yield return new WaitForSeconds(_attackInterval);//攻撃頻度(秒)
             //数秒経ったら
             if (_timer >= _activationTime)
             {
-                /*localAngle.z = ZERO_DEGREE_ANGLE;// 角度を0度に設定
-                _muzzles[0].localEulerAngles = localAngle;//停止*/
                 break;//終了
             }
         }

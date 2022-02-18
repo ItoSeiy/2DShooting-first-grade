@@ -105,46 +105,40 @@ public class SuperAttackEightShape : MonoBehaviour
         //必殺技発動
         while (true)
         {
-                //マズル0（親オブジェクト）を反時計回り（+）に動かす
+                //マズル0（親オブジェクト）を反時計回り（+）に回転する
                 Vector3 upperLocalAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
                 upperLocalAngle.z += _angle;// 角度を設定
                 _muzzles[0].localEulerAngles = upperLocalAngle;//回転する
 
                 //マズル0（親オブジェクト）
-                //弾を発射（仮でBombにしてます）
-                var firstBossEnemyBullet = ObjectPool.Instance.UseBullet(_muzzles[0].position, PoolObjectType.Player01BombChild);
-                //弾をマズルの向きに合わせる
-                firstBossEnemyBullet.transform.rotation = _muzzles[0].rotation;
+
+                //弾をマズルの向きに合わせて弾を発射（仮でBombにしてます）
+                ObjectPool.Instance.UseBullet(_muzzles[0].position, PoolObjectType.Player01BombChild).transform.rotation = _muzzles[0].rotation;
 
                 //マズル1（子オブジェクト）
-                //弾を発射（仮でBombにしてます）
-                var secondBossEnemyBullet = ObjectPool.Instance.UseBullet(_muzzles[1].position, PoolObjectType.Player01BombChild);
-                //弾をマズルの向きに合わせる
-                secondBossEnemyBullet.transform.rotation = _muzzles[1].rotation;
+                //
+                //弾をマズル1の向きに合わせて弾を発射（仮でBombにしてます）
+                ObjectPool.Instance.UseBullet(_muzzles[1].position, PoolObjectType.Player01BombChild).transform.rotation = _muzzles[1].rotation;
 
-                //マズル2（親オブジェクト）を時計回り（-）に動かす
+                //マズル2（親オブジェクト）を時計回り（-）に回転する
                 Vector3 rightLocalAngle = _muzzles[2].localEulerAngles;// ローカル座標を基準に取得
                 rightLocalAngle.z -= _angle;// 角度を設定
                 _muzzles[2].localEulerAngles = rightLocalAngle;//回転する
 
                 //マズル2（親オブジェクト）
-                //弾を発射（仮でBombにしてます）
-                var thirdBossEnemyBullet = ObjectPool.Instance.UseBullet(_muzzles[2].position, PoolObjectType.Player01BombChild);
-                //弾をマズルの向きに合わせる
-                thirdBossEnemyBullet.transform.rotation = _muzzles[2].rotation;
+
+                //弾をマズル2の向きに合わせて弾を発射（仮でBombにしてます）
+                ObjectPool.Instance.UseBullet(_muzzles[2].position, PoolObjectType.Player01BombChild).transform.rotation = _muzzles[2].rotation;
 
                 //マズル3（子オブジェクト）
-                //弾を発射（仮でBombにしてます）
-                var fourthBossEnemyBullet = ObjectPool.Instance.UseBullet(_muzzles[3].position, PoolObjectType.Player01BombChild);
-                //弾をマズルの向きに合わせる
-                fourthBossEnemyBullet.transform.rotation = _muzzles[3].rotation;
+                
+                //弾をマズル3の向きに合わせて弾を発射（仮でBombにしてます）
+                ObjectPool.Instance.UseBullet(_muzzles[3].position, PoolObjectType.Player01BombChild).transform.rotation = _muzzles[3].rotation;
 
             yield return new WaitForSeconds(_attackInterval);//攻撃頻度(秒)
             //数秒経ったら
             if (_timer >= _activationTime)
             {
-                /*localAngle.z = ZERO_DEGREE_ANGLE;// 角度を0度に設定
-                _muzzles[0].localEulerAngles = localAngle;//停止*/
                 break;//終了
             }
         }

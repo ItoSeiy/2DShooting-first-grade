@@ -40,8 +40,6 @@ public class SuperAttackWindmill : MonoBehaviour
     const float PLAYER_POS_OFFSET = 0.5f;
     /// <summary>判定回数の制限</summary>
     const float JUDGMENT_TIME = 1 / 60f;
-    /// <summary>0度の角度</summary>
-    const float ZERO_DEGREE_ANGLE = 0f;
     /// <summary>リセットタイマー</summary>
     const float RESET_TIME = 0f;
 
@@ -50,12 +48,10 @@ public class SuperAttackWindmill : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();//《スタート》でゲットコンポーネント
         StartCoroutine(Windmill()); //コルーチンを発動    
     }
-
     void Update()
     {
-        _timer += Time.deltaTime;
+        _timer += Time.deltaTime;//タイマー
     }
-
 
     /// <summary>風車のような軌道、反時計回りに発射</summary>
     IEnumerator Windmill()
@@ -66,7 +62,7 @@ public class SuperAttackWindmill : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(JUDGMENT_TIME);//判定回数の制限
-                                                           //横方向
+            //横方向
             _horizontalDir = _superAttackPos.position.x - transform.position.x;
             //縦方向
             _verticalDir = _superAttackPos.position.y - transform.position.y;
@@ -77,18 +73,18 @@ public class SuperAttackWindmill : MonoBehaviour
             _upperRange = transform.position.y < _superAttackPos.position.y + PLAYER_POS_OFFSET;
             _downRange = transform.position.y > _superAttackPos.position.y - PLAYER_POS_OFFSET;
             //行きたいポジションに移動する
-            //近かったら
+            //もし近かったら
             if (_rightRange && _leftRange && _upperRange && _downRange)
             {
                 Debug.Log("結果は" + _rightRange + _leftRange + _upperRange + _downRange);
-                //スムーズに移動
+                //スムーズに到着
                 _rb.velocity = new Vector2(_horizontalDir, _verticalDir) * _speed;
             }
             //遠かったら
             else
             {
                 Debug.Log("結果は" + _rightRange + _leftRange + _upperRange + _downRange);
-                //安定して移動
+                //安定した速度で移動
                 _rb.velocity = new Vector2(_horizontalDir, _verticalDir).normalized * _speed;
             }
 
@@ -110,42 +106,30 @@ public class SuperAttackWindmill : MonoBehaviour
         {
             //親オブジェクト
 
-            //1つ目のマズル
+            //マズルを回転する
             Vector3 firstLocalAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
             firstLocalAngle.z += _angle;// 角度を設定
             _muzzles[0].localEulerAngles = firstLocalAngle;//回転する
-            //弾を発射（仮でBombにしてます）
-            var firstBossEnemyBullet = ObjectPool.Instance.UseBullet(_muzzles[0].position, PoolObjectType.Player01BombChild);
-            //弾をマズルの向きに合わせる
-            firstBossEnemyBullet.transform.rotation = _muzzles[0].rotation;
+
+            //弾をマズル0の向きに合わせて弾を発射（仮でBombにしてます）
+            ObjectPool.Instance.UseBullet(_muzzles[0].position, PoolObjectType.Player01BombChild).transform.rotation = _muzzles[0].rotation;
 
             //子オブジェクト
 
-            //2つ目のマズル
-            //弾を発射（仮でBombにしてます）
-            var secondBossEnemyBullet = ObjectPool.Instance.UseBullet(_muzzles[1].position, PoolObjectType.Player01BombChild);
-            //弾をマズルの向きに合わせる
-            secondBossEnemyBullet.transform.rotation = _muzzles[1].rotation;
+            //弾をマズル1の向きに合わせて弾を発射（仮でBombにしてます）
+            ObjectPool.Instance.UseBullet(_muzzles[1].position, PoolObjectType.Player01BombChild).transform.rotation = _muzzles[1].rotation;
 
-            //3つ目のマズル
-            //弾を発射（仮でBombにしてます）
-            var thirdBossEnemyBullet = ObjectPool.Instance.UseBullet(_muzzles[2].position, PoolObjectType.Player01BombChild);
-            //弾をマズルの向きに合わせる
-            thirdBossEnemyBullet.transform.rotation = _muzzles[2].rotation;
+            //弾をマズル2の向きに合わせて弾を発射（仮でBombにしてます）
+            ObjectPool.Instance.UseBullet(_muzzles[2].position, PoolObjectType.Player01BombChild).transform.rotation = _muzzles[2].rotation;
 
-            //4つ目のマズル
-            //弾を発射（仮でBombにしてます）
-            var forceBossEnemyBullet = ObjectPool.Instance.UseBullet(_muzzles[3].position, PoolObjectType.Player01BombChild);
-            //弾をマズルの向きに合わせる
-            forceBossEnemyBullet.transform.rotation = _muzzles[3].rotation;
+            //弾をのマズル3の向きに合わせて弾を発射（仮でBombにしてます）
+            ObjectPool.Instance.UseBullet(_muzzles[3].position, PoolObjectType.Player01BombChild).transform.rotation = _muzzles[3].rotation;
 
             yield return new WaitForSeconds(_attackInterval);//攻撃頻度(秒)
 
             //数秒経ったら
             if (_timer >= _activationTime)
             {
-                firstLocalAngle.z = ZERO_DEGREE_ANGLE;// 角度を0度に設定
-                _muzzles[0].localEulerAngles = firstLocalAngle;//停止
                 break;//終了
             }
         }

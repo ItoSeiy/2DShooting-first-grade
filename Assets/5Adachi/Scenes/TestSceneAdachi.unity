@@ -3119,6 +3119,7 @@ GameObject:
   - component: {fileID: 1339267475}
   - component: {fileID: 1339267476}
   - component: {fileID: 1339267477}
+  - component: {fileID: 1339267478}
   m_Layer: 0
   m_Name: TestBoss00SpeciaAttack
   m_TagString: Untagged
@@ -3340,7 +3341,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1339267465}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e65931d9c1362b84a8bef11382a0b8c5, type: 3}
   m_Name: 
@@ -3385,7 +3386,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1339267465}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9b001a49a3fe1c64ea511aac3470fd81, type: 3}
   m_Name: 
@@ -3397,6 +3398,25 @@ MonoBehaviour:
   _waitTime: 5
   _activationTime: 30
   _attackInterval: 0.2
+--- !u!114 &1339267478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1339267465}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf3dc8619385f88468e56fd9c1a65262, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _superAttackPos: {fileID: 1415339303}
+  _muzzles:
+  - {fileID: 1930539043}
+  _speed: 4
+  _waitTime: 5
+  _activationTime: 30
+  _angle: 10
 --- !u!1 &1415339302
 GameObject:
   m_ObjectHideFlags: 0

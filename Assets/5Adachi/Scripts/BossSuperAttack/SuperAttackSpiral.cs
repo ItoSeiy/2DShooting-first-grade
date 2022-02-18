@@ -38,8 +38,6 @@ public class SuperAttackSpiral : MonoBehaviour
     const float PLAYER_POS_OFFSET = 0.5f;
     /// <summary>判定回数の制限</summary>
     const float JUDGMENT_TIME = 1 / 60f;
-    /// <summary>0度の角度</summary>
-    const float ZERO_DEGREE_ANGLE = 0f;
     /// <summary>リセットタイマー</summary>
     const float RESET_TIME = 0f;
     void Start()
@@ -47,10 +45,9 @@ public class SuperAttackSpiral : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();//《スタート》でゲットコンポーネント
         StartCoroutine(Spiral()); //コルーチンを発動    
     }
-
     void Update()
     {
-        _timer += Time.deltaTime;
+        _timer += Time.deltaTime;//タイマー
     }
 
     /// <summary>渦巻のような軌道、反時計回りに発射</summary>
@@ -104,21 +101,18 @@ public class SuperAttackSpiral : MonoBehaviour
         //必殺技発動
         while (true)
         {
+            //マズルを回転する
             Vector3 localAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
             localAngle.z += _angle;// 角度を設定
-            _muzzles[0].localEulerAngles = localAngle;//回転する
-            //弾を発射（仮でBombにしてます）
-            var bossEnemyBullet = ObjectPool.Instance.UseBullet(_muzzles[0].position, PoolObjectType.Player01BombChild);
-            //弾をマズルの向きに合わせる
-            bossEnemyBullet.transform.rotation = _muzzles[0].rotation;
+            _muzzles[0].localEulerAngles = localAngle;//回転する           
+            //弾をマズルの向きに合わせて弾を発射（仮でBombにしてます）
+            ObjectPool.Instance.UseBullet(_muzzles[0].position, PoolObjectType.Player01BombChild).transform.rotation = _muzzles[0].rotation;
 
             yield return new WaitForSeconds(JUDGMENT_TIME);//判定回数の調整
 
             //数秒経ったら
             if (_timer >= _activationTime)
             {
-                localAngle.z = ZERO_DEGREE_ANGLE;// 角度を0度に設定
-                _muzzles[0].localEulerAngles = localAngle;//停止
                 break;//終了
             }
         }

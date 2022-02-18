@@ -36,7 +36,7 @@ public class SuperAttackRestriction: MonoBehaviour
     /// <summary>攻撃頻度</summary>
     [SerializeField, Header("攻撃頻度(秒)")] private float _attackInterval = 0.6f;
     /// <summary>修正値</summary>
-    float _rotationOffset = 0.5f;
+    float _rotationOffset = 0f;
     /// <summary>修正値</summary>
     const float PLAYER_POS_OFFSET = 0.5f;
     /// <summary>判定回数の制限</summary>
@@ -112,15 +112,15 @@ public class SuperAttackRestriction: MonoBehaviour
             if (_timer >= _activationTime / 2f)
             {
                 //360度全方位に発射
-                for (float angle = 0 + a + MUZZLE_ROT_OFFSET; angle <= 360f + a + MUZZLE_ROT_OFFSET; angle += 10f)
+                for (float angle = 0 + _rotationOffset + MUZZLE_ROT_OFFSET; angle <= 360f + _rotationOffset + MUZZLE_ROT_OFFSET; angle += 10f)
                 {
+                    //マズルを回転する
                     Vector3 localAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
                     localAngle.z = -angle;// 角度を設定
                     _muzzles[0].localEulerAngles = localAngle;//回転する
-                    //弾を発射（仮でBombにしてます）
-                    var bossEnemyBullet = ObjectPool.Instance.UseBullet(_muzzles[0].position, PoolObjectType.Player01BombChild);
-                    //弾をマズルの向きに合わせる
-                    bossEnemyBullet.transform.rotation = _muzzles[0].rotation;
+                                       
+                    //弾をマズルの向きに合わせて弾を発射（仮でBombにしてます）
+                    ObjectPool.Instance.UseBullet(_muzzles[0].position, PoolObjectType.Player01BombChild).transform.rotation = _muzzles[0].rotation;
                 }
 
             }
@@ -128,25 +128,23 @@ public class SuperAttackRestriction: MonoBehaviour
             else
             {
                 //360度全方位に発射
-                for (float rotation = 0 + a; rotation <= 360f + a; rotation += 10)
+                for (float rotation = 0 + _rotationOffset; rotation <= 360f + _rotationOffset; rotation += 10)
                 {
+                    //マズルを回転する
                     Vector3 localAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
                     localAngle.z = rotation;// 角度を設定
                     _muzzles[0].localEulerAngles = localAngle;//回転する
-                                                              //弾を発射（仮でBombにしてます）
-                    var bossEnemyBullet = ObjectPool.Instance.UseBullet(_muzzles[0].position, PoolObjectType.Player01BombChild);
-                    //弾をマズルの向きに合わせる
-                    bossEnemyBullet.transform.rotation = _muzzles[0].rotation;
+                                       
+                    //弾をマズルの向きに合わせて弾を発射（仮でBombにしてます）
+                    ObjectPool.Instance.UseBullet(_muzzles[0].position, PoolObjectType.Player01BombChild).transform.rotation = _muzzles[0].rotation;
                 }
             }
-            a++;
+            _rotationOffset++;
 
             yield return new WaitForSeconds(_attackInterval);//攻撃頻度(秒)
             //数秒経ったら
             if (_timer >= _activationTime)
             {
-                /*localAngle.z = ZERO_DEGREE_ANGLE;// 角度を0度に設定
-                _muzzles[0].localEulerAngles = localAngle;//停止*/
                 break;//終了
             }
         }

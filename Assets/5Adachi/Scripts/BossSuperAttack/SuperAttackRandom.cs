@@ -2,21 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SuperAttackPrison : MonoBehaviour
+public class SuperAttackRandom : MonoBehaviour
 {
     /// <summary>形状や大きさの概念を持った物質</summary>
     Rigidbody2D _rb;
-    /// <summary>方向</summary>
-    Vector3 _dir;
-    /// <summary>プレイヤーのオブジェクト</summary>
-    private GameObject _player;
-    [SerializeField, Header("playerのtag")] string _playerTag = null;
-    /// <summary>バレットを発射するポジション</summary>
-    [SerializeField, Header("Bulletを発射するポジション")] Transform[] _muzzles = null;
-    /// <summary>速度</summary>
-    [SerializeField, Header("スピード")] float _speed = 4f;
     /// <summary>必殺前に移動するポジション</summary>
     [SerializeField, Header("必殺前に移動するポジション")] Transform _superAttackPos = null;
+    /// <summary>バレットを発射するポジション</summary>
+    [SerializeField, Header("Bulletを発射するポジション")] Transform[] _muzzles = null;
+    /// <summary>必殺前に移動するときのスピード</summary>
+    [SerializeField, Header("必殺前に移動するときのスピード")] float _speed = 4f;
     /// <summary>初期の攻撃割合</summary>
     float _initialDamageRatio;
     /// <summary>タイマー</summary>
@@ -37,28 +32,26 @@ public class SuperAttackPrison : MonoBehaviour
     [SerializeField, Header("必殺技待機時間")] float _waitTime = 5f;
     /// <summary>必殺技発動時間</summary>
     [SerializeField, Header("必殺技発動時間")] float _activationTime = 30f;
-    /// <summary>攻撃頻度</summary>
-    [SerializeField, Header("攻撃頻度(秒)")] private float _attackInterval = 0.6f;
+    /// <summary>マズルの角度間隔</summary>
+    [SerializeField, Header("マズルの角度間隔")] float _angle = 10f;
     /// <summary>修正値</summary>
     const float PLAYER_POS_OFFSET = 0.5f;
     /// <summary>判定回数の制限</summary>
     const float JUDGMENT_TIME = 1 / 60f;
     /// <summary>リセットタイマー</summary>
     const float RESET_TIME = 0f;
-
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();//《スタート》でゲットコンポーネント
-        _player = GameObject.FindGameObjectWithTag(_playerTag);//プレイヤーのタグを探す
-        StartCoroutine(Prison());//コルーチンを発動
+        StartCoroutine(Spiral()); //コルーチンを発動    
     }
     void Update()
     {
         _timer += Time.deltaTime;//タイマー
     }
 
-    /// <summary>playerを閉じ込めてplayerがいる方向に弾を発射する</summary>
-    IEnumerator Prison()
+    /// <summary>渦巻のような軌道、反時計回りに発射</summary>
+    IEnumerator Spiral()
     {
         _timer = RESET_TIME;//タイムリセット
 
@@ -103,32 +96,27 @@ public class SuperAttackPrison : MonoBehaviour
         }
         //_initialDamageRatio = AddDamageRatio;//初期値を設定
         //AddDamageRatio = 0.5f;//必殺時は攻撃割合を変更
-        _timer = RESET_TIME;//タイムリセット
+        _timer = 0f;//タイムリセット
 
         //必殺技発動
         while (true)
         {
-            //動くマズル
-
             //マズルを回転する
-
-            //ターゲット（プレイヤー）の方向を計算
-            _dir = (_player.transform.position - _muzzles[0].transform.position);
-            //ターゲット（プレイヤー）の方向に回転
-            _muzzles[0].transform.rotation = Quaternion.FromToRotation(Vector3.up, _dir);
-
-            //弾をマズル0の向きに合わせて弾を発射（仮でBombにしてます）
+            Vector3 localAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
+            localAngle.z = Random.Range(0f,360f);// 角度を設定(90f,270f)
+            _muzzles[0].localEulerAngles = localAngle;//回転する
+            
+            //弾をマズルの向きに合わせて弾を発射（仮でBombにしてます）
             ObjectPool.Instance.UseBullet(_muzzles[0].position, PoolObjectType.Player01BombChild).transform.rotation = _muzzles[0].rotation;
 
-            //動かないマズル
+            //マズルを回転する
+            localAngle.z = Random.Range(0f, 360f);// 角度を設定(90f,270f)
+            _muzzles[0].localEulerAngles = localAngle;//回転する
+           
+            //弾をマズルの向きに合わせて弾を発射（仮でBombにしてます）
+            ObjectPool.Instance.UseBullet(_muzzles[0].position, PoolObjectType.Player01BombChild).transform.rotation = _muzzles[0].rotation;
 
-            //弾をマズル1の向きに合わせて弾を発射（動くマズルの弾より右側）
-            ObjectPool.Instance.UseBullet(_muzzles[1].position, PoolObjectType.Player01BombChild).transform.rotation = _muzzles[1].rotation;
-            
-            //弾をマズル2の向きに合わせて弾を発射（動くマズルより左側）
-            ObjectPool.Instance.UseBullet(_muzzles[2].position, PoolObjectType.Player01BombChild).transform.rotation = _muzzles[2].rotation;
-
-            yield return new WaitForSeconds(_attackInterval);//攻撃頻度
+            yield return new WaitForSeconds(JUDGMENT_TIME);//判定回数の調整
 
             //数秒経ったら
             if (_timer >= _activationTime)
@@ -136,6 +124,7 @@ public class SuperAttackPrison : MonoBehaviour
                 break;//終了
             }
         }
+
         //AddDamageRatio = _initialDamageRatio;//攻撃割合を元に戻す
         yield break;//終了
     }
