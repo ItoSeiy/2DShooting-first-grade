@@ -12,18 +12,20 @@ public class EnemyController : EnemyBase
     [SerializeField,Header("Muzzleの切り替え")] MuzzleTransform _muzzleTransform;
 
     [SerializeField,Header("弾幕")] GameObject _bullet;
-    
+    [SerializeField, Header("攻撃頻度をランダムにするか")] AttackIntervelChange _attackIntervelChange;
+    [SerializeField, Header("攻撃頻度がランダム時のmax")] float _randomIntervalMax = 1f;
+    [SerializeField, Header("攻撃頻度がランダム時のmin")] float _randomIntervalMin = 0.1f;
     [SerializeField,Header("モブ敵の出現位置")] GeneratePos _generatePos;
     [SerializeField, Header("移動方向が変わるXまたはYの座標")] float _limitPos = 0;
     [SerializeField,Header("Muzzleが一周するまでの秒数")] float _rotateSecond = 2f;
     [SerializeField, Header("出た時の移動方向")] Vector2 _beforeDir;
     [SerializeField, Header("移動変わった後の移動方向")] Vector2 _afterDir;
-    bool _isBttomposition = false;
     [SerializeField, Header("何秒とどまるか")] float _stopcount = 0.0f;
 
     [SerializeField, Header("倒された時の音")] GameObject _deathSFX = default;
 
     [SerializeField, Header("モブの攻撃するときを変える")] AttackMode _attackMode;
+    bool _isBttomposition = false;
     bool _isMove = false;
     
 
@@ -104,6 +106,7 @@ public class EnemyController : EnemyBase
 
     protected override void Attack()
     {
+        
         switch (_muzzleTransform)
         {
             case MuzzleTransform.Normal:
@@ -111,10 +114,16 @@ public class EnemyController : EnemyBase
                 {
                     var bullet = Instantiate(_bullet);
                     bullet.transform.position = _muzzle[i].position;
-                    bullet.transform.rotation = _muzzle[i].rotation;
-                    
+                    bullet.transform.rotation = _muzzle[i].rotation;  
                 }
-                
+                switch(_attackIntervelChange)
+                {
+                    case AttackIntervelChange.No:
+                        break;
+                    case AttackIntervelChange.Yes:
+                        ChangeAttackIntervalRandom(_randomIntervalMin,_randomIntervalMax );
+                        break;
+                }
                 break;
             case MuzzleTransform.Rotate:
                 Rotate();
@@ -123,6 +132,14 @@ public class EnemyController : EnemyBase
                     var bullet = Instantiate(_bullet);
                     bullet.transform.position = _rotateMuzzles[i].position;
                     bullet.transform.rotation = _rotateMuzzles[i].rotation;
+                }
+                switch (_attackIntervelChange)
+                {
+                    case AttackIntervelChange.No:
+                        break;
+                    case AttackIntervelChange.Yes:
+                        ChangeAttackIntervalRandom(_randomIntervalMin, _randomIntervalMax);
+                        break;
                 }
 
                 break;
@@ -178,5 +195,10 @@ public class EnemyController : EnemyBase
     {
         StopAttack,
         MoveAtrack
+    }
+    enum AttackIntervelChange
+    {
+        Yes,
+        No
     }
 }
