@@ -104,10 +104,10 @@ public class SuperAttackFirework : MonoBehaviour
         while (true)
         {
             //360度全方位に発射
-            for (float angle = 0f; angle <= 360f; angle += 10)//下半分だけ→(float i = -270f; i <= -90f; i += 10)
+            for (float rotation = 0f; rotation <= 360f; rotation += 10)//下半分だけ→(float i = -270f; i <= -90f; i += 10)
             {
                 Vector3 localAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
-                localAngle.z = angle;// 角度を設定
+                localAngle.z = rotation;// 角度を設定
                 _muzzles[0].localEulerAngles = localAngle;//回転する
                                                           //弾を発射（仮でBombにしてます）
                 var bossEnemyBullet = ObjectPool.Instance.UseBullet(_muzzles[0].position, PoolObjectType.Player01BombChild);

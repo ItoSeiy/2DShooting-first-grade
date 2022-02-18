@@ -600,7 +600,7 @@ GameObject:
   m_Component:
   - component: {fileID: 46600669}
   m_Layer: 0
-  m_Name: DownMuzzle5
+  m_Name: DownMuzzleForEightShape
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -613,12 +613,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 46600668}
-  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
+  m_LocalRotation: {x: -0, y: -0, z: 1, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1339267468}
-  m_RootOrder: 6
+  m_Father: {fileID: 1280622537}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!1 &77306085
 GameObject:
@@ -2578,7 +2578,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1043716407}
   m_Layer: 0
-  m_Name: LeftMuzzle5 (1)
+  m_Name: LeftMuzzleForEightShape
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2591,12 +2591,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1043716406}
-  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalRotation: {x: -0, y: 0, z: -1, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1339267468}
-  m_RootOrder: 8
+  m_Father: {fileID: 1196272965}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!1 &1134146604
 GameObject:
@@ -2699,7 +2699,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1196272965}
   m_Layer: 0
-  m_Name: RightMuzzle5
+  m_Name: RightMuzzleForEightShape
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2715,9 +2715,10 @@ Transform:
   m_LocalRotation: {x: 0, y: -0, z: 0.7071068, w: -0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1043716407}
   m_Father: {fileID: 1339267468}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 270}
 --- !u!1001 &1245928793
 PrefabInstance:
@@ -2877,7 +2878,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1280622537}
   m_Layer: 0
-  m_Name: UpperMuzzle5
+  m_Name: UpperMuzzleForEightShape
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2893,7 +2894,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 46600669}
   m_Father: {fileID: 1339267468}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3116,6 +3118,7 @@ GameObject:
   - component: {fileID: 1339267471}
   - component: {fileID: 1339267475}
   - component: {fileID: 1339267476}
+  - component: {fileID: 1339267477}
   m_Layer: 0
   m_Name: TestBoss00SpeciaAttack
   m_TagString: Untagged
@@ -3210,9 +3213,7 @@ Transform:
   - {fileID: 393988657}
   - {fileID: 2085429352}
   - {fileID: 1280622537}
-  - {fileID: 46600669}
   - {fileID: 1196272965}
-  - {fileID: 1043716407}
   m_Father: {fileID: 0}
   m_RootOrder: 28
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3275,6 +3276,7 @@ MonoBehaviour:
   _waitTime: 5
   _activationTime: 30
   _attackInterval: 0.2
+  _angle: 10
 --- !u!114 &1339267472
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3293,6 +3295,7 @@ MonoBehaviour:
   _speed: 4
   _waitTime: 5
   _activationTime: 30
+  _angle: 10
 --- !u!114 &1339267473
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3310,7 +3313,6 @@ MonoBehaviour:
   - {fileID: 393988657}
   - {fileID: 573006664}
   - {fileID: 2020811148}
-  _speed: 4
   _attackInterval: 0.64
 --- !u!114 &1339267474
 MonoBehaviour:
@@ -3360,7 +3362,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1339267465}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2800cbf523e9fe84aab1e905848dc22c, type: 3}
   m_Name: 
@@ -3375,6 +3377,26 @@ MonoBehaviour:
   _waitTime: 5
   _activationTime: 30
   _attackInterval: 0.1
+  _angle: 10
+--- !u!114 &1339267477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1339267465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b001a49a3fe1c64ea511aac3470fd81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _muzzles:
+  - {fileID: 1930539043}
+  _speed: 4
+  _superAttackPos: {fileID: 1415339303}
+  _waitTime: 5
+  _activationTime: 30
+  _attackInterval: 0.2
 --- !u!1 &1415339302
 GameObject:
   m_ObjectHideFlags: 0

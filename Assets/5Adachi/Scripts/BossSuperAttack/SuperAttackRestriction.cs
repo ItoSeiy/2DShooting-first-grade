@@ -36,13 +36,15 @@ public class SuperAttackRestriction: MonoBehaviour
     /// <summary>攻撃頻度</summary>
     [SerializeField, Header("攻撃頻度(秒)")] private float _attackInterval = 0.6f;
     /// <summary>修正値</summary>
+    float _rotationOffset = 0.5f;
+    /// <summary>修正値</summary>
     const float PLAYER_POS_OFFSET = 0.5f;
     /// <summary>判定回数の制限</summary>
     const float JUDGMENT_TIME = 1 / 60f;
     /// <summary>リセットタイマー</summary>
     const float RESET_TIME = 0f;
-    /// <summary>修正値</summary>
-    const float MUZZLE_ROT_OFFSET = 4.9f;
+    /// <summary>逆回転時のマズルの修正値</summary>
+    const float MUZZLE_ROT_OFFSET = 4f;
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();//《スタート》でゲットコンポーネント
@@ -126,10 +128,10 @@ public class SuperAttackRestriction: MonoBehaviour
             else
             {
                 //360度全方位に発射
-                for (float angle = 0 + a; angle <= 360f + a; angle += 10)
+                for (float rotation = 0 + a; rotation <= 360f + a; rotation += 10)
                 {
                     Vector3 localAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
-                    localAngle.z = angle;// 角度を設定
+                    localAngle.z = rotation;// 角度を設定
                     _muzzles[0].localEulerAngles = localAngle;//回転する
                                                               //弾を発射（仮でBombにしてます）
                     var bossEnemyBullet = ObjectPool.Instance.UseBullet(_muzzles[0].position, PoolObjectType.Player01BombChild);
