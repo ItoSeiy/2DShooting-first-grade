@@ -47,8 +47,6 @@ public class TestSpecialAttack : EnemyBase
     private float _horizontal = 0f;
     /// <summary>垂直、縦方向</summary>
     private float _veritical = 0f;
-    /// <summary>速度</summary>
-    [SerializeField, Header("スピード")] float _speed = 4f;
     /// <summary>停止時間</summary>
     [SerializeField, Header("停止時間")] float _stopTime = 2f;
     /// <summary>移動時間</summary>
@@ -144,13 +142,13 @@ public class TestSpecialAttack : EnemyBase
             if(transform.position.x >= _spAttackPos.position.x - PLAYER_POS_OFFSET && transform.position.x <= _spAttackPos.position.x + PLAYER_POS_OFFSET && transform.position.y <= _spAttackPos.position.y + PLAYER_POS_OFFSET && transform.position.y >= _spAttackPos.position.y - PLAYER_POS_OFFSET)
             {
                 Debug.Log("b");
-                Rb.velocity = new Vector2((_spAttackPos.position.x - transform.position.x), (_spAttackPos.position.y - transform.position.y)) * _speed;
+                Rb.velocity = new Vector2((_spAttackPos.position.x - transform.position.x), (_spAttackPos.position.y - transform.position.y)) * Speed;
             }
             //遠かったら
             else
             {
                 Debug.Log("a");
-               Rb.velocity = new Vector2((_spAttackPos.position.x - transform.position.x), (_spAttackPos.position.y - transform.position.y)).normalized * _speed;
+               Rb.velocity = new Vector2((_spAttackPos.position.x - transform.position.x), (_spAttackPos.position.y - transform.position.y)).normalized * Speed;
             }
 
             //数秒経ったら
@@ -230,7 +228,7 @@ public class TestSpecialAttack : EnemyBase
 
             _dir = new Vector2(_horizontal, _veritical);//ランダムに移動
             //一定時間移動する
-            Rb.velocity = _dir.normalized * _speed;
+            Rb.velocity = _dir.normalized * Speed;
             yield return new WaitForSeconds(_moveTime);
 
             Debug.Log("x" + _horizontal);
