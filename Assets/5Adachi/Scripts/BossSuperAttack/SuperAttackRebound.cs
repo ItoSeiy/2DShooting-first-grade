@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SuperAttackKuShape : MonoBehaviour
+public class SuperAttackRebound : MonoBehaviour
 {
     Rigidbody2D _rb;
     /// <summary>必殺前に移動するポジション</summary>
@@ -39,7 +39,7 @@ public class SuperAttackKuShape : MonoBehaviour
     const float JUDGMENT_TIME = 1 / 60f;
     /// <summary>リセットタイマー</summary>
     const float RESET_TIME = 0f;
-
+    
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();//《Start》でゲットコンポーネント
@@ -104,18 +104,15 @@ public class SuperAttackKuShape : MonoBehaviour
         while (true)
         {
             //全方位に発射
-            for (float rotation = 0f; rotation <= 360f; rotation += 10f)
+            for (float rotation = 0f; rotation <= 360f; rotation += 20f)
             {
                 Vector3 localAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
                 localAngle.z = rotation;// 角度を設定
                 _muzzles[0].localEulerAngles = localAngle;//回転する
                 //弾をマズルの向きに合わせて弾を発射（Bombになっていますが実際はリバウンドするBulletを使います）
                 ObjectPool.Instance.UseBullet(_muzzles[0].position, PoolObjectType.Player01BombChild).transform.rotation = _muzzles[0].rotation;
-                if(rotation == 130f)
-                {
-                    rotation = 220f;
-                }
             }
+
             yield return new WaitForSeconds(_attackInterval);//攻撃頻度(秒)
             //数秒経ったら
             if (_timer >= _activationTime)
@@ -123,6 +120,7 @@ public class SuperAttackKuShape : MonoBehaviour
                 break;//終了
             }
         }
+
         //AddDamageRatio = _initialDamageRatio;//攻撃割合を元に戻す
         yield break;//終了
     }
