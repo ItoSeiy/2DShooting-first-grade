@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Player2 : PlayerBase
 {
-    public override void Bom()
+    public override void Bomb()
     {
         //ここにボムを使う処理を書く
         ObjectPool.Instance.UseBullet(_muzzle.position, PoolObjectType.Player02Bomb01);
         Debug.Log("ボムドーン！！");
-        base.Bom();
+        base.Bomb();
     }
 
     public override void InvincibleMode()

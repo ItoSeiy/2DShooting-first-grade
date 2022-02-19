@@ -19,11 +19,11 @@ public class ItemBase : MonoBehaviour
     [SerializeField, Header("演出が再生されるタイミング")] StartPS _stratPS = StartPS.Contact;
 
     bool _isGetItemMode = false;
-    bool _isTaking = false;
-    public bool IsTaking => _isTaking;
+    public bool _isTaking = false;
 
     private void OnEnable()
     {
+        _isTaking = false;
         if (_stratPS == StartPS.FirstTime)
         {
             _childrenPS.SetActive(true);
@@ -67,7 +67,6 @@ public class ItemBase : MonoBehaviour
             {
                 _childrenPS.SetActive(true);
             }
-            _isTaking = true;
         }
     }
 

@@ -129,8 +129,8 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     public void PlayerPowerItemCountChange(int itemCount)
     {
         _playerPowerItemCount += itemCount;
+        UIManager.Instance.UIPowerCountChange(itemCount);
         PlayerLevelSet();
-        UIManager.Instance.UIPowerCountChange(_playerPowerItemCount);
 
     }
 
@@ -139,21 +139,23 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     /// </summary>
     public  void PlayerLevelSet()
     {
-        if (PlayerPowerItemCount < _player.PlayerPowerRequiredNumberLevel2)//レベル１のとき
+        if (_playerPowerItemCount < _player.PlayerPowerRequiredNumberLevel2)//レベル１のとき
         {
             //パワーアイテムの数が、レベル２になるために必要なパワーアイテム数よりも少なかったときの処理
             _playerLevel = LEVEL1;
+            UIManager.Instance.UIPowerLimitChange(_player.PlayerPowerRequiredNumberLevel2);
         }
-        else if (PlayerPowerItemCount >= _player.PlayerPowerRequiredNumberLevel2 && PlayerPowerItemCount < _player.PlayerPowerRequiredNumberLevel3)//レベル2のとき
+        else if (_playerPowerItemCount >= _player.PlayerPowerRequiredNumberLevel2 && _playerPowerItemCount < _player.PlayerPowerRequiredNumberLevel3)//レベル2のとき
         {
             //パワーアイテムの数が、レベル２になるために必要なパワーアイテム数よりも多く、レベル３になるために必要なパワーアイテム数よりも少なかったときの処理
             _playerLevel = LEVEL2;
             UIManager.Instance.UIPowerLimitChange(_player.PlayerPowerRequiredNumberLevel3);
         }
-        else if (_player.PlayerPowerRequiredNumberLevel3 <= PlayerPowerItemCount)//レベル3のとき
+        else if (_player.PlayerPowerRequiredNumberLevel3 <= _playerPowerItemCount)//レベル3のとき
         {
             //パワーアイテムの数が、レベル３になるために必要なパワーアイテム数よりも多かったときの処理
             _playerLevel = LEVEL3;
+            UIManager.Instance.UIPowerLimitChange(_player.PlayerPowerLimit);
         }
     }
 

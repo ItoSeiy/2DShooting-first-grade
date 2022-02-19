@@ -101,7 +101,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0
+  m_GravityScale: 0.1
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -140,6 +140,7 @@ MonoBehaviour:
   _itemSpeed: 10
   _childrenPS: {fileID: 7215296348193069637}
   _stratPS: 1
+  _isTaking: 0
 --- !u!1001 &1290278778955199145
 PrefabInstance:
   m_ObjectHideFlags: 0

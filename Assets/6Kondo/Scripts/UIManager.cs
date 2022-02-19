@@ -39,7 +39,10 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     int _powerItemLimit3;
     int _powerItemCount;
     int _level;
-    const int Level3 = 3; 
+    const int _default = 0;
+    const int Level1 = 1;
+    const int Level2 = 2;
+    const int Level3 = 3;
 
     public void UISet()
     {
@@ -54,6 +57,8 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 
         _firstInvicibleObject = GameManager.Instance.PlayerInvincibleObjectCount;
         _invicibleObjectCountText.text = _firstInvicibleObject.ToString("000");
+       
+        _maxInvicibleObject = GameManager.Instance.PlayerInvicibleObjectLimit;
 
         _firstPowerItem = GameManager.Instance.PlayerPowerItemCount;
         _powerItemCountText.text = _firstPowerItem.ToString("000");
@@ -63,8 +68,6 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         _maxResidue = GameManager.Instance.PlayerResidueLimit;
 
         _maxBomb = GameManager.Instance.PlayerBombLimit;
-
-        _maxInvicibleObject = GameManager.Instance.PlayerInvicibleObjectLimit;
 
         _maxPowerItem = GameManager.Instance.PlayerPowerLimit;
         
@@ -131,29 +134,13 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
                 .OnComplete(() => _bombText.text = GameManager.Instance.PlayerBombCount.ToString("00"));
         }
     }
-    public void UIInvicibleLimitChange(int invicible)
-    {
-        int tempInvicible = int.Parse(_invicibleObjectLimitText.text.ToString());
-
-        tempInvicible = Mathf.Min(tempInvicible + invicible, _invicibleObjectLimit);
-
-        if (tempInvicible <= _invicibleObjectLimit)
-        {
-            DOTween.To(() => tempInvicible,
-                x => tempInvicible = x,
-                GameManager.Instance.PlayerInvicibleObjectLimit,
-                _invicibleObjectLimitChangeInterval)
-                .OnUpdate(() => _invicibleObjectLimitText.text = tempInvicible.ToString("000"))
-                .OnComplete(() => _invicibleObjectLimitText.text = GameManager.Instance.PlayerInvicibleObjectLimit.ToString("00"));
-        }
-    }
     public void UIInvisibleCountChange(int invisible)
     {
         int tempInvisible = int.Parse(_invicibleObjectCountText.text.ToString());
 
         tempInvisible = Mathf.Min(tempInvisible + invisible, _maxInvicibleObject);
 
-        if (tempInvisible <= _invicibleObjectCount)
+        if (tempInvisible <= _maxInvicibleObject)
         {
             DOTween.To(() => tempInvisible,
                 x => tempInvisible = x,
@@ -165,17 +152,41 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     }
     public void UIPowerLimitChange(int power)
     {
-        if (GameManager.Instance.PlayerLevel == Level3)
+        switch(GameManager.Instance.PlayerLevel)
         {
-            int tempPower = int.Parse(_powerItemLimitText.text.ToString());
+            case Level1:
+                int tempPower = int.Parse(_powerItemLimitText.text.ToString());
 
-            tempPower = Mathf.Min(tempPower + power, _powerItemLimit3);
-            DOTween.To(() => tempPower,
-                x => tempPower = x,
-                _powerItemLimit3,
-                _powerItemLimitChangeInterval)
-                .OnUpdate(() => _powerItemCountText.text = tempPower.ToString("000"))
-                .OnComplete(() => _powerItemLimitText.text = _powerItemLimit3.ToString("000"));
+                tempPower = Mathf.Min(tempPower + power, _powerItemLimit2);
+                DOTween.To(() => tempPower,
+                    x => tempPower = x,
+                    _powerItemLimit2,
+                    _powerItemLimitChangeInterval)
+                    .OnUpdate(() => _powerItemLimitText.text = tempPower.ToString("000"))
+                    .OnComplete(() => _powerItemLimitText.text = _powerItemLimit2.ToString("000"));
+                break;
+            case Level2:
+                int tempPower2 = int.Parse(_powerItemLimitText.text.ToString());
+
+                tempPower2 = Mathf.Min(tempPower2 + power, _powerItemLimit3);
+                DOTween.To(() => tempPower2,
+                    x => tempPower2 = x,
+                    _powerItemLimit3,
+                    _powerItemLimitChangeInterval)
+                    .OnUpdate(() => _powerItemLimitText.text = tempPower2.ToString("000"))
+                    .OnComplete(() => _powerItemLimitText.text = _powerItemLimit3.ToString("000"));
+                break;
+            case Level3:
+                int tempPower3 = int.Parse(_powerItemLimitText.text.ToString());
+
+                tempPower3 = Mathf.Min(tempPower3 + power, _maxPowerItem);
+                DOTween.To(() => tempPower3,
+                    x => tempPower3 = x,
+                    _maxPowerItem,
+                    _powerItemLimitChangeInterval)
+                    .OnUpdate(() => _powerItemLimitText.text = tempPower3.ToString("000"))
+                    .OnComplete(() => _powerItemLimitText.text = _maxPowerItem.ToString("000"));
+                break;
         }
     }
     public void UIPowerCountChange(int power)
@@ -183,8 +194,11 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         int tempPower = int.Parse(_powerItemCountText.text.ToString());
 
         tempPower = Mathf.Min(tempPower + power, _maxPowerItem);
-
-        if (tempPower <= _powerItemCount)
+        if(tempPower <= _default)
+        {
+            tempPower = _default;
+        }
+        if (tempPower <= _maxPowerItem)
         {
             DOTween.To(() => tempPower,
                 x => tempPower = x,

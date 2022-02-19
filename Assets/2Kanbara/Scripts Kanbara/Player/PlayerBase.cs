@@ -46,7 +46,6 @@ public class PlayerBase : MonoBehaviour
 
     [SerializeField, Header("動くスピード")] float _moveSpeed = default;
     [SerializeField, Header("精密操作のスピード")] float _lateMove = default;
-    [SerializeField, Header("アイテムを回収するときにアイテムが集まる速度")] float _itemGetSpeed = default;
 
     [SerializeField, Header("Plaerの残機の上限")] int _playerResidueLimit = 99;
     [SerializeField, Header("Playerのボムの上限")] int _playerBombLimit = 99;
@@ -76,6 +75,8 @@ public class PlayerBase : MonoBehaviour
     [SerializeField, Header("精密操作時のPlayerの色をゲーミングにする変数")] int _gameingPlayerColorTime = default;
 
     [SerializeField, Header("パワーアイテムの数がカンストしたとき（レベルマックスのとき）の演出")] GameObject _fullPowerModeEffect = default;
+
+    [SerializeField, Header("パワーアイテムのデスペナルティ")] int _powerDeathPenalty = -50;
 
 
     protected const int _level1 = 1;
@@ -111,6 +112,9 @@ public class PlayerBase : MonoBehaviour
     bool _wasCharge = default;
     /// <summary>アタックしているかどうか判定するフラグ</summary>
     bool _isAttackMode = default;
+    bool _isPowerMax = false;
+    bool _is1upMax = false;
+    bool _isBombMax = false;
 
     /// <summary>カウントアップする定数</summary>
     const int _defaultUp = 1;
@@ -220,13 +224,15 @@ public class PlayerBase : MonoBehaviour
 
     public async void OnJump(InputAction.CallbackContext context)//SpaceKeyが押された瞬間の処理
     {
-        if(context.started && _bombCount > _default && !_isBomb && !_isControll && !_wasCharge && !_isAttackMode)
+        _bombCount = GameManager.Instance.PlayerBombCount;
+        if (context.started && _default < _bombCount && !_isBomb && _isControll && !_wasCharge && !_isAttackMode)
         {
-            Bom();
-            await Task.Delay(_bombCoolTime);
-            _isBomb = false;
+            Debug.Log("Bomb");
+            Bomb();
             GameManager.Instance.PlayerBombCountChange(_defaultDown);
             _bombCount = GameManager.Instance.PlayerBombCount;
+            await Task.Delay(_bombCoolTime);
+            _isBomb = false;
         }
     }
 
@@ -291,7 +297,7 @@ public class PlayerBase : MonoBehaviour
     }
 
     /// <summary>ボム使用時の処理</summary>
-    public virtual void Bom()
+    public virtual void Bomb()
     {
         _isBomb = true;
         Debug.Log("ボム撃ったよー");
@@ -327,51 +333,65 @@ public class PlayerBase : MonoBehaviour
         if (collision.gameObject.tag == _1upTag)//残機を増やす処理
         {
             var item = collision.GetComponent<ItemBase>();
-            if (item.IsTaking) return;
+            if (item._isTaking || _is1upMax) return;
             GameManager.Instance.ResidueChange(_defaultUp);
             _playerResidue = GameManager.Instance.PlayerResidueCount;
+            if(_playerResidue >= _playerResidueLimit)
+            {
+                _is1upMax = true;
+            }
+            item._isTaking = true;
             Debug.Log("残機ふえたよー" + _playerResidue);
         }
 
-        if(collision.gameObject.tag == _bombItemTag)//ボムの所持数を増やす処理
+        if (collision.gameObject.tag == _bombItemTag)//ボムの所持数を増やす処理
         {
             var item = collision.GetComponent<ItemBase>();
-            if (item.IsTaking) return;
+            if (item._isTaking || _isBombMax) return;
             GameManager.Instance.PlayerBombCountChange(_defaultUp);
             _bombCount = GameManager.Instance.PlayerBombCount;
+            if(_bombCount >= _playerBombLimit)
+            {
+                _isBombMax = true;
+            }
+            item._isTaking = true;
             Debug.Log("ボムふえたよー" + _bombCount);
         }
 
         if (collision.gameObject.tag == _pointTag)//スコアを増やす処理
         {
             var item = collision.GetComponent<ItemBase>();
-            if (item.IsTaking) return;
+            if (item._isTaking) return;
             GameManager.Instance.PlayerScoreChange(_defaultUp);
             _playerScore = GameManager.Instance.PlayerScore;
+            item._isTaking = true;
             Debug.Log("スコアふえたよー" + _playerScore);
         }
 
         if (collision.gameObject.tag == _powerTag)//パワーを増やす処理
         {
             var item = collision.GetComponent<ItemBase>();
-            if (item.IsTaking) return;
-            if (_playerPower == _playerPowerLimit)
-            {
-                _fullPowerModeEffect.SetActive(true);
-            }
+            if (item._isTaking || _isPowerMax) return;
             GameManager.Instance.PlayerPowerItemCountChange(_defaultUp);
             _playerPower = GameManager.Instance.PlayerPowerItemCount;
+            if (_playerPower >= _playerPowerLimit)
+            {
+                _fullPowerModeEffect.SetActive(true);
+                _isPowerMax = true;
+            }
+            item._isTaking = true;
             Debug.Log("パワーふえたよー" + _playerPower);
         }
 
         if (collision.gameObject.tag == _invincibleTag)//一定数取得すると無敵になるアイテムの所持数を増やす処理
         {
             var item = collision.GetComponent<ItemBase>();
-            if (item.IsTaking) return;
+            if (item._isTaking) return;
             GameManager.Instance.PlayerInvicibleObjectValueChange(_defaultUp);
             _invincibleObjectCount = GameManager.Instance.PlayerInvincibleObjectCount;
+            item._isTaking = true;
             Debug.Log("アイテム名決まってない怪しいやつふえたよー" + _invincibleObjectCount);
-            if (_invincibleObjectCount > _invincibleLimit)//一定数アイテムを集めたら無敵モードに切り替わる
+            if (_invincibleObjectCount >= _invincibleLimit)//一定数アイテムを集めたら無敵モードに切り替わる
             {
                 InvincibleMode();
             }
@@ -405,6 +425,7 @@ public class PlayerBase : MonoBehaviour
         _chargeps.SetActive(false);
         _fullPowerModeEffect.SetActive(false);
         GamingFalse();
+        DeathPenalty();
         await Task.Delay(_respawnTime);
         _dir = Vector2.zero;
         transform.position = _playerRespawn.position;//ここでリスポーン地点に移動
@@ -472,5 +493,11 @@ public class PlayerBase : MonoBehaviour
     {
         if (_isLateMode || _godMode) return;
         Respawn();
+    }
+
+    void DeathPenalty()
+    {
+        GameManager.Instance.PlayerPowerItemCountChange(_powerDeathPenalty);
+        _isPowerMax = false;
     }
 }
