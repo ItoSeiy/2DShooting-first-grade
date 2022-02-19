@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SuperAttackFirework : MonoBehaviour
+public class SuperAttackKuShape : MonoBehaviour
 {
     Rigidbody2D _rb;
     /// <summary>必殺前に移動するポジション</summary>
@@ -42,15 +42,15 @@ public class SuperAttackFirework : MonoBehaviour
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();//《Start》でゲットコンポーネント
-        StartCoroutine(Firework()); //コルーチンを発動    
+        StartCoroutine(KuShape()); //コルーチンを発動    
     }
     void Update()
     {
         _timer += Time.deltaTime;//タイマー
     }
 
-    /// <summary>花火のような軌道、全方位に発射</summary>
-    IEnumerator Firework()
+    /// <summary>両側にくの字のような</summary>
+    IEnumerator KuShape()
     {
         _timer = RESET_TIME;//タイムリセット
 
@@ -100,8 +100,16 @@ public class SuperAttackFirework : MonoBehaviour
         //必殺技発動
         while (true)
         {
-            //360度全方位に発射
-            for (float rotation = 0f; rotation <= 360f; rotation += 10)//下半分だけ→(float i = -270f; i <= -90f; i += 10)
+            //下半分に発射
+            for (float rotation = -270f; rotation <= -225f; rotation += 5)
+            {
+                Vector3 localAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
+                localAngle.z = rotation;// 角度を設定
+                _muzzles[0].localEulerAngles = localAngle;//回転する
+                //弾をマズルの向きに合わせて弾を発射（仮でBombにしてます）
+                ObjectPool.Instance.UseBullet(_muzzles[0].position, PoolObjectType.Player01BombChild).transform.rotation = _muzzles[0].rotation;
+            }
+            for (float rotation = -135f; rotation <= -90f; rotation += 5)
             {
                 Vector3 localAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
                 localAngle.z = rotation;// 角度を設定
