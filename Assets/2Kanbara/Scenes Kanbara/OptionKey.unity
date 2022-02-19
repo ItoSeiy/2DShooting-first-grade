@@ -1175,7 +1175,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 855261432}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 1549410278}
@@ -2754,13 +2754,21 @@ MonoBehaviour:
     m_Name: Pause Button
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: c9a2c8fc-5d71-4256-a329-5bd18a852479
+    m_Id: f1aa12aa-0ddf-43f9-8a63-1db51dd03270
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings:
     - m_Name: 
-      m_Id: 092d901c-2189-42c5-a151-324e69c5bc69
+      m_Id: b53e67f2-11ad-4421-9920-8a4cc98d980e
       m_Path: <Keyboard>/escape
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Pause Button
+      m_Flags: 0
+    - m_Name: 
+      m_Id: 08cec80a-665e-442b-979f-ffb8ed303c9e
+      m_Path: <SwitchProControllerHID>/select
       m_Interactions: 
       m_Processors: 
       m_Groups: 
