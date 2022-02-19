@@ -59,7 +59,7 @@ public class ItemBase : MonoBehaviour
         if (collision.tag == _playerTag)//ƒvƒŒƒCƒ„[‚ÉÚG‚µ‚½‚ç
         {
             _childrenPS.SetActive(false);
-            Destroy(this.gameObject);
+            gameObject.SetActive(false);
         }
         if(collision.tag == _itemGetColiderTag)
         {
