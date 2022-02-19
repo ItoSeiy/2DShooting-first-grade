@@ -8,10 +8,17 @@ public class Tutorial : MonoBehaviour
 {
     [SerializeField] GameObject _checkMove;
     [SerializeField] InputAction _input;
-
     private void Start()
     {
         MoveTutorial();
+    }
+    private void OnEnable()
+    {
+        _input.Enable();
+    }
+    private void OnDisable()
+    {
+        _input.Disable();
     }
     private void SetCheck()
     {
