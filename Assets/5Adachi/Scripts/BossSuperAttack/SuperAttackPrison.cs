@@ -39,6 +39,8 @@ public class SuperAttackPrison : MonoBehaviour
     [SerializeField, Header("必殺技発動時間")] float _activationTime = 30f;
     /// <summary>攻撃頻度</summary>
     [SerializeField, Header("攻撃頻度(秒)")] private float _attackInterval = 0.6f;
+    /// <summary>発射する弾を設定できる</summary>
+    [SerializeField, Header("発射する弾の設定")] PoolObjectType _bullet;
     /// <summary>修正値</summary>
     const float PLAYER_POS_OFFSET = 0.5f;
     /// <summary>判定回数の制限</summary>
@@ -117,16 +119,16 @@ public class SuperAttackPrison : MonoBehaviour
             //ターゲット（プレイヤー）の方向に回転
             _muzzles[0].transform.rotation = Quaternion.FromToRotation(Vector3.up, _dir);
 
-            //弾をマズル0の向きに合わせて弾を発射（仮でBombにしてます）
-            ObjectPool.Instance.UseBullet(_muzzles[0].position, PoolObjectType.Player01BombChild).transform.rotation = _muzzles[0].rotation;
+            //弾をマズル0の向きに合わせて弾を発射
+            ObjectPool.Instance.UseBullet(_muzzles[0].position, _bullet).transform.rotation = _muzzles[0].rotation;
 
             //動かないマズル
 
             //弾をマズル1の向きに合わせて弾を発射（動くマズルの弾より右側）
-            ObjectPool.Instance.UseBullet(_muzzles[1].position, PoolObjectType.Player01BombChild).transform.rotation = _muzzles[1].rotation;
+            ObjectPool.Instance.UseBullet(_muzzles[1].position, _bullet).transform.rotation = _muzzles[1].rotation;
             
             //弾をマズル2の向きに合わせて弾を発射（動くマズルより左側）
-            ObjectPool.Instance.UseBullet(_muzzles[2].position, PoolObjectType.Player01BombChild).transform.rotation = _muzzles[2].rotation;
+            ObjectPool.Instance.UseBullet(_muzzles[2].position, _bullet).transform.rotation = _muzzles[2].rotation;
 
             yield return new WaitForSeconds(_attackInterval);//攻撃頻度
 

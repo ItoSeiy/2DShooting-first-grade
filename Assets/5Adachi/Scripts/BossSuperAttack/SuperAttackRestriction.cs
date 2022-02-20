@@ -35,6 +35,8 @@ public class SuperAttackRestriction: MonoBehaviour
     [SerializeField, Header("•KE‹Z”­“®ŠÔ")] float _activationTime = 30f;
     /// <summary>UŒ‚•p“x</summary>
     [SerializeField, Header("UŒ‚•p“x(•b)")] private float _attackInterval = 0.6f;
+    /// <summary>”­Ë‚·‚é’e‚ğİ’è‚Å‚«‚é</summary>
+    [SerializeField, Header("”­Ë‚·‚é’e‚Ìİ’è")] PoolObjectType _bullet;
     /// <summary>C³’l</summary>
     float _rotationOffset = 0f;
     /// <summary>C³’l</summary>
@@ -135,8 +137,8 @@ public class SuperAttackRestriction: MonoBehaviour
                     localAngle.z = rotation;// Šp“x‚ğİ’è
                     _muzzles[0].localEulerAngles = localAngle;//‰ñ“]‚·‚é
                                        
-                    //’e‚ğƒ}ƒYƒ‹‚ÌŒü‚«‚É‡‚í‚¹‚Ä’e‚ğ”­Ëi‰¼‚ÅBomb‚É‚µ‚Ä‚Ü‚·j
-                    ObjectPool.Instance.UseBullet(_muzzles[0].position, PoolObjectType.Player01BombChild).transform.rotation = _muzzles[0].rotation;
+                    //’e‚ğƒ}ƒYƒ‹‚ÌŒü‚«‚É‡‚í‚¹‚Ä’e‚ğ”­Ë
+                    ObjectPool.Instance.UseBullet(_muzzles[0].position, _bullet).transform.rotation = _muzzles[0].rotation;
                 }
             }
             _rotationOffset++;

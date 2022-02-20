@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4683120540629595777}
   - component: {fileID: 4683120540629595778}
   m_Layer: 0
-  m_Name: Rebound
+  m_Name: BossReboundBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -100,7 +100,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.0001
+  m_Radius: 0.25
 --- !u!50 &4683120540629595777
 Rigidbody2D:
   serializedVersion: 4
@@ -136,7 +136,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 10
   _direction: {x: 0, y: 1}
-  _speed: 4
+  _speed: 2
   _bulletMoveMethod: 1
   _opponentTag: 
   _gameZoneTag: Finish

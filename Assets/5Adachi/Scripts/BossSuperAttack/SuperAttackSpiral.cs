@@ -34,6 +34,8 @@ public class SuperAttackSpiral : MonoBehaviour
     [SerializeField, Header("必殺技発動時間")] float _activationTime = 30f;
     /// <summary>マズルの角度間隔</summary>
     [SerializeField,Header("マズルの角度間隔")]　float _angle = 10f;
+    /// <summary>発射する弾を設定できる</summary>
+    [SerializeField, Header("発射する弾の設定")] PoolObjectType _bullet;
     /// <summary>修正値</summary>
     const float PLAYER_POS_OFFSET = 0.5f;
     /// <summary>判定回数の制限</summary>
@@ -105,8 +107,8 @@ public class SuperAttackSpiral : MonoBehaviour
             Vector3 localAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
             localAngle.z += _angle;// 角度を設定
             _muzzles[0].localEulerAngles = localAngle;//回転する           
-            //弾をマズルの向きに合わせて弾を発射（仮でBombにしてます）
-            ObjectPool.Instance.UseBullet(_muzzles[0].position, PoolObjectType.Player01BombChild).transform.rotation = _muzzles[0].rotation;
+            //弾をマズルの向きに合わせて弾を発射
+            ObjectPool.Instance.UseBullet(_muzzles[0].position, _bullet).transform.rotation = _muzzles[0].rotation;
 
             yield return new WaitForSeconds(JUDGMENT_TIME);//判定回数の調整
 

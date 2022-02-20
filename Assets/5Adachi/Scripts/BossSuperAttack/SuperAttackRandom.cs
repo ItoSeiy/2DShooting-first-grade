@@ -33,13 +33,23 @@ public class SuperAttackRandom : MonoBehaviour
     /// <summary>必殺技発動時間</summary>
     [SerializeField, Header("必殺技発動時間")] float _activationTime = 30f;
     /// <summary>マズルの角度間隔</summary>
-    [SerializeField, Header("マズルの角度間隔")] float _angle = 10f;
+    [SerializeField, Header("マズルの角度間隔")] float _rotationInterval = 2f;
+    /// <summary>発射する弾を設定できる</summary>
+    [SerializeField, Header("発射する弾の設定")] PoolObjectType _bullet;
+    /// <summary>1回の処理で弾を発射する回数</summary>
+    [SerializeField,Header("1回の処理で弾を発射する回数")] int _maximumCount = 2;
     /// <summary>修正値</summary>
     const float PLAYER_POS_OFFSET = 0.5f;
     /// <summary>判定回数の制限</summary>
     const float JUDGMENT_TIME = 1 / 60f;
     /// <summary>リセットタイマー</summary>
     const float RESET_TIME = 0f;
+    /// <summary>最小の回転値</summary>
+    const float MINIMUM_ROTATION_RANGE = 0f;
+    /// <summary>最大の回転値</summary>
+    const float MAXIMUM_ROTATION_RANGE = 360f;
+    /// <summary>1回の処理で弾を発射する回数の初期値</summary>
+    const int INITIAL_COUNT = 0;
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();//《スタート》でゲットコンポーネント
@@ -101,20 +111,17 @@ public class SuperAttackRandom : MonoBehaviour
         //必殺技発動
         while (true)
         {
-            //マズルを回転する
-            Vector3 localAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
-            localAngle.z = Random.Range(0f,360f);// 角度を設定(90f,270f)
-            _muzzles[0].localEulerAngles = localAngle;//回転する
-            
-            //弾をマズルの向きに合わせて弾を発射（仮でBombにしてます）
-            ObjectPool.Instance.UseBullet(_muzzles[0].position, PoolObjectType.Player01BombChild).transform.rotation = _muzzles[0].rotation;
-
-            //マズルを回転する
-            localAngle.z = Random.Range(0f, 360f);// 角度を設定(90f,270f)
-            _muzzles[0].localEulerAngles = localAngle;//回転する
-           
-            //弾をマズルの向きに合わせて弾を発射（仮でBombにしてます）
-            ObjectPool.Instance.UseBullet(_muzzles[0].position, PoolObjectType.Player01BombChild).transform.rotation = _muzzles[0].rotation;
+            //同じ処理を数回(_maximumCount)繰り返す
+            for (int count = INITIAL_COUNT; count < _maximumCount; count++)
+            {
+                ///マズルを回転する///
+                Vector3 localAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
+                // ランダムな角度を設定（（　0度　～　360度/マズルの角度間隔　）* マズルの角度間隔　)
+                localAngle.z = Random.Range(MINIMUM_ROTATION_RANGE,MAXIMUM_ROTATION_RANGE / _rotationInterval) * _rotationInterval;
+                _muzzles[0].localEulerAngles = localAngle;//回転する
+                //弾をマズルの向きに合わせて弾を発射
+                ObjectPool.Instance.UseBullet(_muzzles[0].position, _bullet).transform.rotation = _muzzles[0].rotation;
+            }
 
             yield return new WaitForSeconds(JUDGMENT_TIME);//判定回数の調整
 

@@ -15,6 +15,8 @@ public class BossNormalAttack01 : MonoBehaviour
     [SerializeField, Header("Bulletを発射するポジション")] Transform[] _muzzles = null;
     /// <summary>攻撃頻度</summary>
     [SerializeField, Header("攻撃頻度(秒)")] private float _attackInterval = 0.6f;
+    /// <summary>発射する弾を設定できる</summary>
+    [SerializeField, Header("発射する弾の設定")] PoolObjectType _bullet;
 
     void Start()
     {
@@ -40,18 +42,18 @@ public class BossNormalAttack01 : MonoBehaviour
             //親オブジェクトのマズル
 
             //弾を発射（仮でBombにしてます）
-            var bossEnemyBulletStraight = ObjectPool.Instance.UseBullet(_muzzles[0].position, PoolObjectType.Player01BombChild);
+            var bossEnemyBulletStraight = ObjectPool.Instance.UseBullet(_muzzles[0].position, _bullet);
             //弾をマズル0の向きに合わせる
             bossEnemyBulletStraight.transform.rotation = _muzzles[0].rotation;
 
             //子オブジェクトのマズル
 
             //弾を発射（親オブジェクトの弾より右側）
-            var bossEnemyBulletRight = ObjectPool.Instance.UseBullet(_muzzles[1].position, PoolObjectType.Player01BombChild);
+            var bossEnemyBulletRight = ObjectPool.Instance.UseBullet(_muzzles[1].position, _bullet);
             //弾をマズル1の向きに合わせる
             bossEnemyBulletRight.transform.rotation = _muzzles[1].rotation;
             //弾を発射（親オブジェクトの弾より左側）
-            var bossEnemyBulletLeft = ObjectPool.Instance.UseBullet(_muzzles[2].position, PoolObjectType.Player01BombChild);
+            var bossEnemyBulletLeft = ObjectPool.Instance.UseBullet(_muzzles[2].position, _bullet);
             //弾をマズル2の向きに合わせる
             bossEnemyBulletLeft.transform.rotation = _muzzles[2].rotation;
 

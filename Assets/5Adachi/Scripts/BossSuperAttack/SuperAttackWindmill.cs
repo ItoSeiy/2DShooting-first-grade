@@ -35,7 +35,9 @@ public class SuperAttackWindmill : MonoBehaviour
     /// <summary>攻撃頻度</summary>
     [SerializeField, Header("攻撃頻度(秒)")] float _attackInterval = 0.2f;
     /// <summary>マズルの角度間隔</summary>
-    [SerializeField, Header("マズルの角度間隔")] float _angle = 10f;
+    [SerializeField, Header("マズルの角度間隔")] float _rotationInterval = 10f;
+    /// <summary>発射する弾を設定できる</summary>
+    [SerializeField, Header("発射する弾の設定")] PoolObjectType _bullet;
     /// <summary>修正値</summary>
     const float PLAYER_POS_OFFSET = 0.5f;
     /// <summary>判定回数の制限</summary>
@@ -108,22 +110,22 @@ public class SuperAttackWindmill : MonoBehaviour
 
             //マズルを回転する
             Vector3 firstLocalAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
-            firstLocalAngle.z += _angle;// 角度を設定
+            firstLocalAngle.z += _rotationInterval;// 角度を設定
             _muzzles[0].localEulerAngles = firstLocalAngle;//回転する
 
-            //弾をマズル0の向きに合わせて弾を発射（仮でBombにしてます）
-            ObjectPool.Instance.UseBullet(_muzzles[0].position, PoolObjectType.Player01BombChild).transform.rotation = _muzzles[0].rotation;
+            //弾をマズル0の向きに合わせて弾を発射
+            ObjectPool.Instance.UseBullet(_muzzles[0].position, _bullet).transform.rotation = _muzzles[0].rotation;
 
             //子オブジェクト
 
-            //弾をマズル1の向きに合わせて弾を発射（仮でBombにしてます）
-            ObjectPool.Instance.UseBullet(_muzzles[1].position, PoolObjectType.Player01BombChild).transform.rotation = _muzzles[1].rotation;
+            //弾をマズル1の向きに合わせて弾を発射
+            ObjectPool.Instance.UseBullet(_muzzles[1].position, _bullet).transform.rotation = _muzzles[1].rotation;
 
-            //弾をマズル2の向きに合わせて弾を発射（仮でBombにしてます）
-            ObjectPool.Instance.UseBullet(_muzzles[2].position, PoolObjectType.Player01BombChild).transform.rotation = _muzzles[2].rotation;
+            //弾をマズル2の向きに合わせて弾を発射
+            ObjectPool.Instance.UseBullet(_muzzles[2].position, _bullet).transform.rotation = _muzzles[2].rotation;
 
-            //弾をのマズル3の向きに合わせて弾を発射（仮でBombにしてます）
-            ObjectPool.Instance.UseBullet(_muzzles[3].position, PoolObjectType.Player01BombChild).transform.rotation = _muzzles[3].rotation;
+            //弾をマズル3の向きに合わせて弾を発射
+            ObjectPool.Instance.UseBullet(_muzzles[3].position, _bullet).transform.rotation = _muzzles[3].rotation;
 
             yield return new WaitForSeconds(_attackInterval);//攻撃頻度(秒)
 

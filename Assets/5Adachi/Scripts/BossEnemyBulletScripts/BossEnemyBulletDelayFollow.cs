@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossEnemyBulletDelayChangeDir : BulletBese
+public class BossEnemyBulletDelayFollow : BulletBese
 {
     /// <summary>PlayerのGameObject</summary>
     GameObject _player;
@@ -10,8 +10,8 @@ public class BossEnemyBulletDelayChangeDir : BulletBese
     float _timer;
     /// <summary>Playerがいた方向</summary>
     Vector2 _oldDir = Vector2.down;
-    /// <summary>一定時間遅れたらプレイヤーに方向を変える</summary>
-    [SerializeField, Header("一定時間遅れたら方向を変える")] float _delayChangeDirTime = 2f;
+    /// <summary>一定時間遅れたらプレイヤーに方向を変える(秒)</summary>
+    [SerializeField, Header("一定時間遅れたらプレイヤーがいる方向に変える(秒)")] float _delayChangeDirTime = 2f;
     /// <summary>時間の修正値</summary>
     const float DELAY_CHANGE_DIR_TIME_OFFSET = 0.1f;
 

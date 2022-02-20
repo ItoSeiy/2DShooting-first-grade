@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SuperAttackFirework : MonoBehaviour
+public class SuperAttackParty : MonoBehaviour
 {
+    /// <summary>形状や大きさの概念を持った物質</summary>
     Rigidbody2D _rb;
     /// <summary>必殺前に移動するポジション</summary>
     [SerializeField, Header("必殺前に移動するポジション")] Transform _superAttackPos = null;
@@ -31,28 +32,32 @@ public class SuperAttackFirework : MonoBehaviour
     [SerializeField, Header("必殺技待機時間")] float _waitTime = 5f;
     /// <summary>必殺技発動時間</summary>
     [SerializeField, Header("必殺技発動時間")] float _activationTime = 30f;
-    /// <summary>攻撃頻度</summary>
-    [SerializeField, Header("攻撃頻度(秒)")] float _attackInterval = 1f;
+    /// <summary>マズルの角度間隔</summary>
+    [SerializeField, Header("マズルの角度間隔")] float _rotationInterval = 4f;
     /// <summary>発射する弾を設定できる</summary>
-    [SerializeField, Header("発射する弾の設定")] PoolObjectType _bullet;
+    [SerializeField, Header("発射する弾の設定")] PoolObjectType _bullet; 
     /// <summary>修正値</summary>
     const float PLAYER_POS_OFFSET = 0.5f;
     /// <summary>判定回数の制限</summary>
     const float JUDGMENT_TIME = 1 / 60f;
     /// <summary>リセットタイマー</summary>
     const float RESET_TIME = 0f;
+    /// <summary>最小の回転値</summary>
+    const float MINIMUM_ROTATION_RANGE = 0f;
+    /// <summary>最大の回転値</summary>
+    const float MAXIMUM_ROTATION_RANGE = 360f;
     void Start()
     {
-        _rb = GetComponent<Rigidbody2D>();//《Start》でゲットコンポーネント
-        StartCoroutine(Firework()); //コルーチンを発動    
+        _rb = GetComponent<Rigidbody2D>();//《スタート》でゲットコンポーネント
+        StartCoroutine(Party()); //コルーチンを発動    
     }
     void Update()
     {
         _timer += Time.deltaTime;//タイマー
     }
 
-    /// <summary>花火のような軌道、全方位に発射</summary>
-    IEnumerator Firework()
+    /// <summary>ランダムな方向に跳ね返る弾を発射する必殺技</summary>
+    IEnumerator Party()
     {
         _timer = RESET_TIME;//タイムリセット
 
@@ -102,17 +107,17 @@ public class SuperAttackFirework : MonoBehaviour
         //必殺技発動
         while (true)
         {
-            //360度全方位に発射
-            for (float rotation = 0f; rotation <= 360f; rotation += 10)//下半分だけ→(float i = -270f; i <= -90f; i += 10)
-            {
-                Vector3 localAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
-                localAngle.z = rotation;// 角度を設定
-                _muzzles[0].localEulerAngles = localAngle;//回転する
-                //弾をマズルの向きに合わせて弾を発射（仮でBombにしてます）
-                ObjectPool.Instance.UseBullet(_muzzles[0].position, _bullet).transform.rotation = _muzzles[0].rotation;
-            }
+            ///マズルを回転する///
+            Vector3 localAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
+            //ランダムな角度を設定（（　0度　～　360度/マズルの角度間隔　）* マズルの角度間隔　）の範囲
+            localAngle.z = Random.Range(MINIMUM_ROTATION_RANGE, MAXIMUM_ROTATION_RANGE / _rotationInterval) * _rotationInterval;
+            _muzzles[0].localEulerAngles = localAngle;//回転する
 
-            yield return new WaitForSeconds(_attackInterval);//攻撃頻度(秒)
+            //弾をマズルの向きに合わせて弾を発射
+            ObjectPool.Instance.UseBullet(_muzzles[0].position, _bullet).transform.rotation = _muzzles[0].rotation;
+
+            yield return new WaitForSeconds(JUDGMENT_TIME);//判定回数の調整
+
             //数秒経ったら
             if (_timer >= _activationTime)
             {
