@@ -75,6 +75,7 @@ public class PlayerBase : MonoBehaviour
     [SerializeField, Header("精密操作時のPlayerの色をゲーミングにする変数")] int _gameingPlayerColorTime = default;
 
     [SerializeField, Header("パワーアイテムの数がカンストしたとき（レベルマックスのとき）の演出")] GameObject _fullPowerModeEffect = default;
+    [SerializeField, Header("Invincibleモードのときの演出")] GameObject _invincibleModeEffect = default;
 
     [SerializeField, Header("パワーアイテムのデスペナルティ")] int _powerDeathPenalty = -50;
 
@@ -141,6 +142,7 @@ public class PlayerBase : MonoBehaviour
         _parsG.GetComponent<ParticleSystem>();
 
         _fullPowerModeEffect.GetComponent<ParticleSystem>();
+        _invincibleModeEffect.GetComponent<ParticleSystem>();
 
         transform.position = _playerRespawn.position;//リスポーン地点に移動
 
@@ -300,6 +302,7 @@ public class PlayerBase : MonoBehaviour
     public virtual void Bomb()
     {
         _isBomb = true;
+        _isBombMax = false;
         Debug.Log("ボム撃ったよー");
         Play(_playerBombShotAudio);
     }
@@ -421,6 +424,7 @@ public class PlayerBase : MonoBehaviour
     {
         _godMode = true;
         _isControll = false;
+        _is1upMax = false;
         _anim.SetBool(_invicibleAnimParamName, true);
         _chargeps.SetActive(false);
         _fullPowerModeEffect.SetActive(false);
@@ -440,10 +444,12 @@ public class PlayerBase : MonoBehaviour
         if (_godMode) return;
         _godMode = true;
         _anim.SetBool(_invicibleAnimParamName, true);
+        _invincibleModeEffect.SetActive(true);
         GameManager.Instance.PlayerInvicibleObjectValueChange(_returnDefault);
         await Task.Delay(_invincibleTime);
         _godMode = false;
         _anim.SetBool(_invicibleAnimParamName, false);
+        _invincibleModeEffect.SetActive(false);
     }
 
     void Inversion()
@@ -498,6 +504,12 @@ public class PlayerBase : MonoBehaviour
     void DeathPenalty()
     {
         GameManager.Instance.PlayerPowerItemCountChange(_powerDeathPenalty);
+        _playerPower = GameManager.Instance.PlayerPowerItemCount;
+        if (_playerPower < _default)
+        {
+            GameManager.Instance.PlayerPowerItemCountChange(_playerPower * _defaultDown);
+            _playerPower = GameManager.Instance.PlayerPowerItemCount;
+        }
         _isPowerMax = false;
     }
 }
