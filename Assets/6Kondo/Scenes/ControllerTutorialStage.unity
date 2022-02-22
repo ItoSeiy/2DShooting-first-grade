@@ -595,8 +595,16 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings:
     - m_Name: 
-      m_Id: cdeb628a-ebe2-44bf-8fd7-c0fd836f6ed0
-      m_Path: <Gamepad>/leftStick/down
+      m_Id: 53406e2c-983d-4f16-9e1d-b05bda6e10f6
+      m_Path: <Gamepad>/leftStick
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Input Move
+      m_Flags: 0
+    - m_Name: 
+      m_Id: 23e759c1-e3c6-4c5c-91c4-b27fb0868f3d
+      m_Path: <Gamepad>/dpad
       m_Interactions: 
       m_Processors: 
       m_Groups: 
@@ -610,7 +618,23 @@ MonoBehaviour:
     m_Id: 5d969322-8f62-4386-b72e-9a7041d181bc
     m_Processors: 
     m_Interactions: 
-    m_SingletonActionBindings: []
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: f1aa9985-5916-4169-8788-a1f6bf70ecac
+      m_Path: <Gamepad>/buttonNorth
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Input Shot
+      m_Flags: 0
+    - m_Name: 
+      m_Id: 9e031aa7-b0d7-4d17-8426-2e09e2a72169
+      m_Path: <Gamepad>/buttonWest
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Input Shot
+      m_Flags: 0
   _chargeShotCheck: {fileID: 359057476}
   _inputChargeShot:
     m_Name: Input Charge Shot
@@ -619,7 +643,23 @@ MonoBehaviour:
     m_Id: f9a08a09-8721-4e5a-a145-6e90bd857fdb
     m_Processors: 
     m_Interactions: 
-    m_SingletonActionBindings: []
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 48d5136e-6487-4226-8bc3-dc0c95c7b860
+      m_Path: <Gamepad>/rightShoulder
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Input Charge Shot
+      m_Flags: 0
+    - m_Name: 
+      m_Id: 4c0d64be-e15e-4fdd-af72-d161c049779a
+      m_Path: <Gamepad>/rightTrigger
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Input Charge Shot
+      m_Flags: 0
   _slowMoveCheck: {fileID: 491042754}
   _inputSlowMove:
     m_Name: Input Slow Move
@@ -628,7 +668,23 @@ MonoBehaviour:
     m_Id: 36513761-46f0-4de4-bab2-dfc065dc2a21
     m_Processors: 
     m_Interactions: 
-    m_SingletonActionBindings: []
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 4793b02a-f808-4081-8b02-db4d6d3f3ee2
+      m_Path: <Gamepad>/leftTrigger
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Input Slow Move
+      m_Flags: 0
+    - m_Name: 
+      m_Id: 2e07d0c1-9605-4dda-bf89-788dd89ef71f
+      m_Path: <Gamepad>/leftShoulder
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Input Slow Move
+      m_Flags: 0
 --- !u!1 &168744933
 GameObject:
   m_ObjectHideFlags: 0
@@ -667,7 +723,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -815, y: 219}
+  m_AnchoredPosition: {x: -815, y: 196}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &168744935
@@ -718,7 +774,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\u5DE6\u4E0B\u306E\u3000\u3000\u30AB\u30A6\u30F3\u30C8\u304C\u3042\u308B\u3068\u304D\u306B\nSpace\u3067\u30DC\u30E0\u3092\u767A\u5C04"
+  m_Text: "\u5DE6\u4E0B\u306E\u3000\u3000\u30AB\u30A6\u30F3\u30C8\u304C\u3042\u308B\u3068\u304D\u306B\n\u4E0B\u30DC\u30BF\u30F3(\u307E\u305F\u306F\u53F3\u30DC\u30BF\u30F3)\u3067\u30DC\u30E0\u3092\u767A\u5C04"
 --- !u!222 &168744937
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1703,7 +1759,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -815, y: 116}
+  m_AnchoredPosition: {x: -815, y: 93}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &673138171
@@ -1800,7 +1856,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -815, y: 20}
+  m_AnchoredPosition: {x: -815, y: -3}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &714814432
@@ -2489,7 +2545,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -565, y: 303}
+  m_AnchoredPosition: {x: -565, y: 267}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1017320540
@@ -2684,7 +2740,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "Shift\u3092\u62BC\u3057\u306A\u304C\u3089\u79FB\u52D5\u3067\u7CBE\u5BC6\u64CD\u4F5C"
+  m_Text: "\u5DE6\u30C8\u30EA\u30AC\u30FC(\u307E\u305F\u306FL)\u3092\u62BC\u3057\u306A\u304C\u3089\u79FB\u52D5\u3067\u7CBE\u5BC6\u64CD\u4F5C"
 --- !u!222 &1271592838
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2711,7 +2767,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -815, y: 336}
+  m_AnchoredPosition: {x: -815, y: 313}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1278663948 stripped
@@ -3237,7 +3293,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\u5DE6\u30AF\u30EA\u30C3\u30AF(\u307E\u305F\u306FZ)\u3067\u5F3E\u3092\u767A\u5C04"
+  m_Text: "\u5DE6\u30DC\u30BF\u30F3(\u307E\u305F\u306F\u4E0A\u30DC\u30BF\u30F3)\u3067\u5F3E\u3092\u767A\u5C04"
 --- !u!222 &1629375784
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3528,7 +3584,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -815, y: 278}
+  m_AnchoredPosition: {x: -815, y: 255}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1820119458
@@ -3619,7 +3675,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\u5DE6\u30B9\u30C6\u30C3\u30AF\u3067\u79FB\u52D5\u3059\u308B"
+  m_Text: "\u5DE6\u30B9\u30C6\u30C3\u30AF(\u307E\u305F\u306F\u5341\u5B57\u30AD\u30FC)\u3067\u79FB\u52D5\u3059\u308B"
 --- !u!222 &1820119462
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4083,7 +4139,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "V\u9577\u62BC\u3057\u3067\u5F3E\u3092\u767A\u5C04"
+  m_Text: "\u53F3\u30C8\u30EA\u30AC\u30FC(\u307E\u305F\u306FR)\u9577\u62BC\u3057\u3067\u30C1\u30E3\u30FC\u30B8\u3057\u3066\n\u96E2\u3057\u3066\u5F3E\u3092\u767A\u5C04"
 --- !u!222 &1901715959
 CanvasRenderer:
   m_ObjectHideFlags: 0
