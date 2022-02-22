@@ -12,8 +12,6 @@ public class SuperAttackRestriction: MonoBehaviour
     [SerializeField, Header("必殺前に移動するときのスピード")] float _speed = 4f;
     /// <summary>必殺前に移動するポジション</summary>
     [SerializeField, Header("必殺前に移動するポジション")] Transform _superAttackPos = null;
-    /// <summary>初期の攻撃割合</summary>
-    float _initialDamageRatio;
     /// <summary>タイマー</summary>
     float _timer = 0f;
     /// <summary>右側の範囲</summary>
