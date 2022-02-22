@@ -12,8 +12,6 @@ public class SuperAttackEightShape : MonoBehaviour
     [SerializeField, Header("必殺前に移動するときのスピード")] float _speed = 4f;
     /// <summary>必殺前に移動するポジション</summary>
     [SerializeField, Header("必殺前に移動するポジション")] Transform _superAttackPos = null;
-    /// <summary>初期の攻撃割合</summary>
-    float _initialDamageRatio;
     /// <summary>タイマー</summary>
     float _timer = 0f;
     /// <summary>右側の範囲</summary>
@@ -42,8 +40,6 @@ public class SuperAttackEightShape : MonoBehaviour
     const float PLAYER_POS_OFFSET = 0.5f;
     /// <summary>判定回数の制限</summary>
     const float JUDGMENT_TIME = 1 / 60f;
-    /// <summary>0度の角度</summary>
-    const float ZERO_DEGREE_ANGLE = 0f;
     /// <summary>リセットタイマー</summary>
     const float RESET_TIME = 0f;
     void Start()
@@ -100,8 +96,7 @@ public class SuperAttackEightShape : MonoBehaviour
                 break;//終わり
             }
         }
-        //_initialDamageRatio = AddDamageRatio;//初期値を設定
-        //AddDamageRatio = 0.5f;//必殺時は攻撃割合を変更
+
         _timer = RESET_TIME;//タイムリセット
 
         //必殺技発動
@@ -144,8 +139,6 @@ public class SuperAttackEightShape : MonoBehaviour
                 break;//終了
             }
         }
-
-        //AddDamageRatio = _initialDamageRatio;//攻撃割合を元に戻す
         yield break;//終了
     }
 }

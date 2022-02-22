@@ -11,8 +11,6 @@ public class SuperAttackDelayFollow : MonoBehaviour
     [SerializeField, Header("Bulletを発射するポジション")] Transform[] _muzzles = null;
     /// <summary>必殺前に移動するときのスピード</summary>
     [SerializeField, Header("必殺前に移動するときのスピード")] float _speed = 4f;
-    /// <summary>初期の攻撃割合</summary>
-    float _initialDamageRatio;
     /// <summary>タイマー</summary>
     float _timer = 0f;
     /// <summary>右側の範囲</summary>
@@ -45,6 +43,7 @@ public class SuperAttackDelayFollow : MonoBehaviour
     const float RESET_TIME = 0f;
     /// <summary>最初の回転値</summary>
     const float FIRST_ROTATION = 95f;
+    /// <summary>最後の回転値</summary>
     const float LAST_ROTATION = 265f;
     /// <summary>真ん中の範囲</summary>
     const float MIDDLE_RANGE = 135f;
@@ -106,8 +105,7 @@ public class SuperAttackDelayFollow : MonoBehaviour
                 break;//終わり
             }
         }
-        //_initialDamageRatio = AddDamageRatio;//初期値を設定
-        //AddDamageRatio = 0.5f;//必殺時は攻撃割合を変更
+        
         _timer = 0f;//タイムリセット
 
         //必殺技発動
@@ -134,7 +132,6 @@ public class SuperAttackDelayFollow : MonoBehaviour
                 break;//終了
             }
         }
-        //AddDamageRatio = _initialDamageRatio;//攻撃割合を元に戻す
         yield break;//終了
     }
 }

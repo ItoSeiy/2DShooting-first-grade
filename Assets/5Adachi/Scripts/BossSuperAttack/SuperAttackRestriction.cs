@@ -112,8 +112,7 @@ public class SuperAttackRestriction: MonoBehaviour
                 break;//終わり
             }
         }
-        //_initialDamageRatio = AddDamageRatio;//初期値を設定
-        //AddDamageRatio = 0.5f;//必殺時は攻撃割合を変更
+
         _timer = RESET_TIME;//タイムリセット
 
         //必殺技発動
@@ -159,8 +158,6 @@ public class SuperAttackRestriction: MonoBehaviour
                 break;//終了
             }
         }
-
-        //AddDamageRatio = _initialDamageRatio;//攻撃割合を元に戻す
         yield break;//終了
     }
 }

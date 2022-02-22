@@ -12,8 +12,6 @@ public class SuperAttackRandom : MonoBehaviour
     [SerializeField, Header("Bulletを発射するポジション")] Transform[] _muzzles = null;
     /// <summary>必殺前に移動するときのスピード</summary>
     [SerializeField, Header("必殺前に移動するときのスピード")] float _speed = 4f;
-    /// <summary>初期の攻撃割合</summary>
-    float _initialDamageRatio;
     /// <summary>タイマー</summary>
     float _timer = 0f;
     /// <summary>右側の範囲</summary>
@@ -104,8 +102,7 @@ public class SuperAttackRandom : MonoBehaviour
                 break;//終わり
             }
         }
-        //_initialDamageRatio = AddDamageRatio;//初期値を設定
-        //AddDamageRatio = 0.5f;//必殺時は攻撃割合を変更
+ 
         _timer = 0f;//タイムリセット
 
         //必殺技発動
@@ -131,8 +128,6 @@ public class SuperAttackRandom : MonoBehaviour
                 break;//終了
             }
         }
-
-        //AddDamageRatio = _initialDamageRatio;//攻撃割合を元に戻す
         yield break;//終了
     }
 }
