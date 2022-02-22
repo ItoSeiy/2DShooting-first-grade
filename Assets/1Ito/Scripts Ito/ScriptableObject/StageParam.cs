@@ -16,16 +16,24 @@ public class StageParam
 [Serializable]
 public class PhaseParm
 {
-    public GameObject Prefab { get => phasePrefab;}
-    public float StartTime { get => startTime;}
-    public float Interval { get => interval;}
-    public float FinishTime { get => finishTime;}
+    public GameObject Prefab => phasePrefab;
+    public float StartTime => startTime;
+    public bool UseInterval => useInterval;
+    public float Interval => interval;
+    public float FinishTime => finishTime;
 
-    [SerializeField] public string PhaseName = "Phase";
+    [SerializeField] 
+    public string PhaseName = "Phase";
 
-    [SerializeField] private GameObject phasePrefab;
-    [SerializeField] private float startTime;
-    [SerializeField] private float interval;
-    [SerializeField] private float finishTime;
+    [SerializeField]
+    private GameObject phasePrefab;
+    [SerializeField]
+    private float startTime;
+    [SerializeField, Tooltip("インターバルを用いて何度も生成するか")]
+    private bool useInterval;
+    [SerializeField, Tooltip("UseIntevalにチェックが入っていないと使用できない")]
+    private float interval;
+    [SerializeField]
+    private float finishTime;
 }
 
