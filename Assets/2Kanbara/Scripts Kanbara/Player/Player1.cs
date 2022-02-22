@@ -49,7 +49,7 @@ public class Player1 : PlayerBase
                 ObjectPool.Instance.UseBullet(_muzzle.position, PoolObjectType.Player01SuperPower3);
                 break;
         }
-        Play(_playerSuperBulletAudio);
+        Play(_playerBulletAudio);
         base.PlayerSuperAttack();
     }
 

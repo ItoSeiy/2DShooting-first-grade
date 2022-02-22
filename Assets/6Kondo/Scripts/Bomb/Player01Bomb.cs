@@ -13,6 +13,9 @@ public class Player01Bomb : BulletBese
     [SerializeField] Transform[] _muzzle = null;
     SpriteRenderer _sprite = null;
 
+    [SerializeField] AudioSource _audioSource;
+    [SerializeField, Header("BombChildが発射された時の音")] AudioClip _bombChildAudio;
+
     protected override void Awake()
     {
         base.Awake();
@@ -21,6 +24,8 @@ public class Player01Bomb : BulletBese
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
+        var playerAudio = GameObject.FindWithTag("Player").GetComponent<AudioSource>();
+        playerAudio.Stop();
         StartCoroutine(UseBombChildBullet(collision));
     }
 

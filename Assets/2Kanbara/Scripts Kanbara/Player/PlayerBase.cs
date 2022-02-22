@@ -60,11 +60,17 @@ public class PlayerBase : MonoBehaviour
     [SerializeField, Header("揺らすカメラ")] CinemachineVirtualCamera _cmvcam1 = default;
 
     [SerializeField, Header("通常弾の音")] protected string _playerBulletAudio = "Bullet";
-    [SerializeField, Header("精密操作時の弾の音")] protected string _playerSuperBulletAudio = "SuperBullet";
     [SerializeField, Header("チャージ中の音")] protected string _playerChargeBulletAudio = "Charge";
     [SerializeField, Header("チャージショットの音")] protected string _playerChargeShotBulletAudio = "ChargeShot";
     [SerializeField, Header("ボムの音")] protected string _playerBombShotAudio = "Bomb";
+    [SerializeField, Header("ボムの着弾時の音")] protected string _bombOnEnemyAudio = "OnBomb";
     [SerializeField, Header("プレイヤーの被弾時に流れる音")] protected string _playerDestroyAudio = "PlayerDestroy";
+    [SerializeField, Header("アイテムを回収したときの音")] protected string _itemGetAudio = "ItemGet";
+    [SerializeField, Header("１UPの音")] protected string _1UPAudio = "1UP";
+    [SerializeField, Header("ボムアイテム獲得時の音")] protected string _getBombAudio = "BombGet";
+    [SerializeField, Header("レベルアップ時の音")] protected string _levelUpAudio = "LevelUp";
+    [SerializeField, Header("Invincibleモードの時の音")] protected string _invincibleModeAudio = "Invincible";
+         
 
     [SerializeField, Header("チャージショットのパーティカルシステム（溜め）")] GameObject _chargeps = default;
 
@@ -339,6 +345,7 @@ public class PlayerBase : MonoBehaviour
             if (item._isTaking || _is1upMax) return;
             GameManager.Instance.ResidueChange(_defaultUp);
             _playerResidue = GameManager.Instance.PlayerResidueCount;
+            Play(_1UPAudio);
             if(_playerResidue >= _playerResidueLimit)
             {
                 _is1upMax = true;
@@ -353,6 +360,7 @@ public class PlayerBase : MonoBehaviour
             if (item._isTaking || _isBombMax) return;
             GameManager.Instance.PlayerBombCountChange(_defaultUp);
             _bombCount = GameManager.Instance.PlayerBombCount;
+            Play(_getBombAudio);
             if(_bombCount >= _playerBombLimit)
             {
                 _isBombMax = true;
@@ -367,6 +375,7 @@ public class PlayerBase : MonoBehaviour
             if (item._isTaking) return;
             GameManager.Instance.PlayerScoreChange(_defaultUp);
             _playerScore = GameManager.Instance.PlayerScore;
+            Play(_itemGetAudio);
             item._isTaking = true;
             Debug.Log("スコアふえたよー" + _playerScore);
         }
@@ -377,6 +386,8 @@ public class PlayerBase : MonoBehaviour
             if (item._isTaking || _isPowerMax) return;
             GameManager.Instance.PlayerPowerItemCountChange(_defaultUp);
             _playerPower = GameManager.Instance.PlayerPowerItemCount;
+            Play(_itemGetAudio);
+
             if (_playerPower >= _playerPowerLimit)
             {
                 _fullPowerModeEffect.SetActive(true);
@@ -392,6 +403,7 @@ public class PlayerBase : MonoBehaviour
             if (item._isTaking) return;
             GameManager.Instance.PlayerInvicibleObjectValueChange(_defaultUp);
             _invincibleObjectCount = GameManager.Instance.PlayerInvincibleObjectCount;
+            Play(_itemGetAudio);
             item._isTaking = true;
             Debug.Log("アイテム名決まってない怪しいやつふえたよー" + _invincibleObjectCount);
             if (_invincibleObjectCount >= _invincibleLimit)//一定数アイテムを集めたら無敵モードに切り替わる
@@ -445,6 +457,7 @@ public class PlayerBase : MonoBehaviour
         _godMode = true;
         _anim.SetBool(_invicibleAnimParamName, true);
         _invincibleModeEffect.SetActive(true);
+        Play(_invincibleModeAudio);
         GameManager.Instance.PlayerInvicibleObjectValueChange(_returnDefault);
         await Task.Delay(_invincibleTime);
         _godMode = false;
