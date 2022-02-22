@@ -35,10 +35,12 @@ public class SuperAttackRestriction: MonoBehaviour
     [SerializeField, Header("必殺技発動時間")] float _activationTime = 30f;
     /// <summary>攻撃頻度</summary>
     [SerializeField, Header("攻撃頻度(秒)")] private float _attackInterval = 0.6f;
+    /// <summary>マズルの角度間隔</summary>
+    [SerializeField, Header("マズルの角度間隔")] float _rotationInterval = 4f;
     /// <summary>発射する弾を設定できる</summary>
     [SerializeField, Header("発射する弾の設定")] PoolObjectType _bullet;
     /// <summary>修正値</summary>
-    float _rotationOffset = 0f;
+    float _rotOffset = 0f;
     /// <summary>修正値</summary>
     const float PLAYER_POS_OFFSET = 0.5f;
     /// <summary>判定回数の制限</summary>
@@ -47,6 +49,13 @@ public class SuperAttackRestriction: MonoBehaviour
     const float RESET_TIME = 0f;
     /// <summary>逆回転時のマズルの修正値</summary>
     const float MUZZLE_ROT_OFFSET = 4f;
+    /// <summary>半分の時間</summary>
+    const float HALF_TIME = 2;
+    /// <summary>最小の回転値</summary>
+    const float MINIMUM_ROT_RANGE = 0f;
+    /// <summary>最大の回転値</summary>
+    const float MAXIMUM_ROT_RANGE = 360f;
+
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();//《スタート》でゲットコンポーネント
@@ -111,14 +120,14 @@ public class SuperAttackRestriction: MonoBehaviour
         while (true)
         {
             //必殺技発動時間の後半になったら反時計回りに全方位発射
-            if (_timer >= _activationTime / 2f)
+            if (_timer >= _activationTime / HALF_TIME)
             {
                 //360度全方位に発射
-                for (float angle = 0 + _rotationOffset + MUZZLE_ROT_OFFSET; angle <= 360f + _rotationOffset + MUZZLE_ROT_OFFSET; angle += 10f)
+                for (float rot = MINIMUM_ROT_RANGE + _rotOffset + MUZZLE_ROT_OFFSET; rot <= MAXIMUM_ROT_RANGE + _rotOffset + MUZZLE_ROT_OFFSET; rot += _rotationInterval)
                 {
                     //マズルを回転する
                     Vector3 localAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
-                    localAngle.z = -angle;// 角度を設定
+                    localAngle.z = -rot;// 角度を設定
                     _muzzles[0].localEulerAngles = localAngle;//回転する
                                        
                     //弾をマズルの向きに合わせて弾を発射（仮でBombにしてます）
@@ -130,7 +139,7 @@ public class SuperAttackRestriction: MonoBehaviour
             else
             {
                 //360度全方位に発射
-                for (float rotation = 0 + _rotationOffset; rotation <= 360f + _rotationOffset; rotation += 10)
+                for (float rotation = MINIMUM_ROT_RANGE + _rotOffset; rotation <= MAXIMUM_ROT_RANGE + _rotOffset; rotation += _rotationInterval)
                 {
                     //マズルを回転する
                     Vector3 localAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
@@ -141,7 +150,7 @@ public class SuperAttackRestriction: MonoBehaviour
                     ObjectPool.Instance.UseBullet(_muzzles[0].position, _bullet).transform.rotation = _muzzles[0].rotation;
                 }
             }
-            _rotationOffset++;
+            _rotOffset++;
 
             yield return new WaitForSeconds(_attackInterval);//攻撃頻度(秒)
             //数秒経ったら

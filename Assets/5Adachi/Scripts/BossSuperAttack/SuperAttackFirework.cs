@@ -31,6 +31,8 @@ public class SuperAttackFirework : MonoBehaviour
     [SerializeField, Header("必殺技待機時間")] float _waitTime = 5f;
     /// <summary>必殺技発動時間</summary>
     [SerializeField, Header("必殺技発動時間")] float _activationTime = 30f;
+    /// <summary>マズルの角度間隔</summary>
+    [SerializeField, Header("マズルの角度間隔")] float _rotationInterval = 10f;
     /// <summary>攻撃頻度</summary>
     [SerializeField, Header("攻撃頻度(秒)")] float _attackInterval = 1f;
     /// <summary>発射する弾を設定できる</summary>
@@ -41,6 +43,10 @@ public class SuperAttackFirework : MonoBehaviour
     const float JUDGMENT_TIME = 1 / 60f;
     /// <summary>リセットタイマー</summary>
     const float RESET_TIME = 0f;
+    /// <summary>最小の回転値</summary>
+    const float MINIMUM_ROTATION_RANGE = 0f;
+    /// <summary>最大の回転値</summary>
+    const float MAXIMUM_ROTATION_RANGE = 360f;
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();//《Start》でゲットコンポーネント
@@ -103,7 +109,7 @@ public class SuperAttackFirework : MonoBehaviour
         while (true)
         {
             //360度全方位に発射
-            for (float rotation = 0f; rotation <= 360f; rotation += 10)//下半分だけ→(float i = -270f; i <= -90f; i += 10)
+            for (float rotation = MINIMUM_ROTATION_RANGE; rotation <= MAXIMUM_ROTATION_RANGE; rotation += _rotationInterval)
             {
                 Vector3 localAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
                 localAngle.z = rotation;// 角度を設定

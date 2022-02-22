@@ -35,7 +35,7 @@ public class SuperAttackEightShape : MonoBehaviour
     /// <summary>攻撃頻度</summary>
     [SerializeField, Header("攻撃頻度(秒)")] private float _attackInterval = 0.6f;
     /// <summary>マズルの角度間隔</summary>
-    [SerializeField, Header("マズルの角度間隔")] float _angle = 10f;
+    [SerializeField, Header("マズルの角度間隔")] float _rotationInterval = 10f;
     /// <summary>発射する弾を設定できる</summary>
     [SerializeField, Header("発射する弾の設定")] PoolObjectType _bullet;
     /// <summary>修正値</summary>
@@ -109,7 +109,7 @@ public class SuperAttackEightShape : MonoBehaviour
         {
                 //マズル0（親オブジェクト）を反時計回り（+）に回転する
                 Vector3 upperLocalAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
-                upperLocalAngle.z += _angle;// 角度を設定
+                upperLocalAngle.z += _rotationInterval;// 角度を設定
                 _muzzles[0].localEulerAngles = upperLocalAngle;//回転する
 
                 //マズル0（親オブジェクト）
@@ -124,7 +124,7 @@ public class SuperAttackEightShape : MonoBehaviour
 
                 //マズル2（親オブジェクト）を時計回り（-）に回転する
                 Vector3 rightLocalAngle = _muzzles[2].localEulerAngles;// ローカル座標を基準に取得
-                rightLocalAngle.z -= _angle;// 角度を設定
+                rightLocalAngle.z -= _rotationInterval;// 角度を設定
                 _muzzles[2].localEulerAngles = rightLocalAngle;//回転する
 
                 //マズル2（親オブジェクト）

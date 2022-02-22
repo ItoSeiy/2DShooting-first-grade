@@ -10,6 +10,7 @@ public class BossNormalAttack01 : MonoBehaviour
     Vector3 _dir;
     /// <summary>プレイヤーのオブジェクト</summary>
     private GameObject _player;
+    /// <summary>プレイヤーのタグ</summary>
     [SerializeField,Header("playerのtag")] string _playerTag = null;
     /// <summary>バレットを発射するポジション</summary>
     [SerializeField, Header("Bulletを発射するポジション")] Transform[] _muzzles = null;
@@ -48,16 +49,19 @@ public class BossNormalAttack01 : MonoBehaviour
 
             //子オブジェクトのマズル
 
-            //弾を発射（親オブジェクトの弾より右側）
-            var bossEnemyBulletRight = ObjectPool.Instance.UseBullet(_muzzles[1].position, _bullet);
-            //弾をマズル1の向きに合わせる
-            bossEnemyBulletRight.transform.rotation = _muzzles[1].rotation;
-            //弾を発射（親オブジェクトの弾より左側）
-            var bossEnemyBulletLeft = ObjectPool.Instance.UseBullet(_muzzles[2].position, _bullet);
-            //弾をマズル2の向きに合わせる
-            bossEnemyBulletLeft.transform.rotation = _muzzles[2].rotation;
-
+            //弾をマズル1の向きに合わせて弾を発射（親オブジェクトの弾より右側）
+            ObjectPool.Instance.UseBullet(_muzzles[1].position, _bullet).transform.rotation = _muzzles[1].rotation;
             
+            //弾をマズル2の向きに合わせて弾を発射（親オブジェクトの弾より左側）
+            ObjectPool.Instance.UseBullet(_muzzles[2].position, _bullet).transform.rotation = _muzzles[2].rotation;
+
+            //弾をマズル3の向きに合わせて弾を発射（親オブジェクトの弾より右側）
+            ObjectPool.Instance.UseBullet(_muzzles[3].position, _bullet).transform.rotation = _muzzles[3].rotation;
+
+            //弾をマズル4の向きに合わせて弾を発射（親オブジェクトの弾より左側）
+            ObjectPool.Instance.UseBullet(_muzzles[4].position, _bullet).transform.rotation = _muzzles[4].rotation;
+
+
         }
     }
 }
