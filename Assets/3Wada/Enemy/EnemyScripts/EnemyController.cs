@@ -27,7 +27,7 @@ public class EnemyController : EnemyBase
     [SerializeField, Header("モブの攻撃するときを変える")] AttackMode _attackMode;
     bool _isBttomposition = false;
     bool _isMove = false;
-    
+    [SerializeField] AudioSource _hitAudio = default;
 
 
 
@@ -160,10 +160,11 @@ public class EnemyController : EnemyBase
   
     protected override void OnGetDamage()
     {
-        if (EnemyHp <= 0)
-        {
-            Instantiate(_deathSFX);
-        }
+        _hitAudio.Play();
+            if (EnemyHp <= 0)
+            {
+                Instantiate(_deathSFX);
+            }
     }
 
     enum GeneratePos
