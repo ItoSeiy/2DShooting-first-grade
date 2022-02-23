@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Runtime.CompilerServices;
 
 public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
 {
@@ -44,7 +45,7 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
 
     private int _phaseIndex = default;
 
-    private bool _isFirstTime = true;
+    private bool _isGenerateFirstTime = true;
 
     protected override void Awake()
     {
@@ -70,6 +71,7 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
         }
 
         BackGround();
+
         switch (_gamePhaseState)
         {
             case GamePhase.Boss:
@@ -92,12 +94,12 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
             Debug.Log("生成待機");
             _intervalTimer += Time.deltaTime;
 
-            if(_isFirstTime)
+            if(_isGenerateFirstTime)
             {
                 Debug.Log("初回生成");
+                _isGenerateFirstTime = false;
                 Debug.Log(_stageParam.PhaseParms[_phaseIndex].PhaseName);
                 Instantiate(_stageParam.PhaseParms[_phaseIndex].Prefab).transform.position = _generateTransform.position;
-                _isFirstTime = false;
             }
 
             if (_intervalTimer >= _stageParam.PhaseParms[_phaseIndex].Interval && _stageParam.PhaseParms[_phaseIndex].UseInterval)
@@ -109,11 +111,20 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
 
             if (_timer >= _stageParam.PhaseParms[_phaseIndex].FinishTime)
             {
+                _isGenerateFirstTime = true;
                 Debug.Log("生成終了");
                 _timer = 0;
-                _isFirstTime = true;
                 ChangePhase((GamePhase)_phaseIndex + 1);
             }
+        }
+    }
+
+    public void RunNextPhase([System.Ca])
+    {
+        if(_isGenerateFirstTime)
+        {
+            Debug.LogWarning("次のフェイズを始める指示を");
+            return;
         }
     }
 
@@ -123,6 +134,7 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
     void BossStage()
     {
         _timer += Time.deltaTime;
+        Debug.Log(_phaseIndex);
         if(_timer >= _stageParam.PhaseParms[_phaseIndex].StartTime)
         {
             SetNovel();
@@ -134,7 +146,7 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
     /// </summary>
     public void SetUp()
     {
-        _isFirstTime = true;
+        _isGenerateFirstTime = true;
         _timer = 0;
         _intervalTimer = 0;
 
@@ -149,12 +161,16 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
         _gamePhaseState = phase;
 
         _phaseIndex = (int)_gamePhaseState;
+
+        if(_phaseIndex == _stageParam.BossPhaseIndex)
+        {
+            _gamePhaseState = GamePhase.Boss;
+            _phaseIndex = _stageParam.BossPhaseIndex;
+        }
     }
 
     void SetNovel()
     {
-
-
         if (GameManager.Instance.IsStageClear)
         {
             _novelPhaseState = NovelPhase.Win;

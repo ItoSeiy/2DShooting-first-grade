@@ -6,9 +6,12 @@ using System;
 [Serializable]
 public class StageParam
 {
+    public int BossPhaseIndex => bossPhaseIndex;
     public List<PhaseParm> PhaseParms => phaseParms;
-    [SerializeField] private List<PhaseParm> phaseParms = new List<PhaseParm>();
-
+    [SerializeField, Tooltip("ボスのフェイズのIndexを指定する(0から始まる数字)")]
+    private int bossPhaseIndex;
+    [SerializeField]
+    private List<PhaseParm> phaseParms = new List<PhaseParm>();
 }
 
 
@@ -24,7 +27,6 @@ public class PhaseParm
 
     [SerializeField] 
     public string PhaseName = "Phase";
-
     [SerializeField]
     private GameObject phasePrefab;
     [SerializeField]
