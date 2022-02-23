@@ -6,13 +6,33 @@ using UnityEngine.InputSystem;
 
 public class PlayerTutorialTriger : MonoBehaviour
 {
-    [SerializeField] string _itemLayerName = default;
+    [SerializeField, Header("アイテムのレイヤー名")] string _itemLayerName = default;
+    [SerializeField, Header("ボムのタグ名")] string _bombTag = default;
+    [SerializeField, Header("残機のタグ名")] string _residueTag = default;
+    [SerializeField, Header("無敵アイテムのタグ名")] string _invisibleTag = default;
+    [SerializeField, Header("パワーアイテムのタグ名")] string _powerTag = default;
     public void OnTriggerEnter2D(Collider2D collision)
     {
         string _layerName = LayerMask.LayerToName(collision.gameObject.layer);
         if (_layerName == _itemLayerName)
         {
             Tutorial.Instance.GetItemTutorial();
+        }
+        if (collision.tag == _bombTag)
+        {
+            Tutorial.Instance.BombTutorial();
+        }
+        if (collision.tag == _residueTag)
+        {
+            Tutorial.Instance.ResidueTutorial();
+        }
+        if (collision.tag == _invisibleTag)
+        {
+            Tutorial.Instance.InvisibleTutorial();
+        }
+        if (collision.tag == _powerTag)
+        {
+            Tutorial.Instance.PowerTutorial();
         }
     }
 }

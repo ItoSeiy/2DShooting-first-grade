@@ -15,9 +15,10 @@ public class Tutorial : SingletonMonoBehaviour<Tutorial>
     [SerializeField, Header("精密操作のチュートリアルのチェック")] GameObject _slowMoveCheck;
     [SerializeField, Header("精密操作のチュートリアルの対応キー")] InputAction _inputSlowMove;
     [SerializeField, Header("アイテム取得のチュートリアルのチェック")] GameObject _itemCheck;
-    [SerializeField, Header("アイテム取得のチュートリアルのチェック")] GameObject _bombCheck;
-    [SerializeField, Header("アイテム取得のチュートリアルのチェック")] GameObject _rediusCheck;
-    [SerializeField, Header("アイテム取得のチュートリアルのチェック")] GameObject _invisibleCheck;
+    [SerializeField, Header("ボム取得のチュートリアルのチェック")] GameObject _bombCheck;
+    [SerializeField, Header("残機取得のチュートリアルのチェック")] GameObject _residueCheck;
+    [SerializeField, Header("無敵アイテム取得のチュートリアルのチェック")] GameObject _invisibleCheck;
+    [SerializeField, Header("パワーアイテム取得のチュートリアルのチェック")] GameObject _powerCheck;
     private void Start()
     {
         MoveTutorial();
@@ -58,5 +59,21 @@ public class Tutorial : SingletonMonoBehaviour<Tutorial>
     public void GetItemTutorial()
     {
         _itemCheck.SetActive(true);
+    }
+    public void BombTutorial()
+    {
+        _bombCheck.SetActive(true);
+    }
+    public void ResidueTutorial()
+    {
+        _residueCheck.SetActive(true);
+    }
+    public void InvisibleTutorial()
+    {
+        _invisibleCheck.SetActive(true);
+    }
+    public void PowerTutorial()
+    {
+        _powerCheck.SetActive(true);
     }
 }
