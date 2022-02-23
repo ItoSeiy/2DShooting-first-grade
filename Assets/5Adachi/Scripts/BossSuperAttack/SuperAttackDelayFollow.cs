@@ -118,7 +118,7 @@ public class SuperAttackDelayFollow : MonoBehaviour
                 localAngle.z = rotation;// 角度を設定
                 _muzzles[0].localEulerAngles = localAngle;//回転する
                 //弾をマズルの向きに合わせて弾を発射（時間が経つとプレイヤーに一瞬だけ追従するBulletを使います）
-                ObjectPool.Instance.UseBullet(_muzzles[0].position, _bullet).transform.rotation = _muzzles[0].rotation;
+                ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet).transform.rotation = _muzzles[0].rotation;
                 //真ん中あたりは発射しない
                 if (rotation == MIDDLE_RANGE)
                 {

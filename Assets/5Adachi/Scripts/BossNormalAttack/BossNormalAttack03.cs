@@ -49,7 +49,7 @@ public class BossNormalAttack03 : MonoBehaviour
             //親オブジェクトのマズル
 
             //弾をマズル0の向きに合わせて弾を発射
-            ObjectPool.Instance.UseBullet(_muzzles[0].position, _bullet).transform.rotation = _muzzles[0].rotation;
+            ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet).transform.rotation = _muzzles[0].rotation;
 
             //同じ処理を数回(_maximumCount)繰り返す
             for (float rotation = MINIMUM_ROTATION_RANGE; rotation <= MAXIMUM_ROTATION_RANGE; rotation += _rotationInterval)
@@ -58,7 +58,7 @@ public class BossNormalAttack03 : MonoBehaviour
                 localAngle.z = rotation;// 角度を設定
                 _muzzles[0].localEulerAngles = localAngle;//回転する
                 //弾をマズルの向きに合わせて弾を発射（仮でBombにしてます）
-                ObjectPool.Instance.UseBullet(_muzzles[0].position, _bullet).transform.rotation = _muzzles[0].rotation;
+                ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet).transform.rotation = _muzzles[0].rotation;
             }
 
             _firstAttackInterval = Random.Range(0f, _attackInterval);
@@ -73,7 +73,7 @@ public class BossNormalAttack03 : MonoBehaviour
             //親オブジェクトのマズル
 
             //弾をマズル0の向きに合わせて弾を発射
-            ObjectPool.Instance.UseBullet(_muzzles[0].position, _bullet).transform.rotation = _muzzles[0].rotation;
+            ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet).transform.rotation = _muzzles[0].rotation;
 
             //同じ処理を数回(_maximumCount)繰り返す
             for (float rotation = MINIMUM_ROTATION_RANGE; rotation <= MAXIMUM_ROTATION_RANGE; rotation += _rotationInterval)
@@ -82,7 +82,7 @@ public class BossNormalAttack03 : MonoBehaviour
                 localAngle.z = rotation;// 角度を設定
                 _muzzles[0].localEulerAngles = localAngle;//回転する
                 //弾をマズルの向きに合わせて弾を発射（仮でBombにしてます）
-                ObjectPool.Instance.UseBullet(_muzzles[0].position, _bullet).transform.rotation = _muzzles[0].rotation;
+                ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet).transform.rotation = _muzzles[0].rotation;
             }
 
             yield return new WaitForSeconds(_attackInterval - _firstAttackInterval);

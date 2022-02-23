@@ -111,18 +111,18 @@ public class SuperAttackWindmill : MonoBehaviour
             _muzzles[0].localEulerAngles = firstLocalAngle;//回転する
 
             //弾をマズル0の向きに合わせて弾を発射
-            ObjectPool.Instance.UseBullet(_muzzles[0].position, _bullet).transform.rotation = _muzzles[0].rotation;
+            ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet).transform.rotation = _muzzles[0].rotation;
 
             //子オブジェクト
 
             //弾をマズル1の向きに合わせて弾を発射
-            ObjectPool.Instance.UseBullet(_muzzles[1].position, _bullet).transform.rotation = _muzzles[1].rotation;
+            ObjectPool.Instance.UseObject(_muzzles[1].position, _bullet).transform.rotation = _muzzles[1].rotation;
 
             //弾をマズル2の向きに合わせて弾を発射
-            ObjectPool.Instance.UseBullet(_muzzles[2].position, _bullet).transform.rotation = _muzzles[2].rotation;
+            ObjectPool.Instance.UseObject(_muzzles[2].position, _bullet).transform.rotation = _muzzles[2].rotation;
 
             //弾をマズル3の向きに合わせて弾を発射
-            ObjectPool.Instance.UseBullet(_muzzles[3].position, _bullet).transform.rotation = _muzzles[3].rotation;
+            ObjectPool.Instance.UseObject(_muzzles[3].position, _bullet).transform.rotation = _muzzles[3].rotation;
 
             yield return new WaitForSeconds(_attackInterval);//攻撃頻度(秒)
 

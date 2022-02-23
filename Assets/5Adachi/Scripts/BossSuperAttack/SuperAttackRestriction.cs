@@ -128,7 +128,7 @@ public class SuperAttackRestriction: MonoBehaviour
                     _muzzles[0].localEulerAngles = localAngle;//‰ñ“]‚·‚é
                                        
                     //’e‚ğƒ}ƒYƒ‹‚ÌŒü‚«‚É‡‚í‚¹‚Ä’e‚ğ”­Ëi‰¼‚ÅBomb‚É‚µ‚Ä‚Ü‚·j
-                    ObjectPool.Instance.UseBullet(_muzzles[0].position, PoolObjectType.Player01BombChild).transform.rotation = _muzzles[0].rotation;
+                    ObjectPool.Instance.UseObject(_muzzles[0].position, PoolObjectType.Player01BombChild).transform.rotation = _muzzles[0].rotation;
                 }
 
             }
@@ -144,7 +144,7 @@ public class SuperAttackRestriction: MonoBehaviour
                     _muzzles[0].localEulerAngles = localAngle;//‰ñ“]‚·‚é
                                        
                     //’e‚ğƒ}ƒYƒ‹‚ÌŒü‚«‚É‡‚í‚¹‚Ä’e‚ğ”­Ë
-                    ObjectPool.Instance.UseBullet(_muzzles[0].position, _bullet).transform.rotation = _muzzles[0].rotation;
+                    ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet).transform.rotation = _muzzles[0].rotation;
                 }
             }
             _rotOffset++;
