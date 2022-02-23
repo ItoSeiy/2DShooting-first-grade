@@ -80,7 +80,7 @@ public class PlayerBase : MonoBehaviour
     [SerializeField, Header("アイテムを回収したときの音")] string _itemGetAudio = "ItemGet";
     [SerializeField, Header("１UPの音")] string _1UPAudio = "1UP";
     [SerializeField, Header("ボムアイテム獲得時の音")] string _getBombAudio = "BombGet";
-    [SerializeField, Header("レベルアップ時の音")] string _levelUpAudio = "LevelUp";
+    [SerializeField, Header("レベルアップ時の音")] public readonly string _levelUpAudio = "LevelUp";
     [SerializeField, Header("Invincibleモードの時の音")] string _invincibleModeAudio = "Invincible";
     /// <summary>無敵モードのフラグ</summary>
     [SerializeField, Header("無敵モード")] bool _isGodMode = false;
@@ -119,6 +119,7 @@ public class PlayerBase : MonoBehaviour
     bool _isPowerMax = false;
     bool _is1upMax = false;
     bool _isBombMax = false;
+
 
     /// <summary>カウントアップする定数</summary>
     const int _defaultUp = 1;
@@ -383,7 +384,10 @@ public class PlayerBase : MonoBehaviour
             if (item._isTaking || _isPowerMax) return;
             GameManager.Instance.PlayerPowerItemCountChange(_defaultUp);
             _playerPower = GameManager.Instance.PlayerPowerItemCount;
-
+            if(_playerPower == _playerPowerRequiredNumberLevel2 || _playerPower == _playerPowerRequiredNumberLevel3 || _playerPower == _playerPowerLimit)
+            {
+                Play(_levelUpAudio);
+            }
             if (_playerPower >= _playerPowerLimit)
             {
                 _fullPowerModeEffect.SetActive(true);
