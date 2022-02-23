@@ -59,19 +59,6 @@ public class PlayerBase : MonoBehaviour
 
     [SerializeField, Header("揺らすカメラ")] CinemachineVirtualCamera _cmvcam1 = default;
 
-    [SerializeField, Header("通常弾の音")] protected string _playerBulletAudio = "Bullet";
-    [SerializeField, Header("チャージ中の音")] protected string _playerChargeBulletAudio = "Charge";
-    [SerializeField, Header("チャージショットの音")] protected string _playerChargeShotBulletAudio = "ChargeShot";
-    [SerializeField, Header("ボムの音")] protected string _playerBombShotAudio = "Bomb";
-    [SerializeField, Header("ボムの着弾時の音")] protected string _bombOnEnemyAudio = "OnBomb";
-    [SerializeField, Header("プレイヤーの被弾時に流れる音")] protected string _playerDestroyAudio = "PlayerDestroy";
-    [SerializeField, Header("アイテムを回収したときの音")] protected string _itemGetAudio = "ItemGet";
-    [SerializeField, Header("１UPの音")] protected string _1UPAudio = "1UP";
-    [SerializeField, Header("ボムアイテム獲得時の音")] protected string _getBombAudio = "BombGet";
-    [SerializeField, Header("レベルアップ時の音")] protected string _levelUpAudio = "LevelUp";
-    [SerializeField, Header("Invincibleモードの時の音")] protected string _invincibleModeAudio = "Invincible";
-         
-
     [SerializeField, Header("チャージショットのパーティカルシステム（溜め）")] GameObject _chargeps = default;
 
     [SerializeField, Header("精密操作時の演出R")] GameObject _parsR;
@@ -85,6 +72,19 @@ public class PlayerBase : MonoBehaviour
 
     [SerializeField, Header("パワーアイテムのデスペナルティ")] int _powerDeathPenalty = -50;
 
+    [SerializeField, Header("通常弾の音")] protected string _playerBulletAudio = "Bullet";
+    [SerializeField, Header("チャージ中の音")] protected string _playerChargeBulletAudio = "Charge";
+    [SerializeField, Header("チャージショットの音")] protected string _playerChargeShotBulletAudio = "ChargeShot";
+    [SerializeField, Header("ボムの音")] protected string _playerBombShotAudio = "Bomb";
+    [SerializeField, Header("ボムの着弾時の音")] string _bombOnEnemyAudio = "OnBomb";
+    [SerializeField, Header("プレイヤーの被弾時に流れる音")] string _playerDestroyAudio = "PlayerDestroy";
+    [SerializeField, Header("アイテムを回収したときの音")] string _itemGetAudio = "ItemGet";
+    [SerializeField, Header("１UPの音")] string _1UPAudio = "1UP";
+    [SerializeField, Header("ボムアイテム獲得時の音")] string _getBombAudio = "BombGet";
+    [SerializeField, Header("レベルアップ時の音")] string _levelUpAudio = "LevelUp";
+    [SerializeField, Header("Invincibleモードの時の音")] string _invincibleModeAudio = "Invincible";
+    /// <summary>無敵モードのフラグ</summary>
+    [SerializeField, Header("無敵モード")] bool _isGodMode = false;
 
     protected const int _level1 = 1;
     protected const int _level2 = 2;
@@ -109,8 +109,6 @@ public class PlayerBase : MonoBehaviour
     bool _isBulletStop = default;
     /// <summary>精密操作時のフラグ</summary>
     bool _isLateMode = default;
-    /// <summary>無敵モードのフラグ</summary>
-    protected bool _godMode = default;
     /// <summary>ボムの使用時に立つフラグ</summary>
     protected bool _isBomb = default;
     /// <summary>コントロールが効かないようにするフラグ</summary>
@@ -310,15 +308,14 @@ public class PlayerBase : MonoBehaviour
         _isBomb = true;
         _isBombMax = false;
         Debug.Log("ボム撃ったよー");
-        Play(_playerBombShotAudio);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //EnemyまたはEnemyBuletに当たった際行う残機を減らす処理　無敵モードであれば残機は減らない
-        if (!_godMode && collision.gameObject.tag == _enemyTag || collision.gameObject.tag == _enemyBulletTag)
+        if (!_isGodMode && collision.gameObject.tag == _enemyTag || collision.gameObject.tag == _enemyBulletTag)
         {
-            if (_godMode) return;
+            if (_isGodMode) return;
             _cmvcam1.Priority = -1;
             _wasCharge = false;
             _isAttackMode = false;
@@ -342,10 +339,10 @@ public class PlayerBase : MonoBehaviour
         if (collision.gameObject.tag == _1upTag)//残機を増やす処理
         {
             var item = collision.GetComponent<ItemBase>();
+            Play(_1UPAudio);
             if (item._isTaking || _is1upMax) return;
             GameManager.Instance.ResidueChange(_defaultUp);
             _playerResidue = GameManager.Instance.PlayerResidueCount;
-            Play(_1UPAudio);
             if(_playerResidue >= _playerResidueLimit)
             {
                 _is1upMax = true;
@@ -357,10 +354,10 @@ public class PlayerBase : MonoBehaviour
         if (collision.gameObject.tag == _bombItemTag)//ボムの所持数を増やす処理
         {
             var item = collision.GetComponent<ItemBase>();
+            Play(_getBombAudio);
             if (item._isTaking || _isBombMax) return;
             GameManager.Instance.PlayerBombCountChange(_defaultUp);
             _bombCount = GameManager.Instance.PlayerBombCount;
-            Play(_getBombAudio);
             if(_bombCount >= _playerBombLimit)
             {
                 _isBombMax = true;
@@ -372,10 +369,10 @@ public class PlayerBase : MonoBehaviour
         if (collision.gameObject.tag == _pointTag)//スコアを増やす処理
         {
             var item = collision.GetComponent<ItemBase>();
+            Play(_itemGetAudio);
             if (item._isTaking) return;
             GameManager.Instance.PlayerScoreChange(_defaultUp);
             _playerScore = GameManager.Instance.PlayerScore;
-            Play(_itemGetAudio);
             item._isTaking = true;
             Debug.Log("スコアふえたよー" + _playerScore);
         }
@@ -383,10 +380,10 @@ public class PlayerBase : MonoBehaviour
         if (collision.gameObject.tag == _powerTag)//パワーを増やす処理
         {
             var item = collision.GetComponent<ItemBase>();
+            Play(_itemGetAudio);
             if (item._isTaking || _isPowerMax) return;
             GameManager.Instance.PlayerPowerItemCountChange(_defaultUp);
             _playerPower = GameManager.Instance.PlayerPowerItemCount;
-            Play(_itemGetAudio);
 
             if (_playerPower >= _playerPowerLimit)
             {
@@ -400,10 +397,10 @@ public class PlayerBase : MonoBehaviour
         if (collision.gameObject.tag == _invincibleTag)//一定数取得すると無敵になるアイテムの所持数を増やす処理
         {
             var item = collision.GetComponent<ItemBase>();
+            Play(_itemGetAudio);
             if (item._isTaking) return;
             GameManager.Instance.PlayerInvicibleObjectValueChange(_defaultUp);
             _invincibleObjectCount = GameManager.Instance.PlayerInvincibleObjectCount;
-            Play(_itemGetAudio);
             item._isTaking = true;
             Debug.Log("アイテム名決まってない怪しいやつふえたよー" + _invincibleObjectCount);
             if (_invincibleObjectCount >= _invincibleLimit)//一定数アイテムを集めたら無敵モードに切り替わる
@@ -428,13 +425,13 @@ public class PlayerBase : MonoBehaviour
         foreach(var item in items)
         {
             var itemBase = item.GetComponent<ItemBase>();
-            itemBase.OnItemGetLine();
+            itemBase.ItemGet();
         }
     }
 
     public async void Respawn()//リスポーンの処理
     {
-        _godMode = true;
+        _isGodMode = true;
         _isControll = false;
         _is1upMax = false;
         _anim.SetBool(_invicibleAnimParamName, true);
@@ -447,20 +444,20 @@ public class PlayerBase : MonoBehaviour
         transform.position = _playerRespawn.position;//ここでリスポーン地点に移動
         _isControll = true;
         await Task.Delay(_afterRespawnTime);
-        _godMode = false;
+        _isGodMode = false;
         _anim.SetBool(_invicibleAnimParamName, false);
     }
 
     public virtual async void InvincibleMode()//無敵モード
     {
-        if (_godMode) return;
-        _godMode = true;
+        if (_isGodMode) return;
+        _isGodMode = true;
         _anim.SetBool(_invicibleAnimParamName, true);
         _invincibleModeEffect.SetActive(true);
         Play(_invincibleModeAudio);
         GameManager.Instance.PlayerInvicibleObjectValueChange(_returnDefault);
         await Task.Delay(_invincibleTime);
-        _godMode = false;
+        _isGodMode = false;
         _anim.SetBool(_invicibleAnimParamName, false);
         _invincibleModeEffect.SetActive(false);
     }
@@ -510,7 +507,7 @@ public class PlayerBase : MonoBehaviour
     }
     private void OnParticleCollision(GameObject other)
     {
-        if (_isLateMode || _godMode) return;
+        if (_isLateMode || _isGodMode) return;
         Respawn();
     }
 

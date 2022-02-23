@@ -305,15 +305,23 @@ MonoBehaviour:
   - _key: Charge
     _audio: {fileID: 8300000, guid: 964a8f42b3ae5104b8d7c2e98afb6770, type: 3}
   - _key: ChargeShot
-    _audio: {fileID: 8300000, guid: 27073d1ce8499684c9a86aa8ee9d955e, type: 3}
+    _audio: {fileID: 8300000, guid: e59a67ae3cbe2c94680a97d3b490e4e4, type: 3}
   - _key: Bullet
-    _audio: {fileID: 0}
-  - _key: SuperBullet
-    _audio: {fileID: 0}
-  - _key: Bobm
-    _audio: {fileID: 0}
+    _audio: {fileID: 8300000, guid: 24070710bc7b10f4aa076b1660778258, type: 3}
+  - _key: Bomb
+    _audio: {fileID: 8300000, guid: f61ba39276346284d9345973aa02384a, type: 3}
   - _key: PlayerDestroy
-    _audio: {fileID: 0}
+    _audio: {fileID: 8300000, guid: 94b7aa2212300484fac59194656a6727, type: 3}
+  - _key: ItemGet
+    _audio: {fileID: 8300000, guid: ac4b55fc365a11948989ba1b6957eb6f, type: 3}
+  - _key: 1UP
+    _audio: {fileID: 8300000, guid: fc3a226f5c7e4c247b3d3188fd04b08c, type: 3}
+  - _key: BombGet
+    _audio: {fileID: 8300000, guid: 6e95accb313f730478ad78197d638f47, type: 3}
+  - _key: LevelUp
+    _audio: {fileID: 8300000, guid: d5e8ec846098a0f43a60b89a03b6a777, type: 3}
+  - _key: Invincible
+    _audio: {fileID: 8300000, guid: 68901ca8fde88eb4b9c2db705bbaec17, type: 3}
   _playerRespawn: {fileID: 8494302934883400905, guid: ea9957449aa2ce04681b61bcb9045a17,
     type: 3}
   _muzzle: {fileID: 2659204507980155405}
@@ -342,13 +350,8 @@ MonoBehaviour:
   _respawnTime: 2800
   _afterRespawnTime: 1400
   _musicVolume: 1
-  _cmvcam1: {fileID: 0}
-  _playerBulletAudio: Bullet
-  _playerSuperBulletAudio: SuperBullet
-  _playerChargeBulletAudio: Charge
-  _playerChargeShotBulletAudio: ChargeShot
-  _playerBombShotAudio: Bomb
-  _playerDestroyAudio: PlayerDestroy
+  _cmvcam1: {fileID: 4551802122371824449, guid: a0fba6d711617884f8bb908d7b6035ab,
+    type: 3}
   _chargeps: {fileID: 7880075907462272649}
   _parsR: {fileID: 177813058978853691}
   _parsB: {fileID: 5006241038877571444}
@@ -357,6 +360,18 @@ MonoBehaviour:
   _fullPowerModeEffect: {fileID: 8564091187337393466}
   _invincibleModeEffect: {fileID: 6630344809961874575}
   _powerDeathPenalty: -50
+  _playerBulletAudio: Bullet
+  _playerChargeBulletAudio: Charge
+  _playerChargeShotBulletAudio: ChargeShot
+  _playerBombShotAudio: Bomb
+  _bombOnEnemyAudio: OnBomb
+  _playerDestroyAudio: PlayerDestroy
+  _itemGetAudio: ItemGet
+  _1UPAudio: 1UP
+  _getBombAudio: BombGet
+  _levelUpAudio: LevelUp
+  _invincibleModeAudio: Invincible
+  _isGodMode: 0
 --- !u!114 &1684132987068084035
 MonoBehaviour:
   m_ObjectHideFlags: 0
