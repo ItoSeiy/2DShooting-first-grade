@@ -34,7 +34,7 @@ public class SuperAttackRebound : MonoBehaviour
     /// <summary>UŒ‚•p“x</summary>
     [SerializeField, Header("UŒ‚•p“x(•b)")] float _attackInterval = 1f;
     /// <summary>”­Ë‚·‚é’e‚ğİ’è‚Å‚«‚é</summary>
-    [SerializeField, Header("”­Ë‚·‚é’e‚Ìİ’è")] PoolObjectType _bullet;
+    [SerializeField, Header("”­Ë‚·‚é’e‚Ìİ’è(ƒŠƒoƒEƒ“ƒhj")] PoolObjectType _bullet;
     /// <summary>C³’l</summary>
     const float PLAYER_POS_OFFSET = 0.5f;
     /// <summary>”»’è‰ñ”‚Ì§ŒÀ</summary>
