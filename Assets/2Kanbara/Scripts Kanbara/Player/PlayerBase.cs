@@ -20,7 +20,6 @@ public class PlayerBase : MonoBehaviour
     protected AudioSource _audioSource;
     Animator _anim;
     Vector2 _dir;
-    List<Rigidbody2D> _itemRbs = new List<Rigidbody2D>();
 
     [SerializeField, Header("リスポーンするポジション")] Transform _playerRespawn = default;
     [SerializeField, Header("弾を発射するポジション")] protected Transform _muzzle = default;
