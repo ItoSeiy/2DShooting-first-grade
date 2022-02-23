@@ -18,6 +18,7 @@ public class EnemyController : EnemyBase
     [SerializeField,Header("モブ敵の出現位置")] GeneratePos _generatePos;
     [SerializeField, Header("移動方向が変わるXまたはYの座標")] float _limitPos = 0;
     [SerializeField,Header("Muzzleが一周するまでの秒数")] float _rotateSecond = 2f;
+    [SerializeField, Header("Muzzleが1秒間で回転する角度")] float _rotsteMuzzleLimit = 360f;
     [SerializeField, Header("出た時の移動方向")] Vector2 _beforeDir;
     [SerializeField, Header("移動変わった後の移動方向")] Vector2 _afterDir;
     [SerializeField, Header("何秒とどまるか")] float _stopcount = 0.0f;
@@ -161,12 +162,10 @@ public class EnemyController : EnemyBase
     void Rotate()
     {   
         foreach(var rotateMuzzle in _rotateMuzzles)
-        {
-
-            rotateMuzzle.DORotate(new Vector3(0,0, 360f), _rotateSecond, RotateMode.WorldAxisAdd)
+        {                      
+            rotateMuzzle.DORotate(new Vector3(0, 0, _rotsteMuzzleLimit), _rotateSecond, RotateMode.WorldAxisAdd)
             .SetEase(Ease.Linear)
             .SetLoops(-1, LoopType.Restart);
-
         }
     }
   
@@ -214,4 +213,5 @@ public class EnemyController : EnemyBase
         Yes,
         No
     }
+    
 }
