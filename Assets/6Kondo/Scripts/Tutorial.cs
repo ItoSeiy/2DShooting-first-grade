@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
-public class Tutorial : MonoBehaviour
+public class Tutorial : SingletonMonoBehaviour<Tutorial>
 {
     [SerializeField, Header("移動チュートリアルのチェック")] GameObject _moveCheck;
     [SerializeField, Header("移動チュートリアルの対応キー")] InputAction _inputMove;
@@ -14,6 +14,7 @@ public class Tutorial : MonoBehaviour
     [SerializeField, Header("チャージショットチュートリアルの対応キー")] InputAction _inputChargeShot;
     [SerializeField, Header("精密操作のチュートリアルのチェック")] GameObject _slowMoveCheck;
     [SerializeField, Header("精密操作のチュートリアルの対応キー")] InputAction _inputSlowMove;
+    [SerializeField, Header("アイテム取得のチュートリアルのチェック")] GameObject _itemCheck;
     private void Start()
     {
         MoveTutorial();
@@ -35,36 +36,24 @@ public class Tutorial : MonoBehaviour
         _inputSlowMove.Disable();
         _inputChargeShot.Disable();
     }
-    private void SetMoveCheck()
-    {
-        _moveCheck.SetActive(true);
-    }
     private void MoveTutorial()
     {            
-        _inputMove.performed += _ => SetMoveCheck();
-    }
-    private void SetShotCheck()
-    {
-        _shotCheck.SetActive(true);
+        _inputMove.performed += _ => _moveCheck.SetActive(true);
     }
     private void ShotTutorial()
     {
-        _inputShot.performed += _ => SetShotCheck();
-    }
-    private void SetChargeCheck()
-    {
-        _chargeShotCheck.SetActive(true);
+        _inputShot.performed += _ => _shotCheck.SetActive(true);
     }
     private void CharegeShotTutorial()
     {
-        _inputChargeShot.performed += _ => SetChargeCheck();
-    }
-    private void SetSlowMoveCheck()
-    {
-        _slowMoveCheck.SetActive(true);
+        _inputChargeShot.performed += _ => _chargeShotCheck.SetActive(true);
     }
     private void SlowMoveTutorial()
     {
-        _inputSlowMove.performed += _ => SetSlowMoveCheck();
+        _inputSlowMove.performed += _ => _slowMoveCheck.SetActive(true);
+    }
+    public void GetItemTutorial()
+    {
+        _itemCheck.SetActive(true);
     }
 }
