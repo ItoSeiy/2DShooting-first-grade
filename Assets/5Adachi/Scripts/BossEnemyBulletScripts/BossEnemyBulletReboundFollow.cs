@@ -6,14 +6,8 @@ public class BossEnemyBulletReboundFollow : BulletBese
 {
     /// <summary>BossのGameObject</summary>
     GameObject _bossEnemy;
-    /// <summary>タイマー</summary>
-    float _timer;
     /// <summary>Playerがいた方向</summary>
     Vector2 _oldDir = Vector2.down;
-    /// <summary>一定時間遅れたらプレイヤーに方向を変える(秒)</summary>
-    [SerializeField, Header("一定時間遅れたらプレイヤーがいる方向に変える(秒)")] float _delayChangeDirTime = 2f;
-    /// <summary>時間の修正値</summary>
-    const float DELAY_CHANGE_DIR_TIME_OFFSET = 0.1f;
     /// <summary>右限</summary>
     [SerializeField, Header("右限")] float _rightLimit = 7.5f;
     /// <summary>左限</summary>
@@ -24,8 +18,9 @@ public class BossEnemyBulletReboundFollow : BulletBese
     [SerializeField, Header("下限")] float _downLimit = -4f;
     /// <summary>横限の条件式</summary>
     bool _horizontalLimit;
-    /// <summary></summary>
+    /// <summary>縦限の条件式</summary>
     bool _verticalLimit;
+    /// <summary></summary>
     bool _rebound = true;
     protected override void OnEnable()
     {

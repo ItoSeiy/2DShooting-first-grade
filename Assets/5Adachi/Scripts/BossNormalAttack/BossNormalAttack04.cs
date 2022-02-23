@@ -45,20 +45,18 @@ public class BossNormalAttack04 : MonoBehaviour
 
             Vector3 firstLocalAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
 
-            //親オブジェクトのマズル
-
             //弾をマズル0の向きに合わせて弾を発射
             ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet).transform.rotation = _muzzles[0].rotation;
 
             //_rotationIntervalで設定した角度間隔で全方位に発射する
             for (float rotation = MINIMUM_ROT_RANGE + firstLocalAngle.z; rotation < MAXIMUM_ROT_RANGE + firstLocalAngle.z; rotation += _rotationInterval)
             {
-                ///マズルを回転する///
+                ///マズル1を回転する///
                 Vector3 secondLocalAngle = _muzzles[1].localEulerAngles;// ローカル座標を基準に取得
                 //角度を設定
                 secondLocalAngle.z = rotation;
                 _muzzles[1].localEulerAngles = secondLocalAngle;//回転する
-                //弾をマズルの向きに合わせて弾を発射
+                //弾をマズル1の向きに合わせて弾を発射
                 ObjectPool.Instance.UseObject(_muzzles[1].position, _bullet).transform.rotation = _muzzles[1].rotation;
             }
 
