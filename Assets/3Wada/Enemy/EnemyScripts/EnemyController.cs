@@ -28,17 +28,29 @@ public class EnemyController : EnemyBase
     bool _isBttomposition = false;
     bool _isMove = false;
     [SerializeField] AudioSource _hitAudio = default;
+    SpriteRenderer _spriteRenderer = default;
 
-
+    private void Start()
+    {
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+    }
 
     private void OnEnable()
     {
         Rb.velocity = _beforeDir * Speed;
-        _isMove = true;
+        _isMove = true; 
     }
 
     protected override void Update()
      {
+        if(Rb.velocity.x < 0f)
+        {
+            _spriteRenderer.flipX = true;
+        }
+        else
+        {
+            _spriteRenderer.flipX = false;
+        }
         switch(_attackMode)
         {
             case AttackMode.MoveAtrack:
