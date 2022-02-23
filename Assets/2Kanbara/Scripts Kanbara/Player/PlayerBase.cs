@@ -8,6 +8,9 @@ using Cinemachine;
 
 /// <summary>
 /// Playerの基底クラス
+/// シングルトンパターンではない
+/// アイテムの上限値等を持っている
+/// (プレイヤーによって実数が変わる可能性があるため)
 /// </summary>
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Collider2D))]

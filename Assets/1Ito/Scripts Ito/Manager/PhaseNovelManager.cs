@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Runtime.CompilerServices;
 
 public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
 {
@@ -71,6 +70,7 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
         }
 
         BackGround();
+        ChangePhase();
 
         switch (_gamePhaseState)
         {
@@ -119,13 +119,17 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
         }
     }
 
-    public void RunNextPhase([System.Ca])
+    public void RunNextPhase()
     {
         if(_isGenerateFirstTime)
         {
-            Debug.LogWarning("次のフェイズを始める指示を");
+            Debug.LogWarning("次のフェイズを始める指示を受けましたがフェイズ移行中のため実行できませんでした");
             return;
         }
+
+        ChangePhase((GamePhase)_phaseIndex + 1);
+
+        EnemyGenerate();
     }
 
     /// <summary>
@@ -134,7 +138,6 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
     void BossStage()
     {
         _timer += Time.deltaTime;
-        Debug.Log(_phaseIndex);
         if(_timer >= _stageParam.PhaseParms[_phaseIndex].StartTime)
         {
             SetNovel();
@@ -163,6 +166,15 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
         _phaseIndex = (int)_gamePhaseState;
 
         if(_phaseIndex == _stageParam.BossPhaseIndex)
+        {
+            _gamePhaseState = GamePhase.Boss;
+            _phaseIndex = _stageParam.BossPhaseIndex;
+        }
+    }
+
+    void ChangePhase()
+    {
+        if (_phaseIndex == _stageParam.BossPhaseIndex)
         {
             _gamePhaseState = GamePhase.Boss;
             _phaseIndex = _stageParam.BossPhaseIndex;
