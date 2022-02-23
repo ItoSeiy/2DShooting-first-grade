@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 4508989130467046453}
   - component: {fileID: -8201632760338897031}
   - component: {fileID: 8607801382470810776}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bomb02Child
-  m_TagString: Untagged
+  m_TagString: Bomb
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -136,12 +136,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 10
   _direction: {x: 0, y: 1}
-  _speed: 2
+  _speed: 5
   _bulletMoveMethod: 1
   _opponentTag: Enemy
   _gameZoneTag: Finish
   _parentTag: Parent
   _playerTag: Player
   _enemyBulletTag: Bullet
-  _followStartTime: 2
-  _followFnishTime: 5
+  _followStartTime: 1
+  _followFnishTime: 3

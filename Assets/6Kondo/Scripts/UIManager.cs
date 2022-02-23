@@ -164,6 +164,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
                     _powerItemLimitChangeInterval)
                     .OnUpdate(() => _powerItemLimitText.text = tempPower.ToString("000"))
                     .OnComplete(() => _powerItemLimitText.text = _powerItemLimit2.ToString("000"));
+                UILevelChange();
                 break;
             case Level2:
                 int tempPower2 = int.Parse(_powerItemLimitText.text.ToString());
@@ -175,6 +176,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
                     _powerItemLimitChangeInterval)
                     .OnUpdate(() => _powerItemLimitText.text = tempPower2.ToString("000"))
                     .OnComplete(() => _powerItemLimitText.text = _powerItemLimit3.ToString("000"));
+                UILevelChange();
                 break;
             case Level3:
                 int tempPower3 = int.Parse(_powerItemLimitText.text.ToString());
@@ -186,6 +188,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
                     _powerItemLimitChangeInterval)
                     .OnUpdate(() => _powerItemLimitText.text = tempPower3.ToString("000"))
                     .OnComplete(() => _powerItemLimitText.text = _maxPowerItem.ToString("000"));
+                UILevelChange();
                 break;
         }
     }
@@ -207,5 +210,9 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
                 .OnUpdate(() => _powerItemCountText.text = tempPower.ToString("000"))
                 .OnComplete(() => _powerItemCountText.text = GameManager.Instance.PlayerPowerItemCount.ToString("000"));
         }
+    }
+    void UILevelChange()
+    {
+        _levelText.text = GameManager.Instance.PlayerLevel.ToString("0");
     }
 }
