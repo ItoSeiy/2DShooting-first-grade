@@ -111,7 +111,7 @@ public class SuperAttackFirework : MonoBehaviour
                 localAngle.z = rotation;// Šp“x‚ğİ’è
                 _muzzles[0].localEulerAngles = localAngle;//‰ñ“]‚·‚é
                 //’e‚ğƒ}ƒYƒ‹‚ÌŒü‚«‚É‡‚í‚¹‚Ä’e‚ğ”­Ëi‰¼‚ÅBomb‚É‚µ‚Ä‚Ü‚·j
-                ObjectPool.Instance.UseBullet(_muzzles[0].position, _bullet).transform.rotation = _muzzles[0].rotation;
+                ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet).transform.rotation = _muzzles[0].rotation;
             }
 
             yield return new WaitForSeconds(_attackInterval);//UŒ‚•p“x(•b)

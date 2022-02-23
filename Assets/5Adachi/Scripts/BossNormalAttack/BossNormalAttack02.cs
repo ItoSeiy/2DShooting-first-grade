@@ -49,7 +49,7 @@ public class BossNormalAttack02 : MonoBehaviour
             //親オブジェクトのマズル
 
             //弾をマズル0の向きに合わせて弾を発射
-            ObjectPool.Instance.UseBullet(_muzzles[0].position, _bullet).transform.rotation = _muzzles[0].rotation;
+            ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet).transform.rotation = _muzzles[0].rotation;
 
             //同じ処理を数回(_maximumCount)繰り返す
             for (int count = INITIAL_COUNT; count < _maximumCount; count++)
@@ -60,7 +60,7 @@ public class BossNormalAttack02 : MonoBehaviour
                 localAngle.z = Random.Range(MINIMUM_ROTATION_RANGE, MAXIMUM_ROTATION_RANGE / _rotationInterval) * _rotationInterval;
                 _muzzles[0].localEulerAngles = localAngle;//回転する
                 //弾をマズルの向きに合わせて弾を発射
-                ObjectPool.Instance.UseBullet(_muzzles[0].position, _bullet).transform.rotation = _muzzles[0].rotation;
+                ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet).transform.rotation = _muzzles[0].rotation;
             }
 
             yield return new WaitForSeconds(_attackInterval);

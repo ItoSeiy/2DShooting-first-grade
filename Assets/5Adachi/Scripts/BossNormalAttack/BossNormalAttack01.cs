@@ -39,21 +39,21 @@ public class BossNormalAttack01 : MonoBehaviour
             //親オブジェクトのマズル
             
             //弾をマズル0の向きに合わせて弾を発射
-            ObjectPool.Instance.UseBullet(_muzzles[0].position, _bullet).transform.rotation = _muzzles[0].rotation;
+            ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet).transform.rotation = _muzzles[0].rotation;
 
             //子オブジェクトのマズル
 
             //弾をマズル1の向きに合わせて弾を発射（親オブジェクトの弾より右側）
-            ObjectPool.Instance.UseBullet(_muzzles[1].position, _bullet).transform.rotation= _muzzles[1].rotation;
+            ObjectPool.Instance.UseObject(_muzzles[1].position, _bullet).transform.rotation= _muzzles[1].rotation;
             
             //弾をマズル2の向きに合わせて弾を発射（親オブジェクトの弾より左側）
-            ObjectPool.Instance.UseBullet(_muzzles[2].position, _bullet).transform.rotation = _muzzles[2].rotation;
+            ObjectPool.Instance.UseObject(_muzzles[2].position, _bullet).transform.rotation = _muzzles[2].rotation;
 
             //弾をマズル3の向きに合わせて弾を発射（親オブジェクトの弾より右側）
-            ObjectPool.Instance.UseBullet(_muzzles[3].position, _bullet).transform.rotation = _muzzles[3].rotation;
+            ObjectPool.Instance.UseObject(_muzzles[3].position, _bullet).transform.rotation = _muzzles[3].rotation;
 
             //弾をマズル4の向きに合わせて弾を発射（親オブジェクトの弾より左側）
-            ObjectPool.Instance.UseBullet(_muzzles[4].position, _bullet).transform.rotation = _muzzles[4].rotation;
+            ObjectPool.Instance.UseObject(_muzzles[4].position, _bullet).transform.rotation = _muzzles[4].rotation;
 
             yield return new WaitForSeconds(_attackInterval);
         }
