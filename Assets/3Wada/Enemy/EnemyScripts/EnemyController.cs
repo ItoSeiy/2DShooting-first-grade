@@ -27,18 +27,30 @@ public class EnemyController : EnemyBase
     [SerializeField, Header("モブの攻撃するときを変える")] AttackMode _attackMode;
     bool _isBttomposition = false;
     bool _isMove = false;
-    
+    [SerializeField] AudioSource _hitAudio = default;
+    SpriteRenderer _spriteRenderer = default;
 
-
+    private void Start()
+    {
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+    }
 
     private void OnEnable()
     {
         Rb.velocity = _beforeDir * Speed;
-        _isMove = true;
+        _isMove = true; 
     }
 
     protected override void Update()
      {
+        if(Rb.velocity.x < 0f)
+        {
+            _spriteRenderer.flipX = true;
+        }
+        else
+        {
+            _spriteRenderer.flipX = false;
+        }
         switch(_attackMode)
         {
             case AttackMode.MoveAtrack:
@@ -160,10 +172,11 @@ public class EnemyController : EnemyBase
   
     protected override void OnGetDamage()
     {
-        if (EnemyHp <= 0)
-        {
-            Instantiate(_deathSFX);
-        }
+        _hitAudio.Play();
+            if (EnemyHp <= 0)
+            {
+                Instantiate(_deathSFX);
+            }
     }
 
     enum GeneratePos

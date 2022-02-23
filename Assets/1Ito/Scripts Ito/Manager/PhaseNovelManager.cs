@@ -22,6 +22,8 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
     [SerializeField] Canvas _gameOverCanavas;
     [SerializeField] Canvas _gameClearCanvas;
 
+    [SerializeField] Canvas _uiCanvas;
+
     [SerializeField] Transform _generateTransform;
     [SerializeField] Transform _bossgenerateTransform;
 
@@ -31,7 +33,7 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
     [SerializeField] SpriteRenderer _backGround;
     [SerializeField] GameObject _backGroundParent;
     SpriteRenderer _backGroundClone = null;
-    [SerializeField] Vector2 _backGroundDir = new Vector2(0, -1);
+    [SerializeField] Vector2 _backGroundDir = Vector2.down;
     [SerializeField] float _scrollSpeed = 0.5f;
     float _initialPosY;
 
@@ -60,6 +62,13 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
 
     private void Update()
     {
+        if(GameManager.Instance.IsGameOver)
+        {
+            _gameOverCanavas.gameObject.SetActive(true);
+            _uiCanvas.gameObject.SetActive(false);
+            return;
+        }
+
         BackGround();
         switch (_gamePhaseState)
         {
@@ -83,13 +92,19 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
             Debug.Log("¶¬‘Ò‹@");
             _intervalTimer += Time.deltaTime;
 
-            if (_intervalTimer >= _stageParam.PhaseParms[_phaseIndex].Interval || _isFirstTime)
+            if(_isFirstTime)
+            {
+                Debug.Log("‰‰ñ¶¬");
+                Debug.Log(_stageParam.PhaseParms[_phaseIndex].PhaseName);
+                Instantiate(_stageParam.PhaseParms[_phaseIndex].Prefab).transform.position = _generateTransform.position;
+                _isFirstTime = false;
+            }
+
+            if (_intervalTimer >= _stageParam.PhaseParms[_phaseIndex].Interval && _stageParam.PhaseParms[_phaseIndex].UseInterval)
             {
                 Debug.Log("¶¬");
                 Instantiate(_stageParam.PhaseParms[_phaseIndex].Prefab).transform.position = _generateTransform.position;
-                Debug.Log(_stageParam.PhaseParms[_phaseIndex].PhaseName);
                 _intervalTimer = 0;
-                _isFirstTime = false;
             }
 
             if (_timer >= _stageParam.PhaseParms[_phaseIndex].FinishTime)
@@ -168,6 +183,7 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
                 {
                     _novelCanvas.gameObject.SetActive(false);
                     _beforeNovelRenderer.gameObject.SetActive(false);
+                    _uiCanvas.gameObject.SetActive(false);
                     _novelPhaseState = NovelPhase.None;
                     Instantiate(_stageParam.PhaseParms[_phaseIndex].Prefab).transform.position = _bossgenerateTransform.position;
                 }
@@ -191,6 +207,7 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
                 {
                     _novelCanvas.gameObject.SetActive(false);
                     _winNovelRenderer.gameObject.SetActive(false);
+                    _uiCanvas.gameObject.SetActive(false);
                     _gameClearCanvas.gameObject.SetActive(true);
                 }
 
@@ -212,6 +229,7 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
                 {
                     _novelCanvas.gameObject.SetActive(false);
                     _loseNovelRenderer.gameObject.SetActive(false);
+                    _uiCanvas.gameObject.SetActive(false);
                     _gameOverCanavas.gameObject.SetActive(true);
                 }
 

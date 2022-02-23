@@ -26,6 +26,9 @@ public abstract class EnemyBase : MonoBehaviour, IDamage
     [SerializeField, Header("攻撃力を何割にするか"), Range(0f, 1f)] float _damageRatio = 1f;
     [SerializeField, Header("プレイヤーのBulletのタグ")] string _playerBulletTag = "PlayerBullet";
     [SerializeField] string _finishTag = "Finish";
+    [SerializeField] DropItems _dropItems;
+    [SerializeField] float _itemDropRangeX = 2f;
+    [SerializeField] float _itemDropRangeY = 2f;
     private float _timer = default;
     Rigidbody2D _rb = null;
 　　protected bool _isDeleteAble = false;
@@ -63,7 +66,8 @@ public abstract class EnemyBase : MonoBehaviour, IDamage
     {
         if(EnemyHp <= 0)
         {
-            gameObject.SetActive(false);
+            ItemDrop();
+            Destroy(gameObject);
         }
         if(collision.tag == _finishTag)
         {
@@ -73,7 +77,20 @@ public abstract class EnemyBase : MonoBehaviour, IDamage
             }
             else
             {
-                gameObject.SetActive(false);
+                Destroy(gameObject);
+            }
+        }
+    }
+
+    public void ItemDrop()
+    {
+        for(int i = 0; i < _dropItems.Items.Count; i++)
+        {
+            for(int i2 = 0; i2 < _dropItems.Items[i].Count; i2++)
+            {
+                float x = Random.Range(transform.position.x + _itemDropRangeX, transform.position.x - _itemDropRangeX);
+                float y = Random.Range(transform.position.y + _itemDropRangeY, transform.position.y - _itemDropRangeY);
+                ObjectPool.Instance.UseObject(new Vector2(x, y), _dropItems.Items[i].ItemType);
             }
         }
     }
@@ -104,4 +121,23 @@ public abstract class EnemyBase : MonoBehaviour, IDamage
     {
         _attackInterval = Random.Range(min, max);
     }
+}
+
+[System.Serializable]
+class DropItems
+{
+    public List<DropItem> Items => items;
+    [SerializeField]
+    private List<DropItem> items = new List<DropItem>();
+}
+
+[System.Serializable]
+class DropItem
+{
+    public PoolObjectType ItemType => itemType;
+    public int Count => count;
+    [SerializeField]
+    PoolObjectType itemType;
+    [SerializeField]
+    private int count = 5;
 }

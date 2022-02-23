@@ -44,10 +44,10 @@ public class ItemBase : MonoBehaviour
                 {
                     _childrenPS.SetActive(true);
                 }
-                Rigidbody2D rb = GetComponent<Rigidbody2D>();
+                _rb = GetComponent<Rigidbody2D>();
                 var playerRb = GameObject.FindWithTag(_playerTag);
                 var dir = playerRb.transform.position - this.gameObject.transform.position;
-                rb.velocity = dir.normalized * _itemSpeed;
+                _rb.velocity = dir.normalized * _itemSpeed;
                 break;
             case false:
                 break;
@@ -56,7 +56,7 @@ public class ItemBase : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == _playerTag)//プレイヤーに接触したら
+        if (collision.tag == _playerTag || collision.tag == "Finish")//プレイヤーに接触したら
         {
             _childrenPS.SetActive(false);
             gameObject.SetActive(false);
@@ -67,17 +67,13 @@ public class ItemBase : MonoBehaviour
             {
                 _childrenPS.SetActive(true);
             }
+            ItemGet();
         }
     }
 
-    public void OnItemGetLine()
+    public void ItemGet()
     {
         _isGetItemMode = true;
-    }
-
-    protected virtual void OnBecameInvisible()
-    {
-        Destroy(this.gameObject);
     }
 
     /// <summary>

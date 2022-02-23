@@ -13,14 +13,19 @@ public class Player01Bomb : BulletBese
     [SerializeField] Transform[] _muzzle = null;
     SpriteRenderer _sprite = null;
 
+    AudioSource _audioSource;
+
     protected override void Awake()
     {
         base.Awake();
+        _audioSource = GetComponent<AudioSource>();
         _sprite = GetComponent<SpriteRenderer>();
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
+        var playerAudio = GameObject.FindWithTag("Player").GetComponent<AudioSource>();
+        playerAudio.Stop();
         StartCoroutine(UseBombChildBullet(collision));
     }
 
@@ -38,8 +43,9 @@ public class Player01Bomb : BulletBese
             Rb.velocity = Vector2.zero;
             for (int i = 0; i < _muzzle.Length; i++)
             {
-                var bombChild = ObjectPool.Instance.UseBullet(_muzzle[i].position, PoolObjectType.Player01BombChild);
+                var bombChild = ObjectPool.Instance.UseObject(_muzzle[i].position, PoolObjectType.Player01BombChild);
                 bombChild.transform.rotation = _muzzle[i].rotation;
+                _audioSource.Play();
                 yield return new WaitForSeconds(_childBulletDelay);
             }
 
