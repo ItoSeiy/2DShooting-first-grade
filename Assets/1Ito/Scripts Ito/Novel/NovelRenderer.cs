@@ -26,8 +26,6 @@ public class NovelRenderer : MonoBehaviour
     bool _isClick = false;
     bool _isCommandFirstTime = true;
 
-    SoundType _soundType;
-
     const int NAME_TEXT_COLUMN = 0;
     const int MAIN_TEXT_COLUMN = 1;
     const int ACTION_TEXT_COLUMN = 2;
@@ -112,8 +110,9 @@ public class NovelRenderer : MonoBehaviour
                 _bossAnimator.Play(action);
                 break;
             case "&Sound":
-                System.Enum.TryParse(action, out _soundType);
-                SoundManager.Instance.UseSound(_soundType);
+                SoundType soundType;
+                System.Enum.TryParse(action, out soundType);
+                SoundManager.Instance.UseSound(soundType);
                 break;
             default:
                 Debug.LogError(command + action + "‚Æ‚¢‚¤ƒRƒ}ƒ“ƒh‚Í–³Œø‚Å‚·");
