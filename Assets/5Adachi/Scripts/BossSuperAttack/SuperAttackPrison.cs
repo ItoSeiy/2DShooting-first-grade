@@ -117,15 +117,15 @@ public class SuperAttackPrison : MonoBehaviour
             _muzzles[0].transform.rotation = Quaternion.FromToRotation(Vector3.up, _dir);
 
             //弾をマズル0の向きに合わせて弾を発射
-            ObjectPool.Instance.UseBullet(_muzzles[0].position, _bullet).transform.rotation = _muzzles[0].rotation;
+            ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet).transform.rotation = _muzzles[0].rotation;
 
             //動かないマズル
 
             //弾をマズル1の向きに合わせて弾を発射（動くマズルの弾より右側）
-            ObjectPool.Instance.UseBullet(_muzzles[1].position, _bullet).transform.rotation = _muzzles[1].rotation;
+            ObjectPool.Instance.UseObject(_muzzles[1].position, _bullet).transform.rotation = _muzzles[1].rotation;
             
             //弾をマズル2の向きに合わせて弾を発射（動くマズルより左側）
-            ObjectPool.Instance.UseBullet(_muzzles[2].position, _bullet).transform.rotation = _muzzles[2].rotation;
+            ObjectPool.Instance.UseObject(_muzzles[2].position, _bullet).transform.rotation = _muzzles[2].rotation;
 
             yield return new WaitForSeconds(_attackInterval);//攻撃頻度
 
