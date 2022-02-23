@@ -111,7 +111,7 @@ public class SuperAttackParty : MonoBehaviour
             _muzzles[0].localEulerAngles = localAngle;//‰ñ“]‚·‚é
 
             //’e‚ğƒ}ƒYƒ‹‚ÌŒü‚«‚É‡‚í‚¹‚Ä’e‚ğ”­Ë
-            ObjectPool.Instance.UseBullet(_muzzles[0].position, _bullet).transform.rotation = _muzzles[0].rotation;
+            ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet).transform.rotation = _muzzles[0].rotation;
 
             yield return new WaitForSeconds(JUDGMENT_TIME);//”»’è‰ñ”‚Ì’²®
 
