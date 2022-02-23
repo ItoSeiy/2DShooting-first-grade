@@ -9,7 +9,13 @@ public class BossEnemyBulletRebound : BulletBese
     /// <summary>左限</summary>
     [SerializeField, Header("左限")] float _leftLimit = -7.5f;
     /// <summary>リバウンドが可能か不可能か</summary>
-    bool _rebound = true;
+    bool _rebound = false;
+
+    protected override void OnEnable()
+    {
+        _rebound = true;
+        base.OnEnable();
+    }
     protected override void BulletMove()
     {
         //弾が画面端まできたら１回だけ跳ね返る

@@ -33,7 +33,7 @@ public class SuperAttackParty : MonoBehaviour
     /// <summary>マズルの角度間隔</summary>
     [SerializeField, Header("マズルの角度間隔")] float _rotationInterval = 4f;
     /// <summary>発射する弾を設定できる</summary>
-    [SerializeField, Header("発射する弾の設定")] PoolObjectType _bullet; 
+    [SerializeField, Header("発射する弾の設定(リバウンド)")] PoolObjectType _bullet; 
     /// <summary>修正値</summary>
     const float PLAYER_POS_OFFSET = 0.5f;
     /// <summary>判定回数の制限</summary>

@@ -5,7 +5,9 @@ using UnityEngine;
 public class BossEnemyMoveRandom : MonoBehaviour
 {
     /// <summary>形状や大きさの概念を持った物質</summary>
-    Rigidbody2D _rb;   
+    Rigidbody2D _rb;
+    /// <summary>指定した画像を描画する機能</summary>
+    SpriteRenderer _sr;
     /// <summary>水平、横方向</summary>
     private float _horizontal = 0f;
     /// <summary>垂直、縦方向</summary>
@@ -89,10 +91,21 @@ public class BossEnemyMoveRandom : MonoBehaviour
     private void OnEnable()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _sr = GetComponent<SpriteRenderer>();
         StartCoroutine("RandomMovement");
     }
     private void Update()
     {
-        //_rb.velocity = _dir * _speed;
+        //右に移動したら右を向く
+        if(_rb.velocity.x > NO_DIR)
+        {
+            _sr.flipX = true;
+        }
+        //左に移動したら左を向く
+        else if (_rb.velocity.x < NO_DIR)
+        {
+            _sr.flipX = false;
+        }
+
     }
 }

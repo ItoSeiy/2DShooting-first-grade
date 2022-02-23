@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class BossNormalAttack01 : MonoBehaviour
 {
-    /// <summary>形状や大きさの概念を持った物質</summary>
-    Rigidbody2D _rb;
     /// <summary>方向</summary>
     Vector3 _dir;
     /// <summary>プレイヤーのオブジェクト</summary>
@@ -21,8 +19,7 @@ public class BossNormalAttack01 : MonoBehaviour
 
     void Start()
     {
-        _rb = GetComponent<Rigidbody2D>();
-        _player = GameObject.FindGameObjectWithTag(_playerTag);
+        _player = GameObject.FindGameObjectWithTag(_playerTag);//プレイヤーのタグをとってくる
         StartCoroutine(Attack());
     }
 

@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class BossNormalAttack03 : MonoBehaviour
 {
-    /// <summary>形状や大きさの概念を持った物質</summary>
-    Rigidbody2D _rb;
     /// <summary>方向</summary>
     Vector3 _dir;
     /// <summary>プレイヤーのオブジェクト</summary>
     private GameObject _player;
-    /// <summary>最初の攻撃頻度(秒)</summary>
-    float _firstAttackInterval = 0f;
+    /// <summary>マズルの角度間隔</summary>
+    float _rotationInterval = 360f;
+    /// <summary>発射した回数</summary>
+    int _attackCount = 0;
+    /// <summary>発射する最大回数</summary>
+    [SerializeField,Header("発射する最大回数")] int _maxAttackCount = 7;
     /// <summary>プレイヤーのタグ</summary>
     [SerializeField, Header("playerのtag")] string _playerTag = null;
     /// <summary>バレットを発射するポジション</summary>
@@ -20,19 +22,21 @@ public class BossNormalAttack03 : MonoBehaviour
     [SerializeField, Header("攻撃頻度(秒)")] private float _attackInterval = 0.64f;
     /// <summary>発射する弾を設定できる</summary>
     [SerializeField, Header("発射する弾の設定")] PoolObjectType _bullet;
-    /// <summary>マズルの角度間隔</summary>
-    [SerializeField, Header("マズルの角度間隔")] float _rotationInterval = 20f;
+    /// <summary>最大の弾数</summary>
+    [SerializeField,Header("最大の弾の数")] int _maximumBulletRange = 11;
     /// <summary>最小の回転値</summary>
     const float MINIMUM_ROTATION_RANGE = 0f;
     /// <summary>最大の回転値</summary>
-    const float MAXIMUM_ROTATION_RANGE = 360f;
-    /// <summary>1回の処理で弾を発射する回数の初期値</summary>
-    const int INITIAL_COUNT = 0;
-
+    const float MAX_ROTATION_RANGE = 360f;
+    /// <summary>最小の弾数</summary>
+    const int MINIMUM_BULLET_RANGE = 3;
+    /// <summary>最大の弾数の修正値</summary>
+    const float MAX_BULLET_RANGE_OFFSET = 1;
+    /// <summary>発射回数をリセット</summary>
+    const int ATTACK_COUNT_RESET = 0;
     void Start()
     {
-        _rb = GetComponent<Rigidbody2D>();
-        _player = GameObject.FindGameObjectWithTag(_playerTag);
+        _player = GameObject.FindGameObjectWithTag(_playerTag);//プレイヤーのタグをとってくる
         StartCoroutine(Attack());
     }
 
@@ -41,51 +45,33 @@ public class BossNormalAttack03 : MonoBehaviour
     {
         while (true)
         {
+            //一定の回数発射したら
+            if(_attackCount >= _maxAttackCount)
+            {   //1回の攻撃で弾を飛ばす数(3～?)
+                _rotationInterval = (MAX_ROTATION_RANGE / Random.Range(MINIMUM_BULLET_RANGE, _maximumBulletRange + MAX_BULLET_RANGE_OFFSET));
+                _attackCount = ATTACK_COUNT_RESET;//発射回数をリセット
+            }
             //ターゲット（プレイヤー）の方向を計算
             _dir = (_player.transform.position - _muzzles[0].transform.position);
             //ターゲット（プレイヤー）の方向に回転
             _muzzles[0].transform.rotation = Quaternion.FromToRotation(Vector3.up, _dir);
 
-            //親オブジェクトのマズル
-
             //弾をマズル0の向きに合わせて弾を発射
             ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet).transform.rotation = _muzzles[0].rotation;
 
-            //同じ処理を数回(_maximumCount)繰り返す
-            for (float rotation = MINIMUM_ROTATION_RANGE; rotation <= MAXIMUM_ROTATION_RANGE; rotation += _rotationInterval)
-            {
-                Vector3 localAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
-                localAngle.z = rotation;// 角度を設定
-                _muzzles[0].localEulerAngles = localAngle;//回転する
-                //弾をマズルの向きに合わせて弾を発射（仮でBombにしてます）
-                ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet).transform.rotation = _muzzles[0].rotation;
-            }
-
-            _firstAttackInterval = Random.Range(0f, _attackInterval);
-
-            yield return new WaitForSeconds(_firstAttackInterval);
-
-            //ターゲット（プレイヤー）の方向を計算
-            _dir = (_player.transform.position - _muzzles[0].transform.position);
-            //ターゲット（プレイヤー）の方向に回転
-            _muzzles[0].transform.rotation = Quaternion.FromToRotation(Vector3.up, _dir);
-
-            //親オブジェクトのマズル
-
-            //弾をマズル0の向きに合わせて弾を発射
-            ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet).transform.rotation = _muzzles[0].rotation;
+            Vector3 firstLocalAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
 
             //同じ処理を数回(_maximumCount)繰り返す
-            for (float rotation = MINIMUM_ROTATION_RANGE; rotation <= MAXIMUM_ROTATION_RANGE; rotation += _rotationInterval)
+            for (float rotation = MINIMUM_ROTATION_RANGE + firstLocalAngle.z; rotation <= MAX_ROTATION_RANGE + firstLocalAngle.z; rotation += _rotationInterval)
             {
-                Vector3 localAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
-                localAngle.z = rotation;// 角度を設定
-                _muzzles[0].localEulerAngles = localAngle;//回転する
+                Vector3 secondLocalAngle = _muzzles[1].localEulerAngles;// ローカル座標を基準に取得
+                secondLocalAngle.z = rotation;// 角度を設定
+                _muzzles[1].localEulerAngles = secondLocalAngle;//回転する
                 //弾をマズルの向きに合わせて弾を発射（仮でBombにしてます）
-                ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet).transform.rotation = _muzzles[0].rotation;
+                ObjectPool.Instance.UseObject(_muzzles[1].position, _bullet).transform.rotation = _muzzles[1].rotation;
             }
-
-            yield return new WaitForSeconds(_attackInterval - _firstAttackInterval);
+            _attackCount++;//発射回数を１足す
+            yield return new WaitForSeconds(_attackInterval);
         }
     }
 }
