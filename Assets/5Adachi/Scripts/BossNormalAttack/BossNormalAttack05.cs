@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossNormalAttack04 : MonoBehaviour
+public class BossNormalAttack05 : MonoBehaviour
 {
     /// <summary>Œ`ó‚â‘å‚«‚³‚ÌŠT”O‚ğ‚Á‚½•¨¿</summary>
     Rigidbody2D _rb;
@@ -19,7 +19,7 @@ public class BossNormalAttack04 : MonoBehaviour
     /// <summary>”­Ë‚·‚é’e‚ğİ’è‚Å‚«‚é</summary>
     [SerializeField, Header("”­Ë‚·‚é’e‚Ìİ’è")] PoolObjectType _bullet;
     /// <summary>ƒ}ƒYƒ‹‚ÌŠp“xŠÔŠu</summary>
-    [SerializeField, Header("ƒ}ƒYƒ‹‚ÌŠp“xŠÔŠu")] float _rotationInterval = 20f;
+    [SerializeField, Header("ƒ}ƒYƒ‹‚ÌŠp“xŠÔŠu")] float _rotationInterval = 45f;
     /// <summary>Å¬‚Ì‰ñ“]’l</summary>
     const float MINIMUM_ROT_RANGE = 0f;
     /// <summary>Å‘å‚Ì‰ñ“]’l</summary>

@@ -86,11 +86,10 @@ public class BossEnemyMoveRandom : MonoBehaviour
             Debug.Log("y" + _veritical);
         }
     }
-    void Start()
+    private void OnEnable()
     {
         _rb = GetComponent<Rigidbody2D>();
         StartCoroutine("RandomMovement");
-        
     }
     private void Update()
     {
