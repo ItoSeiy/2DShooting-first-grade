@@ -57,25 +57,25 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 
         _firstInvicibleObject = GameManager.Instance.PlayerInvincibleObjectCount;
         _invicibleObjectCountText.text = _firstInvicibleObject.ToString("000");
-       
-        _maxInvicibleObject = GameManager.Instance.PlayerInvicibleObjectLimit;
+
+        _maxInvicibleObject = GameManager.Instance.Player.InvicibleLimit;
 
         _firstPowerItem = GameManager.Instance.PlayerPowerItemCount;
         _powerItemCountText.text = _firstPowerItem.ToString("000");
 
-        _maxScore = GameManager.Instance.PlayerScoreLimit;
+        _maxScore = GameManager.Instance.Player.PlayerScoreLimit;
 
-        _maxResidue = GameManager.Instance.PlayerResidueLimit;
+        _maxResidue = GameManager.Instance.Player.PlayerResidueLimit;
 
-        _maxBomb = GameManager.Instance.PlayerBombLimit;
+        _maxBomb = GameManager.Instance.Player.PlayerBombLimit;
 
-        _maxPowerItem = GameManager.Instance.PlayerPowerLimit;
+        _maxPowerItem = GameManager.Instance.Player.PlayerPowerLimit;
         
-        _powerItemLimit2 = GameManager.Instance.PlayerPowerRequiredNumberLevel2;
-        _powerItemLimit3 = GameManager.Instance.PlayerPowerRequiredNumberLevel3;
+        _powerItemLimit2 = GameManager.Instance.Player.PlayerPowerRequiredNumberLevel2;
+        _powerItemLimit3 = GameManager.Instance.Player.PlayerPowerRequiredNumberLevel3;
         _powerItemLimitText.text = _powerItemLimit2.ToString("000");
 
-        _invicibleObjectLimit = GameManager.Instance.PlayerInvicibleObjectLimit;
+        _invicibleObjectLimit = GameManager.Instance.Player.InvicibleLimit;
         _invicibleObjectLimitText.text = _invicibleObjectLimit.ToString("000");
 
         _level = GameManager.Instance.PlayerLevel;
