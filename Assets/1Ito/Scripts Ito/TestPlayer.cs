@@ -6,6 +6,6 @@ public class TestPlayer : MonoBehaviour
 {
     public void Use(int i)
     {
-        ObjectPool.Instance.UseBullet(transform.position, (PoolObjectType)i);
+        ObjectPool.Instance.UseObject(transform.position, (PoolObjectType)i);
     }
 }
