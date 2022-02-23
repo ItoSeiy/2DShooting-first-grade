@@ -6,11 +6,11 @@ using UnityEngine.InputSystem;
 
 public class PlayerTutorialTriger : MonoBehaviour
 {
-    [SerializeField] LayerMask _itemLayer;
+    [SerializeField] string _itemLayerName = default;
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("aaa");
-        if (collision.gameObject.layer == _itemLayer)
+        string _layerName = LayerMask.LayerToName(collision.gameObject.layer);
+        if (_layerName == _itemLayerName)
         {
             Tutorial.Instance.GetItemTutorial();
         }

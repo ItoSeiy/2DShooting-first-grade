@@ -15,6 +15,9 @@ public class Tutorial : SingletonMonoBehaviour<Tutorial>
     [SerializeField, Header("精密操作のチュートリアルのチェック")] GameObject _slowMoveCheck;
     [SerializeField, Header("精密操作のチュートリアルの対応キー")] InputAction _inputSlowMove;
     [SerializeField, Header("アイテム取得のチュートリアルのチェック")] GameObject _itemCheck;
+    [SerializeField, Header("アイテム取得のチュートリアルのチェック")] GameObject _bombCheck;
+    [SerializeField, Header("アイテム取得のチュートリアルのチェック")] GameObject _rediusCheck;
+    [SerializeField, Header("アイテム取得のチュートリアルのチェック")] GameObject _invisibleCheck;
     private void Start()
     {
         MoveTutorial();
