@@ -25,6 +25,7 @@ public class Tutorial : SingletonMonoBehaviour<Tutorial>
         ShotTutorial();
         SlowMoveTutorial();
         CharegeShotTutorial();
+        var player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBase>();
     }
     private void OnEnable()
     {
