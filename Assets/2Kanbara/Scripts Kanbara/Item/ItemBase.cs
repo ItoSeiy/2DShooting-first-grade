@@ -56,7 +56,7 @@ public class ItemBase : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == _playerTag)//プレイヤーに接触したら
+        if (collision.tag == _playerTag || collision.tag == "Finish")//プレイヤーに接触したら
         {
             _childrenPS.SetActive(false);
             gameObject.SetActive(false);
@@ -73,11 +73,6 @@ public class ItemBase : MonoBehaviour
     public void OnItemGetLine()
     {
         _isGetItemMode = true;
-    }
-
-    protected virtual void OnBecameInvisible()
-    {
-        Destroy(this.gameObject);
     }
 
     /// <summary>

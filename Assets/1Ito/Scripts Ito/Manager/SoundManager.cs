@@ -11,7 +11,6 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 
     List<Pool> _pool = new List<Pool>();
 
-    //[SerializeField] int[] _poolObjectMaxCount = default;
     int _poolCountIndex = 0;
 
     protected override void Awake()
@@ -19,17 +18,18 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
         base.Awake();
         _poolCountIndex = 0;
         CreatePool();
-        foreach(var pool in _pool)
-        {
-            Debug.Log($"オブジェクト名:{pool.Object.name} 種類:{pool.Type}");
-        }
+        //デバッグ用
+        //foreach(var pool in _pool)
+        //{
+        //    Debug.Log($"オブジェクト名:{pool.Object.name} 種類:{pool.Type}");
+        //}
     }
 
     private void CreatePool()
     {
         if(_poolCountIndex >= _soundObjParam.Params.Count)
         {
-            Debug.Log("オーディオを生成しました。");
+            //Debug.Log("すべてのオーディオを生成しました。");
             return;
         }
 

@@ -121,7 +121,7 @@ public class TestSpecialAttack : EnemyBase
         //Instantiate(_enemyBulletPrefab[0], _muzzle.position, Quaternion.AngleAxis(_muzzle.rotation, Vector3.forward));
         _muzzle.rotation += 10f;
         //(muzzle‚ÌˆÊ’u,enum.’e‚ÌŽí—Þ)
-        ObjectPool.Instance.UseBullet(_muzzle.position, PoolObjectType.Player01Power1);
+        ObjectPool.Instance.UseObject(_muzzle.position, PoolObjectType.Player01Power1);
     }
 
     IEnumerator SpecialAttack()
