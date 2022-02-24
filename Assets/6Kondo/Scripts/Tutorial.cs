@@ -19,6 +19,7 @@ public class Tutorial : SingletonMonoBehaviour<Tutorial>
     [SerializeField, Header("残機取得のチュートリアルのチェック")] GameObject _residueCheck;
     [SerializeField, Header("無敵アイテム取得のチュートリアルのチェック")] GameObject _invisibleCheck;
     [SerializeField, Header("パワーアイテム取得のチュートリアルのチェック")] GameObject _powerCheck;
+    [SerializeField, Header("チュートリアルクリア時に表示")] GameObject _tutorialClearCheck;
     private void Start()
     {
         MoveTutorial();
@@ -26,6 +27,14 @@ public class Tutorial : SingletonMonoBehaviour<Tutorial>
         SlowMoveTutorial();
         CharegeShotTutorial();
         var player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBase>();
+    }
+    public void Update()
+    {
+        if (_moveCheck && _shotCheck && _chargeShotCheck && _slowMoveCheck && _itemCheck &&
+            _bombCheck && _residueCheck && _invisibleCheck && _powerCheck)
+        {
+            _tutorialClearCheck.SetActive(true);
+        }
     }
     private void OnEnable()
     {
@@ -42,7 +51,7 @@ public class Tutorial : SingletonMonoBehaviour<Tutorial>
         _inputChargeShot.Disable();
     }
     private void MoveTutorial()
-    {            
+    {
         _inputMove.performed += _ => _moveCheck.SetActive(true);
     }
     private void ShotTutorial()
