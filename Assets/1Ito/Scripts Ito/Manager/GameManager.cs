@@ -4,6 +4,10 @@ using UnityEngine;
 /// <summary>
 /// ゲームマネージャー
 /// ゲーム内に一つのみ存在しなければならない
+/// 
+/// シングルトンパターン
+/// プレイヤーのアイテム数やレベルを持っている
+/// ()
 /// </summary>
 public class GameManager : SingletonMonoBehaviour<GameManager>
 {
@@ -12,36 +16,24 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     const int LEVEL2 = 2;
     const int LEVEL3 = 3;
 
+    /// <summary>プレイヤーの参照</summary>
+    public PlayerBase Player => _player;
+
     public int PlayerLevel => _playerLevel;
     /// <summary>プレイヤーが持っているパワーアイテムの数</summary>
     public int PlayerPowerItemCount => _playerPowerItemCount;
-    /// <summary>プレイヤーのパワーアイテムの上限</summary>
-    public int PlayerPowerLimit => _player.PlayerPowerLimit;
-    /// <summary>レベル2にするために必要なパワーアイテムの数</summary>//UIManagerから参照すべきプロパティ
-    public int PlayerPowerRequiredNumberLevel2 { get => _player.PlayerPowerRequiredNumberLevel2; }
-    /// <summary>レベル3にするために必要なパワーアイテムの数</summary>//UIManagerから参照すべきプロパティ
-    public int PlayerPowerRequiredNumberLevel3 { get => _player.PlayerPowerRequiredNumberLevel3; }
 
     /// <summary>プレイヤーのスコア</summary>
     public int PlayerScore => _playerScore;
-    /// <summary>プレイヤーのスコアの上限</summary>
-    public int PlayerScoreLimit => _player.PlayerScoreLimit;
 
     /// <summary>プレイヤーのボムの所持数</summary>
     public int PlayerBombCount => _playerBombCount;
-    /// <summary>プレイヤーのボムの上限</summary>
-    public int PlayerBombLimit => _player.PlayerBombLimit;
 
     ///<summary>プレイヤーの残機</summary>
     public int PlayerResidueCount => _playerResidue;
-    /// <summary>プレイヤーの残機の上限</summary>
-    public int PlayerResidueLimit => _player.PlayerResidueLimit;
-
 
     ///<summary>一定数獲得すると無敵になるオブジェクトを獲得した数</summary>
     public int PlayerInvincibleObjectCount => _playerInvicibleObjectCount;
-    /// <summary>無敵になるために必要な無敵オブジェクトアイテムの数</summary>
-    public int PlayerInvicibleObjectLimit => _player.InvicibleLimit;
 
     public bool IsGameOver => _isGameOver;
     public bool IsStageClear => _isStageClear;
@@ -65,14 +57,6 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     {
         base.Awake();
         DontDestroyOnLoad(gameObject);
-    }
-
-    /// <summary>
-    /// キャラクターを変えたときに呼び出される
-    /// </summary>
-    public void CharacterChange()
-    {
-        Init();
     }
     
     /// <summary>
@@ -100,7 +84,6 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     {
         _isGameOver = true;
         _isGameStart = false;
-        Init();
     }
 
     /// <summary>
@@ -188,7 +171,6 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         _playerResidue += residue;
         UIManager.Instance.UIResidueChange(residue);
     }
-
 
     /// <summary>
     /// 変数を初期化する関数
