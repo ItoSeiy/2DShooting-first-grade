@@ -8,6 +8,7 @@ public class Player1 : PlayerBase
     {
         //ここにボムを使う処理を書く
         ObjectPool.Instance.UseObject(_muzzle.position, PoolObjectType.Player01Bomb01);
+        Play(_playerBombShotAudio);
         Debug.Log("ボムドーン！");
         base.Bomb();
     }
@@ -49,7 +50,7 @@ public class Player1 : PlayerBase
                 ObjectPool.Instance.UseObject(_muzzle.position, PoolObjectType.Player01SuperPower3);
                 break;
         }
-        Play(_playerSuperBulletAudio);
+        Play(_playerBulletAudio);
         base.PlayerSuperAttack();
     }
 
