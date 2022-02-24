@@ -22,6 +22,8 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
     [SerializeField] Canvas _gameOverCanavas;
     [SerializeField] Canvas _gameClearCanvas;
 
+    [SerializeField] Canvas _uiCanvas;
+
     [SerializeField] Transform _generateTransform;
     [SerializeField] Transform _bossgenerateTransform;
 
@@ -31,7 +33,7 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
     [SerializeField] SpriteRenderer _backGround;
     [SerializeField] GameObject _backGroundParent;
     SpriteRenderer _backGroundClone = null;
-    [SerializeField] Vector2 _backGroundDir = new Vector2(0, -1);
+    [SerializeField] Vector2 _backGroundDir = Vector2.down;
     [SerializeField] float _scrollSpeed = 0.5f;
     float _initialPosY;
 
@@ -42,7 +44,7 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
 
     private int _phaseIndex = default;
 
-    private bool _isFirstTime = true;
+    private bool _isGenerateFirstTime = true;
 
     protected override void Awake()
     {
@@ -60,7 +62,16 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
 
     private void Update()
     {
+        if(GameManager.Instance.IsGameOver)
+        {
+            _gameOverCanavas.gameObject.SetActive(true);
+            _uiCanvas.gameObject.SetActive(false);
+            return;
+        }
+
         BackGround();
+        ChangePhase();
+
         switch (_gamePhaseState)
         {
             case GamePhase.Boss:
@@ -83,23 +94,42 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
             Debug.Log("生成待機");
             _intervalTimer += Time.deltaTime;
 
-            if (_intervalTimer >= _stageParam.PhaseParms[_phaseIndex].Interval || _isFirstTime)
+            if(_isGenerateFirstTime)
+            {
+                Debug.Log("初回生成");
+                _isGenerateFirstTime = false;
+                Debug.Log(_stageParam.PhaseParms[_phaseIndex].PhaseName);
+                Instantiate(_stageParam.PhaseParms[_phaseIndex].Prefab).transform.position = _generateTransform.position;
+            }
+
+            if (_intervalTimer >= _stageParam.PhaseParms[_phaseIndex].Interval && _stageParam.PhaseParms[_phaseIndex].UseInterval)
             {
                 Debug.Log("生成");
                 Instantiate(_stageParam.PhaseParms[_phaseIndex].Prefab).transform.position = _generateTransform.position;
-                Debug.Log(_stageParam.PhaseParms[_phaseIndex].PhaseName);
                 _intervalTimer = 0;
-                _isFirstTime = false;
             }
 
             if (_timer >= _stageParam.PhaseParms[_phaseIndex].FinishTime)
             {
+                _isGenerateFirstTime = true;
                 Debug.Log("生成終了");
                 _timer = 0;
-                _isFirstTime = true;
                 ChangePhase((GamePhase)_phaseIndex + 1);
             }
         }
+    }
+
+    public void RunNextPhase()
+    {
+        if(_isGenerateFirstTime)
+        {
+            Debug.LogWarning("次のフェイズを始める指示を受けましたがフェイズ移行中のため実行できませんでした");
+            return;
+        }
+
+        ChangePhase((GamePhase)_phaseIndex + 1);
+
+        EnemyGenerate();
     }
 
     /// <summary>
@@ -119,7 +149,7 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
     /// </summary>
     public void SetUp()
     {
-        _isFirstTime = true;
+        _isGenerateFirstTime = true;
         _timer = 0;
         _intervalTimer = 0;
 
@@ -134,12 +164,25 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
         _gamePhaseState = phase;
 
         _phaseIndex = (int)_gamePhaseState;
+
+        if(_phaseIndex == _stageParam.BossPhaseIndex)
+        {
+            _gamePhaseState = GamePhase.Boss;
+            _phaseIndex = _stageParam.BossPhaseIndex;
+        }
+    }
+
+    void ChangePhase()
+    {
+        if (_phaseIndex == _stageParam.BossPhaseIndex)
+        {
+            _gamePhaseState = GamePhase.Boss;
+            _phaseIndex = _stageParam.BossPhaseIndex;
+        }
     }
 
     void SetNovel()
     {
-
-
         if (GameManager.Instance.IsStageClear)
         {
             _novelPhaseState = NovelPhase.Win;
@@ -168,6 +211,7 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
                 {
                     _novelCanvas.gameObject.SetActive(false);
                     _beforeNovelRenderer.gameObject.SetActive(false);
+                    _uiCanvas.gameObject.SetActive(false);
                     _novelPhaseState = NovelPhase.None;
                     Instantiate(_stageParam.PhaseParms[_phaseIndex].Prefab).transform.position = _bossgenerateTransform.position;
                 }
@@ -191,6 +235,7 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
                 {
                     _novelCanvas.gameObject.SetActive(false);
                     _winNovelRenderer.gameObject.SetActive(false);
+                    _uiCanvas.gameObject.SetActive(false);
                     _gameClearCanvas.gameObject.SetActive(true);
                 }
 
@@ -212,6 +257,7 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
                 {
                     _novelCanvas.gameObject.SetActive(false);
                     _loseNovelRenderer.gameObject.SetActive(false);
+                    _uiCanvas.gameObject.SetActive(false);
                     _gameOverCanavas.gameObject.SetActive(true);
                 }
 

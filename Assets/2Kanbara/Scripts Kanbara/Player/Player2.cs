@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Player2 : PlayerBase
 {
-    public override void Bom()
+    public override void Bomb()
     {
         //ここにボムを使う処理を書く
-        ObjectPool.Instance.UseBullet(_muzzle.position, PoolObjectType.Player02Bomb01);
+        ObjectPool.Instance.UseObject(_muzzle.position, PoolObjectType.Player02Bomb01);
         Debug.Log("ボムドーン！！");
-        base.Bom();
+        base.Bomb();
     }
 
     public override void InvincibleMode()
@@ -22,13 +22,13 @@ public class Player2 : PlayerBase
         switch (GameManager.Instance.PlayerLevel)
         {
             case _level1:
-                ObjectPool.Instance.UseBullet(_muzzle.position, PoolObjectType.Player02Power1);
+                ObjectPool.Instance.UseObject(_muzzle.position, PoolObjectType.Player02Power1);
                 break;
             case _level2:
-                ObjectPool.Instance.UseBullet(_muzzle.position, PoolObjectType.Player02Power2);
+                ObjectPool.Instance.UseObject(_muzzle.position, PoolObjectType.Player02Power2);
                 break;
             case _level3:
-                ObjectPool.Instance.UseBullet(_muzzle.position, PoolObjectType.Player02Power3);
+                ObjectPool.Instance.UseObject(_muzzle.position, PoolObjectType.Player02Power3);
                 break;
         }
         Play(_playerBulletAudio);
@@ -40,16 +40,16 @@ public class Player2 : PlayerBase
         switch (GameManager.Instance.PlayerLevel)
         {
             case _level1:
-                ObjectPool.Instance.UseBullet(_muzzle.position, PoolObjectType.Player02SuperPower1);
+                ObjectPool.Instance.UseObject(_muzzle.position, PoolObjectType.Player02SuperPower1);
                 break;
             case _level2:
-                ObjectPool.Instance.UseBullet(_muzzle.position, PoolObjectType.Player02SuperPower2);
+                ObjectPool.Instance.UseObject(_muzzle.position, PoolObjectType.Player02SuperPower2);
                 break;
             case _level3:
-                ObjectPool.Instance.UseBullet(_muzzle.position, PoolObjectType.Player02SuperPower3);
+                ObjectPool.Instance.UseObject(_muzzle.position, PoolObjectType.Player02SuperPower3);
                 break;
         }
-        Play(_playerSuperBulletAudio);
+        Play(_playerBulletAudio);
         base.PlayerSuperAttack();
     }
 
@@ -58,13 +58,13 @@ public class Player2 : PlayerBase
         switch (GameManager.Instance.PlayerLevel)
         {
             case _level1:
-                ObjectPool.Instance.UseBullet(_muzzle.position, PoolObjectType.Player02ChargePower1);
+                ObjectPool.Instance.UseObject(_muzzle.position, PoolObjectType.Player02ChargePower1);
                 break;
             case _level2:
-                ObjectPool.Instance.UseBullet(_muzzle.position, PoolObjectType.Player02ChargePower2);
+                ObjectPool.Instance.UseObject(_muzzle.position, PoolObjectType.Player02ChargePower2);
                 break;
             case _level3:
-                ObjectPool.Instance.UseBullet(_muzzle.position, PoolObjectType.Player02ChargePower3);
+                ObjectPool.Instance.UseObject(_muzzle.position, PoolObjectType.Player02ChargePower3);
                 break;
         }
         _audioSource.Stop();

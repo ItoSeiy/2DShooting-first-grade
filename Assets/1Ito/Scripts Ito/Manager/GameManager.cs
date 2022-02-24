@@ -4,6 +4,10 @@ using UnityEngine;
 /// <summary>
 /// ゲームマネージャー
 /// ゲーム内に一つのみ存在しなければならない
+/// 
+/// シングルトンパターン
+/// プレイヤーのアイテム数やレベルを持っている
+/// ()
 /// </summary>
 public class GameManager : SingletonMonoBehaviour<GameManager>
 {
@@ -12,36 +16,24 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     const int LEVEL2 = 2;
     const int LEVEL3 = 3;
 
+    /// <summary>プレイヤーの参照</summary>
+    public PlayerBase Player => _player;
+
     public int PlayerLevel => _playerLevel;
     /// <summary>プレイヤーが持っているパワーアイテムの数</summary>
     public int PlayerPowerItemCount => _playerPowerItemCount;
-    /// <summary>プレイヤーのパワーアイテムの上限</summary>
-    public int PlayerPowerLimit => _player.PlayerPowerLimit;
-    /// <summary>レベル2にするために必要なパワーアイテムの数</summary>//UIManagerから参照すべきプロパティ
-    public int PlayerPowerRequiredNumberLevel2 { get => _player.PlayerPowerRequiredNumberLevel2; }
-    /// <summary>レベル3にするために必要なパワーアイテムの数</summary>//UIManagerから参照すべきプロパティ
-    public int PlayerPowerRequiredNumberLevel3 { get => _player.PlayerPowerRequiredNumberLevel3; }
 
     /// <summary>プレイヤーのスコア</summary>
     public int PlayerScore => _playerScore;
-    /// <summary>プレイヤーのスコアの上限</summary>
-    public int PlayerScoreLimit => _player.PlayerScoreLimit;
 
     /// <summary>プレイヤーのボムの所持数</summary>
     public int PlayerBombCount => _playerBombCount;
-    /// <summary>プレイヤーのボムの上限</summary>
-    public int PlayerBombLimit => _player.PlayerBombLimit;
 
     ///<summary>プレイヤーの残機</summary>
     public int PlayerResidueCount => _playerResidue;
-    /// <summary>プレイヤーの残機の上限</summary>
-    public int PlayerResidueLimit => _player.PlayerResidueLimit;
-
 
     ///<summary>一定数獲得すると無敵になるオブジェクトを獲得した数</summary>
     public int PlayerInvincibleObjectCount => _playerInvicibleObjectCount;
-    /// <summary>無敵になるために必要な無敵オブジェクトアイテムの数</summary>
-    public int PlayerInvicibleObjectLimit => _player.InvicibleLimit;
 
     public bool IsGameOver => _isGameOver;
     public bool IsStageClear => _isStageClear;
@@ -65,14 +57,6 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     {
         base.Awake();
         DontDestroyOnLoad(gameObject);
-    }
-
-    /// <summary>
-    /// キャラクターを変えたときに呼び出される
-    /// </summary>
-    public void CharacterChange()
-    {
-        Init();
     }
     
     /// <summary>
@@ -100,7 +84,6 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     {
         _isGameOver = true;
         _isGameStart = false;
-        Init();
     }
 
     /// <summary>
@@ -119,7 +102,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     public void PlayerScoreChange(int score)
     {
         _playerScore += score;
-        //UIManager.Instance.UIScoreChange(score);
+        UIManager.Instance.UIScoreChange(score);
     }
 
     /// <summary>
@@ -129,7 +112,9 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     public void PlayerPowerItemCountChange(int itemCount)
     {
         _playerPowerItemCount += itemCount;
+        UIManager.Instance.UIPowerCountChange(itemCount);
         PlayerLevelSet();
+
     }
 
     /// <summary>
@@ -137,20 +122,23 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     /// </summary>
     public  void PlayerLevelSet()
     {
-        if (PlayerPowerItemCount < _player.PlayerPowerRequiredNumberLevel2)//レベル１のとき
+        if (_playerPowerItemCount < _player.PlayerPowerRequiredNumberLevel2)//レベル１のとき
         {
             //パワーアイテムの数が、レベル２になるために必要なパワーアイテム数よりも少なかったときの処理
             _playerLevel = LEVEL1;
+            UIManager.Instance.UIPowerLimitChange(_player.PlayerPowerRequiredNumberLevel2);
         }
-        else if (PlayerPowerItemCount >= _player.PlayerPowerRequiredNumberLevel2 && PlayerPowerItemCount < _player.PlayerPowerRequiredNumberLevel3)//レベル2のとき
+        else if (_playerPowerItemCount >= _player.PlayerPowerRequiredNumberLevel2 && _playerPowerItemCount < _player.PlayerPowerRequiredNumberLevel3)//レベル2のとき
         {
             //パワーアイテムの数が、レベル２になるために必要なパワーアイテム数よりも多く、レベル３になるために必要なパワーアイテム数よりも少なかったときの処理
             _playerLevel = LEVEL2;
+            UIManager.Instance.UIPowerLimitChange(_player.PlayerPowerRequiredNumberLevel3);
         }
-        else if (_player.PlayerPowerRequiredNumberLevel3 <= PlayerPowerItemCount)//レベル3のとき
+        else if (_player.PlayerPowerRequiredNumberLevel3 <= _playerPowerItemCount)//レベル3のとき
         {
             //パワーアイテムの数が、レベル３になるために必要なパワーアイテム数よりも多かったときの処理
             _playerLevel = LEVEL3;
+            UIManager.Instance.UIPowerLimitChange(_player.PlayerPowerLimit);
         }
     }
 
@@ -161,6 +149,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     public void PlayerBombCountChange(int bombCount)
     {
         _playerBombCount += bombCount;
+        UIManager.Instance.UIBombChange(bombCount);
     }
 
     /// <summary>
@@ -170,6 +159,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     public void PlayerInvicibleObjectValueChange(int invicibleObjectCount)
     {
         _playerInvicibleObjectCount += invicibleObjectCount;
+        UIManager.Instance.UIInvisibleCountChange(invicibleObjectCount);
     }
 
     /// <summary>
@@ -179,8 +169,8 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     public void ResidueChange(int residue)
     {
         _playerResidue += residue;
+        UIManager.Instance.UIResidueChange(residue);
     }
-
 
     /// <summary>
     /// 変数を初期化する関数

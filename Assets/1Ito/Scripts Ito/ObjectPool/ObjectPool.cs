@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// PlayerBulletのオブジェクトプールを管理するスクリプト
+/// Bulletのオブジェクトプールを管理するスクリプト
 /// </summary>
 public class ObjectPool : SingletonMonoBehaviour<ObjectPool>
 {
@@ -17,23 +17,25 @@ public class ObjectPool : SingletonMonoBehaviour<ObjectPool>
         base.Awake();
         _poolCountIndex = 0;
         CreatePool();
-        foreach(var pool in _pool)
-        {
-            Debug.Log($"オブジェクト名:{pool.Object.name} 種類:{pool.Type}");
-        }
+
+        //デバッグ用
+        //foreach (var pool in _pool)
+        //{
+        //    Debug.Log($"オブジェクト名:{pool.Object.name} 種類:{pool.Type}");
+        //}
     }
 
     private void CreatePool()
     {
-        if(_poolCountIndex >= _poolObjParam.Params.Count /*_bullets.Length*/)
+        if(_poolCountIndex >= _poolObjParam.Params.Count)
         {
-            Debug.Log("すべてのPlayerBulletを生成しました。");
+            //Debug.Log("すべてのオブジェクトを生成しました。");
             return;
         }
 
-        for (int i = 0; i < _poolObjParam.Params[_poolCountIndex].MaxCount/*_poolObjectMaxCount[_poolObjCountIndex]*/; i++)
+        for (int i = 0; i < _poolObjParam.Params[_poolCountIndex].MaxCount; i++)
         {
-            var bullet = Instantiate(_poolObjParam.Params[_poolCountIndex].Prefab /*_bullets[_poolObjCountIndex]*/, this.transform);
+            var bullet = Instantiate(_poolObjParam.Params[_poolCountIndex].Prefab, this.transform);
             bullet.SetActive(false);
             _pool.Add(new ObjPool { Object = bullet, Type = _poolObjParam.Params[_poolCountIndex].Type } );
         }
@@ -43,12 +45,12 @@ public class ObjectPool : SingletonMonoBehaviour<ObjectPool>
     }
 
     /// <summary>
-    /// Bulletを使いたいときに呼び出す関数
+    /// オブジェクトを使いたいときに呼び出す関数
     /// </summary>
-    /// <param name="position">Bulletの位置を指定する</param>
-    /// <param name="bulletType">発射するBulletの種類</param>
-    /// <returns></returns>
-    public GameObject UseBullet(Vector2 position, PoolObjectType bulletType)
+    /// <param name="position">オブジェクトの位置を指定する</param>
+    /// <param name="bulletType">オブジェクトの種類</param>
+    /// <returns>生成したオブジェクト</returns>
+    public GameObject UseObject(Vector2 position, PoolObjectType bulletType)
     {
         foreach(var pool in _pool)
         {
@@ -60,7 +62,7 @@ public class ObjectPool : SingletonMonoBehaviour<ObjectPool>
             }
         }
 
-        var newBullet = Instantiate(_poolObjParam.Params.Find(x => x.Type == bulletType).Prefab /*_bullets[(int)bulletType]*/, this.transform);
+        var newBullet = Instantiate(_poolObjParam.Params.Find(x => x.Type == bulletType).Prefab, this.transform);
         newBullet.transform.position = position;
         newBullet.SetActive(true);
         _pool.Add(new ObjPool { Object = newBullet, Type = bulletType});
@@ -104,6 +106,13 @@ public enum PoolObjectType
 
     Player02ChargePower1,
     Player02ChargePower2,
-    Player02ChargePower3
+    Player02ChargePower3,
+
+    OneUpItem,
+    BombItem,
+    Invincible,
+    ScoreItem,
+    PowerItem,
+
 }
 
