@@ -101,7 +101,7 @@ public class PlayerBase : MonoBehaviour
     /// <summary>無敵モードになるために必要なInvicibleアイテムの数が入ったプロパティ</summary>
     public int InvicibleLimit => _invincibleLimit;
     /// <summary>移動の可不可が入ったプロパティ</summary>
-    public bool CanMove => _canMove;
+    public bool CanMove { get => _canMove; set => _canMove = value; }
 
     protected int _playerResidue = default;//プレイヤーの残機を入れておく変数
     protected int _bombCount = default;//プレイヤーの所持するボムの数を入れておく変数
