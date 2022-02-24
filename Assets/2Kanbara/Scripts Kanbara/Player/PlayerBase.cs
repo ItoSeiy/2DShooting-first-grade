@@ -198,14 +198,15 @@ public class PlayerBase : MonoBehaviour
                 }
                 break;
         }
-        //if(PhaseNovelManager.Instance.NovelePhaesState == NovelPhase.None)//もしノベルが再生されていなかったらコントロール不能にする
-        //{
-        //    _isControll = false;
-        //}
-        //else if(PhaseNovelManager.Instance.IsBeforeNovelFinish)
-        //{
-        //    _isControll = true;
-        //}
+
+        if (PhaseNovelManager.Instance.NovelePhaesState == NovelPhase.None)//もしノベルが再生されていなかったらコントロール不能にする
+        {
+            _canMove = false;
+        }
+        else if (PhaseNovelManager.Instance.IsBeforeNovelFinish)
+        {
+            _canMove = true;
+        }
     }
     public void OnMove(InputAction.CallbackContext context)//通常の移動
     {
