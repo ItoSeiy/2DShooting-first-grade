@@ -9,14 +9,12 @@ public class BossEnemyController : EnemyBase
     /// <summary> アニメーター </summary>
     public Animator Animator { get; private set; } = default;
 
-    [SerializeField]
-    Transform[] _muzzles = null;
     /// <summary> ボス行動データ </summary>
     [SerializeField]
     BossData _data = null;
 
     /// <summary> 現在の行動 </summary>
-    private BossAction _currentBossAction = default;
+    private BossAttackAction _currentBossAction = default;
     /// <summary> 最後に行った行動パターンインデックス </summary>
     private int _lastPattern = -1;
     /// <summary> プレイヤー参照本体 </summary>
@@ -30,7 +28,7 @@ public class BossEnemyController : EnemyBase
         {
             if (_player == null)
             {
-                Debug.LogWarning("playerタグを持ったオブジェクトがありません。\n追加してください");
+                Debug.LogWarning("Playerタグを持ったオブジェクトがありません。\n追加してください");
                 return null;
             }
             return _player;
@@ -39,12 +37,11 @@ public class BossEnemyController : EnemyBase
 
     protected override void Attack()
     {
-        //ObjectPool.Instance(_);
+        //ObjectPool.Instance.UseObject(pos, objType);
     }
 
     protected override void OnGetDamage()
     {
-        throw new System.NotImplementedException();
     }
 
 
