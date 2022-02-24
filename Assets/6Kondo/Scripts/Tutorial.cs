@@ -19,6 +19,7 @@ public class Tutorial : SingletonMonoBehaviour<Tutorial>
     [SerializeField, Header("残機取得のチュートリアルのチェック")] GameObject _residueCheck;
     [SerializeField, Header("無敵アイテム取得のチュートリアルのチェック")] GameObject _invisibleCheck;
     [SerializeField, Header("パワーアイテム取得のチュートリアルのチェック")] GameObject _powerCheck;
+    [SerializeField, Header("スコアアイテム取得のチュートリアルのチェック")] GameObject _scoreCheck;
     [SerializeField, Header("チュートリアルクリア時に表示")] GameObject _tutorialClearCheck;
     private void Start()
     {
@@ -26,15 +27,6 @@ public class Tutorial : SingletonMonoBehaviour<Tutorial>
         ShotTutorial();
         SlowMoveTutorial();
         CharegeShotTutorial();
-        var player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBase>();
-    }
-    public void Update()
-    {
-        if (_moveCheck && _shotCheck && _chargeShotCheck && _slowMoveCheck && _itemCheck &&
-            _bombCheck && _residueCheck && _invisibleCheck && _powerCheck)
-        {
-            _tutorialClearCheck.SetActive(true);
-        }
     }
     private void OnEnable()
     {
@@ -52,38 +44,73 @@ public class Tutorial : SingletonMonoBehaviour<Tutorial>
     }
     private void MoveTutorial()
     {
-        _inputMove.performed += _ => _moveCheck.SetActive(true);
+        _inputMove.performed += _ =>
+        {
+            _moveCheck.SetActive(true);
+            CheckClear();
+        };
     }
     private void ShotTutorial()
     {
-        _inputShot.performed += _ => _shotCheck.SetActive(true);
+        _inputShot.performed += _ =>
+        {
+            _shotCheck.SetActive(true);
+            CheckClear();
+        };
     }
     private void CharegeShotTutorial()
     {
-        _inputChargeShot.performed += _ => _chargeShotCheck.SetActive(true);
+        _inputChargeShot.performed += _ => 
+        {
+            _chargeShotCheck.SetActive(true);
+            CheckClear();
+        };
     }
     private void SlowMoveTutorial()
     {
-        _inputSlowMove.performed += _ => _slowMoveCheck.SetActive(true);
+        _inputSlowMove.performed += _ =>
+        {
+            _slowMoveCheck.SetActive(true);
+            CheckClear();
+        };
     }
     public void GetItemTutorial()
     {
         _itemCheck.SetActive(true);
+        CheckClear();
     }
     public void BombTutorial()
     {
         _bombCheck.SetActive(true);
+        CheckClear();
     }
     public void ResidueTutorial()
     {
         _residueCheck.SetActive(true);
+        CheckClear();
     }
     public void InvisibleTutorial()
     {
         _invisibleCheck.SetActive(true);
+        CheckClear();
     }
     public void PowerTutorial()
     {
         _powerCheck.SetActive(true);
+        CheckClear();
+    }
+    public void ScoreTutorial()
+    {
+        _scoreCheck.SetActive(true);
+        CheckClear();
+    }
+    private void CheckClear()
+    {
+        var isClear = _moveCheck.activeSelf && _shotCheck.activeSelf && _chargeShotCheck.activeSelf && _slowMoveCheck.activeSelf && _itemCheck.activeSelf && _bombCheck.activeSelf && _residueCheck.activeSelf && _invisibleCheck.activeSelf && _powerCheck.activeSelf && _scoreCheck.activeSelf;
+        if (isClear)
+        {
+            _tutorialClearCheck.SetActive(true);
+            GameManager.Instance.Player.CanMove = true;
+        }
     }
 }
