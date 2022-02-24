@@ -8,6 +8,7 @@ using DG.Tweening;
 public class EnemyController : EnemyBase 
 {
     [SerializeField, Header("球の出る位置")] Transform[] _muzzle = null;
+    [SerializeField, Header("ノーマルマズル時回転するかどうか")] NormalMuzzleRoteto _normalMuzzleRoteto;
     [SerializeField,Header("Muzzleを回しながら球が出る位置")] Transform[] _rotateMuzzles = null;
     [SerializeField,Header("Muzzleの切り替え")] MuzzleTransform _muzzleTransform;
 
@@ -137,6 +138,14 @@ public class EnemyController : EnemyBase
                         ChangeAttackIntervalRandom(_randomIntervalMin,_randomIntervalMax );
                         break;
                 }
+                switch(_normalMuzzleRoteto)
+                {
+                    case NormalMuzzleRoteto.No:
+                        break;
+                    case NormalMuzzleRoteto.Yes:
+                        Rotate();
+                        break;
+                }
                 break;
             case MuzzleTransform.Rotate:
                 Rotate();
@@ -212,6 +221,11 @@ public class EnemyController : EnemyBase
     {
         Yes,
         No
+    }
+    enum NormalMuzzleRoteto
+    {
+        No,
+        Yes
     }
     
 }
