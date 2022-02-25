@@ -9,6 +9,7 @@ public class SuperAttackFirework : MonoBehaviour
     [SerializeField, Header("必殺前に移動するポジション")] Transform _superAttackPos = null;
     /// <summary>バレットを発射するポジション</summary>
     [SerializeField, Header("Bulletを発射するポジション")] Transform[] _muzzles = null;
+    [SerializeField, Header("")] Vector2 _superAttackPosition = new Vector3(0f, 4f,0f);
     /// <summary>必殺前に移動するときのスピード</summary>
     [SerializeField, Header("必殺前に移動するときのスピード")] float _speed = 4f;
     /// <summary>タイマー</summary>
