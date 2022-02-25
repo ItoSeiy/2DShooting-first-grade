@@ -5,10 +5,10 @@ using UnityEngine;
 public class BossData
 {
     /// <summary>行動パターン</summary>
-    public Actions[] ActionPattern => _actionPattern;
+    public Actions[] ActionPattern => actionPattern;
 
     [SerializeField]
-    private Actions[] _actionPattern = default;
+    private Actions[] actionPattern = default;
 
 }
 
@@ -16,10 +16,15 @@ public class BossData
 public class Actions
 {
     /// <summary>攻撃の配列</summary>
-    public BossAttackAction[] BossActions => _bossActions;
+    public BossAttackAction[] BossActions => bossActions;
+    /// <summary>移動の配列</summary>
+    public BossMoveAction[] BossMoveActions => bossMoveActions;
 
     [SerializeField]
-    private BossAttackAction[] _bossActions = default;
+    private BossAttackAction[] bossActions = default;
+
+    [SerializeField]
+    private BossMoveAction[] bossMoveActions = default;
 }
 
 /// <summary>
