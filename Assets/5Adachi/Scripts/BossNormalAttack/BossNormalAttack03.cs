@@ -33,7 +33,7 @@ public class BossNormalAttack03 : MonoBehaviour
     /// <summary>最小の弾数</summary>
     const int MINIMUM_BULLET_RANGE = 3;
     /// <summary>最大の弾数の修正値</summary>
-    const float MAX_BULLET_RANGE_OFFSET = 1;
+    const int MAX_BULLET_RANGE_OFFSET = 1;
     /// <summary>発射回数をリセット</summary>
     const int ATTACK_COUNT_RESET = 0;
     void Start()
@@ -53,7 +53,7 @@ public class BossNormalAttack03 : MonoBehaviour
                 //弾の見た目をランダムで変える
                 _pattern = Random.Range(0, _bullet.Length);
                 //1回の攻撃で弾を飛ばす数(3～?)
-                _rotationInterval = (MAX_ROTATION_RANGE / Random.Range(MINIMUM_BULLET_RANGE, _maximumBulletRange + MAX_BULLET_RANGE_OFFSET));
+                _rotationInterval = MAX_ROTATION_RANGE / Random.Range(MINIMUM_BULLET_RANGE, _maximumBulletRange + MAX_BULLET_RANGE_OFFSET);
                 _attackCount = ATTACK_COUNT_RESET;//発射回数をリセット
             }
             //ターゲット（プレイヤー）の方向を計算
