@@ -9,9 +9,11 @@ public class BossEnemyMoveRandom : MonoBehaviour
     /// <summary>指定した画像を描画する機能</summary>
     SpriteRenderer _sr;
     /// <summary>水平、横方向</summary>
-    private float _horizontal = 0f;
+    float _horizontal = 0f;
     /// <summary>垂直、縦方向</summary>
-    private float _veritical = 0f;
+    float _veritical = 0f;
+    /// <summary>方向</summary>
+    Vector2 _dir;
     /// <summary>速度</summary>
     [SerializeField, Header("スピード")] float _speed = 4f;
     /// <summary>停止時間</summary>
@@ -25,9 +27,7 @@ public class BossEnemyMoveRandom : MonoBehaviour
     /// <summary>上限</summary>
     [SerializeField,Header("上限")] float _upperLimit = 2.5f;
     /// <summary>下限</summary>
-    [SerializeField,Header("下限")] float _lowerLimit = 1.5f;         
-    /// <summary>方向</summary>
-    Vector2 _dir;
+    [SerializeField,Header("下限")] float _lowerLimit = 1.5f;           
     /// <summary>左方向</summary>
     const float LEFT_DIR = -1f;
     /// <summary>右方向</summary>
@@ -38,7 +38,8 @@ public class BossEnemyMoveRandom : MonoBehaviour
     const float DOWN_DIR = -1;
     /// <summary>方向なし</summary>
     const float NO_DIR = 0f;
-
+    /// <summary>中央位置</summary>
+    const float MIDDLE_POS = 0;
 
     /// <summary>
     /// ランダム方向に動く
@@ -97,12 +98,12 @@ public class BossEnemyMoveRandom : MonoBehaviour
     private void Update()
     {
         //右に移動したら右を向く
-        if(_rb.velocity.x > NO_DIR)
+        if(_rb.velocity.x > MIDDLE_POS)
         {
             _sr.flipX = true;
         }
         //左に移動したら左を向く
-        else if (_rb.velocity.x < NO_DIR)
+        else if (_rb.velocity.x < MIDDLE_POS)
         {
             _sr.flipX = false;
         }

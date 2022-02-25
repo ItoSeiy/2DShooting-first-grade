@@ -7,10 +7,10 @@ public class BossEnemyMoveRush : MonoBehaviour
     /// <summary>形状や大きさの概念を持った物質</summary>
     Rigidbody2D _rb;
     /// <summary>プレイヤーのオブジェクト</summary>
-    private GameObject _player;
+    GameObject _player;
     /// <summary>方向</summary>
     Vector2 _dir;
-    /// <summary>時間</summary>
+    /// <summary>タイマー</summary>
     float _time = 0f;
     /// <summary>プレイヤーのタグ</summary>
     [SerializeField,Header("プレイヤーのタグ")] private string _playerTag = null;

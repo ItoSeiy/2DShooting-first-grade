@@ -6,12 +6,7 @@ public class SuperAttackEightShape : MonoBehaviour
 {
     /// <summary>形状や大きさの概念を持った物質</summary>
     Rigidbody2D _rb;
-    /// <summary>バレットを発射するポジション</summary>
-    [SerializeField, Header("Bulletを発射するポジション")] Transform[] _muzzles = null;
-    /// <summary>必殺前に移動するときのスピード</summary>
-    [SerializeField, Header("必殺前に移動するときのスピード")] float _speed = 4f;
-    /// <summary>必殺前に移動するポジション</summary>
-    [SerializeField, Header("必殺前に移動するポジション")] Transform _superAttackPos = null;
+    
     /// <summary>タイマー</summary>
     float _timer = 0f;
     /// <summary>右側の範囲</summary>
@@ -26,6 +21,12 @@ public class SuperAttackEightShape : MonoBehaviour
     float _horizontalDir = 0f;
     /// <summary>縦方向</summary>
     float _verticalDir = 0f;
+    /// <summary>バレットを発射するポジション</summary>
+    [SerializeField, Header("Bulletを発射するポジション")] Transform[] _muzzles = null;
+    /// <summary>必殺前に移動するポジション</summary>
+    [SerializeField, Header("必殺前に移動するポジション")] Vector2 _superAttackPosition = new Vector2(0f, 4f);
+    /// <summary>必殺前に移動するときのスピード</summary>
+    [SerializeField, Header("必殺前に移動するときのスピード")] float _speed = 4f;    
     /// <summary>必殺技待機時間</summary>
     [SerializeField, Header("必殺技待機時間")] float _waitTime = 5f;
     /// <summary>必殺技発動時間</summary>
@@ -62,15 +63,15 @@ public class SuperAttackEightShape : MonoBehaviour
         {
             yield return new WaitForSeconds(JUDGMENT_TIME);//判定回数の制限
             //横方向
-            _horizontalDir = _superAttackPos.position.x - transform.position.x;
+            _horizontalDir = _superAttackPosition.x - transform.position.x;
             //縦方向
-            _verticalDir = _superAttackPos.position.y - transform.position.y;
+            _verticalDir = _superAttackPosition.y - transform.position.y;
             //横の範囲の条件式      
-            _rightRange = transform.position.x < _superAttackPos.position.x + PLAYER_POS_OFFSET;
-            _leftRange = transform.position.x > _superAttackPos.position.x - PLAYER_POS_OFFSET;
+            _rightRange = transform.position.x < _superAttackPosition.x + PLAYER_POS_OFFSET;
+            _leftRange = transform.position.x > _superAttackPosition.x - PLAYER_POS_OFFSET;
             //縦の範囲の条件式
-            _upperRange = transform.position.y < _superAttackPos.position.y + PLAYER_POS_OFFSET;
-            _downRange = transform.position.y > _superAttackPos.position.y - PLAYER_POS_OFFSET;
+            _upperRange = transform.position.y < _superAttackPosition.y + PLAYER_POS_OFFSET;
+            _downRange = transform.position.y > _superAttackPosition.y - PLAYER_POS_OFFSET;
             //行きたいポジションに移動する
             //近かったら
             if (_rightRange && _leftRange && _upperRange && _downRange)
@@ -92,7 +93,7 @@ public class SuperAttackEightShape : MonoBehaviour
             {
                 Debug.Log("stop");
                 _rb.velocity = Vector2.zero;//停止
-                transform.position = _superAttackPos.position;//ボスの位置を修正
+                transform.position = _superAttackPosition;//ボスの位置を修正
                 break;//終わり
             }
         }

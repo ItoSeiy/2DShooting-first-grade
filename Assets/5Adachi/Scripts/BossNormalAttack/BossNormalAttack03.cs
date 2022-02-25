@@ -12,6 +12,8 @@ public class BossNormalAttack03 : MonoBehaviour
     float _rotationInterval = 360f;
     /// <summary>”­Ë‚µ‚½‰ñ”</summary>
     int _attackCount = 0;
+    /// <summary>’e‚ÌŒ©‚½–Ú‚Ìí—Ş</summary>
+    int _pattern = 0;
     /// <summary>”­Ë‚·‚éÅ‘å‰ñ”</summary>
     [SerializeField,Header("”­Ë‚·‚éÅ‘å‰ñ”")] int _maxAttackCount = 7;
     /// <summary>ƒvƒŒƒCƒ„[‚Ìƒ^ƒO</summary>
@@ -21,9 +23,9 @@ public class BossNormalAttack03 : MonoBehaviour
     /// <summary>UŒ‚•p“x</summary>
     [SerializeField, Header("UŒ‚•p“x(•b)")] private float _attackInterval = 0.64f;
     /// <summary>”­Ë‚·‚é’e‚ğİ’è‚Å‚«‚é</summary>
-    [SerializeField, Header("”­Ë‚·‚é’e‚Ìİ’è")] PoolObjectType _bullet;
+    [SerializeField, Header("”­Ë‚·‚é’e‚Ìİ’è")] PoolObjectType[] _bullet;
     /// <summary>Å‘å‚Ì’e”</summary>
-    [SerializeField,Header("Å‘å‚Ì’e‚Ì”")] int _maximumBulletRange = 11;
+    [SerializeField,Header("Å‘å‚Ì’e”")] int _maximumBulletRange = 11;
     /// <summary>Å¬‚Ì‰ñ“]’l</summary>
     const float MINIMUM_ROTATION_RANGE = 0f;
     /// <summary>Å‘å‚Ì‰ñ“]’l</summary>
@@ -47,7 +49,10 @@ public class BossNormalAttack03 : MonoBehaviour
         {
             //ˆê’è‚Ì‰ñ””­Ë‚µ‚½‚ç
             if(_attackCount >= _maxAttackCount)
-            {   //1‰ñ‚ÌUŒ‚‚Å’e‚ğ”ò‚Î‚·”(3`?)
+            {
+                //’e‚ÌŒ©‚½–Ú‚ğƒ‰ƒ“ƒ_ƒ€‚Å•Ï‚¦‚é
+                _pattern = Random.Range(0, _bullet.Length);
+                //1‰ñ‚ÌUŒ‚‚Å’e‚ğ”ò‚Î‚·”(3`?)
                 _rotationInterval = (MAX_ROTATION_RANGE / Random.Range(MINIMUM_BULLET_RANGE, _maximumBulletRange + MAX_BULLET_RANGE_OFFSET));
                 _attackCount = ATTACK_COUNT_RESET;//”­Ë‰ñ”‚ğƒŠƒZƒbƒg
             }
@@ -57,21 +62,21 @@ public class BossNormalAttack03 : MonoBehaviour
             _muzzles[0].transform.rotation = Quaternion.FromToRotation(Vector3.up, _dir);
 
             //’e‚ğƒ}ƒYƒ‹0‚ÌŒü‚«‚É‡‚í‚¹‚Ä’e‚ğ”­Ë
-            ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet).transform.rotation = _muzzles[0].rotation;
+            ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet[_pattern]).transform.rotation = _muzzles[0].rotation;
 
             Vector3 firstLocalAngle = _muzzles[0].localEulerAngles;// ƒ[ƒJƒ‹À•W‚ğŠî€‚Éæ“¾
 
             //“¯‚¶ˆ—‚ğ”‰ñ(_maximumCount)ŒJ‚è•Ô‚·
-            for (float rotation = MINIMUM_ROTATION_RANGE + firstLocalAngle.z; rotation <= MAX_ROTATION_RANGE + firstLocalAngle.z; rotation += _rotationInterval)
+            for (float rotation = MINIMUM_ROTATION_RANGE + firstLocalAngle.z; rotation <= MAX_ROTATION_RANGE; rotation += _rotationInterval)
             {
                 Vector3 secondLocalAngle = _muzzles[1].localEulerAngles;// ƒ[ƒJƒ‹À•W‚ğŠî€‚Éæ“¾
                 secondLocalAngle.z = rotation;// Šp“x‚ğİ’è
                 _muzzles[1].localEulerAngles = secondLocalAngle;//‰ñ“]‚·‚é
                 //’e‚ğƒ}ƒYƒ‹‚ÌŒü‚«‚É‡‚í‚¹‚Ä’e‚ğ”­Ëi‰¼‚ÅBomb‚É‚µ‚Ä‚Ü‚·j
-                ObjectPool.Instance.UseObject(_muzzles[1].position, _bullet).transform.rotation = _muzzles[1].rotation;
+                ObjectPool.Instance.UseObject(_muzzles[1].position, _bullet[_pattern]).transform.rotation = _muzzles[1].rotation;
             }
             _attackCount++;//”­Ë‰ñ”‚ğ‚P‘«‚·
-            yield return new WaitForSeconds(_attackInterval);
+            yield return new WaitForSeconds(_attackInterval);//UŒ‚•p“x(•b)
         }
     }
 }
