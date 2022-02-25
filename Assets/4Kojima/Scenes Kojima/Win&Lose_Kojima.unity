@@ -406,7 +406,7 @@ GameObject:
   - component: {fileID: 659768189}
   - component: {fileID: 659768188}
   m_Layer: 5
-  m_Name: Canvas Lose
+  m_Name: Canvas GameOver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -511,7 +511,7 @@ GameObject:
   - component: {fileID: 699776672}
   - component: {fileID: 699776671}
   m_Layer: 5
-  m_Name: Text -YourWin-
+  m_Name: Text -GameClear-
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -590,7 +590,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: You Win
+  m_Text: Gama Clear
 --- !u!222 &699776673
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -689,7 +689,7 @@ GameObject:
   - component: {fileID: 725514325}
   - component: {fileID: 725514324}
   m_Layer: 0
-  m_Name: TimeLineLose
+  m_Name: TimeLineOver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1309,7 +1309,7 @@ GameObject:
   - component: {fileID: 997124089}
   - component: {fileID: 997124088}
   m_Layer: 5
-  m_Name: Canvas Win
+  m_Name: Canvas GameClear
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1513,7 +1513,7 @@ GameObject:
   - component: {fileID: 1019994834}
   - component: {fileID: 1019994833}
   m_Layer: 5
-  m_Name: Text -YourLose-
+  m_Name: Text -GameOver-
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1572,7 +1572,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1592,7 +1592,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: You Lose
+  m_Text: Game Over
 --- !u!222 &1019994835
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1776,7 +1776,7 @@ GameObject:
   - component: {fileID: 1127225824}
   - component: {fileID: 1127225823}
   m_Layer: 0
-  m_Name: TimeLineWin
+  m_Name: TimeLineClear
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
