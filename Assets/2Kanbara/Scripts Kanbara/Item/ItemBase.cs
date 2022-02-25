@@ -21,6 +21,11 @@ public class ItemBase : MonoBehaviour
     bool _isGetItemMode = false;
     public bool _isTaking = false;
 
+    private void Start()
+    {
+        _rb = GetComponent<Rigidbody2D>();
+    }
+
     private void OnEnable()
     {
         _isTaking = false;
@@ -44,9 +49,7 @@ public class ItemBase : MonoBehaviour
                 {
                     _childrenPS.SetActive(true);
                 }
-                _rb = GetComponent<Rigidbody2D>();
-                var playerRb = GameObject.FindWithTag(_playerTag);
-                var dir = playerRb.transform.position - this.gameObject.transform.position;
+                var dir = GameManager.Instance.Player.transform.position - this.gameObject.transform.position;
                 _rb.velocity = dir.normalized * _itemSpeed;
                 break;
             case false:
