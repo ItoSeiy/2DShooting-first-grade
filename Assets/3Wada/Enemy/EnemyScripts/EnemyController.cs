@@ -8,12 +8,12 @@ using DG.Tweening;
 public class EnemyController : EnemyBase 
 {
     [SerializeField, Header("球の出る位置")] Transform[] _muzzle = null;
-    [SerializeField, Header("ノーマルマズル時回転するかどうか")] NormalMuzzleRoteto _normalMuzzleRoteto;
+    [SerializeField, Header("ノーマルマズル時回転するかどうか")] bool _normalMuzzleRotate = false;
     [SerializeField,Header("Muzzleを回しながら球が出る位置")] Transform[] _rotateMuzzles = null;
     [SerializeField,Header("Muzzleの切り替え")] MuzzleTransform _muzzleTransform;
 
     [SerializeField,Header("弾幕")] GameObject _bullet;
-    [SerializeField, Header("攻撃頻度をランダムにするか")] AttackIntervelChange _attackIntervelChange;
+    [SerializeField, Header("攻撃頻度をランダムにするか")] bool _attackIntervelChange = false;
     [SerializeField, Header("攻撃頻度がランダム時のmax")] float _randomIntervalMax = 1f;
     [SerializeField, Header("攻撃頻度がランダム時のmin")] float _randomIntervalMin = 0.1f;
     [SerializeField,Header("モブ敵の出現位置")] GeneratePos _generatePos;
@@ -132,17 +132,17 @@ public class EnemyController : EnemyBase
                 }
                 switch(_attackIntervelChange)
                 {
-                    case AttackIntervelChange.No:
+                    case false:
                         break;
-                    case AttackIntervelChange.Yes:
+                    case true:
                         ChangeAttackIntervalRandom(_randomIntervalMin,_randomIntervalMax );
                         break;
                 }
-                switch(_normalMuzzleRoteto)
+                switch(_normalMuzzleRotate)
                 {
-                    case NormalMuzzleRoteto.No:
+                    case false:
                         break;
-                    case NormalMuzzleRoteto.Yes:
+                    case true:
                         Rotate();
                         break;
                 }
@@ -157,9 +157,9 @@ public class EnemyController : EnemyBase
                 }
                 switch (_attackIntervelChange)
                 {
-                    case AttackIntervelChange.No:
+                    case false:
                         break;
-                    case AttackIntervelChange.Yes:
+                    case true:
                         ChangeAttackIntervalRandom(_randomIntervalMin, _randomIntervalMax);
                         break;
                 }
@@ -217,15 +217,7 @@ public class EnemyController : EnemyBase
         StopAttack,
         MoveAtrack
     }
-    enum AttackIntervelChange
-    {
-        Yes,
-        No
-    }
-    enum NormalMuzzleRoteto
-    {
-        No,
-        Yes
-    }
+    
+   
     
 }
