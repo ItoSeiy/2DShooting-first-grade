@@ -37,7 +37,14 @@ public class BossNormalAttack02 : MonoBehaviour
         {
             //弾の見た目をランダムで変える
             _firstPattern = Random.Range(0, _firstBullet.Length);
-            _secondPattern = Random.Range(0, _secondBullet.Length);
+            if (_firstPattern == 0)
+            {
+                _secondPattern = 0;
+            }
+            else
+            {
+                _secondPattern = 1;
+            }
 
             ///プレイヤーの向きにマズルが向く///
 

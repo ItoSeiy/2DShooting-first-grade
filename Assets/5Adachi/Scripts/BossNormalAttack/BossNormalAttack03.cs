@@ -62,12 +62,12 @@ public class BossNormalAttack03 : MonoBehaviour
             _muzzles[0].transform.rotation = Quaternion.FromToRotation(Vector3.up, _dir);
 
             //弾をマズル0の向きに合わせて弾を発射
-            ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet[_pattern]).transform.rotation = _muzzles[0].rotation;
+            //ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet[_pattern]).transform.rotation = _muzzles[0].rotation;
 
             Vector3 firstLocalAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
 
             //同じ処理を数回(_maximumCount)繰り返す
-            for (float rotation = MINIMUM_ROTATION_RANGE + firstLocalAngle.z; rotation <= MAX_ROTATION_RANGE; rotation += _rotationInterval)
+            for (float rotation = MINIMUM_ROTATION_RANGE + firstLocalAngle.z; rotation <= MAX_ROTATION_RANGE + firstLocalAngle.z; rotation += _rotationInterval)
             {
                 Vector3 secondLocalAngle = _muzzles[1].localEulerAngles;// ローカル座標を基準に取得
                 secondLocalAngle.z = rotation;// 角度を設定
