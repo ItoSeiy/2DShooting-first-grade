@@ -7,61 +7,91 @@ using System;
 
 public class UIManager : SingletonMonoBehaviour<UIManager>
 {
-    [SerializeField, Header("スコアを何秒かけて変化させるか")] float _scoreChangeInterval = default;
-    [SerializeField] Text _scoreText;
-    [SerializeField, Header("残機数を何秒かけて変化させるか")] float _residuesChangeInterval = default;
-    [SerializeField] Text _residueText;
-    [SerializeField, Header("ボム数を何秒かけて変化させるか")] float _bombChangeInterval = default;
-    [SerializeField] Text _bombText;
-    [SerializeField, Header("無敵オブジェクト所持数を何秒かけて変化させるか")] float _invicibleObjectLimitChangeInterval = default;
-    [SerializeField] Text _invicibleObjectCountText;
-    [SerializeField, Header("無敵オブジェクト必要数を何秒かけて変化させるか")] float _invicibleObjectCountChangeInterval = default;
-    [SerializeField] Text _invicibleObjectLimitText;
-    [SerializeField, Header("パワーアイテム所持数を何秒かけて変化させるか")] float _powerItemCountChamgeInterval = default;
-    [SerializeField] Text _powerItemCountText;
-    [SerializeField, Header("パワーアイテム必要数を何秒かけて変化させるか")] float _powerItemLimitChangeInterval = default;
-    [SerializeField] Text _powerItemLimitText;
-    [SerializeField] Text _levelText;
+    [SerializeField, Header("スコアを何秒かけて変化させるか")]
+    float _scoreChangeInterval = default;
 
-    int _firstScore;
-    int _firstResidue;
-    int _firstBomb;
-    int _firstInvicibleObject;
-    int _firstPowerItem;
+    [SerializeField, Header("スコアUIのテキスト")] 
+    Text _scoreText;
+
+    [SerializeField, Header("残機数を何秒かけて変化させるか")] 
+    float _residuesChangeInterval = default;
+
+    [SerializeField, Header("残機数のテキスト")] 
+    Text _residueText;
+
+    [SerializeField, Header("ボム数を何秒かけて変化させるか")] 
+    float _bombChangeInterval = default;
+
+    [SerializeField, Header("ボム数のテキスト")]
+    Text _bombText;
+
+    [SerializeField, Header("無敵オブジェクト所持数を何秒かけて変化させるか")] 
+    float _invicibleObjectCountChangeInterval = default;
+
+    [SerializeField, Header("無敵オブジェクト所持数のテキスト")] 
+    Text _invicibleObjectCountText;
+
+    [SerializeField, Header("無敵オブジェクト必要数のテキスト")] 
+    Text _invicibleObjectLimitText;
+
+    [SerializeField, Header("パワーアイテム所持数を何秒かけて変化させるか")] 
+    float _powerItemCountChamgeInterval = default;
+
+    [SerializeField, Header("パワーアイテム所持数のテキスト")] 
+    Text _powerItemCountText;
+
+    [SerializeField, Header("パワーアイテム必要数を何秒かけて変化させるか")] 
+    float _powerItemLimitChangeInterval = default;
+
+    [SerializeField, Header("パワーアイテム必要数のテキスト")] 
+    Text _powerItemLimitText;
+
+    [SerializeField, Header("現在のレベルのテキスト")] 
+    Text _levelText;
+
+    int _initialScore;
+    int _initialResidue;
+    int _initialBomb;
+    int _initialInvicibleObject;
+    int _initialPowerItem;
+
     int _maxScore;
     int _maxResidue;
     int _maxBomb;
     int _maxInvicibleObject;
     int _maxPowerItem;
+
     int _invicibleObjectLimit;
     int _invicibleObjectCount;
+
     int _powerItemLimit2;
     int _powerItemLimit3;
     int _powerItemCount;
+
     int _level;
-    const int _default = 0;
-    const int Level1 = 1;
-    const int Level2 = 2;
-    const int Level3 = 3;
+    const int DEFAULT = 0;
+    const int LEVEL1 = 1;
+    const int LEVEL2 = 2;
+    const int LEVEL3 = 3;
 
     public void UISet()
     {
-        _firstScore = GameManager.Instance.PlayerScore;
-        _scoreText.text = _firstScore.ToString("00000000");
+        _initialScore = GameManager.Instance.PlayerScore;
+        _scoreText.text = _initialScore.ToString("00000000");
 
-        _firstResidue = GameManager.Instance.PlayerResidueCount;
-        _residueText.text = _firstResidue.ToString("00");
+        _initialResidue = GameManager.Instance.PlayerResidueCount;
+        _residueText.text = _initialResidue.ToString("00");
 
-        _firstBomb = GameManager.Instance.PlayerBombCount;
-        _bombText.text = _firstBomb.ToString("00");
+        _initialBomb = GameManager.Instance.PlayerBombCount;
+        _bombText.text = _initialBomb.ToString("00");
 
-        _firstInvicibleObject = GameManager.Instance.PlayerInvincibleObjectCount;
-        _invicibleObjectCountText.text = _firstInvicibleObject.ToString("000");
+        _initialInvicibleObject = GameManager.Instance.PlayerInvincibleObjectCount;
+        _invicibleObjectCountText.text = _initialInvicibleObject.ToString("000");
 
         _maxInvicibleObject = GameManager.Instance.Player.InvicibleLimit;
 
-        _firstPowerItem = GameManager.Instance.PlayerPowerItemCount;
-        _powerItemCountText.text = _firstPowerItem.ToString("000");
+        _initialPowerItem = GameManager.Instance.PlayerPowerItemCount;
+        _powerItemCountText.text = _initialPowerItem.ToString("000");
 
         _maxScore = GameManager.Instance.Player.PlayerScoreLimit;
 
@@ -154,7 +184,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     {
         switch(GameManager.Instance.PlayerLevel)
         {
-            case Level1:
+            case LEVEL1:
                 int tempPower = int.Parse(_powerItemLimitText.text.ToString());
 
                 tempPower = Mathf.Min(tempPower + power, _powerItemLimit2);
@@ -166,7 +196,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
                     .OnComplete(() => _powerItemLimitText.text = _powerItemLimit2.ToString("000"));
                 UILevelChange();
                 break;
-            case Level2:
+            case LEVEL2:
                 int tempPower2 = int.Parse(_powerItemLimitText.text.ToString());
 
                 tempPower2 = Mathf.Min(tempPower2 + power, _powerItemLimit3);
@@ -178,7 +208,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
                     .OnComplete(() => _powerItemLimitText.text = _powerItemLimit3.ToString("000"));
                 UILevelChange();
                 break;
-            case Level3:
+            case LEVEL3:
                 int tempPower3 = int.Parse(_powerItemLimitText.text.ToString());
 
                 tempPower3 = Mathf.Min(tempPower3 + power, _maxPowerItem);
@@ -197,9 +227,9 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         int tempPower = int.Parse(_powerItemCountText.text.ToString());
 
         tempPower = Mathf.Min(tempPower + power, _maxPowerItem);
-        if(tempPower <= _default)
+        if(tempPower <= DEFAULT)
         {
-            tempPower = _default;
+            tempPower = DEFAULT;
         }
         if (tempPower <= _maxPowerItem)
         {
