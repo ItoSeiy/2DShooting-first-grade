@@ -319,8 +319,84 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: -842.99994
       objectReference: {fileID: 0}
+    - target: {fileID: 4164564381212421298, guid: e26521d5fe1d5bf49ac24cc8d329003c,
+        type: 3}
+      propertyPath: _sceneName
+      value: StageSelectPlayer1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4164564381380489554, guid: e26521d5fe1d5bf49ac24cc8d329003c,
+        type: 3}
+      propertyPath: _sceneName
+      value: KeybordTutorialPlayer1Stage
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e26521d5fe1d5bf49ac24cc8d329003c, type: 3}
+--- !u!1 &78202371 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4164564380580563915, guid: e26521d5fe1d5bf49ac24cc8d329003c,
+    type: 3}
+  m_PrefabInstance: {fileID: 78202370}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &78202372 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4164564380035254676, guid: e26521d5fe1d5bf49ac24cc8d329003c,
+    type: 3}
+  m_PrefabInstance: {fileID: 78202370}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &78202373 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4164564380947917861, guid: e26521d5fe1d5bf49ac24cc8d329003c,
+    type: 3}
+  m_PrefabInstance: {fileID: 78202370}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &78202374 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4164564380202864462, guid: e26521d5fe1d5bf49ac24cc8d329003c,
+    type: 3}
+  m_PrefabInstance: {fileID: 78202370}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &78202375 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4164564380787169494, guid: e26521d5fe1d5bf49ac24cc8d329003c,
+    type: 3}
+  m_PrefabInstance: {fileID: 78202370}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &78202376 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4164564379730781402, guid: e26521d5fe1d5bf49ac24cc8d329003c,
+    type: 3}
+  m_PrefabInstance: {fileID: 78202370}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &78202377 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4164564380522450516, guid: e26521d5fe1d5bf49ac24cc8d329003c,
+    type: 3}
+  m_PrefabInstance: {fileID: 78202370}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &78202378 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4164564381465166744, guid: e26521d5fe1d5bf49ac24cc8d329003c,
+    type: 3}
+  m_PrefabInstance: {fileID: 78202370}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &78202379 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4164564381328981022, guid: e26521d5fe1d5bf49ac24cc8d329003c,
+    type: 3}
+  m_PrefabInstance: {fileID: 78202370}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &78202380 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4164564381169889692, guid: e26521d5fe1d5bf49ac24cc8d329003c,
+    type: 3}
+  m_PrefabInstance: {fileID: 78202370}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &78202381 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4164564379582292103, guid: e26521d5fe1d5bf49ac24cc8d329003c,
+    type: 3}
+  m_PrefabInstance: {fileID: 78202370}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &136735877
 GameObject:
   m_ObjectHideFlags: 0
@@ -364,7 +440,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90409febc9038274b9cf54e1667d61dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveCheck: {fileID: 0}
+  _moveCheck: {fileID: 78202381}
   _inputMove:
     m_Name: Input Move
     m_Type: 0
@@ -437,7 +513,7 @@ MonoBehaviour:
       m_Groups: 
       m_Action: Input Move
       m_Flags: 0
-  _shotCheck: {fileID: 0}
+  _shotCheck: {fileID: 78202380}
   _inputShot:
     m_Name: Input Shot
     m_Type: 0
@@ -462,7 +538,7 @@ MonoBehaviour:
       m_Groups: 
       m_Action: Input Shot
       m_Flags: 0
-  _slowMoveCheck: {fileID: 0}
+  _slowMoveCheck: {fileID: 78202378}
   _inputSlowMove:
     m_Name: Input Slow Move
     m_Type: 0
@@ -479,7 +555,7 @@ MonoBehaviour:
       m_Groups: 
       m_Action: Input Slow Move
       m_Flags: 0
-  _chargeShotCheck: {fileID: 0}
+  _chargeShotCheck: {fileID: 78202379}
   _inputChargeShot:
     m_Name: Input Charge Shot
     m_Type: 1
@@ -504,13 +580,13 @@ MonoBehaviour:
       m_Groups: 
       m_Action: Input Charge Shot
       m_Flags: 0
-  _itemCheck: {fileID: 0}
-  _bombCheck: {fileID: 0}
-  _residueCheck: {fileID: 0}
-  _invisibleCheck: {fileID: 0}
-  _powerCheck: {fileID: 0}
-  _scoreCheck: {fileID: 0}
-  _tutorialClearCheck: {fileID: 0}
+  _itemCheck: {fileID: 78202377}
+  _bombCheck: {fileID: 78202376}
+  _residueCheck: {fileID: 78202375}
+  _invisibleCheck: {fileID: 78202374}
+  _powerCheck: {fileID: 78202373}
+  _scoreCheck: {fileID: 78202372}
+  _tutorialClearCheck: {fileID: 78202371}
 --- !u!1001 &152907259
 PrefabInstance:
   m_ObjectHideFlags: 0
