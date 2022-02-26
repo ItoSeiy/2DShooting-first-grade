@@ -728,31 +728,6 @@ MonoBehaviour:
       m_Groups: 
       m_Action: Input Shot
       m_Flags: 0
-  _chargeShotCheck: {fileID: 359057476}
-  _inputChargeShot:
-    m_Name: Input Charge Shot
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: f9a08a09-8721-4e5a-a145-6e90bd857fdb
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: baaa72f8-e9c3-4daa-a290-646b245440d2
-      m_Path: <Gamepad>/rightShoulder
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Input Charge Shot
-      m_Flags: 0
-    - m_Name: 
-      m_Id: a0ceff73-7f08-4911-9427-f431c3f508a4
-      m_Path: <Gamepad>/rightTrigger
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Input Charge Shot
-      m_Flags: 0
   _slowMoveCheck: {fileID: 491042754}
   _inputSlowMove:
     m_Name: Input Slow Move
@@ -777,6 +752,31 @@ MonoBehaviour:
       m_Processors: 
       m_Groups: 
       m_Action: Input Slow Move
+      m_Flags: 0
+  _chargeShotCheck: {fileID: 359057476}
+  _inputChargeShot:
+    m_Name: Input Charge Shot
+    m_Type: 1
+    m_ExpectedControlType: Button
+    m_Id: f9a08a09-8721-4e5a-a145-6e90bd857fdb
+    m_Processors: 
+    m_Interactions: SlowTap(duration=1.4)
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: baaa72f8-e9c3-4daa-a290-646b245440d2
+      m_Path: <Gamepad>/rightShoulder
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Input Charge Shot
+      m_Flags: 0
+    - m_Name: 
+      m_Id: a0ceff73-7f08-4911-9427-f431c3f508a4
+      m_Path: <Gamepad>/rightTrigger
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Input Charge Shot
       m_Flags: 0
   _itemCheck: {fileID: 628390414}
   _bombCheck: {fileID: 1982091392}

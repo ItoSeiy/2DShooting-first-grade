@@ -776,31 +776,6 @@ MonoBehaviour:
       m_Groups: 
       m_Action: Input Shot
       m_Flags: 0
-  _chargeShotCheck: {fileID: 359057476}
-  _inputChargeShot:
-    m_Name: Input Charge Shot
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: f9a08a09-8721-4e5a-a145-6e90bd857fdb
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: 060f99b3-c75c-465d-8ca0-2d7423c4b480
-      m_Path: <Keyboard>/v
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Input Charge Shot
-      m_Flags: 0
-    - m_Name: 
-      m_Id: 82592970-d406-4f1b-a2a0-09ef4d7d7241
-      m_Path: <Keyboard>/x
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Input Charge Shot
-      m_Flags: 0
   _slowMoveCheck: {fileID: 491042754}
   _inputSlowMove:
     m_Name: Input Slow Move
@@ -817,6 +792,31 @@ MonoBehaviour:
       m_Processors: 
       m_Groups: 
       m_Action: Input Slow Move
+      m_Flags: 0
+  _chargeShotCheck: {fileID: 359057476}
+  _inputChargeShot:
+    m_Name: Input Charge Shot
+    m_Type: 1
+    m_ExpectedControlType: Button
+    m_Id: f9a08a09-8721-4e5a-a145-6e90bd857fdb
+    m_Processors: 
+    m_Interactions: SlowTap(duration=1.4)
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 060f99b3-c75c-465d-8ca0-2d7423c4b480
+      m_Path: <Keyboard>/v
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Input Charge Shot
+      m_Flags: 0
+    - m_Name: 
+      m_Id: 82592970-d406-4f1b-a2a0-09ef4d7d7241
+      m_Path: <Keyboard>/x
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Input Charge Shot
       m_Flags: 0
   _itemCheck: {fileID: 628390414}
   _bombCheck: {fileID: 1982091392}
