@@ -5,35 +5,44 @@ using UnityEngine;
 
 public class BossEnemyController : EnemyBase
 {
-    /// <summary> 敵の行動データ </summary>
+    /// <summary>ボスのデータ</summary>
     public BossData Data => _data;
     /// <summary> アニメーター </summary>
     public Animator Animator { get; private set; } = default;
-
-    /// <summary> ボス行動データ </summary>
+  
+    /// <summary>ボスのデータ</summary>
     [SerializeField]
     BossData _data = null;
 
-    /// <summary> 現在の行動 </summary>
-    private BossAttackAction _currentBossAction = default;
-    /// <summary> 最後に行った行動パターンインデックス </summary>
-    private int _lastPattern = -1;
-    /// <summary> プレイヤー参照本体 </summary>
-    private GameObject _player = default;
-    /// <summary> 敵のモデル </summary>
+    /// <summary>現在の攻撃行動</summary>
+    private BossAttackAction _currentAttackAction = default;
+    /// <summary>現在の移動行動</summary>
+    private BossMoveAction _currentMoveAction = default;
+    /// <summary>行動パターンインデックス </summary>
+    private int _patternIndex = -1;
+    /// <summary>ボスのオブジェクト</summary>
     public GameObject Model { get => gameObject; }
 
-    public GameObject PlayerObj
+    protected override void Awake()
     {
-        get
+        base.Awake();
+        foreach (var pattern in _data.ActionPattern)
         {
-            if (_player == null)
+            foreach (var attackAction in pattern.BossAttackActions)
             {
-                Debug.LogWarning("Playerタグを持ったオブジェクトがありません。\n追加してください");
-                return null;
+
             }
-            return _player;
+            foreach(var moveAction in pattern.BossMoveActions)
+            {
+
+            }
         }
+    }
+
+    protected override void Update()
+    {
+        _currentAttackAction?.ManagedUpdate(this);
+        _currentMoveAction?.ManagedUpdate(this);
     }
 
     protected override void Attack()
@@ -44,6 +53,4 @@ public class BossEnemyController : EnemyBase
     protected override void OnGetDamage()
     {
     }
-
-
 }

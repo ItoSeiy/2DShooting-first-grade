@@ -1,10 +1,13 @@
 using System;
 using UnityEngine;
 
+/// <summary>
+/// ボスのデータが格納されたクラス
+/// </summary>
 [Serializable]
 public class BossData
 {
-    /// <summary>行動パターン</summary>
+    /// <summary>ボスの行動</summary>
     public Actions[] ActionPattern => actionPattern;
 
     [SerializeField]
@@ -12,16 +15,19 @@ public class BossData
 
 }
 
+/// <summary>
+/// ボスの行動が格納されたクラス
+/// </summary>
 [Serializable]
 public class Actions
 {
     /// <summary>攻撃の配列</summary>
-    public BossAttackAction[] BossActions => bossActions;
+    public BossAttackAction[] BossAttackActions => bossAttackActions;
     /// <summary>移動の配列</summary>
     public BossMoveAction[] BossMoveActions => bossMoveActions;
 
     [SerializeField]
-    private BossAttackAction[] bossActions = default;
+    private BossAttackAction[] bossAttackActions = default;
 
     [SerializeField]
     private BossMoveAction[] bossMoveActions = default;

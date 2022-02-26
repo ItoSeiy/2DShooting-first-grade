@@ -7,7 +7,6 @@ using UnityEngine;
 /// 
 /// シングルトンパターン
 /// プレイヤーのアイテム数やレベルを持っている
-/// ()
 /// </summary>
 public class GameManager : SingletonMonoBehaviour<GameManager>
 {
