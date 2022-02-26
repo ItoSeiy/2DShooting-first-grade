@@ -1,7 +1,7 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 
 /// <summary>
@@ -50,12 +50,14 @@ public class BossEnemyController : EnemyBase
 
                     if(_actionIndex >= _data.ActionPattern[_patternIndex].BossAttackActions.Length)
                     {
-                        //すべてのアクションを実行しきったら
+                        //行動パターンを実行しきったら
                         RandomPatternChange();//行動パターンを変える
                     }
-                    else//アクションを実行しきっていなかったら
+                    else//行動パターンを実行しきっていなかったら
                     {
-
+                        //アクションを次のものに切り替える
+                        ChangeAction(_data.ActionPattern[_patternIndex].BossAttackActions[_actionIndex],
+                                     _data.ActionPattern[_patternIndex].BossMoveActions[_actionIndex]);
                     }
                 };
             }
@@ -73,21 +75,33 @@ public class BossEnemyController : EnemyBase
     /// </summary>
     private void RandomPatternChange()
     {
+        //行動パターンのインッデクスを決める
+        _patternIndex = Random.Range(0, _data.ActionPattern.Length);
+        Debug.Log($"パターン{_patternIndex}を実行する");
 
+        //アクションを変更し実行する
+        ChangeAction(_data.ActionPattern[_patternIndex].BossAttackActions[_actionIndex],
+                     _data.ActionPattern[_patternIndex].BossMoveActions[_actionIndex]);
     }
 
-    private void ChangeAction()
+    /// <summary>
+    /// アクションを変更し実行する
+    /// </summary>
+    /// <param name="bossAttackAction"></param>
+    /// <param name="bossMoveAction"></param>
+    private void ChangeAction(BossAttackAction bossAttackAction, BossMoveAction bossMoveAction)
     {
         //現在のアクションの最後に行う関数を呼ぶ
         _currentAttackAction?.Exit(this);
         _currentMoveAction?.Exit(this);
 
         //アクションの中身を切り替える
-    }
+        _currentAttackAction = bossAttackAction;
+        _currentMoveAction = bossMoveAction;
 
-    private void ExecutionAction()
-    {
-
+        //切り替えた後のアクションを実行する
+        _currentAttackAction.Enter(this);
+        _currentAttackAction.Enter(this);
     }
 
     protected override void OnGetDamage()
