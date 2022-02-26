@@ -223,7 +223,7 @@
                 {
                     "name": "",
                     "id": "143bb1cd-cc10-4eca-a2f0-a3664166fe91",
-                    "path": "<Gamepad>/rightTrigger",
+                    "path": "<Gamepad>/buttonWest",
                     "interactions": "Hold",
                     "processors": "",
                     "groups": ";Gamepad",
@@ -277,6 +277,17 @@
                 },
                 {
                     "name": "",
+                    "id": "2d319a81-a590-4898-a66c-b17ce4742e36",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Fire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "8b06cce8-1350-46a4-99e3-34993b5d9da8",
                     "path": "<Keyboard>/space",
                     "interactions": "",
@@ -290,6 +301,17 @@
                     "name": "",
                     "id": "dfd6b823-b296-4abe-832f-16779ff6fdce",
                     "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "91764d11-b27c-4465-833d-d18a0df14c80",
+                    "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -322,7 +344,7 @@
                 {
                     "name": "",
                     "id": "c1b11c82-fe9a-483e-97de-6b8f6e15e113",
-                    "path": "<Keyboard>/x",
+                    "path": "<Keyboard>/v",
                     "interactions": "SlowTap(duration=1.4,pressPoint=0.5)",
                     "processors": "",
                     "groups": "",
@@ -333,10 +355,21 @@
                 {
                     "name": "",
                     "id": "0c0cae40-3cb5-4b8c-b094-fa505e1e5b04",
-                    "path": "<Gamepad>/buttonWest",
+                    "path": "<Gamepad>/rightTrigger",
                     "interactions": "SlowTap(duration=1.4,pressPoint=0.3)",
                     "processors": "",
                     "groups": "Gamepad",
+                    "action": "ChargeShot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "58c7defb-6088-4366-a68c-51497525e9ac",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
                     "action": "ChargeShot",
                     "isComposite": false,
                     "isPartOfComposite": false

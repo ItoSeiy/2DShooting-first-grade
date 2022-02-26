@@ -180,7 +180,11 @@ public class PlayerBase : MonoBehaviour
             case false:
                 break;
             case true:
-                if (!_canMove) return;
+                if (!_canMove)
+                {
+                    _rb.velocity = Vector2.zero;
+                    return;
+                }
                 switch (_isLateMode)
                 {
                     case false:

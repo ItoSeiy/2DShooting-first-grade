@@ -719,7 +719,7 @@ Canvas:
   m_GameObject: {fileID: 8925306503556631989}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -729,7 +729,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!114 &8925306503556631944
 MonoBehaviour:
@@ -1921,9 +1921,8 @@ MonoBehaviour:
   _residueText: {fileID: 8925306503968504226}
   _bombChangeInterval: 0.5
   _bombText: {fileID: 8925306505118058472}
-  _invicibleObjectLimitChangeInterval: 0
-  _invicibleObjectCountText: {fileID: 6611629409441576689}
   _invicibleObjectCountChangeInterval: 0
+  _invicibleObjectCountText: {fileID: 6611629409441576689}
   _invicibleObjectLimitText: {fileID: 4453440245573790464}
   _powerItemCountChamgeInterval: 0.5
   _powerItemCountText: {fileID: 8925306505180125508}
