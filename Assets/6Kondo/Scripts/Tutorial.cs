@@ -110,7 +110,7 @@ public class Tutorial : SingletonMonoBehaviour<Tutorial>
         if (isClear)
         {
             _tutorialClearCheck.SetActive(true);
-            GameManager.Instance.Player.CanMove = true;
+            GameManager.Instance.Player.CanMove = false;
         }
     }
 }
