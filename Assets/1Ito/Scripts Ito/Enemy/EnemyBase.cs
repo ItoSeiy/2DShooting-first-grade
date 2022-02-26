@@ -11,7 +11,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamage
 {
     public float Speed => _speed;
     public float EnemyHp { get => _enemyHp;}
-    public float AddDamageRatio { get => _damageRatio;}
+    public float DamageTakenRation { get => _damageTakenRatio; set => _damageTakenRatio = value; }
     public Rigidbody2D Rb { get => _rb; set => _rb = value; }
     public float Timer { get => _timer; }
     public float AttackInterval { get => _attackInterval; }
@@ -23,7 +23,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamage
     /// <summary>
     /// 攻撃力の割合
     /// </summary>
-    [SerializeField, Header("攻撃力を何割にするか"), Range(0f, 1f)] float _damageRatio = 1f;
+    [SerializeField, Header("被ダメージを何割にするか"), Range(0f, 1f)] float _damageTakenRatio = 1f;
     [SerializeField, Header("プレイヤーのBulletのタグ")] string _playerBulletTag = "PlayerBullet";
     [SerializeField] string _finishTag = "Finish";
     [SerializeField] DropItems _dropItems;
@@ -106,7 +106,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamage
     public void AddDamage(float damage, Collider2D col)
     {
         //攻撃力を設定した分減らす処理
-        damage *= _damageRatio;
+        damage *= _damageTakenRatio;
 
         _enemyHp -= damage;
         OnGetDamage();

@@ -32,7 +32,10 @@ public class Actions
 /// </summary>
 public abstract class BossAttackAction : MonoBehaviour
 {
-    /// <summary></summary>
+    /// <summary>
+    /// やりたい行動の終了時にActonEnd?.Invoke();と記載する
+    /// そうすることで次の動きに移行する
+    /// </summary>
     public abstract Action ActinoEnd { get; set; }
     /// <summary> この行動に入って来た時の処理 </summary>
     public abstract void Enter(BossEnemyController contlloer);
@@ -47,6 +50,10 @@ public abstract class BossAttackAction : MonoBehaviour
 /// </summary>
 public abstract class BossMoveAction : MonoBehaviour
 {
+    /// <summary>
+    /// やりたい移動の終了時にActonEnd?.Invoke();と記載する
+    /// そうすることで次の動きに移行する
+    /// </summary>
     public abstract Action ActinoEnd { get; set; }
     /// <summary> この行動に入って来た時の処理 </summary>
     public abstract void Enter(BossEnemyController contlloer);

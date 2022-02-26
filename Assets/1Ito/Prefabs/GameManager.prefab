@@ -159,7 +159,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.047169805, g: 0.047169805, b: 0.047169805, a: 0}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -220,6 +220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b784e7e6c4d7b0f428a3c90e849024df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerLevel: 0
   _playerResidue: 3
 --- !u!114 &1490303969360170165
 MonoBehaviour:

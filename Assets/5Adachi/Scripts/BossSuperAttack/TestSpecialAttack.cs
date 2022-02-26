@@ -160,7 +160,7 @@ public class TestSpecialAttack : EnemyBase
                 break;//終わる
             }
         }
-        _initialDamageRatio = AddDamageRatio;//初期値を設定
+        _initialDamageRatio = DamageTakenRation;//初期値を設定
         //AddDamageRatio = 0.5f;//必殺時は攻撃割合を変更
 
         /*while (true)
