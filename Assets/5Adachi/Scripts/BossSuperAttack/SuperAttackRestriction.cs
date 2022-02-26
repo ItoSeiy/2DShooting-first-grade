@@ -20,6 +20,8 @@ public class SuperAttackRestriction: MonoBehaviour
     float _horizontalDir = 0f;
     /// <summary>縦方向</summary>
     float _verticalDir = 0f;
+    /// <summary>弾の見た目の種類</summary>
+    int _pattern = 0;
     /// <summary>バレットを発射するポジション</summary>
     [SerializeField, Header("Bulletを発射するポジション")] Transform[] _muzzles = null;
     /// <summary>必殺前に移動するポジション</summary>
@@ -35,7 +37,7 @@ public class SuperAttackRestriction: MonoBehaviour
     /// <summary>マズルの角度間隔</summary>
     [SerializeField, Header("マズルの角度間隔")] float _rotationInterval = 4f;
     /// <summary>発射する弾を設定できる</summary>
-    [SerializeField, Header("発射する弾の設定")] PoolObjectType _bullet;
+    [SerializeField, Header("発射する弾の設定")] PoolObjectType[] _bullet;
     /// <summary>修正値</summary>
     float _rotOffset = 0f;
     /// <summary>修正値</summary>
@@ -115,6 +117,7 @@ public class SuperAttackRestriction: MonoBehaviour
         //必殺技発動
         while (true)
         {
+            _pattern = Random.Range(0, _bullet.Length);
             //必殺技発動時間の後半になったら反時計回りに全方位発射
             if (_timer >= _activationTime / HALF_TIME)
             {
@@ -127,10 +130,10 @@ public class SuperAttackRestriction: MonoBehaviour
                     _muzzles[0].localEulerAngles = localAngle;//回転する
                                        
                     //弾をマズルの向きに合わせて弾を発射（仮でBombにしてます）
-                    ObjectPool.Instance.UseObject(_muzzles[0].position, PoolObjectType.Player01BombChild).transform.rotation = _muzzles[0].rotation;
+                    ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet[_pattern]).transform.rotation = _muzzles[0].rotation;
                 }
-
             }
+
             //必殺技発動時間の前半までは反時計回りに全方位発射
             else
             {
@@ -143,7 +146,7 @@ public class SuperAttackRestriction: MonoBehaviour
                     _muzzles[0].localEulerAngles = localAngle;//回転する
                                        
                     //弾をマズルの向きに合わせて弾を発射
-                    ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet).transform.rotation = _muzzles[0].rotation;
+                    ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet[_pattern]).transform.rotation = _muzzles[0].rotation;
                 }
             }
             _rotOffset++;

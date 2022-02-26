@@ -24,6 +24,12 @@ public class SuperAttackPrison : MonoBehaviour
     float _horizontalDir = 0f;
     /// <summary>縦方向</summary>
     float _verticalDir = 0f;
+    /// <summary>弾の見た目の種類</summary>
+    int _firstPattern = 0;
+    /// <summary>弾の見た目の種類</summary>
+    int _secondPattern = 0;
+    /// <summary>弾の見た目の種類</summary>
+    int _thirdPattern = 0;
     /// <summary>プレイヤーのタグ</summary>
     [SerializeField, Header("playerのtag")] string _playerTag = null;
     /// <summary>必殺前に移動するポジション</summary>
@@ -38,14 +44,22 @@ public class SuperAttackPrison : MonoBehaviour
     [SerializeField, Header("必殺技発動時間")] float _activationTime = 30f;
     /// <summary>攻撃頻度</summary>
     [SerializeField, Header("攻撃頻度(秒)")] private float _attackInterval = 0.6f;
+    /// <summary>マズルの角度間隔</summary>
+    [SerializeField, Header("マズルの角度間隔")] float _rotationInterval = 3f;
     /// <summary>発射する弾を設定できる</summary>
-    [SerializeField, Header("発射する弾の設定")] PoolObjectType _bullet;
+    [SerializeField, Header("発射する弾の設定")] PoolObjectType[] _bullet;
     /// <summary>修正値</summary>
     const float PLAYER_POS_OFFSET = 0.5f;
     /// <summary>判定回数の制限</summary>
     const float JUDGMENT_TIME = 1 / 60f;
     /// <summary>リセットタイマー</summary>
     const float RESET_TIME = 0f;
+    /// <summary>必殺時間の6分の1</summary>
+    const float FIRST_TIME = 6f;
+    /// <summary>必殺時間の3分の1</summary>
+    const float SECOND_TIME = 3f;
+    /// <summary>必殺時間の6分の2</summary>
+    const float THIRD_TIME = 1.5f;
 
     void Start()
     {
@@ -104,10 +118,32 @@ public class SuperAttackPrison : MonoBehaviour
         }
 
         _timer = RESET_TIME;//タイムリセット
-
+        _secondPattern = Random.Range(0, _bullet.Length);
+        _thirdPattern = Random.Range(0, _bullet.Length);
         //必殺技発動
         while (true)
-        {
+        {            
+            //必殺時間の6分の1
+            if(_timer >= _activationTime / FIRST_TIME)//5f
+            {
+                Debug.Log("start");
+                Vector3 localAngle = _muzzles[1].localEulerAngles;// ローカル座標を基準に取得
+
+                //必殺時間の3分の1～必殺時間の3分の2
+                if(_timer >= _activationTime / SECOND_TIME && _timer <= _activationTime / THIRD_TIME)//10f以上20f以下
+                {
+                    localAngle.z -= _rotationInterval;// 角度を設定
+                    _muzzles[1].localEulerAngles = localAngle;//回転する
+                }
+                else
+                {
+                    //マズルを回転する                  
+                    localAngle.z += _rotationInterval;// 角度を設定
+                    _muzzles[1].localEulerAngles = localAngle;//回転する
+                }               
+            }
+            //弾の見た目を変える
+            _firstPattern = Random.Range(0, _bullet.Length);
             //動くマズル
 
             //マズルを回転する
@@ -118,15 +154,15 @@ public class SuperAttackPrison : MonoBehaviour
             _muzzles[0].transform.rotation = Quaternion.FromToRotation(Vector3.up, _dir);
 
             //弾をマズル0の向きに合わせて弾を発射
-            ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet).transform.rotation = _muzzles[0].rotation;
+            ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet[_firstPattern]).transform.rotation = _muzzles[0].rotation;
 
             //動かないマズル
 
             //弾をマズル1の向きに合わせて弾を発射（動くマズルの弾より右側）
-            ObjectPool.Instance.UseObject(_muzzles[1].position, _bullet).transform.rotation = _muzzles[1].rotation;
+            ObjectPool.Instance.UseObject(_muzzles[1].position, _bullet[_secondPattern]).transform.rotation = _muzzles[1].rotation;
             
             //弾をマズル2の向きに合わせて弾を発射（動くマズルより左側）
-            ObjectPool.Instance.UseObject(_muzzles[2].position, _bullet).transform.rotation = _muzzles[2].rotation;
+            ObjectPool.Instance.UseObject(_muzzles[2].position, _bullet[_thirdPattern]).transform.rotation = _muzzles[2].rotation;
 
             yield return new WaitForSeconds(_attackInterval);//攻撃頻度
 

@@ -86,7 +86,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: -0.92387956, w: 0.38268343}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 7655994817305963044}
   m_Father: {fileID: 7655994818033232000}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -135}
@@ -118,7 +119,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7655994818033232000}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7655994817305963051
 GameObject:
@@ -143,12 +144,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7655994817305963051}
-  m_LocalRotation: {x: 0, y: 0, z: 0.92387956, w: 0.38268343}
+  m_LocalRotation: {x: -0, y: -0, z: 0.70710677, w: -0.7071069}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 7655994818033232000}
-  m_RootOrder: 2
+  m_Father: {fileID: 7655994816967247273}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 135}
 --- !u!1 &7655994817762846778
 GameObject:
@@ -209,7 +210,7 @@ Transform:
   m_Children:
   - {fileID: 7655994817762846779}
   m_Father: {fileID: 7655994818033232000}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 270}
 --- !u!1 &7655994817969653024
 GameObject:
@@ -270,7 +271,7 @@ Transform:
   m_Children:
   - {fileID: 7655994816874848465}
   m_Father: {fileID: 7655994818033232000}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7655994818033232005
 GameObject:
@@ -324,7 +325,6 @@ Transform:
   m_Children:
   - {fileID: 7655994818783871279}
   - {fileID: 7655994816967247273}
-  - {fileID: 7655994817305963044}
   - {fileID: 7655994817103690557}
   - {fileID: 7655994818795180388}
   - {fileID: 7655994817991478981}
@@ -555,7 +555,8 @@ MonoBehaviour:
   - {fileID: 7655994818783871279}
   - {fileID: 7655994817224573373}
   _attackInterval: 0.5
-  _bullet: 160000001a0000001e000000
+  _firstBullet: 
+  _secondBullet: 
 --- !u!114 &7655994818033232018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -614,8 +615,8 @@ MonoBehaviour:
   - {fileID: 3026788719395543892}
   - {fileID: 3026788720103610768}
   _attackInterval: 0.46
-  _bullet: 38
-  _bulletRetrun: 39
+  _bullet: 
+  _secondBullet: 0
   _rotationInterval: 45
 --- !u!114 &7655994818033232006
 MonoBehaviour:
@@ -637,7 +638,7 @@ MonoBehaviour:
   _activationTime: 30
   _rotationInterval: 10
   _attackInterval: 1
-  _bullet: 8
+  _bullet: 
 --- !u!114 &7655994818033232028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -657,7 +658,7 @@ MonoBehaviour:
   _waitTime: 5
   _activationTime: 30
   _rotationInterval: 10
-  _bullet: 8
+  _bullet: 
 --- !u!114 &7655994818033232003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -681,7 +682,7 @@ MonoBehaviour:
   _activationTime: 30
   _attackInterval: 0.2
   _rotationInterval: 10
-  _bullet: 8
+  _bullet: 
 --- !u!114 &7655994818033232031
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -704,7 +705,7 @@ MonoBehaviour:
   _waitTime: 5
   _activationTime: 30
   _attackInterval: 0.4
-  _bullet: 8
+  _bullet: 
 --- !u!114 &7655994818033232024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -976,7 +977,7 @@ Transform:
   - {fileID: 7655994818686993352}
   - {fileID: 7655994818824832387}
   m_Father: {fileID: 7655994818033232000}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7655994818824832386
 GameObject:
@@ -1038,7 +1039,7 @@ PrefabInstance:
     - target: {fileID: 4629382610687237670, guid: 65f4a61f7c0fdf545b23f3aff4b184b0,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4629382610687237670, guid: 65f4a61f7c0fdf545b23f3aff4b184b0,
         type: 3}
@@ -1165,7 +1166,7 @@ PrefabInstance:
     - target: {fileID: 4629382610687237670, guid: 65f4a61f7c0fdf545b23f3aff4b184b0,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4629382610687237670, guid: 65f4a61f7c0fdf545b23f3aff4b184b0,
         type: 3}
