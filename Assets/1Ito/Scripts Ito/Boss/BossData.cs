@@ -56,11 +56,6 @@ public abstract class BossAttackAction : MonoBehaviour
 /// </summary>
 public abstract class BossMoveAction : MonoBehaviour
 {
-    /// <summary>
-    /// やりたい移動の終了時にActonEnd?.Invoke();と記載する
-    /// そうすることで次の動きに移行する
-    /// </summary>
-    public abstract Action ActinoEnd { get; set; }
     /// <summary> この行動に入って来た時の処理 </summary>
     public abstract void Enter(BossEnemyController contlloer);
     /// <summary> この行動Update処理 </summary>
