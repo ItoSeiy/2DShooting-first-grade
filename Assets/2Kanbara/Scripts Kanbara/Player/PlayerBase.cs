@@ -166,6 +166,11 @@ public class PlayerBase : MonoBehaviour
 
     private async void Update()
     {
+        if (!_canMove)
+        {
+            _rb.velocity = Vector2.zero;
+            return;
+        }
         switch (_isLateMode)//移動時に精密操作モードかどうか判定する
         {
             case false:
@@ -180,11 +185,6 @@ public class PlayerBase : MonoBehaviour
             case false:
                 break;
             case true:
-                if (!_canMove)
-                {
-                    _rb.velocity = Vector2.zero;
-                    return;
-                }
                 switch (_isLateMode)
                 {
                     case false:
@@ -203,13 +203,16 @@ public class PlayerBase : MonoBehaviour
                 break;
         }
 
-        if (PhaseNovelManager.Instance.NovelePhaesState == NovelPhase.None)//もしノベルが再生されていなかったらコントロール不能にする
+        if(PhaseNovelManager.Instance)
         {
-            _canMove = false;
-        }
-        else if (PhaseNovelManager.Instance.IsBeforeNovelFinish)
-        {
-            _canMove = true;
+            if (PhaseNovelManager.Instance.NovelePhaesState == NovelPhase.None)//もしノベルが再生されていなかったらコントロール不能にする
+            {
+                _canMove = false;
+            }
+            else if (PhaseNovelManager.Instance.IsBeforeNovelFinish)
+            {
+                _canMove = true;
+            }
         }
     }
     public void OnMove(InputAction.CallbackContext context)//通常の移動
