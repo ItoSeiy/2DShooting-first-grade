@@ -10,7 +10,7 @@ public class BossData
     /// <summary>ƒ{ƒX‚Ìs“®</summary>
     public Actions[] ActionPattern => actionPattern;
 
-    [SerializeField]
+    [SerializeField,Header("BossAttackAction‚ÆBossAttackAction‚Í“¯”‚É‚·‚é‚±‚Æ")]
     private Actions[] actionPattern = default;
 
 }

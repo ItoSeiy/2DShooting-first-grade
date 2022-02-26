@@ -3,6 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+/// <summary>
+/// ボス敵を管理するステートパターンのスクリプト
+/// 
+/// ボスには"アクション(Action)"という行動(攻撃や移動)
+/// が一つ一つ作られている
+/// 
+/// それをまとめて"パターン(Pattern)"としているものがある
+/// </summary>
 public class BossEnemyController : EnemyBase
 {
     /// <summary>ボスのデータ</summary>
@@ -18,8 +27,12 @@ public class BossEnemyController : EnemyBase
     private BossAttackAction _currentAttackAction = default;
     /// <summary>現在の移動行動</summary>
     private BossMoveAction _currentMoveAction = default;
-    /// <summary>行動パターンインデックス </summary>
+
+    /// <summary>行動"パターン"のインデックス</summary>
     private int _patternIndex = -1;
+    /// <summary>"アクション"のインデックス</summary>
+    private int _actionIndex = 0;
+
     /// <summary>ボスのオブジェクト</summary>
     public GameObject Model { get => gameObject; }
 
@@ -30,11 +43,21 @@ public class BossEnemyController : EnemyBase
         {
             foreach (var attackAction in pattern.BossAttackActions)
             {
+                attackAction.ActinoEnd = () =>
+                {
+                    Debug.Log("行動パターンを次に移ります");
+                    _actionIndex++;
 
-            }
-            foreach(var moveAction in pattern.BossMoveActions)
-            {
+                    if(_actionIndex >= _data.ActionPattern[_patternIndex].BossAttackActions.Length)
+                    {
+                        //すべてのアクションを実行しきったら
+                        RandomPatternChange();//行動パターンを変える
+                    }
+                    else//アクションを実行しきっていなかったら
+                    {
 
+                    }
+                };
             }
         }
     }
@@ -45,9 +68,26 @@ public class BossEnemyController : EnemyBase
         _currentMoveAction?.ManagedUpdate(this);
     }
 
-    protected override void Attack()
+    /// <summary>
+    /// 行動パターンをランダムに変える
+    /// </summary>
+    private void RandomPatternChange()
     {
-        //ObjectPool.Instance.UseObject(pos, objType);
+
+    }
+
+    private void ChangeAction()
+    {
+        //現在のアクションの最後に行う関数を呼ぶ
+        _currentAttackAction?.Exit(this);
+        _currentMoveAction?.Exit(this);
+
+        //アクションの中身を切り替える
+    }
+
+    private void ExecutionAction()
+    {
+
     }
 
     protected override void OnGetDamage()

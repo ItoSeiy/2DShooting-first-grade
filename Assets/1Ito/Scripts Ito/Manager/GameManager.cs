@@ -85,7 +85,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
     public void GameStart()
     {
-        Debug.Log("プレイヤーセット完了\nUIのセットを行います");
+        Debug.Log("プレイヤーを参照できました\nUIとプレイヤーのセットを行います");
         PlayerLevelSet();
         UIManager.Instance.UISet();
         _isGameStart = true;
