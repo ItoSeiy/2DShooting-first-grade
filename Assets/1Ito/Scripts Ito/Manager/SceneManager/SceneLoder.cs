@@ -38,6 +38,8 @@ public class SceneLoder : SingletonMonoBehaviour<SceneLoder>
 
         yield return SceneManager.LoadSceneAsync(sceneName);
 
+        GameManager.Instance.SettingScene();
+
         while (_fadeImage.color.a >  0)
         {
             c = _fadeImage.color;
@@ -46,7 +48,6 @@ public class SceneLoder : SingletonMonoBehaviour<SceneLoder>
             _fadeImage.color = c;
             yield return new WaitForEndOfFrame();
         }
-        GameManager.Instance.GameStart();
         _isLoad = false; 
     }
 }

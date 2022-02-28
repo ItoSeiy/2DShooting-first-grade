@@ -7,12 +7,12 @@ public class TestEnemy01 : EnemyBase
     [SerializeField] Vector2 _direction = default;
     protected override void Attack()
     {
-        //Debug.Log(gameObject + "Attack");
+
     }
 
     protected override void OnGetDamage()
     {
-        //Debug.Log("GetDamage");
+
     }
 
     protected override void Update()
