@@ -2,11 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bonb02ChildBullet : BulletBese
+public class Bomb02ChildBullet : BulletBese
 {
-    [SerializeField, Header("EnemyのBulletのタグ")] string _enemyBulletTag = "Bullet";
-    [SerializeField, Header("追従し始める時間")] float _followStartTime = 2f;
-    [SerializeField, Header("追従を終わる時間")] float _followFnishTime = 5f;
+    [SerializeField, Header("追従し始める時間")] 
+    float _followStartTime = 2f;
+
+    [SerializeField, Header("追従を終わる時間")]
+    float _followFnishTime = 5f;
+
+    [SerializeField, Header("EnemyのBulletのタグ")]
+    string _enemyBulletTag = "EnemyBullet";
+
     float _timer = 0;
     Vector2 _oldDir;
     GameObject _enemy;

@@ -13,40 +13,58 @@ public abstract class EnemyBase : MonoBehaviour, IDamage
     public float EnemyHp { get => _enemyHp;}
     public float DamageTakenRation { get => _damageTakenRatio; set => _damageTakenRatio = value; }
     public Rigidbody2D Rb { get => _rb; set => _rb = value; }
-    public float Timer { get => _timer; }
     public float AttackInterval { get => _attackInterval; }
     public string PlayerBulletTag { get => _playerBulletTag; }
+    public string PlayerTag { get => _playerTag; }
+    public string GameZoneTag { get => _gameZoneTag; }
 
-    [SerializeField, Header("動きのスピード")] private float _speed = 5f;
-    [SerializeField, Header("体力")] private float _enemyHp = 10f;
-    [SerializeField, Header("攻撃頻度(秒)")] private float _attackInterval = 1f;
-    /// <summary>
-    /// 攻撃力の割合
-    /// </summary>
-    [SerializeField, Header("被ダメージを何割にするか"), Range(0f, 1f)] float _damageTakenRatio = 1f;
-    [SerializeField, Header("プレイヤーのBulletのタグ")] string _playerBulletTag = "PlayerBullet";
-    [SerializeField] string _finishTag = "Finish";
-    [SerializeField] DropItems _dropItems;
-    [SerializeField] float _itemDropRangeX = 2f;
-    [SerializeField] float _itemDropRangeY = 2f;
-    private float _timer = default;
+    [SerializeField, Header("動きのスピード")]
+    private float _speed = 5f;
+
+    [SerializeField, Header("体力")] 
+    private float _enemyHp = 10f;
+
+    [SerializeField, Header("攻撃頻度(秒)")]
+    private float _attackInterval = 1f;
+
+    /// <summary>攻撃力の割合/// </summary>
+    [SerializeField, Header("被ダメージを何割にするか"), Range(0f, 1f)]
+    float _damageTakenRatio = 1f;
+
+    [SerializeField, Header("プレイヤーのBulletのタグ")]
+    string _playerBulletTag = "PlayerBullet";
+
+    [SerializeField, Header("プレイヤーのタグ")]
+    string _playerTag = "PlayerTag";
+
+    [SerializeField, Header("壁のタグ")] 
+    string _gameZoneTag = "Finish";
+
+    [SerializeField, Header("死亡時に落とすアイテム")] 
+    DropItems _dropItems;
+
+    [SerializeField] 
+    float _itemDropRangeX = 2f;
+    [SerializeField] 
+    float _itemDropRangeY = 2f;
+
+    private float _attackTimer = default;
     Rigidbody2D _rb = null;
-　　protected bool _isDeleteAble = false;
+　　protected bool _destroyAble = false;
 
     protected virtual void Awake()
     {
-        Debug.Log("よばれた");
         _rb = GetComponent<Rigidbody2D>();
     }
 
     protected virtual void Update()
     {
-        _timer += Time.deltaTime;
+        _attackTimer += Time.deltaTime;
 
-        if(_timer > _attackInterval)
+        if(_attackTimer > _attackInterval)
         {
             Attack();
-            _timer = 0;
+            _attackTimer = 0;
         }
     }
 
@@ -73,11 +91,11 @@ public abstract class EnemyBase : MonoBehaviour, IDamage
             ItemDrop();
             Destroy(gameObject);
         }
-        if(collision.tag == _finishTag)
+        if(collision.tag == _gameZoneTag)
         {
-            if(!_isDeleteAble)
+            if(!_destroyAble)
             {
-                _isDeleteAble = true;
+                _destroyAble = true;
             }
             else
             {
