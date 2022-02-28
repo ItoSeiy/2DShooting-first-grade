@@ -11,7 +11,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamage
 {
     public float Speed => _speed;
     public float EnemyHp { get => _enemyHp;}
-    public float AddDamageRatio { get => _damageRatio;}
+    public float DamageTakenRation { get => _damageTakenRatio; set => _damageTakenRatio = value; }
     public Rigidbody2D Rb { get => _rb; set => _rb = value; }
     public float Timer { get => _timer; }
     public float AttackInterval { get => _attackInterval; }
@@ -23,7 +23,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamage
     /// <summary>
     /// 攻撃力の割合
     /// </summary>
-    [SerializeField, Header("攻撃力を何割にするか"), Range(0f, 1f)] float _damageRatio = 1f;
+    [SerializeField, Header("被ダメージを何割にするか"), Range(0f, 1f)] float _damageTakenRatio = 1f;
     [SerializeField, Header("プレイヤーのBulletのタグ")] string _playerBulletTag = "PlayerBullet";
     [SerializeField] string _finishTag = "Finish";
     [SerializeField] DropItems _dropItems;
@@ -35,6 +35,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamage
 
     protected virtual void Awake()
     {
+        Debug.Log("よばれた");
         _rb = GetComponent<Rigidbody2D>();
     }
 
@@ -53,7 +54,10 @@ public abstract class EnemyBase : MonoBehaviour, IDamage
     /// 攻撃の処理を書いてください
     /// 例)Bulletプレハブを生成するなど
     /// </summary>
-    protected abstract void Attack();
+    protected virtual void Attack()
+    {
+        Debug.LogError($"{gameObject.name}の攻撃が実装されていません\n実装してください");
+    }
 
     /// <summary>
     /// ダメージを受けた際に行う処理を書いてください
@@ -82,15 +86,18 @@ public abstract class EnemyBase : MonoBehaviour, IDamage
         }
     }
 
+    /// <summary>
+    /// アイテムを落とす処理
+    /// </summary>
     public void ItemDrop()
     {
-        for(int i = 0; i < _dropItems.Items.Count; i++)
+        for(int itemIndex = 0; itemIndex < _dropItems.Items.Count; itemIndex++)
         {
-            for(int i2 = 0; i2 < _dropItems.Items[i].Count; i2++)
+            for(int i = 0; i < _dropItems.Items[itemIndex].Count; i++)
             {
                 float x = Random.Range(transform.position.x + _itemDropRangeX, transform.position.x - _itemDropRangeX);
                 float y = Random.Range(transform.position.y + _itemDropRangeY, transform.position.y - _itemDropRangeY);
-                ObjectPool.Instance.UseObject(new Vector2(x, y), _dropItems.Items[i].ItemType);
+                ObjectPool.Instance.UseObject(new Vector2(x, y), _dropItems.Items[itemIndex].ItemType);
             }
         }
     }
@@ -106,7 +113,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamage
     public void AddDamage(float damage, Collider2D col)
     {
         //攻撃力を設定した分減らす処理
-        damage *= _damageRatio;
+        damage *= _damageTakenRatio;
 
         _enemyHp -= damage;
         OnGetDamage();
@@ -121,23 +128,30 @@ public abstract class EnemyBase : MonoBehaviour, IDamage
     {
         _attackInterval = Random.Range(min, max);
     }
+
+    /// <summary>
+    /// 落とすアイテムを格納するクラス
+    /// </summary>
+    [System.Serializable]
+    class DropItems
+    {
+        public List<DropItem> Items => items;
+        [SerializeField]
+        private List<DropItem> items = new List<DropItem>();
+    }
+
+    /// <summary>
+    /// 落とすアイテムひとつひとつを格納するクラス
+    /// </summary>
+    [System.Serializable]
+    class DropItem
+    {
+        public PoolObjectType ItemType => itemType;
+        public int Count => count;
+        [SerializeField]
+        PoolObjectType itemType;
+        [SerializeField]
+        private int count = 5;
+    }
 }
 
-[System.Serializable]
-class DropItems
-{
-    public List<DropItem> Items => items;
-    [SerializeField]
-    private List<DropItem> items = new List<DropItem>();
-}
-
-[System.Serializable]
-class DropItem
-{
-    public PoolObjectType ItemType => itemType;
-    public int Count => count;
-    [SerializeField]
-    PoolObjectType itemType;
-    [SerializeField]
-    private int count = 5;
-}
