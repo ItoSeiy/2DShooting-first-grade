@@ -8,10 +8,10 @@ using UnityEngine;
 public class BossData
 {
     /// <summary>ボスの行動</summary>
-    public Actions[] ActionPattern => actionPattern;
+    public BossActions[] ActionPattern => actionPattern;
 
     [SerializeField,Header("BossAttackActionとBossAttackActionは同数にすること")]
-    private Actions[] actionPattern = default;
+    private BossActions[] actionPattern = default;
 
 }
 
@@ -19,7 +19,7 @@ public class BossData
 /// ボスの行動が格納されたクラス
 /// </summary>
 [Serializable]
-public class Actions
+public class BossActions
 {
     /// <summary>攻撃の配列</summary>
     public BossAttackAction[] BossAttackActions => bossAttackActions;
@@ -44,11 +44,11 @@ public abstract class BossAttackAction : MonoBehaviour
     /// </summary>
     public abstract Action ActinoEnd { get; set; }
     /// <summary> この行動に入って来た時の処理 </summary>
-    public abstract void Enter(BossEnemyController contlloer);
+    public abstract void Enter(BossController contlloer);
     /// <summary> この行動Update処理 </summary>
-    public abstract void ManagedUpdate(BossEnemyController contlloer);
+    public abstract void ManagedUpdate(BossController contlloer);
     /// <summary> この行動から出る時の処理 </summary>
-    public abstract void Exit(BossEnemyController contlloer);
+    public abstract void Exit(BossController contlloer);
 }
 
 /// <summary>
@@ -57,9 +57,9 @@ public abstract class BossAttackAction : MonoBehaviour
 public abstract class BossMoveAction : MonoBehaviour
 {
     /// <summary> この行動に入って来た時の処理 </summary>
-    public abstract void Enter(BossEnemyController contlloer);
+    public abstract void Enter(BossController contlloer);
     /// <summary> この行動Update処理 </summary>
-    public abstract void ManagedUpdate(BossEnemyController contlloer);
+    public abstract void ManagedUpdate(BossController contlloer);
     /// <summary> この行動から出る時の処理 </summary>
-    public abstract void Exit(BossEnemyController contlloer);
+    public abstract void Exit(BossController contlloer);
 }

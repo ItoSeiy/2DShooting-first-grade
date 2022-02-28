@@ -12,7 +12,7 @@ using System.Linq;
 /// 
 /// それをまとめて"パターン(Pattern)"としているものがある
 /// </summary>
-public class BossEnemyController : EnemyBase
+public class BossController : EnemyBase
 {
     /// <summary>ボスのデータ</summary>
     public BossData Data => _data;
