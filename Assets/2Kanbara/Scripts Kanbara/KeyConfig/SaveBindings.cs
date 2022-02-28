@@ -21,4 +21,16 @@ public class SaveBindings : MonoBehaviour
         //var rebinds = _actions.SaveBindingOverridesAsJson();
         //PlayerPrefs.SetString("rebinds",rebinds);
     }
+    private static void SaveBinbing(InputAction action)
+    {
+        for(int i = 0; i < action.bindings.Count; i++)
+        {
+            PlayerPrefs.SetString(action.actionMap + action.name + i, action.bindings[i].overridePath);
+        }
+    }
+
+    private static void LoadBinding()
+    {
+
+    }
 }
