@@ -7,7 +7,11 @@ public class BossEnemyMoveRush : MonoBehaviour
     /// <summary>形状や大きさの概念を持った物質</summary>
     Rigidbody2D _rb;
     /// <summary>プレイヤーのオブジェクト</summary>
-    private GameObject _player;
+    GameObject _player;
+    /// <summary>方向</summary>
+    Vector2 _dir;
+    /// <summary>タイマー</summary>
+    float _time = 0f;
     /// <summary>プレイヤーのタグ</summary>
     [SerializeField,Header("プレイヤーのタグ")] private string _playerTag = null;
     /// <summary>スピード</summary>
@@ -18,16 +22,16 @@ public class BossEnemyMoveRush : MonoBehaviour
     [SerializeField, Header("下限")] float _lowerLimit = -3f;
     /// <summary>停止時間</summary>
     [SerializeField, Header("降りた後の停止時間")] float _stopTime = 2f;
-    /// <summary>方向</summary>
-    Vector2 _dir;
+    /// <summary>上に滞在する時間、追尾時間</summary>
+    [SerializeField,Header("追尾時間(上に滞在している時間)")] float _stayingTime = 4f;    
     /// <summary>判定回数の制限</summary>
-    const float JUDGMENT_TIME = 0.1f;
+    const float JUDGMENT_TIME = 1/60f;
     /// <summary>修正値</summary>
     const float PLAYER_POSTION_OFFSET = 0.5f;
-    /// <summary>時間</summary>
-    float _time = 0f;
-    /// <summary>上に滞在する時間、追尾時間</summary>
-    [SerializeField,Header("追尾時間(上に滞在している時間)")] float _stayingTime = 4f;
+    /// <summary>方向なし</summary>
+    const float NO_DIR = 0f;
+    
+    
     
     private void Start()
     {
@@ -38,7 +42,7 @@ public class BossEnemyMoveRush : MonoBehaviour
 
     private void Update()
     {
-        _rb.velocity = _dir.normalized * _speed;
+        _rb.velocity = _dir * _speed;
         _time += Time.deltaTime;
     }
 
@@ -55,20 +59,23 @@ public class BossEnemyMoveRush : MonoBehaviour
             yield return new WaitForSeconds(JUDGMENT_TIME);
             
             //プレイヤーが右にいたら
-            if (_player.transform.position.x > transform.position.x + PLAYER_POSTION_OFFSET)
+            if (_player.transform.position.x > transform.position.x + PLAYER_POSTION_OFFSET || _player.transform.position.x < transform.position.x - PLAYER_POSTION_OFFSET)
             {
                 Debug.Log("right");
-                _dir = Vector2.right;//右に移動
+                //_dir = Vector2.right;//右に移動
+                _dir = new Vector2(_player.transform.position.x - transform.position.x, NO_DIR).normalized;
             }
-            //プレイヤーが左にいたら
-            else if(_player.transform.position.x  < transform.position.x - PLAYER_POSTION_OFFSET)
+            /*//プレイヤーが左にいたら
+            else if (_player.transform.position.x < transform.position.x - PLAYER_POSTION_OFFSET)
             {
-                Debug.Log("left");  
+                Debug.Log("left");
                 _dir = Vector2.left;//左に移動
-            }
+            }*/
             else//プレイヤーのx座標が近かったら
             {
-                _dir = Vector2.zero;//停止
+                Debug.Log("stop");
+                //_dir = Vector2.zero;//停止
+                _dir = new Vector2(_player.transform.position.x - transform.position.x, NO_DIR);
             }
             //限界に達したら
             if ( _time >= _stayingTime)
