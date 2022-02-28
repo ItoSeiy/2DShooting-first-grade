@@ -18,7 +18,7 @@ public class BossEnemyBulletDelayFollow : BulletBese
     protected override void OnEnable()
     {
         _timer = 0;//タイマーをリセット
-        _player = GameObject.FindWithTag(PlayerTag);//PlayerのTagをとってくる
+        _player = GameObject.FindWithTag(OpponenTag);//PlayerのTagをとってくる
         base.OnEnable();
     }
 
