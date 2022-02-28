@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2216476877729728976}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: defaulMuzzle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51,7 +51,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2379765005741054942}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RotateMuzzle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -81,8 +81,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2379765007505252758}
-  m_Layer: 0
-  m_Name: muzzle
+  m_Layer: 8
+  m_Name: muzzle 90
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -111,8 +111,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4489941887392317397}
-  m_Layer: 0
-  m_Name: muzzle (2)
+  m_Layer: 8
+  m_Name: muzzle 150
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -141,8 +141,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1316891705125733083}
-  m_Layer: 0
-  m_Name: muzzle (6)
+  m_Layer: 8
+  m_Name: muzzle 270
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -171,8 +171,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 242042860778297267}
-  m_Layer: 0
-  m_Name: muzzle (7)
+  m_Layer: 8
+  m_Name: muzzle 300
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -201,8 +201,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4492350620645024593}
-  m_Layer: 0
-  m_Name: muzzle
+  m_Layer: 8
+  m_Name: muzzle 0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -231,8 +231,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4492350621358007046}
-  m_Layer: 0
-  m_Name: muzzle
+  m_Layer: 8
+  m_Name: muzzle 60
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -261,8 +261,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4492350622571593960}
-  m_Layer: 0
-  m_Name: muzzle
+  m_Layer: 8
+  m_Name: muzzle 30
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -296,9 +296,9 @@ GameObject:
   - component: {fileID: 4492350622637780626}
   - component: {fileID: 4492350622637780627}
   - component: {fileID: 4516831256451577437}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: DownEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -360,7 +360,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -425,11 +425,16 @@ MonoBehaviour:
   _damageRatio: 1
   _playerBulletTag: PlayerBullet
   _finishTag: Finish
+  _dropItems:
+    items: []
+  _itemDropRangeX: 2
+  _itemDropRangeY: 2
   _muzzle:
   - {fileID: 4492350620645024593}
   - {fileID: 4492350622571593960}
   - {fileID: 4492350621358007046}
   - {fileID: 2379765007505252758}
+  _normalMuzzleRotate: 0
   _rotateMuzzles:
   - {fileID: 4492350620645024593}
   _muzzleTransform: 0
@@ -440,6 +445,7 @@ MonoBehaviour:
   _generatePos: 3
   _limitPos: 0
   _rotateSecond: 1
+  _rotsteMuzzleLimit: 360
   _beforeDir: {x: 0, y: 0}
   _afterDir: {x: 0, y: 0}
   _stopcount: 1.2
@@ -552,8 +558,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8856323511066829461}
-  m_Layer: 0
-  m_Name: muzzle (1)
+  m_Layer: 8
+  m_Name: muzzle 120
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -582,8 +588,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7348235581540407156}
-  m_Layer: 0
-  m_Name: muzzle (3)
+  m_Layer: 8
+  m_Name: muzzle 180
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -612,8 +618,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2165767835524867224}
-  m_Layer: 0
-  m_Name: muzzle (8)
+  m_Layer: 8
+  m_Name: muzzle 330
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -642,8 +648,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6979752462177711293}
-  m_Layer: 0
-  m_Name: muzzle (4)
+  m_Layer: 8
+  m_Name: muzzle 210
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -672,8 +678,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7010504147627183675}
-  m_Layer: 0
-  m_Name: muzzle (5)
+  m_Layer: 8
+  m_Name: muzzle 240
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
