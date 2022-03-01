@@ -10,6 +10,8 @@ public class BossNormalAttack02 : BossAttackAction
     int _firstPattern = 0;
     /// <summary>弾の見た目の種類</summary>
     int _secondPattern = 0;
+    /// <summary>タイマー</summary>
+    float _timer = 0f;
     /// <summary>バレットを発射するポジション</summary>
     [SerializeField, Header("Bulletを発射するポジション")] Transform[] _muzzles = null;
     /// <summary>攻撃頻度</summary>
@@ -18,19 +20,28 @@ public class BossNormalAttack02 : BossAttackAction
     [SerializeField, Header("発射する弾の設定")] PoolObjectType[] _firstBullet;
     /// <summary>発射する弾を設定できる</summary>
     [SerializeField, Header("発射する弾の設定")] PoolObjectType[] _secondBullet;
+    /// <summary>この行動から出る時間</summary>
+    [SerializeField, Header("この行動から出る時間")] float _endingTime = 20f;
     /// <summary>対項角</summary>
     const float OPPOSITE_ANGLE = 180f;
+    
 
     public override System.Action ActinoEnd { get; set; }
 
     public override void Enter(BossController contlloer)
     {
+        _timer = 0f;
         StartCoroutine(Attack(contlloer));
     }
 
     public override void ManagedUpdate(BossController contlloer)
     {
-        throw new System.NotImplementedException();
+        _timer += Time.deltaTime;
+
+        if(_timer >= _endingTime)
+        {
+            ActinoEnd?.Invoke();
+        }
     }
 
     public override void Exit(BossController contlloer)

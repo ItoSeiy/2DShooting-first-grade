@@ -16,12 +16,14 @@ public class BossNormalAttack01 : BossAttackAction
     [SerializeField, Header("UŒ‚•p“x(•b)")] float _attackInterval = 0.6f;
     /// <summary>”­Ë‚·‚é’e‚ğİ’è‚Å‚«‚é</summary>
     [SerializeField, Header("”­Ë‚·‚é’e‚Ìİ’è")] PoolObjectType[] _bullet;
-    const float ENDING_TIME = 10f;
+    /// <summary>‚±‚Ìs“®‚©‚ço‚éŠÔ</summary>
+    [SerializeField,Header("‚±‚Ìs“®‚©‚ço‚éŠÔ")] float _endingTime = 20f;
 
     public override System.Action ActinoEnd { get; set; }
 
     public override void Enter(BossController contlloer)
     {
+        _timer = 0f;
         StartCoroutine(Attack(contlloer));
     }
 
@@ -29,7 +31,7 @@ public class BossNormalAttack01 : BossAttackAction
     {
         _timer += Time.deltaTime;
 
-        if(_timer >= ENDING_TIME)
+        if(_timer >= _endingTime)
         {
             ActinoEnd?.Invoke();
         }

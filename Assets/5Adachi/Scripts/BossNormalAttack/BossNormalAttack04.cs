@@ -2,16 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossNormalAttack04 : MonoBehaviour
+public class BossNormalAttack04 : BossAttackAction
 {
     /// <summary>方向</summary>
     Vector3 _dir;
-    /// <summary>プレイヤーのオブジェクト</summary>
-    private GameObject _player;
     /// <summary>弾の見た目の種類</summary>
     int _pattern = 0;
-    /// <summary>プレイヤーのタグ</summary>
-    [SerializeField, Header("playerのtag")] string _playerTag = null;
+    /// <summary>タイマー</summary>
+    float _timer = 0f;
     /// <summary>バレットを発射するポジション</summary>
     [SerializeField, Header("Bulletを発射するポジション")] Transform[] _muzzles = null;
     /// <summary>攻撃頻度</summary>
@@ -22,6 +20,8 @@ public class BossNormalAttack04 : MonoBehaviour
     [SerializeField, Header("マズルの角度間隔")] float _rotationInterval = 1f;
     /// <summary>1回の処理で弾を発射する回数</summary>
     [SerializeField, Header("1回の処理で弾を発射する回数")] int _maximumCount = 7;
+    /// <summary>この行動から出る時間</summary>
+    [SerializeField, Header("この行動から出る時間")] float _endingTime = 20f;
     /// <summary>最小の回転値</summary>
     const float MINIMUM_ROTATION_RANGE = 0f;
     /// <summary>最大の回転値</summary>
@@ -29,10 +29,27 @@ public class BossNormalAttack04 : MonoBehaviour
     /// <summary>1回の処理で弾を発射する回数の初期値</summary>
     const int INITIAL_COUNT = 0;
 
-    void Start()
+    public override System.Action ActinoEnd { get; set; }
+
+    public override void Enter(BossController contlloer)
     {
-        _player = GameObject.FindGameObjectWithTag(_playerTag);
+        _timer = 0f;
         StartCoroutine(Attack());
+    }
+
+    public override void ManagedUpdate(BossController contlloer)
+    {
+        _timer += Time.deltaTime;
+
+        if(_timer >= _endingTime)
+        {
+            ActinoEnd?.Invoke();
+        }
+    }
+
+    public override void Exit(BossController contlloer)
+    {
+        
     }
 
     //Attack関数に入れる通常攻撃
@@ -41,7 +58,7 @@ public class BossNormalAttack04 : MonoBehaviour
         while (true)
         {
             //ターゲット（プレイヤー）の方向を計算
-            _dir = (_player.transform.position - _muzzles[0].transform.position);
+            _dir = (GameManager.Instance.Player.transform.position - _muzzles[0].transform.position);
             //ターゲット（プレイヤー）の方向に回転
             _muzzles[0].transform.rotation = Quaternion.FromToRotation(Vector3.up, _dir);
             //弾をマズル0の向きに合わせて弾を発射
@@ -64,4 +81,5 @@ public class BossNormalAttack04 : MonoBehaviour
             yield return new WaitForSeconds(_attackInterval);
         }
     }
+
 }
