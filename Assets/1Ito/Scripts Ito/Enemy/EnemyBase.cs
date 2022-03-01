@@ -5,18 +5,19 @@ using UnityEngine;
 /// <summary>
 /// Enemyの基底クラス
 /// </summary>
-[RequireComponent(typeof (Rigidbody2D))]
+[RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Collider2D))]
 public abstract class EnemyBase : MonoBehaviour, IDamage
 {
     public float Speed => _speed;
-    public float EnemyHp { get => _enemyHp;}
+    public float EnemyHp => _enemyHp;
     public float DamageTakenRation { get => _damageTakenRatio; set => _damageTakenRatio = value; }
-    public Rigidbody2D Rb { get => _rb; set => _rb = value; }
-    public float AttackInterval { get => _attackInterval; }
-    public string PlayerBulletTag { get => _playerBulletTag; }
-    public string PlayerTag { get => _playerTag; }
-    public string GameZoneTag { get => _gameZoneTag; }
+    public Rigidbody2D Rb { get => _rb; set => _rb = value;}
+    public float AttackInterval  => _attackInterval; 
+    public string PlayerBulletTag  => _playerBulletTag; 
+    public string PlayerTag  => _playerTag;
+    public string GameZoneTag => _gameZoneTag;
+    public SpriteRenderer Sprite => _sprite;
 
     [SerializeField, Header("動きのスピード")]
     private float _speed = 5f;
@@ -39,6 +40,9 @@ public abstract class EnemyBase : MonoBehaviour, IDamage
 
     [SerializeField, Header("壁のタグ")] 
     string _gameZoneTag = "Finish";
+
+    [SerializeField]
+    SpriteRenderer _sprite = default;
 
     [SerializeField, Header("死亡時に落とすアイテム")] 
     DropItems _dropItems;
