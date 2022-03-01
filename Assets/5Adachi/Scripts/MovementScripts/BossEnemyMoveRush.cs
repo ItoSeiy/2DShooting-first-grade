@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class BossEnemyMoveRush : BossMoveAction
 {
-    /// <summary>形状や大きさの概念を持った物質</summary>
-    Rigidbody2D _rb;
     /// <summary>プレイヤーのオブジェクト</summary>
     GameObject _player;
     /// <summary>方向</summary>
@@ -14,8 +12,6 @@ public class BossEnemyMoveRush : BossMoveAction
     float _time = 0f;
     /// <summary>プレイヤーのタグ</summary>
     [SerializeField,Header("プレイヤーのタグ")] private string _playerTag = null;
-    /// <summary>スピード</summary>
-    [SerializeField, Header("スピード")] float _speed = 5f;
     /// <summary>上限</summary>
     [SerializeField, Header("上限")] float _upperLimit = 3f;
     /// <summary>下限</summary>
@@ -30,41 +26,41 @@ public class BossEnemyMoveRush : BossMoveAction
     const float PLAYER_POSTION_OFFSET = 0.5f;
     /// <summary>方向なし</summary>
     const float NO_DIR = 0f;
-    
-    
-    
-    private void Start()
-    {
-        _rb = GetComponent<Rigidbody2D>();
-        _player = GameObject.FindGameObjectWithTag(_playerTag);
-        StartCoroutine(Rush());
-    }
+    /// <summary>中央位置</summary>
+    const float MIDDLE_POS = 0f;
 
-    private void Update()
-    {
-        _rb.velocity = _dir * _speed;
-        _time += Time.deltaTime;
-    }
     public override void Enter(BossController contlloer)
     {
-        StartCoroutine(Rush());
-
+        _player = GameObject.FindGameObjectWithTag(_playerTag);
+        StartCoroutine(Rush(contlloer));
     }
 
     public override void ManagedUpdate(BossController contlloer)
     {
-        throw new System.NotImplementedException();
+        contlloer.Rb.velocity = _dir * contlloer.Speed;
+        _time += Time.deltaTime;
+
+        //右に移動したら右を向く
+        if (contlloer.Rb.velocity.x > MIDDLE_POS)
+        {
+            contlloer.Sprite.flipX = true;
+        }
+        //左に移動したら左を向く
+        else if (contlloer.Rb.velocity.x < MIDDLE_POS)
+        {
+            contlloer.Sprite.flipX = false;
+        }
     }
 
     public override void Exit(BossController contlloer)
     {
-        throw new System.NotImplementedException();
+        
     }
 
     /// <summary>
     /// 一定時間プレイヤーをロックオンしたあと真下にサガる。その後上に上がる。
     /// </summary>
-    IEnumerator Rush()        
+    IEnumerator Rush(BossController controller)        
     {
         _time = 0;
 
@@ -74,23 +70,15 @@ public class BossEnemyMoveRush : BossMoveAction
             yield return new WaitForSeconds(JUDGMENT_TIME);
             
             //プレイヤーが右にいたら
-            if (_player.transform.position.x > transform.position.x + PLAYER_POSTION_OFFSET || _player.transform.position.x < transform.position.x - PLAYER_POSTION_OFFSET)
+            if (_player.transform.position.x > controller.transform.position.x + PLAYER_POSTION_OFFSET || _player.transform.position.x < controller.transform.position.x - PLAYER_POSTION_OFFSET)
             {
                 Debug.Log("right");
-                //_dir = Vector2.right;//右に移動
-                _dir = new Vector2(_player.transform.position.x - transform.position.x, NO_DIR).normalized;
+                _dir = new Vector2(_player.transform.position.x - controller.transform.position.x, NO_DIR).normalized;
             }
-            /*//プレイヤーが左にいたら
-            else if (_player.transform.position.x < transform.position.x - PLAYER_POSTION_OFFSET)
-            {
-                Debug.Log("left");
-                _dir = Vector2.left;//左に移動
-            }*/
             else//プレイヤーのx座標が近かったら
             {
                 Debug.Log("stop");
-                //_dir = Vector2.zero;//停止
-                _dir = new Vector2(_player.transform.position.x - transform.position.x, NO_DIR);
+                _dir = new Vector2(_player.transform.position.x - controller.transform.position.x, NO_DIR);
             }
             //限界に達したら
             if ( _time >= _stayingTime)
@@ -104,7 +92,7 @@ public class BossEnemyMoveRush : BossMoveAction
             yield return new WaitForSeconds(JUDGMENT_TIME);
             _dir = Vector2.down;//サガる
 
-            if (transform.position.y <= _lowerLimit)//サガったら
+            if (controller.transform.position.y <= _lowerLimit)//サガったら
             {
                 _dir = Vector2.zero;//停止
                 yield return new WaitForSeconds(_stopTime);//停止時間
@@ -117,7 +105,7 @@ public class BossEnemyMoveRush : BossMoveAction
         {
             yield return new WaitForSeconds(JUDGMENT_TIME);
             
-            if (_upperLimit <= transform.position.y)//一定の場所まできたら
+            if (_upperLimit <= controller.transform.position.y)//一定の場所まできたら
             {
                 Debug.Log("ラスト");
                 _dir = Vector2.zero;//停止
@@ -125,6 +113,7 @@ public class BossEnemyMoveRush : BossMoveAction
                 break;
             }            
         }
+        yield break;
     }
 
 }

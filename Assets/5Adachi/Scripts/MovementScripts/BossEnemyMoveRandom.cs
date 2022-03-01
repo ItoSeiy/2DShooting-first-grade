@@ -29,11 +29,11 @@ public class BossEnemyMoveRandom : BossMoveAction
     /// <summary>ã•ûŒü</summary>
     const float UP_DIR = 1f;
     /// <summary>‰º•ûŒü</summary>
-    const float DOWN_DIR = -1;
+    const float DOWN_DIR = -1f;
     /// <summary>•ûŒü‚È‚µ</summary>
     const float NO_DIR = 0f;
     /// <summary>’†‰›ˆÊ’u</summary>
-    const float MIDDLE_POS = 0;
+    const float MIDDLE_POS = 0f;
 
     public override void Enter(BossController contlloer)
     {

@@ -2,24 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossEnemyMoveThunder : MonoBehaviour
+public class BossEnemyMoveThunder : BossMoveAction
 {
-    /// <summary>形状や大きさの概念を持った物質</summary>
-    Rigidbody2D _rb;
     /// <summary>方向</summary>
     Vector2 _dir;
     /// <summary>垂直、縦方向</summary>
     float _vertical = 1f;
     /// <summary>タイマー</summary>
     float _timer = 0f;    
-    /// <summary>中央位置</summary>
-    float _middlePos = 0;
+    
     /// <summary>現在のパターン</summary>
     int _pattern = 0;
     /// <summary>正常位置に軌道修正する</summary>
     bool _fix = false;   
-    /// <summary>スピード</summary>
-    [SerializeField, Header("スピード")] float _speed;
     /// <summary>停止時間</summary>
     [SerializeField, Header("停止時間")] float _stopTime = 2f;
     /// <summary>右限</summary>
@@ -48,29 +43,46 @@ public class BossEnemyMoveThunder : MonoBehaviour
     const float MOVEUP = 1f;
     /// <summary>下にサガる</summary>
     const float MOVEDOWN = -1f;
+    /// <summary>中央位置</summary>
+    const float MIDDLE_POS = 0;
 
-    void Start()
+    public override void Enter(BossController contlloer)
     {
-        _rb = GetComponent<Rigidbody2D>();//ゲットコンポーネント
         _fix = true;//雷のような軌道を修正できるようにする
-        StartCoroutine(Thunder());//スタートコルーチン
-        
+        StartCoroutine(Thunder(contlloer));
     }
-    void Update()
+
+    public override void ManagedUpdate(BossController contlloer)
     {
-        _rb.velocity = _dir.normalized * _speed;//その方向に移動
+        contlloer.Rb.velocity = _dir.normalized * contlloer.Speed;//その方向に移動
         _timer += Time.deltaTime;//時間
+
+        //右に移動したら右を向く
+        if (contlloer.Rb.velocity.x > MIDDLE_POS)
+        {
+            contlloer.Sprite.flipX = true;
+        }
+        //左に移動したら左を向く
+        else if (contlloer.Rb.velocity.x < MIDDLE_POS)
+        {
+            contlloer.Sprite.flipX = false;
+        }
+    }
+
+    public override void Exit(BossController contlloer)
+    {
+        
     }
 
     /// <summary>
     /// 端に一直線に移動した後、反対側に着くまでジグザグ移動する
     /// </summary>
-    IEnumerator Thunder()
+    IEnumerator Thunder(BossController controller)
     {
-        _dir = new Vector2(-transform.position.x, 0f);
+        _dir = new Vector2(-controller.transform.position.x, 0f);
 
         //ボスのポジションXが0だったら棒立ちして詰むので
-        if (transform.position.x == 0f)
+        if (controller.transform.position.x == 0f)
         {
             _dir = Vector2.right;//右に移動
         }
@@ -80,7 +92,7 @@ public class BossEnemyMoveThunder : MonoBehaviour
         {
             yield return new WaitForSeconds(JUDGMENT_TIME);//判定回数の制御
 
-            if (transform.position.x <= _leftLimit)//左についたら
+            if (controller.transform.position.x <= _leftLimit)//左についたら
             {
                 Debug.Log("a");
                 _pattern = PATTERN1;//パターン1に切り替え
@@ -88,7 +100,7 @@ public class BossEnemyMoveThunder : MonoBehaviour
                 yield return new WaitForSeconds(_stopTime);//停止時間
                 break;
             }
-            else if (transform.position.x >= _rightLimit)//右についたら
+            else if (controller.transform.position.x >= _rightLimit)//右についたら
             {
                 Debug.Log("a");
                 _pattern = PATTERN2;//パターン2に切り替え
@@ -108,7 +120,7 @@ public class BossEnemyMoveThunder : MonoBehaviour
             Debug.Log("1");
             yield return new WaitForSeconds(JUDGMENT_TIME);//判定回数の制御
 
-            if (transform.position.x <= _rightLimit)//端についていないなら繰り返す
+            if (controller.transform.position.x <= _rightLimit)//端についていないなら繰り返す
             {
                 _dir = new Vector2(HORIZONTAL, _vertical);//右上or右下に動きながら
 
@@ -119,14 +131,14 @@ public class BossEnemyMoveThunder : MonoBehaviour
                 }
 
                 //画面外に行きそうになったら１度だけ軌道修正する
-                else if (transform.position.y >= _upperLimit && _fix)
+                else if (controller.transform.position.y >= _upperLimit && _fix)
                 {
                     _vertical = MOVEDOWN;//下にサガる動きにする   
                     _timer = TIMER_RESET;//タイムをリセット
                     _fix = false;//使えないようにする
                     Debug.Log("3");
                 }
-                else if (transform.position.y <= _lowerLimit && _fix)
+                else if (controller.transform.position.y <= _lowerLimit && _fix)
                 {
                     _vertical = MOVEUP;//上の動きにする   
                     _timer = TIMER_RESET;//タイムをリセット
@@ -147,7 +159,7 @@ public class BossEnemyMoveThunder : MonoBehaviour
             Debug.Log("2");
             yield return new WaitForSeconds(JUDGMENT_TIME);//判定回数の制御
 
-            if (transform.position.x >= _leftLimit)//端についていないなら繰り返す
+            if (controller.transform.position.x >= _leftLimit)//端についていないなら繰り返す
             {
                 _dir = new Vector2(-HORIZONTAL, _vertical);//左上or左下に動きながら
 
@@ -159,14 +171,14 @@ public class BossEnemyMoveThunder : MonoBehaviour
                 }
 
                 //画面外に行きそうになったら１度だけ軌道修正する
-                else if (transform.position.y >= _upperLimit && _fix)
+                else if (controller.transform.position.y >= _upperLimit && _fix)
                 {
                     _vertical = MOVEDOWN;//下にサガる動きにする   
                     _timer = TIMER_RESET;//タイムをリセット
                     _fix = false;//使えないようにする
                     Debug.Log("3");
                 }
-                else if (transform.position.y <= _lowerLimit && _fix)
+                else if (controller.transform.position.y <= _lowerLimit && _fix)
                 {
                     _vertical = MOVEUP;//上に上がる動きにする   
                     _timer = TIMER_RESET;//タイムをリセット
@@ -184,4 +196,5 @@ public class BossEnemyMoveThunder : MonoBehaviour
         _fix = true;//使えるようにする
         yield break;
     }
+
 }

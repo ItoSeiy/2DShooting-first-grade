@@ -2,18 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossNormalAttack02 : MonoBehaviour
+public class BossNormalAttack02 : BossAttackAction
 {
     /// <summary>方向</summary>
     Vector3 _dir;
-    /// <summary>プレイヤーのオブジェクト</summary>
-    private GameObject _player;
     /// <summary>弾の見た目の種類</summary>
     int _firstPattern = 0;
     /// <summary>弾の見た目の種類</summary>
     int _secondPattern = 0;
-    /// <summary>プレイヤーのタグ</summary>
-    [SerializeField, Header("playerのtag")] string _playerTag = null;
     /// <summary>バレットを発射するポジション</summary>
     [SerializeField, Header("Bulletを発射するポジション")] Transform[] _muzzles = null;
     /// <summary>攻撃頻度</summary>
@@ -24,14 +20,26 @@ public class BossNormalAttack02 : MonoBehaviour
     [SerializeField, Header("発射する弾の設定")] PoolObjectType[] _secondBullet;
     /// <summary>対項角</summary>
     const float OPPOSITE_ANGLE = 180f;
-    void Start()
+
+    public override System.Action ActinoEnd { get; set; }
+
+    public override void Enter(BossController contlloer)
     {
-        _player = GameObject.FindGameObjectWithTag(_playerTag);//プレイヤーのタグをとってくる
-        StartCoroutine(Attack());
+        StartCoroutine(Attack(contlloer));
+    }
+
+    public override void ManagedUpdate(BossController contlloer)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void Exit(BossController contlloer)
+    {
+        throw new System.NotImplementedException();
     }
 
     //Attack関数に入れる通常攻撃
-    IEnumerator Attack()
+    IEnumerator Attack(BossController controller)
     {
         while (true)
         {
@@ -49,7 +57,7 @@ public class BossNormalAttack02 : MonoBehaviour
             ///プレイヤーの向きにマズルが向く///
 
             //ターゲット（プレイヤー）の方向を計算
-            _dir = (_player.transform.position - _muzzles[0].transform.position);
+            _dir = (GameManager.Instance.Player.transform.position - _muzzles[0].transform.position);
             //ターゲット（プレイヤー）の方向に回転
             _muzzles[0].transform.rotation = Quaternion.FromToRotation(Vector3.up, _dir);
 
@@ -65,7 +73,7 @@ public class BossNormalAttack02 : MonoBehaviour
             ObjectPool.Instance.UseObject(_muzzles[0].position, _secondBullet[_secondPattern]).transform.rotation = _muzzles[0].rotation;
 
             ///プレイヤーがいる方向と逆(XとYが逆方向）///
-            _dir = (_player.transform.position - _muzzles[0].transform.position);
+            _dir = (GameManager.Instance.Player.transform.position - _muzzles[0].transform.position);
             //ターゲット（プレイヤー）の方向に回転
             _muzzles[0].transform.rotation = Quaternion.FromToRotation(Vector3.up, -_dir);
 
@@ -82,4 +90,5 @@ public class BossNormalAttack02 : MonoBehaviour
             yield return new WaitForSeconds(_attackInterval);//攻撃頻度(秒)
         }
     }
+
 }
