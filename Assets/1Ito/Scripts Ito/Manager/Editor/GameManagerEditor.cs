@@ -11,7 +11,7 @@ public class GameManagerEditor : Editor
         EditorGUI.BeginDisabledGroup(gameManager.IsGameStart);
         if(GUILayout.Button("GameStart"))
         {
-            gameManager.GameStart();
+            gameManager.SettingScene();
         }
         EditorGUI.EndDisabledGroup();
     }

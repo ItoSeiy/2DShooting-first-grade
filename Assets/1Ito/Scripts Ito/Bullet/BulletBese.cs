@@ -11,24 +11,40 @@ public abstract class BulletBese : MonoBehaviour
 {
     public float Damage { get => _damage;}
     public float Speed { get => _speed;}
+    /// <summary>相手のタグ</summary>
     public string OpponenTag { get => _opponentTag; }
     public Rigidbody2D Rb { get => _rb; set => _rb = value; }
     private BulletMoveMethod MoveMethod { get => _bulletMoveMethod; set => _bulletMoveMethod = value; }
     public string GameZoneTag { get => _gameZoneTag;}
-    public string  PlayerTag { get => _playerTag;}  
-    [SerializeField, Header("Bulletが与えるダメージ")] private float _damage = 10f;
-    [SerializeField, Header("Bulletの動く向き")] Vector2 _direction = Vector2.up;
-    [SerializeField, Header("Bulletのスピード")] float _speed = default;
-    [SerializeField, Header("Bulletの動きをどの関数で呼び出すか")] BulletMoveMethod _bulletMoveMethod = BulletMoveMethod.Start;
-    [SerializeField, Header("相手(当たったら消えるオブジェクトのタグ")] string _opponentTag;
-    [SerializeField, Header("壁のタグ")] string _gameZoneTag = "Finish";
-    [SerializeField, Header("Bulletの親オブジェクトのタグ")] string _parentTag = "Parent";
-    [SerializeField, Header("Playerのタグ")] string _playerTag = "Player";
+
+    [SerializeField, Header("Bulletが与えるダメージ")]
+    private float _damage = 10f;
+
+    [SerializeField, Header("Bulletのスピード")] 
+    float _speed = default;
+
+    [SerializeField, Header("Bulletの動きをどの関数で呼び出すか")]
+    BulletMoveMethod _bulletMoveMethod = BulletMoveMethod.Update;
+
+    [SerializeField, Header("相手(当たったら消えるオブジェクトのタグ")] 
+    string _opponentTag;
+
+    [SerializeField, Header("壁のタグ")] 
+    string _gameZoneTag = "Finish";
+
+    [SerializeField, Header("Bulletの親オブジェクトのタグ")]
+    string _parentTag = "Parent";
+
+
     Rigidbody2D _rb = null;
     BulletParent _bulletParent = null;
-
+   
     protected virtual void Awake()
     {
+        if(string.IsNullOrWhiteSpace(_opponentTag))
+        {
+            Debug.LogError($"{gameObject.name}のOpponenTagタグが設定されていません\n設定してください");
+        }
         _rb = GetComponent<Rigidbody2D>();
         _bulletParent = transform.parent?.GetComponent<BulletParent>();
     }
@@ -77,7 +93,8 @@ public abstract class BulletBese : MonoBehaviour
     /// </summary>
     protected virtual void BulletMove()
     {
-        _rb.velocity = _direction.normalized * _speed;
+        //_rb.velocity = _direction.normalized * _speed;
+        _rb.velocity = gameObject.transform.rotation * new Vector3(0, Speed, 0);
     }
 
     /// <summary>

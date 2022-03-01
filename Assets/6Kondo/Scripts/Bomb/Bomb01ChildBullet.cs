@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class Bomb01ChildBullet : BulletBese
 {
-    [SerializeField, Header("EnemyのBulletのタグ")] string _enemyBulletTag = "Bullet";
+    [SerializeField, Header("EnemyのBulletのタグ")] 
+    string _enemyBulletTag = "EnemyBullet";
+
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == _enemyBulletTag)
         {
+            //敵の弾に衝突したら相手のみを消す
             collision.gameObject.SetActive(false);
         }
         else if (collision.tag == OpponenTag)
         {
+
             base.BulletAttack(collision);
             gameObject.SetActive(false);
         }

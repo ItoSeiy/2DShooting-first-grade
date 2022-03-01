@@ -7,7 +7,6 @@ using UnityEngine;
 /// 
 /// シングルトンパターン
 /// プレイヤーのアイテム数やレベルを持っている
-/// ()
 /// </summary>
 public class GameManager : SingletonMonoBehaviour<GameManager>
 {
@@ -17,7 +16,18 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     const int LEVEL3 = 3;
 
     /// <summary>プレイヤーの参照</summary>
-    public PlayerBase Player => _player;
+    public PlayerBase Player
+    {
+        get
+        {
+            if(!_player)
+            {
+                Debug.LogError("Playerタグを持ったオブジェクトがありません\n追加してください");
+                return null;
+            }
+            return _player;
+        }
+    }
 
     public int PlayerLevel => _playerLevel;
     /// <summary>プレイヤーが持っているパワーアイテムの数</summary>
@@ -56,25 +66,32 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     protected override void Awake()
     {
         base.Awake();
+        SettingScene();
         DontDestroyOnLoad(gameObject);
     }
     
     /// <summary>
-    /// ゲームスタート時に呼び出される関数
+    /// シーン遷移後に呼び出される関数
+    /// プレイヤーがいたらゲームスタート関数を呼び出す
     /// </summary> 
-    public void GameStart()
+    public void SettingScene()
     {
         _player = GameObject.FindWithTag("Player")?.GetComponent<PlayerBase>();
-        Debug.Log("ゲームスタート");
+        Debug.Log("シーンが読み込まれました");
         if(_player)
         {
-            Debug.Log("プレイヤーセット完了");
-            PlayerLevelSet();
-            _isGameStart = true;
-            _isGameOver = false;
-            _isStageClear = false;
-            UIManager.Instance.UISet();
+            GameStart();
         }
+    }
+
+    public void GameStart()
+    {
+        Debug.Log("プレイヤーを参照できました\nUIとプレイヤーのセットを行います");
+        PlayerLevelSet();
+        UIManager.Instance.UISet();
+        _isGameStart = true;
+        _isGameOver = false;
+        _isStageClear = false;
     }
 
     /// <summary>
