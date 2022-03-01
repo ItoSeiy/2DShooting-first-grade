@@ -71,7 +71,7 @@ public class BossEnemyMoveThunder : BossMoveAction
 
     public override void Exit(BossController contlloer)
     {
-        
+        StopAllCoroutines();
     }
 
     /// <summary>

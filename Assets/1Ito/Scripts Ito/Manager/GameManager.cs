@@ -22,7 +22,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         {
             if(!_player)
             {
-                Debug.LogError("Playerタグを持ったオブジェクトがありません\n追加してください");
+                Debug.LogError("Playerタグ,PlayerBaseがアタッチされたオブジェクトがありません\n追加してください");
                 return null;
             }
             return _player;

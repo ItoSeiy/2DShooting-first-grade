@@ -46,7 +46,7 @@ public class BossNormalAttack02 : BossAttackAction
 
     public override void Exit(BossController contlloer)
     {
-        throw new System.NotImplementedException();
+        StopAllCoroutines();
     }
 
     //AttackŠÖ”‚É“ü‚ê‚é’ÊíUŒ‚

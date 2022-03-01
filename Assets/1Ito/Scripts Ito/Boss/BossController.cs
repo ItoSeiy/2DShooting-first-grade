@@ -18,12 +18,7 @@ public class BossController : EnemyBase
     public BossData Data => _data;
     /// <summary>ボスのデータ</summary>
     [SerializeField]
-    BossData _data = null;
-
-    public float CastTime => _castTime;
-
-    [SerializeField]
-    float _castTime;
+    BossData _data = null;  
 
     /// <summary>キャストの判定</summary>
     public bool IsCast { get; private set; } = default;
@@ -47,25 +42,14 @@ public class BossController : EnemyBase
         {
             foreach (var attackAction in pattern.BossAttackActions)
             {
-                attackAction.ActinoEnd = () =>
-                {
-                    Debug.Log("行動パターンを次に移ります");
-                    _actionIndex++;
-
-                    if(_actionIndex >= _data.ActionPattern[_patternIndex].BossAttackActions.Length)
-                    {
-                        //行動パターンを実行しきったら
-                        RandomPatternChange();//行動パターンを変える
-                    }
-                    else//行動パターンを実行しきっていなかったら
-                    {
-                        //アクションを次のものに切り替える
-                        ChangeAction(_data.ActionPattern[_patternIndex].BossAttackActions[_actionIndex],
-                                     _data.ActionPattern[_patternIndex].BossMoveActions[_actionIndex]);
-                    }
-                };
+                attackAction.ActinoEnd = JudgeAction;
             }
         }
+    }
+
+    void Start()
+    {
+        RandomPatternChange();    
     }
 
     protected override void Update()
@@ -80,6 +64,28 @@ public class BossController : EnemyBase
     }
 
     /// <summary>
+    /// 現在行っているアクションを判定する
+    /// それに応じてパターン又はアクションを切り替える
+    /// </summary>
+    private void JudgeAction()
+    {
+        Debug.Log("アクションを判定します");
+        _actionIndex++;
+
+        if(_actionIndex >= _data.ActionPattern[_patternIndex].BossAttackActions.Length)
+        {
+            //行動パターンを実行しきったら
+            RandomPatternChange();//行動パターンを変える
+        }
+        else//行動パターンを実行しきっていなかったら
+        {
+            //アクションを次のものに切り替える
+            ActionChange(_data.ActionPattern[_patternIndex].BossAttackActions[_actionIndex],
+                            _data.ActionPattern[_patternIndex].BossMoveActions[_actionIndex]);
+        }
+    }
+
+    /// <summary>
     /// 行動パターンをランダムに変える
     /// </summary>
     private void RandomPatternChange()
@@ -89,8 +95,10 @@ public class BossController : EnemyBase
         Debug.Log($"パターン{_patternIndex}を実行する");
 
         //アクションを変更し実行する
-        ChangeAction(_data.ActionPattern[_patternIndex].BossAttackActions[_actionIndex],
-                     _data.ActionPattern[_patternIndex].BossMoveActions[_actionIndex]);
+        ActionChange(_data.ActionPattern[_patternIndex].BossAttackActions.FirstOrDefault(),
+                     _data.ActionPattern[_patternIndex].BossMoveActions.FirstOrDefault());
+
+        _actionIndex = 0;
     }
 
     /// <summary>
@@ -98,7 +106,7 @@ public class BossController : EnemyBase
     /// </summary>
     /// <param name="bossAttackAction"></param>
     /// <param name="bossMoveAction"></param>
-    private void ChangeAction(BossAttackAction bossAttackAction, BossMoveAction bossMoveAction)
+    private void ActionChange(BossAttackAction bossAttackAction, BossMoveAction bossMoveAction)
     {
         //現在のアクションの最後に行う関数を呼ぶ
         _currentAttackAction?.Exit(this);
@@ -108,9 +116,11 @@ public class BossController : EnemyBase
         _currentAttackAction = bossAttackAction;
         _currentMoveAction = bossMoveAction;
 
+        Debug.Log($"{_currentAttackAction.gameObject.name},と{_currentMoveAction.gameObject.name}にアクションを切り替えます");
+
         //切り替えた後のアクションを実行する
-        _currentAttackAction.Enter(this);
-        _currentAttackAction.Enter(this);
+        _currentAttackAction?.Enter(this);
+        _currentMoveAction?.Enter(this);
     }
 
     /// <summary>
