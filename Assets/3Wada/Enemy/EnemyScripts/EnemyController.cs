@@ -7,22 +7,53 @@ using DG.Tweening;
 /// </summary>
 public class EnemyController : EnemyBase 
 {
-    [SerializeField, Header("球の出る位置")] Transform[] _muzzle = null;
-    [SerializeField,Header("Muzzleを回しながら球が出る位置")] Transform[] _rotateMuzzles = null;
-    [SerializeField,Header("Muzzleの切り替え")] MuzzleTransform _muzzleTransform;
+    [SerializeField, Header("球の出る位置")]
+    Transform[] _muzzle = null;
 
-    [SerializeField,Header("弾幕")] GameObject _bullet;
-    [SerializeField, Header("攻撃頻度をランダムにするか")] AttackIntervelChange _attackIntervelChange;
-    [SerializeField, Header("攻撃頻度がランダム時のmax")] float _randomIntervalMax = 1f;
-    [SerializeField, Header("攻撃頻度がランダム時のmin")] float _randomIntervalMin = 0.1f;
-    [SerializeField,Header("モブ敵の出現位置")] GeneratePos _generatePos;
-    [SerializeField, Header("移動方向が変わるXまたはYの座標")] float _limitPos = 0;
-    [SerializeField,Header("Muzzleが一周するまでの秒数")] float _rotateSecond = 2f;
-    [SerializeField, Header("出た時の移動方向")] Vector2 _beforeDir;
-    [SerializeField, Header("移動変わった後の移動方向")] Vector2 _afterDir;
-    [SerializeField, Header("何秒とどまるか")] float _stopcount = 0.0f;
+    [SerializeField, Header("ノーマルマズル時回転するかどうか")] 
+    bool _normalMuzzleRotate = false;
 
-    [SerializeField, Header("倒された時の音")] GameObject _deathSFX = default;
+    [SerializeField,Header("Muzzleを回しながら球が出る位置")]
+    Transform[] _rotateMuzzles = null;
+
+    [SerializeField,Header("Muzzleの切り替え")] 
+    MuzzleTransform _muzzleTransform;
+
+    [SerializeField,Header("弾幕")]
+    GameObject _bullet;
+
+    [SerializeField, Header("攻撃頻度をランダムにするか")]
+    bool _attackIntervelChange = false;
+
+    [SerializeField, Header("攻撃頻度がランダム時のmax")] 
+    float _randomIntervalMax = 1f;
+
+    [SerializeField, Header("攻撃頻度がランダム時のmin")] 
+    float _randomIntervalMin = 0.1f;
+
+    [SerializeField,Header("モブ敵の出現位置")]
+    GeneratePos _generatePos;
+
+    [SerializeField, Header("移動方向が変わるXまたはYの座標")] 
+    float _limitPos = 0;
+
+    [SerializeField,Header("Muzzleが一周するまでの秒数")] 
+    float _rotateSecond = 2f;
+
+    [SerializeField, Header("Muzzleが1秒間で回転する角度")] 
+    float _rotsteMuzzleLimit = 360f;
+
+    [SerializeField, Header("出た時の移動方向")] 
+    Vector2 _beforeDir;
+
+    [SerializeField, Header("移動変わった後の移動方向")] 
+    Vector2 _afterDir;
+
+    [SerializeField, Header("何秒とどまるか")] 
+    float _stopcount = 0.0f;
+
+    [SerializeField, Header("倒された時の音")] 
+    GameObject _deathSFX = default;
 
     [SerializeField, Header("モブの攻撃するときを変える")] AttackMode _attackMode;
     bool _isBttomposition = false;
@@ -53,7 +84,7 @@ public class EnemyController : EnemyBase
         }
         switch(_attackMode)
         {
-            case AttackMode.MoveAtrack:
+            case AttackMode.MoveAttack:
                 base.Update();
                 break;
             case AttackMode.StopAttack:
@@ -90,12 +121,8 @@ public class EnemyController : EnemyBase
                     EnemyMove();
                 }
                 break;
-               
         }
-        
      }
-
-
 
     void EnemyMove()
     {   
@@ -114,8 +141,6 @@ public class EnemyController : EnemyBase
         }
     }
 
-
-
     protected override void Attack()
     {
         
@@ -130,10 +155,18 @@ public class EnemyController : EnemyBase
                 }
                 switch(_attackIntervelChange)
                 {
-                    case AttackIntervelChange.No:
+                    case false:
                         break;
-                    case AttackIntervelChange.Yes:
+                    case true:
                         ChangeAttackIntervalRandom(_randomIntervalMin,_randomIntervalMax );
+                        break;
+                }
+                switch(_normalMuzzleRotate)
+                {
+                    case false:
+                        break;
+                    case true:
+                        Rotate();
                         break;
                 }
                 break;
@@ -147,9 +180,9 @@ public class EnemyController : EnemyBase
                 }
                 switch (_attackIntervelChange)
                 {
-                    case AttackIntervelChange.No:
+                    case false:
                         break;
-                    case AttackIntervelChange.Yes:
+                    case true:
                         ChangeAttackIntervalRandom(_randomIntervalMin, _randomIntervalMax);
                         break;
                 }
@@ -161,12 +194,10 @@ public class EnemyController : EnemyBase
     void Rotate()
     {   
         foreach(var rotateMuzzle in _rotateMuzzles)
-        {
-
-            rotateMuzzle.DORotate(new Vector3(0,0, 360f), _rotateSecond, RotateMode.WorldAxisAdd)
+        {                      
+            rotateMuzzle.DORotate(new Vector3(0, 0, _rotsteMuzzleLimit), _rotateSecond, RotateMode.WorldAxisAdd)
             .SetEase(Ease.Linear)
             .SetLoops(-1, LoopType.Restart);
-
         }
     }
   
@@ -207,11 +238,6 @@ public class EnemyController : EnemyBase
     enum AttackMode
     {
         StopAttack,
-        MoveAtrack
-    }
-    enum AttackIntervelChange
-    {
-        Yes,
-        No
+        MoveAttack
     }
 }

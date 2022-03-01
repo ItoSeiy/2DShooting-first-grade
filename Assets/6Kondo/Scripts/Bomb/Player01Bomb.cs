@@ -8,11 +8,16 @@ using UnityEngine.Experimental.Rendering.Universal;
 
 public class Player01Bomb : BulletBese
 {
-    [SerializeField] Explosion _explosionPrefab　= null;
-    [SerializeField] float _childBulletDelay = 1f;
-    [SerializeField] Transform[] _muzzle = null;
-    SpriteRenderer _sprite = null;
+    [SerializeField] Explosion
+    _explosionPrefab　= null;
 
+    [SerializeField]
+    float _childBulletDelay = 1f;
+
+    [SerializeField]
+    Transform[] _muzzle = null;
+
+    SpriteRenderer _sprite = null;
     AudioSource _audioSource;
 
     protected override void Awake()

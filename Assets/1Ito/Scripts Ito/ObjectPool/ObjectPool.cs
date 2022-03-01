@@ -108,6 +108,43 @@ public enum PoolObjectType
     Player02ChargePower2,
     Player02ChargePower3,
 
+    //ボスの弾
+
+    //ボス共通の弾
+    BossDefaultBullet1,
+    BossDefaultBullet2,
+    BossDefaultBullet3,
+    BossDefaultBullet4,
+    BossDefaultBullet5, 
+    //ボス5専用の弾
+    Boss05DefaultBullet1,
+
+    //ボス1の必殺技の弾
+    Boss01SuperAttackBullet1,
+    Boss01SuperAttackBullet2,
+    Boss01SupetAttackBullet3,
+    
+    //ボス2の必殺技の弾
+    Boss02SuperAttackBullet1,
+    Boss02SuperAttackBullet2,
+    Boss02SupetAttackBullet3,
+
+    //ボス3の必殺技の弾
+    Boss03SuperAttackBullet1,
+    Boss03SuperAttackBullet2,
+    Boss03SupetAttackBullet3,
+
+    //ボス4の必殺技の弾
+    Boss04SuperAttackBullet1,
+    Boss04SuperAttackBullet2,
+    Boss04SupetAttackBullet3,
+
+   
+    //ボス5の必殺技の弾
+    Boss05SuperAttackBullet1,
+    Boss05SuperAttackBullet2,
+    Boss05SupetAttackBullet3,
+
     OneUpItem,
     BombItem,
     Invincible,
