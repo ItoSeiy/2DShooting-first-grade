@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossEnemyMoveRandom : MonoBehaviour
+public class BossEnemyMoveRandom : BossMoveAction
 {
     /// <summary>Œ`ó‚â‘å‚«‚³‚ÌŠT”O‚ğ‚Á‚½•¨¿</summary>
     Rigidbody2D _rb;
@@ -41,10 +41,25 @@ public class BossEnemyMoveRandom : MonoBehaviour
     /// <summary>’†‰›ˆÊ’u</summary>
     const float MIDDLE_POS = 0;
 
+    public override void Enter(BossController contlloer)
+    {
+        StartCoroutine(RandomMovement(contlloer)) ;
+    }
+
+    public override void ManagedUpdate(BossController contlloer)
+    {
+        
+    }
+
+    public override void Exit(BossController contlloer)
+    {
+        
+    }
+
     /// <summary>
     /// ƒ‰ƒ“ƒ_ƒ€•ûŒü‚É“®‚­
     /// </summary>
-    IEnumerator RandomMovement()
+    IEnumerator RandomMovement(BossController controller)
     {       
         while (true)
         {
@@ -91,7 +106,6 @@ public class BossEnemyMoveRandom : MonoBehaviour
     }
     private void OnEnable()
     {
-        _rb = GetComponent<Rigidbody2D>();
         _sr = GetComponent<SpriteRenderer>();
         StartCoroutine("RandomMovement");
     }
@@ -107,6 +121,5 @@ public class BossEnemyMoveRandom : MonoBehaviour
         {
             _sr.flipX = false;
         }
-
     }
 }

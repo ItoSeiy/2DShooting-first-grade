@@ -20,6 +20,8 @@ public class SuperAttackRebound : MonoBehaviour
     float _horizontalDir = 0f;
     /// <summary>縦方向</summary>
     float _verticalDir = 0f;
+    /// <summary>弾の見た目の種類</summary>
+    int _pattern = 0;
     /// <summary>必殺前に移動するポジション</summary>
     [SerializeField, Header("必殺前に移動するポジション")] Vector2 _superAttackPosition = new Vector2(0f, 4f);
     /// <summary>バレットを発射するポジション</summary>
@@ -35,7 +37,7 @@ public class SuperAttackRebound : MonoBehaviour
     /// <summary>攻撃頻度</summary>
     [SerializeField, Header("攻撃頻度(秒)")] float _attackInterval = 1f;
     /// <summary>発射する弾を設定できる</summary>
-    [SerializeField, Header("発射する弾の設定(リバウンド）")] PoolObjectType _bullet;
+    [SerializeField, Header("発射する弾の設定(リバウンド）")] PoolObjectType[] _bullet;
     /// <summary>修正値</summary>
     const float PLAYER_POS_OFFSET = 0.5f;
     /// <summary>判定回数の制限</summary>
@@ -112,11 +114,12 @@ public class SuperAttackRebound : MonoBehaviour
             //全方位に発射
             for (float rotation = MINIMUM_ROTATION_RANGE; rotation <= MAXIMUM_ROTATION_RANGE; rotation += _rotationInterval)
             {
+                _pattern = Random.Range(0, _bullet.Length);
                 Vector3 localAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
                 localAngle.z = rotation;// 角度を設定
                 _muzzles[0].localEulerAngles = localAngle;//回転する
                 //弾をマズルの向きに合わせて弾を発射（リバウンドするBulletを使います）
-                ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet).transform.rotation = _muzzles[0].rotation;
+                ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet[_pattern]).transform.rotation = _muzzles[0].rotation;
             }
 
             yield return new WaitForSeconds(_attackInterval);//攻撃頻度(秒)

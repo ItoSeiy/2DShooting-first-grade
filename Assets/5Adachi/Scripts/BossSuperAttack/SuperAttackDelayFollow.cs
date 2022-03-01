@@ -20,6 +20,8 @@ public class SuperAttackDelayFollow : MonoBehaviour
     float _horizontalDir = 0f;
     /// <summary>縦方向</summary>
     float _verticalDir = 0f;
+    /// <summary>弾の見た目の種類</summary>
+    int _pattern = 0;
     /// <summary>必殺前に移動するポジション</summary>
     [SerializeField, Header("必殺前に移動するポジション")] Vector2 _superAttackPosition = new Vector2(0f, 4f);
     /// <summary>バレットを発射するポジション</summary>
@@ -35,7 +37,7 @@ public class SuperAttackDelayFollow : MonoBehaviour
     /// <summary>攻撃頻度</summary>
     [SerializeField, Header("攻撃頻度(秒)")] float _attackInterval = 1f;
     /// <summary>発射する弾を設定できる</summary>
-    [SerializeField, Header("発射する弾の設定(ディレイフォロ-)")]  PoolObjectType _bullet;
+    [SerializeField, Header("発射する弾の設定(ディレイフォロ-)")]  PoolObjectType[] _bullet;
     /// <summary>修正値</summary>
     const float PLAYER_POS_OFFSET = 0.5f;
     /// <summary>判定回数の制限</summary>
@@ -61,7 +63,7 @@ public class SuperAttackDelayFollow : MonoBehaviour
     {
         _timer += Time.deltaTime;//タイマー
     }
-
+    
     /// <summary>横の方向に弾を発射した後、プレイヤーの方に弾が飛んでいく必殺技</summary>
     IEnumerator DelayFollow()
     {
@@ -112,6 +114,7 @@ public class SuperAttackDelayFollow : MonoBehaviour
         //必殺技発動
         while (true)
         {
+            _pattern = Random.Range(0, _bullet.Length);
             //下全体に発射
             for (float rotation = FIRST_ROTATION; rotation <= LAST_ROTATION; rotation += _rotationInterval)//95度～135度、225度～265度の範囲
             {
@@ -119,7 +122,7 @@ public class SuperAttackDelayFollow : MonoBehaviour
                 localAngle.z = rotation;// 角度を設定
                 _muzzles[0].localEulerAngles = localAngle;//回転する
                 //弾をマズルの向きに合わせて弾を発射（時間が経つとプレイヤーに一瞬だけ追従するBulletを使います）
-                ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet).transform.rotation = _muzzles[0].rotation;
+                ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet[_pattern]).transform.rotation = _muzzles[0].rotation;
                 //真ん中あたりは発射しない
                 if (rotation == MIDDLE_RANGE)
                 {

@@ -20,6 +20,8 @@ public class SuperAttackParty : MonoBehaviour
     float _horizontalDir = 0f;
     /// <summary>縦方向</summary>
     float _verticalDir = 0f;
+    /// <summary>弾の見た目の種類</summary>
+    int _pattern = 0;
     /// <summary>必殺前に移動するポジション</summary>
     [SerializeField, Header("必殺前に移動するポジション")] Vector2 _superAttackPosition = new Vector2(0f, 4f);
     /// <summary>バレットを発射するポジション</summary>
@@ -33,7 +35,7 @@ public class SuperAttackParty : MonoBehaviour
     /// <summary>マズルの角度間隔</summary>
     [SerializeField, Header("マズルの角度間隔")] float _rotationInterval = 4f;
     /// <summary>発射する弾を設定できる</summary>
-    [SerializeField, Header("発射する弾の設定(リバウンド)")] PoolObjectType _bullet; 
+    [SerializeField, Header("発射する弾の設定(リバウンド)")] PoolObjectType[] _bullet; 
     /// <summary>修正値</summary>
     const float PLAYER_POS_OFFSET = 0.5f;
     /// <summary>判定回数の制限</summary>
@@ -104,6 +106,7 @@ public class SuperAttackParty : MonoBehaviour
         //必殺技発動
         while (true)
         {
+            _pattern = Random.Range(0, _bullet.Length);
             ///マズルを回転する///
             Vector3 localAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
             //ランダムな角度を設定（（　0度　～　360度/マズルの角度間隔　）* マズルの角度間隔　）の範囲
@@ -111,7 +114,7 @@ public class SuperAttackParty : MonoBehaviour
             _muzzles[0].localEulerAngles = localAngle;//回転する
 
             //弾をマズルの向きに合わせて弾を発射
-            ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet).transform.rotation = _muzzles[0].rotation;
+            ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet[_pattern]).transform.rotation = _muzzles[0].rotation;
 
             yield return new WaitForSeconds(JUDGMENT_TIME);//判定回数の調整
 
