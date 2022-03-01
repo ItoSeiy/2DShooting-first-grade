@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossEnemyMoveRush : MonoBehaviour
+public class BossEnemyMoveRush : BossMoveAction
 {
     /// <summary>å`èÛÇ‚ëÂÇ´Ç≥ÇÃäTîOÇéùÇ¡ÇΩï®éø</summary>
     Rigidbody2D _rb;
@@ -44,6 +44,21 @@ public class BossEnemyMoveRush : MonoBehaviour
     {
         _rb.velocity = _dir * _speed;
         _time += Time.deltaTime;
+    }
+    public override void Enter(BossController contlloer)
+    {
+        StartCoroutine(Rush());
+
+    }
+
+    public override void ManagedUpdate(BossController contlloer)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void Exit(BossController contlloer)
+    {
+        throw new System.NotImplementedException();
     }
 
     /// <summary>
@@ -111,4 +126,5 @@ public class BossEnemyMoveRush : MonoBehaviour
             }            
         }
     }
+
 }
