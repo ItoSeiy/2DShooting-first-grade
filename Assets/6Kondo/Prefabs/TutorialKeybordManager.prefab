@@ -1,0 +1,192 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1623682303027859526
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1623682303027859525}
+  - component: {fileID: 1623682303027859531}
+  m_Layer: 0
+  m_Name: TutorialKeybordManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1623682303027859525
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1623682303027859526}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1623682303027859531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1623682303027859526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90409febc9038274b9cf54e1667d61dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _moveCheck: {fileID: 0}
+  _inputMove:
+    m_Name: Input Move
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 4cd3cfab-1ea3-40bf-b5b9-64fa19e75c32
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 55c49a0c-1943-4e4b-b6f9-bbd40b3f2adb
+      m_Path: <Keyboard>/w
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Input Move
+      m_Flags: 0
+    - m_Name: 
+      m_Id: 847ab7f8-9883-4106-904b-2efa8cc41eba
+      m_Path: <Keyboard>/a
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Input Move
+      m_Flags: 0
+    - m_Name: 
+      m_Id: e433b5fc-41de-41ef-a9f0-77aef206452a
+      m_Path: <Keyboard>/s
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Input Move
+      m_Flags: 0
+    - m_Name: 
+      m_Id: 02a152e0-682b-422c-b751-b97c061afc55
+      m_Path: <Keyboard>/d
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Input Move
+      m_Flags: 0
+    - m_Name: 
+      m_Id: fbf343e0-2a78-4af9-9358-8960acaa2af7
+      m_Path: <Keyboard>/upArrow
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Input Move
+      m_Flags: 0
+    - m_Name: 
+      m_Id: 26f779e9-ae2b-4d2d-83b2-f888f8abe283
+      m_Path: <Keyboard>/leftArrow
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Input Move
+      m_Flags: 0
+    - m_Name: 
+      m_Id: 46b4c2fc-bf6c-4953-a820-bd6f3e961b49
+      m_Path: <Keyboard>/downArrow
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Input Move
+      m_Flags: 0
+    - m_Name: 
+      m_Id: 4be2a785-9daa-49fb-8938-219ba10f56f8
+      m_Path: <Keyboard>/rightArrow
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Input Move
+      m_Flags: 0
+  _shotCheck: {fileID: 0}
+  _inputShot:
+    m_Name: Input Shot
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 5d969322-8f62-4386-b72e-9a7041d181bc
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 088ae2a7-be79-42b4-8a36-15ba67a0d25b
+      m_Path: <Mouse>/leftButton
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Input Shot
+      m_Flags: 0
+    - m_Name: 
+      m_Id: 4145c648-1fcc-4e38-87e8-5374a4ffd06b
+      m_Path: <Keyboard>/z
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Input Shot
+      m_Flags: 0
+  _slowMoveCheck: {fileID: 0}
+  _inputSlowMove:
+    m_Name: Input Slow Move
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 36513761-46f0-4de4-bab2-dfc065dc2a21
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 3bbb85f4-7201-47cb-8166-16f407c56ec2
+      m_Path: <Keyboard>/shift
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Input Slow Move
+      m_Flags: 0
+  _chargeShotCheck: {fileID: 0}
+  _inputChargeShot:
+    m_Name: Input Charge Shot
+    m_Type: 1
+    m_ExpectedControlType: Button
+    m_Id: f9a08a09-8721-4e5a-a145-6e90bd857fdb
+    m_Processors: 
+    m_Interactions: SlowTap(duration=1.4)
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 060f99b3-c75c-465d-8ca0-2d7423c4b480
+      m_Path: <Keyboard>/v
+      m_Interactions: SlowTap(duration=1.4,pressPoint=0.5)
+      m_Processors: 
+      m_Groups: 
+      m_Action: Input Charge Shot
+      m_Flags: 0
+    - m_Name: 
+      m_Id: 82592970-d406-4f1b-a2a0-09ef4d7d7241
+      m_Path: <Keyboard>/x
+      m_Interactions: SlowTap(duration=1.4,pressPoint=0.5)
+      m_Processors: 
+      m_Groups: 
+      m_Action: Input Charge Shot
+      m_Flags: 0
+  _itemCheck: {fileID: 0}
+  _bombCheck: {fileID: 0}
+  _residueCheck: {fileID: 0}
+  _invisibleCheck: {fileID: 0}
+  _powerCheck: {fileID: 0}
+  _scoreCheck: {fileID: 0}
+  _tutorialClearCheck: {fileID: 0}

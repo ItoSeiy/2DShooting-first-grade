@@ -192,156 +192,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a0fba6d711617884f8bb908d7b6035ab, type: 3}
---- !u!1 &136735877
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 136735878}
-  - component: {fileID: 136735880}
-  m_Layer: 0
-  m_Name: TutorialManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &136735878
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 136735877}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &136735880
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 136735877}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90409febc9038274b9cf54e1667d61dc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _moveCheck: {fileID: 0}
-  _inputMove:
-    m_Name: Input Move
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 4cd3cfab-1ea3-40bf-b5b9-64fa19e75c32
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: f854dc96-083d-4dc9-a7e4-f3faa98c6f19
-      m_Path: <Gamepad>/leftStick
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Input Move
-      m_Flags: 0
-    - m_Name: 
-      m_Id: 1179b8b7-13d6-4487-96a0-f1a499ee6c59
-      m_Path: <Gamepad>/dpad
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Input Move
-      m_Flags: 0
-  _shotCheck: {fileID: 0}
-  _inputShot:
-    m_Name: Input Shot
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 5d969322-8f62-4386-b72e-9a7041d181bc
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: 3647ac78-8d0b-4105-90be-731beb984dd8
-      m_Path: <Gamepad>/buttonWest
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Input Shot
-      m_Flags: 0
-    - m_Name: 
-      m_Id: de384a58-2922-43e8-bb77-536c5eb35f14
-      m_Path: <Gamepad>/buttonEast
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Input Shot
-      m_Flags: 0
-  _slowMoveCheck: {fileID: 0}
-  _inputSlowMove:
-    m_Name: Input Slow Move
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 36513761-46f0-4de4-bab2-dfc065dc2a21
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: da41db9a-ae3e-4856-99d2-8008fea026d6
-      m_Path: <Gamepad>/leftShoulder
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Input Slow Move
-      m_Flags: 0
-    - m_Name: 
-      m_Id: 3bcd64da-ee02-4880-9d65-2a7fcc68d62a
-      m_Path: <Gamepad>/leftTrigger
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Input Slow Move
-      m_Flags: 0
-  _chargeShotCheck: {fileID: 0}
-  _inputChargeShot:
-    m_Name: Input Charge Shot
-    m_Type: 1
-    m_ExpectedControlType: Button
-    m_Id: f9a08a09-8721-4e5a-a145-6e90bd857fdb
-    m_Processors: 
-    m_Interactions: SlowTap(duration=1.4)
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: baaa72f8-e9c3-4daa-a290-646b245440d2
-      m_Path: <Gamepad>/rightShoulder
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Input Charge Shot
-      m_Flags: 0
-    - m_Name: 
-      m_Id: a0ceff73-7f08-4911-9427-f431c3f508a4
-      m_Path: <Gamepad>/rightTrigger
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Input Charge Shot
-      m_Flags: 0
-  _itemCheck: {fileID: 0}
-  _bombCheck: {fileID: 0}
-  _residueCheck: {fileID: 0}
-  _invisibleCheck: {fileID: 0}
-  _powerCheck: {fileID: 0}
-  _scoreCheck: {fileID: 0}
-  _tutorialClearCheck: {fileID: 0}
 --- !u!1001 &147301738
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2270,3 +2120,72 @@ MonoBehaviour:
   _invincibleTag: Invincible
   _powerTag: Power
   _scoreTag: Score
+--- !u!1001 &1643793268642787078
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1643793268775306112, guid: 393a44c487d8bb845ac836ab4d32c7ab,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1643793268775306112, guid: 393a44c487d8bb845ac836ab4d32c7ab,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1643793268775306112, guid: 393a44c487d8bb845ac836ab4d32c7ab,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1643793268775306112, guid: 393a44c487d8bb845ac836ab4d32c7ab,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1643793268775306112, guid: 393a44c487d8bb845ac836ab4d32c7ab,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1643793268775306112, guid: 393a44c487d8bb845ac836ab4d32c7ab,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1643793268775306112, guid: 393a44c487d8bb845ac836ab4d32c7ab,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1643793268775306112, guid: 393a44c487d8bb845ac836ab4d32c7ab,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1643793268775306112, guid: 393a44c487d8bb845ac836ab4d32c7ab,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1643793268775306112, guid: 393a44c487d8bb845ac836ab4d32c7ab,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1643793268775306112, guid: 393a44c487d8bb845ac836ab4d32c7ab,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1643793268775306115, guid: 393a44c487d8bb845ac836ab4d32c7ab,
+        type: 3}
+      propertyPath: m_Name
+      value: TutorialManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 393a44c487d8bb845ac836ab4d32c7ab, type: 3}
