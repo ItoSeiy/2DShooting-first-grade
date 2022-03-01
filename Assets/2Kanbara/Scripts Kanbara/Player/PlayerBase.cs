@@ -232,7 +232,7 @@ public class PlayerBase : MonoBehaviour
             GamingPlayer();
             Debug.Log(_isLateMode);
         }
-        if (context.canceled)//LeftShiftKeyが離された瞬間の処理
+        if (context.performed || context.canceled)//LeftShiftKeyが離された瞬間の処理
         {
             _isLateMode = false;
             GamingFalse();
