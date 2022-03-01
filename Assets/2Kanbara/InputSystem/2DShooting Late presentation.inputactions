@@ -189,6 +189,17 @@
                 },
                 {
                     "name": "",
+                    "id": "c82d9f4e-f07a-41d1-8a44-7b15a81c711d",
+                    "path": "<Gamepad>/dpad",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "c1f7a91b-d0fd-4a62-997e-7fb9b69bf235",
                     "path": "<Gamepad>/rightStick",
                     "interactions": "",
@@ -343,6 +354,17 @@
                 },
                 {
                     "name": "",
+                    "id": "86291fa9-e134-458e-accc-fec26bcf4935",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "Hold",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "IsLateMove",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "c1b11c82-fe9a-483e-97de-6b8f6e15e113",
                     "path": "<Keyboard>/v",
                     "interactions": "SlowTap(duration=1.4,pressPoint=0.5)",
@@ -370,6 +392,17 @@
                     "interactions": "SlowTap(duration=1.4,pressPoint=0.5)",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
+                    "action": "ChargeShot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c600aa9c-cec2-4287-b1e4-7fe3c379ff83",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "SlowTap(duration=1.4,pressPoint=0.5)",
+                    "processors": "",
+                    "groups": "Gamepad",
                     "action": "ChargeShot",
                     "isComposite": false,
                     "isPartOfComposite": false
