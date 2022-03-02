@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Audio : MonoBehaviour
+public class DestructInTime : MonoBehaviour
 {
     [SerializeField] float _destroyTime = 2f;
     float _time;
