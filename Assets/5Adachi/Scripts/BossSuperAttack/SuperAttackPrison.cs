@@ -7,9 +7,7 @@ public class SuperAttackPrison : MonoBehaviour
     /// <summary>形状や大きさの概念を持った物質</summary>
     Rigidbody2D _rb;
     /// <summary>方向</summary>
-    Vector3 _dir;
-    /// <summary>プレイヤーのオブジェクト</summary>
-    GameObject _player;    
+    Vector3 _dir; 
     /// <summary>タイマー</summary>
     float _timer = 0f;
     /// <summary>右側の範囲</summary>
@@ -30,8 +28,6 @@ public class SuperAttackPrison : MonoBehaviour
     int _secondPattern = 0;
     /// <summary>弾の見た目の種類</summary>
     int _thirdPattern = 0;
-    /// <summary>プレイヤーのタグ</summary>
-    [SerializeField, Header("playerのtag")] string _playerTag = null;
     /// <summary>必殺前に移動するポジション</summary>
     [SerializeField, Header("必殺前に移動するポジション")] Vector2 _superAttackPosition = new Vector2(0f, 4f);
     /// <summary>バレットを発射するポジション</summary>
@@ -64,7 +60,6 @@ public class SuperAttackPrison : MonoBehaviour
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();//《スタート》でゲットコンポーネント
-        _player = GameObject.FindGameObjectWithTag(_playerTag);//プレイヤーのタグを探す
         StartCoroutine(Prison());//コルーチンを発動
     }
     void Update()
@@ -149,7 +144,7 @@ public class SuperAttackPrison : MonoBehaviour
             //マズルを回転する
 
             //ターゲット（プレイヤー）の方向を計算
-            _dir = (_player.transform.position - _muzzles[0].transform.position);
+            _dir = (GameManager.Instance.Player.transform.position - _muzzles[0].transform.position);
             //ターゲット（プレイヤー）の方向に回転
             _muzzles[0].transform.rotation = Quaternion.FromToRotation(Vector3.up, _dir);
 
