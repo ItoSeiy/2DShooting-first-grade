@@ -440,7 +440,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b041b7c247df4949b3cfa9df47a0525, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerTag: 
   _upperLimit: 3
   _lowerLimit: -3
   _stopTime: 2
@@ -808,7 +807,7 @@ PrefabInstance:
     - target: {fileID: 4629382610687237670, guid: 65f4a61f7c0fdf545b23f3aff4b184b0,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4629382610687237670, guid: 65f4a61f7c0fdf545b23f3aff4b184b0,
         type: 3}
@@ -1008,6 +1007,37 @@ Transform:
   m_Father: {fileID: 1087561681}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1059215243
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1059215244}
+  m_Layer: 0
+  m_Name: SuperAttackActions
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1059215244
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1059215243}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1118932146}
+  m_Father: {fileID: 1096083945}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1087561680
 GameObject:
   m_ObjectHideFlags: 0
@@ -1124,7 +1154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 5
-  _enemyHp: 10
+  _enemyHp: 600
   _attackInterval: 1
   _damageTakenRatio: 1
   _playerBulletTag: PlayerBullet
@@ -1136,13 +1166,19 @@ MonoBehaviour:
   _itemDropRangeX: 2
   _itemDropRangeY: 2
   _data:
-    actionPattern:
+    actionPatterns:
     - bossAttackActions:
       - {fileID: 1295514443}
       - {fileID: 926571359}
       bossMoveActions:
       - {fileID: 1793011905}
       - {fileID: 1539239776}
+    bossSuperAttackActons:
+    - {fileID: 1118932147}
+    - {fileID: 1118932147}
+  _superAttackTimingHp:
+  - 500
+  - 250
 --- !u!70 &1096083943
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -1193,6 +1229,7 @@ Transform:
   m_Children:
   - {fileID: 1087561681}
   - {fileID: 2138193435}
+  - {fileID: 1059215244}
   - {fileID: 912063237}
   m_Father: {fileID: 0}
   m_RootOrder: 6
@@ -1266,6 +1303,58 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8ee05df372273d4459d3d9c93ded8522, type: 3}
+--- !u!1 &1118932145
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1118932146}
+  - component: {fileID: 1118932147}
+  m_Layer: 0
+  m_Name: SuperAttackActions
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1118932146
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1118932145}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 0}
+  m_Children: []
+  m_Father: {fileID: 1059215244}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1118932147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1118932145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a72087573cd6df04cbf91998568f1f4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _superAttackPosition: {x: 0, y: 4}
+  _muzzles:
+  - {fileID: 912063237}
+  _speed: 4
+  _waitTime: 5
+  _activationTime: 30
+  _rotationInterval: 20
+  _attackInterval: 1
+  _bullet: 1e000000
 --- !u!1 &1295514442
 GameObject:
   m_ObjectHideFlags: 0
@@ -1707,13 +1796,9 @@ MonoBehaviour:
   _itemDropRangeX: 2
   _itemDropRangeY: 2
   _data:
-    actionPattern:
-    - bossAttackActions:
-      - {fileID: 0}
-      bossMoveActions:
-      - {fileID: 0}
-    - bossAttackActions: []
-      bossMoveActions: []
+    actionPatterns: []
+    bossSuperAttackActons: []
+  _superAttackTimingHp: []
 --- !u!61 &1811270294
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2158,6 +2243,11 @@ PrefabInstance:
       propertyPath: _cmvcam1
       value: 
       objectReference: {fileID: 1821538078}
+    - target: {fileID: 8073652284958033806, guid: 9e9962444e183474597e568b85370ae6,
+        type: 3}
+      propertyPath: _isGodMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8073652284958033810, guid: 9e9962444e183474597e568b85370ae6,
         type: 3}
       propertyPath: m_Name
@@ -2171,12 +2261,12 @@ PrefabInstance:
     - target: {fileID: 8073652285846561726, guid: 9e9962444e183474597e568b85370ae6,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.17
+      value: -0.22
       objectReference: {fileID: 0}
     - target: {fileID: 8073652285846561726, guid: 9e9962444e183474597e568b85370ae6,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -7.18
+      value: -3.43
       objectReference: {fileID: 0}
     - target: {fileID: 8073652285846561726, guid: 9e9962444e183474597e568b85370ae6,
         type: 3}

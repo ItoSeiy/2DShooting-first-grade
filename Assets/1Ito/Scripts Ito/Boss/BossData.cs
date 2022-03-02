@@ -8,29 +8,34 @@ using UnityEngine;
 public class BossData
 {
     /// <summary>ボスの行動</summary>
-    public BossActions[] ActionPattern => actionPattern;
+    public BossAcitionPattern[] ActionPatterns => actionPatterns;
+    /// <summary>必殺技の配列</summary>
+    public BossAttackAction[] BossSuperAttackActions => bossSuperAttackActons;
 
     [SerializeField,Header("BossAttackActionとBossAttackActionは同数にすること")]
-    private BossActions[] actionPattern = default;
+    private BossAcitionPattern[] actionPatterns = default;
 
+    [SerializeField, Header("必殺技の行動(基本的に2つ)")]
+    private BossAttackAction[] bossSuperAttackActons = default; 
 }
 
 /// <summary>
 /// ボスの行動が格納されたクラス
 /// </summary>
 [Serializable]
-public class BossActions
+public class BossAcitionPattern
 {
     /// <summary>攻撃の配列</summary>
     public BossAttackAction[] BossAttackActions => bossAttackActions;
     /// <summary>移動の配列</summary>
     public BossMoveAction[] BossMoveActions => bossMoveActions;
 
-    [SerializeField]
+    [SerializeField, Header("攻撃の行動")]
     private BossAttackAction[] bossAttackActions = default;
 
-    [SerializeField]
+    [SerializeField, Header("移動の行動")]
     private BossMoveAction[] bossMoveActions = default;
+
 }
 
 /// <summary>

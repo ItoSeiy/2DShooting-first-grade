@@ -25,7 +25,7 @@ public class BossNormalAttack05 : BossAttackAction
     /// <summary>”­Ë‚·‚é’e‚ğİ’è‚Å‚«‚é</summary>
     [SerializeField, Header("”­Ë‚·‚é’e‚Ìİ’è")] PoolObjectType[] _bullet;
     /// <summary>”­Ë‚·‚é’e‚ğİ’è‚Å‚«‚é</summary>
-    [SerializeField, Header("”­Ë‚·‚é’e‚Ìİ’è(Boss05DefaultBullet2)")] PoolObjectType _secondBullet;
+    [SerializeField, Header("”­Ë‚·‚é’e‚Ìİ’è(Boss05DefaultBullet1)")] PoolObjectType _secondBullet;
     /// <summary>ƒ}ƒYƒ‹‚ÌŠp“xŠÔŠu</summary>
     [SerializeField, Header("ƒ}ƒYƒ‹‚ÌŠp“xŠÔŠu")] float _rotationInterval = 45f;
     /// <summary>‚±‚Ìs“®‚©‚ço‚éŠÔ</summary>
@@ -60,7 +60,7 @@ public class BossNormalAttack05 : BossAttackAction
 
     public override void Exit(BossController contlloer)
     {
-        
+        StopAllCoroutines();
     }
 
     //AttackŠÖ”‚É“ü‚ê‚é’ÊíUŒ‚
