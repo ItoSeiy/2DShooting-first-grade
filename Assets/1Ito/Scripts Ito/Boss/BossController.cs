@@ -18,7 +18,11 @@ public class BossController : EnemyBase
     public BossData Data => _data;
     /// <summary>ボスのデータ</summary>
     [SerializeField]
-    BossData _data = null;  
+    BossData _data = null;
+
+    [SerializeField, Header("設定した数値以下になると必殺技を発動する(基本的に2つ)")]
+    float[] _superAttackTimingHp = default;
+    private int _timingIndex = 0;
 
     /// <summary>キャストの判定</summary>
     public bool IsCast { get; private set; } = default;
@@ -30,6 +34,8 @@ public class BossController : EnemyBase
     private BossAttackAction _currentAttackAction = default;
     /// <summary>現在の移動行動</summary>
     private BossMoveAction _currentMoveAction = default;
+    /// <summary>現在の</summary>
+    private BossAttackAction _currentSuperAttackAction = default;
 
     /// <summary>行動"パターン"のインデックス</summary>
     private int _patternIndex = -1;
@@ -38,12 +44,26 @@ public class BossController : EnemyBase
     protected override void Awake()
     {
         base.Awake();
-        foreach (var pattern in _data.ActionPattern)
+        foreach (var pattern in _data.ActionPatterns)
         {
             foreach (var attackAction in pattern.BossAttackActions)
             {
+                //アクション終了時の処理を登録する
                 attackAction.ActinoEnd = JudgeAction;
             }
+        }
+
+        foreach(var superAttackAction in _data.BossSuperAttackActions)
+        {
+            superAttackAction.ActinoEnd = () =>//必殺技終了時の行動を登録する
+            {
+                //終了時に呼び出される関数を呼ぶ
+                _currentSuperAttackAction.Exit(this);
+                //中身を空にする(Updateの内容が実行されないようにするため)
+                _currentSuperAttackAction = null;
+                //普段の行動パターンに戻る
+                RandomPatternChange();
+            };
         }
     }
 
@@ -61,6 +81,27 @@ public class BossController : EnemyBase
         }
         _currentAttackAction?.ManagedUpdate(this);
         _currentMoveAction?.ManagedUpdate(this);
+        _currentSuperAttackAction?.ManagedUpdate(this);
+    }
+
+    protected override void OnGetDamage()
+    {
+        if(_superAttackTimingHp[_timingIndex] >= EnemyHp)
+        {
+            SuperAttack();
+        }
+    }
+
+    private void SuperAttack()
+    {
+        _currentAttackAction = null;
+        _currentMoveAction = null;
+
+        _currentSuperAttackAction = _data.BossSuperAttackActions[_timingIndex];
+
+        _currentSuperAttackAction.Enter(this);
+
+        _timingIndex++;
     }
 
     /// <summary>
@@ -72,7 +113,7 @@ public class BossController : EnemyBase
         Debug.Log("アクションを判定します");
         _actionIndex++;
 
-        if(_actionIndex >= _data.ActionPattern[_patternIndex].BossAttackActions.Length)
+        if(_actionIndex >= _data.ActionPatterns[_patternIndex].BossAttackActions.Length)
         {
             //行動パターンを実行しきったら
             RandomPatternChange();//行動パターンを変える
@@ -80,8 +121,8 @@ public class BossController : EnemyBase
         else//行動パターンを実行しきっていなかったら
         {
             //アクションを次のものに切り替える
-            ActionChange(_data.ActionPattern[_patternIndex].BossAttackActions[_actionIndex],
-                            _data.ActionPattern[_patternIndex].BossMoveActions[_actionIndex]);
+            ActionChange(_data.ActionPatterns[_patternIndex].BossAttackActions[_actionIndex],
+                            _data.ActionPatterns[_patternIndex].BossMoveActions[_actionIndex]);
         }
     }
 
@@ -91,14 +132,15 @@ public class BossController : EnemyBase
     private void RandomPatternChange()
     {
         //行動パターンのインッデクスを決める
-        _patternIndex = Random.Range(0, _data.ActionPattern.Length);
+        _patternIndex = Random.Range(0, _data.ActionPatterns.Length);
         Debug.Log($"パターン{_patternIndex}を実行する");
 
-        //アクションを変更し実行する
-        ActionChange(_data.ActionPattern[_patternIndex].BossAttackActions.FirstOrDefault(),
-                     _data.ActionPattern[_patternIndex].BossMoveActions.FirstOrDefault());
-
+        //アクションはリセットされるためIndexを0にする
         _actionIndex = 0;
+
+        //アクションを変更し実行する
+        ActionChange(_data.ActionPatterns[_patternIndex].BossAttackActions.FirstOrDefault(),
+                     _data.ActionPatterns[_patternIndex].BossMoveActions.FirstOrDefault());
     }
 
     /// <summary>
@@ -148,7 +190,4 @@ public class BossController : EnemyBase
         IsCast = false;
     }
 
-    protected override void OnGetDamage()
-    {
-    }
 }
