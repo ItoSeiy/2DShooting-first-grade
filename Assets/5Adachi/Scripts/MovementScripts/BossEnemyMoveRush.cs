@@ -54,7 +54,7 @@ public class BossEnemyMoveRush : BossMoveAction
 
     public override void Exit(BossController contlloer)
     {
-        
+        StopAllCoroutines();
     }
 
     /// <summary>
