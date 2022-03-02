@@ -60,7 +60,7 @@ public class BossNormalAttack05 : BossAttackAction
 
     public override void Exit(BossController contlloer)
     {
-        
+        StopAllCoroutines();
     }
 
     //AttackŠÖ”‚É“ü‚ê‚é’ÊíUŒ‚

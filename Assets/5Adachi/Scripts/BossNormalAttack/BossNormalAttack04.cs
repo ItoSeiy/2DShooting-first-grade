@@ -49,7 +49,7 @@ public class BossNormalAttack04 : BossAttackAction
 
     public override void Exit(BossController contlloer)
     {
-        
+        StopAllCoroutines();
     }
 
     //AttackŠÖ”‚É“ü‚ê‚é’ÊíUŒ‚
