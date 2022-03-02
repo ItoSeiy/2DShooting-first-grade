@@ -56,7 +56,7 @@ public class BossEnemyMoveRandom : BossMoveAction
 
     public override void Exit(BossController contlloer)
     {
-        
+        StopAllCoroutines();
     }
 
     /// <summary>
@@ -103,8 +103,8 @@ public class BossEnemyMoveRandom : BossMoveAction
             controller.Rb.velocity = _dir.normalized * controller.Speed;
             yield return new WaitForSeconds(_moveTime);
             
-            Debug.Log("x" + _horizontal);
-            Debug.Log("y" + _veritical);
+            //Debug.Log("x" + _horizontal);
+            //Debug.Log("y" + _veritical);
         }
     }
 }
