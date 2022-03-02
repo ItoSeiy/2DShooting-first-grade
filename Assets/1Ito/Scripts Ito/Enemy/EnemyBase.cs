@@ -87,7 +87,6 @@ public abstract class EnemyBase : MonoBehaviour, IDamage
     /// </summary>
     protected abstract void OnGetDamage();
 
-
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if(EnemyHp <= 0)

@@ -7,6 +7,9 @@ using DG.Tweening;
 /// </summary>
 public class EnemyController : EnemyBase 
 {
+    [SerializeField, Header("このオブジェクトが破棄されたときに次のフェイズに移るか")]
+    bool _isPhaseTriger = false;
+
     [SerializeField, Header("球の出る位置")]
     Transform[] _muzzle = null;
 
@@ -52,14 +55,16 @@ public class EnemyController : EnemyBase
     [SerializeField, Header("何秒とどまるか")] 
     float _stopcount = 0.0f;
 
-    [SerializeField, Header("倒された時の音")] 
-    GameObject _deathSFX = default;
-
     [SerializeField, Header("モブの攻撃するときを変える")] AttackMode _attackMode;
     bool _isBttomposition = false;
     bool _isMove = false;
-    [SerializeField] AudioSource _hitAudio = default;
     SpriteRenderer _spriteRenderer = default;
+
+    [SerializeField, Header("ダメージを受けた際の音")]
+    SoundType _getDamageSFX = SoundType.None;
+
+    [SerializeField, Header("死亡時の音")]
+    SoundType _onDestroySFX = SoundType.None;
 
     private void Start()
     {
@@ -200,33 +205,26 @@ public class EnemyController : EnemyBase
             .SetLoops(-1, LoopType.Restart);
         }
     }
-  
+
+    private void OnDestroy()
+    {
+        SoundManager.Instance.UseSound(SoundType.None);
+    }
+
     protected override void OnGetDamage()
     {
-        _hitAudio.Play();
-            if (EnemyHp <= 0)
-            {
-                Instantiate(_deathSFX);
-            }
+        SoundManager.Instance.UseSound(SoundType.None);
     }
 
     enum GeneratePos
     {
-        /// <summary>
-        ///右
-        /// </summary>
+        /// <summary>右から生成する</summary>
         Right,
-        /// <summary>
-        /// 左
-        /// </summary>
+        /// <summary>左から生成する</summary>
         Left,
-        /// <summary>
-        ///上 
-        /// </summary>
+        /// <summary>上から生成する</summary>
         Up,
-         /// <summary>
-         /// 下
-         /// </summary>
+         /// <summary>下から生成する</summary>
         Down
     }
 

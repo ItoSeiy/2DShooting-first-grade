@@ -35,7 +35,7 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 
         for (int i = 0; i < _soundObjParam.Params[_poolCountIndex].MaxCount; i++)
         {
-            var sound = Instantiate(_soundObjParam.Params[_poolCountIndex].Prefab　, this.transform);
+            var sound = Instantiate(_soundObjParam.Params[_poolCountIndex].Prefab, this.transform);
             sound.SetActive(false);
             _pool.Add(new Pool { Object = sound, Type = _soundObjParam.Params[_poolCountIndex].Type } );
         }
@@ -75,6 +75,8 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 
 public enum SoundType
 {
+    /// <summary>音無し</summary>
+    None,
     /// <summary>風</summary>
     Wind,
     /// <summary>剣</summary>
