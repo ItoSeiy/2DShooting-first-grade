@@ -97,17 +97,24 @@ public class BossController : EnemyBase
     
     /// <summary>
     /// 必殺技の処理
-    /// 通常時のアクションを空にして
-    /// 必殺技のアクションを追加する
     /// </summary>
     private void SuperAttack()
     {
         Debug.Log($"ボスのHPは{EnemyHp}\n{_timingIndex}番目の必殺技を実行します");
+
+        /// 通常時のアクションと必殺技の最後に行う関数を呼ぶ
+        _currentAttackAction?.Exit(this);
+        _currentMoveAction?.Exit(this);
+        _currentSuperAttackAction?.Exit(this);
+
+        /// 通常時のアクションと必殺技を空にして
         _currentAttackAction = null;
         _currentMoveAction = null;
+        _currentSuperAttackAction = null;
 
+        /// 必殺技のアクションを追加する
         _currentSuperAttackAction = _data.BossSuperAttackActions[_timingIndex];
-
+        //必殺技の初回の動きを実行する
         _currentSuperAttackAction.Enter(this);
 
         _timingIndex++;
@@ -159,7 +166,7 @@ public class BossController : EnemyBase
     /// <param name="bossMoveAction"></param>
     private void ActionChange(BossAttackAction bossAttackAction, BossMoveAction bossMoveAction)
     {
-        //現在のアクションの最後に行う関数を呼ぶ
+        //現在のアクションの最後に行う関数実行する
         _currentAttackAction?.Exit(this);
         _currentMoveAction?.Exit(this);
 
@@ -169,7 +176,7 @@ public class BossController : EnemyBase
 
         Debug.Log($"{_currentAttackAction.gameObject.name},と{_currentMoveAction.gameObject.name}にアクションを切り替えます");
 
-        //切り替えた後のアクションを実行する
+        //切り替えた後のアクションの最初に行う関数を実行する
         _currentAttackAction?.Enter(this);
         _currentMoveAction?.Enter(this);
     }
