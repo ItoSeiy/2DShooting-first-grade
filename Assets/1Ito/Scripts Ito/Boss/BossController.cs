@@ -89,8 +89,15 @@ public class BossController : EnemyBase
 
     protected override void OnGetDamage()
     {
+        if(_timingIndex >= _data.BossSuperAttackActions.Length)
+        {
+            //必殺技を必要以上に発動させないために配列の要素数以上の時にアクセスしたらReturnする
+            return;
+        }
+
         if(_superAttackTimingHp[_timingIndex] >= EnemyHp)
         {
+
             SuperAttack();
         }
     }

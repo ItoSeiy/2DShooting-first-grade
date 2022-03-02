@@ -1174,8 +1174,8 @@ MonoBehaviour:
       - {fileID: 1793011905}
       - {fileID: 1539239776}
     bossSuperAttackActons:
-    - {fileID: 0}
-    - {fileID: 0}
+    - {fileID: 1118932147}
+    - {fileID: 1118932147}
   _superAttackTimingHp:
   - 500
   - 250
@@ -1314,7 +1314,7 @@ GameObject:
   - component: {fileID: 1118932146}
   - component: {fileID: 1118932147}
   m_Layer: 0
-  m_Name: SuperAttackActions (1)
+  m_Name: SuperAttackActions
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1347,13 +1347,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _superAttackPosition: {x: 0, y: 4}
-  _muzzles: []
+  _muzzles:
+  - {fileID: 912063237}
   _speed: 4
   _waitTime: 5
   _activationTime: 30
   _rotationInterval: 20
   _attackInterval: 1
-  _bullet: 00000000
+  _bullet: 1e000000
 --- !u!1 &1295514442
 GameObject:
   m_ObjectHideFlags: 0
