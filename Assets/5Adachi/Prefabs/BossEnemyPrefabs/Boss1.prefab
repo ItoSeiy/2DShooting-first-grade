@@ -241,13 +241,14 @@ MonoBehaviour:
   _itemDropRangeX: 2
   _itemDropRangeY: 2
   _data:
-    actionPattern:
+    actionPatterns:
     - bossAttackActions:
-      - {fileID: 7544650119545537423}
       - {fileID: 7544650119545537423}
       bossMoveActions:
       - {fileID: 7544650118747904148}
-      - {fileID: 7544650118747904148}
+    bossSuperAttackActons:
+    - {fileID: 0}
+  _superAttackTimingHp: []
 --- !u!1 &7544650118432831722
 GameObject:
   m_ObjectHideFlags: 0
