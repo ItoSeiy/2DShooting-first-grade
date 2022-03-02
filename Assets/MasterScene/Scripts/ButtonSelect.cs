@@ -25,24 +25,20 @@ public class ButtonSelect : MonoBehaviour
     bool _isFirstSelectButton = false;
 
     [SerializeField]
-    [Header("呼び出すべきボタンがあるかどうか")]
-    bool _isMustCallNextButton = false;
-
-    [SerializeField]
-    [Header("ボタンの呼び出しを遅らせる秒数（ミリ秒）")]
-    int _delayCallButton = 500;
-
-    [SerializeField]
     [Header("呼び出すボタン")]
-    GameObject[] _callNextButtons;
-
-    [SerializeField]
-    [Header("一緒に消すボタンがあるかどうか")]
-    bool _isMustDeleteButton = false;
+    GameObject[] _callNextButtons = null;
 
     [SerializeField]
     [Header("一緒に消えるButton")]
-    GameObject[] _deleteButtons;
+    GameObject[] _deleteButtons = null;
+
+    [SerializeField]
+    [Header("呼び出すパネル")]
+    GameObject[] _callPanel = null;
+
+    [SerializeField]
+    [Header("一緒に消すパネル")]
+    GameObject[] _deletePanel = null;
 
     private async void OnEnable()
     {
@@ -57,26 +53,34 @@ public class ButtonSelect : MonoBehaviour
         }
     }
 
-    public async void Click()
+    public void Click()
     {
         if(_isDelete)
         {
             this.gameObject.SetActive(false);
         }
-        if(_isMustDeleteButton)
+        if(_deleteButtons　!= null)
         {
-            foreach(var button in _deleteButtons)
-            {
-                button.SetActive(false);
-            }
+            ActiveChange(_deleteButtons, false);
         }
-        if (_isMustCallNextButton)
+        if (_callNextButtons != null)
         {
-            foreach(var button in _callNextButtons)
-            {
-                await Task.Delay(_delayCallButton);
-                button.SetActive(true);
-            }
+            ActiveChange(_callNextButtons, true);
+        }
+        if(_callPanel != null)
+        {
+            ActiveChange(_callPanel, true);
+        }
+        if(_deletePanel != null)
+        {
+            ActiveChange(_deletePanel, false);
+        }
+    }
+    void ActiveChange(GameObject[] gameObjects, bool set)
+    {
+        foreach(var go in gameObjects)
+        {
+            go.SetActive(set);
         }
     }
 }

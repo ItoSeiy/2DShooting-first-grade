@@ -154,6 +154,7 @@ RectTransform:
   m_LocalScale: {x: 1.2500848, y: 0.984375, z: 0.9998999}
   m_Children:
   - {fileID: 1770823063}
+  - {fileID: 1911127871}
   m_Father: {fileID: 1200900379}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -346,7 +347,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.1764706}
+  m_Color: {r: 0, g: 1, b: 1, a: 0.78431374}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -652,16 +653,15 @@ MonoBehaviour:
   _isDelayMode: 1
   _delay: 1500
   _isFirstSelectButton: 1
-  _isMustCallNextButton: 1
-  _delayCallButton: 500
   _callNextButtons:
   - {fileID: 2129243627}
   - {fileID: 1200900378}
   - {fileID: 646477669}
-  _isMustDeleteButton: 1
   _deleteButtons:
   - {fileID: 1797667348}
   - {fileID: 1110586546}
+  _callPanel: []
+  _deletePanel: []
 --- !u!82 &177983619
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2078,7 +2078,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.1764706}
+  m_Color: {r: 0, g: 1, b: 1, a: 0.78431374}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2368,7 +2368,7 @@ RectTransform:
   - {fileID: 1053363454}
   - {fileID: 742369567}
   m_Father: {fileID: 1788004304}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2693,16 +2693,19 @@ MonoBehaviour:
   _isDelayMode: 0
   _delay: 1500
   _isFirstSelectButton: 0
-  _isMustCallNextButton: 1
-  _delayCallButton: 500
   _callNextButtons:
   - {fileID: 177983613}
   - {fileID: 1797667348}
   - {fileID: 1110586546}
-  _isMustDeleteButton: 1
   _deleteButtons:
   - {fileID: 2129243627}
   - {fileID: 1200900378}
+  - {fileID: 1391689428}
+  - {fileID: 1940633021}
+  _callPanel: []
+  _deletePanel:
+  - {fileID: 1234783232}
+  - {fileID: 39527237}
 --- !u!1 &704063475
 GameObject:
   m_ObjectHideFlags: 0
@@ -3560,7 +3563,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 875071853}
   m_Direction: 2
   m_Value: 0.9999935
-  m_Size: 0.5955335
+  m_Size: 0.59553343
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -4520,13 +4523,12 @@ MonoBehaviour:
   _isDelayMode: 0
   _delay: 1500
   _isFirstSelectButton: 0
-  _isMustCallNextButton: 0
-  _delayCallButton: 500
   _callNextButtons: []
-  _isMustDeleteButton: 1
   _deleteButtons:
   - {fileID: 177983613}
   - {fileID: 1797667348}
+  _callPanel: []
+  _deletePanel: []
 --- !u!1 &1114976579
 GameObject:
   m_ObjectHideFlags: 0
@@ -4664,7 +4666,7 @@ RectTransform:
   - {fileID: 351658431}
   - {fileID: 39527238}
   m_Father: {fileID: 1788004304}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -4734,18 +4736,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 202425294}
-        m_TargetAssemblyTypeName: UnityEngine.Playables.PlayableDirector, UnityEngine
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1200900384}
         m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
         m_MethodName: Click
@@ -4812,12 +4802,14 @@ MonoBehaviour:
   _isDelayMode: 1
   _delay: 1500
   _isFirstSelectButton: 0
-  _isMustCallNextButton: 1
-  _delayCallButton: 500
   _callNextButtons:
   - {fileID: 1940633021}
-  _isMustDeleteButton: 0
-  _deleteButtons: []
+  _deleteButtons:
+  - {fileID: 1391689428}
+  _callPanel:
+  - {fileID: 39527237}
+  _deletePanel:
+  - {fileID: 1234783232}
 --- !u!1 &1205279489
 GameObject:
   m_ObjectHideFlags: 0
@@ -5013,6 +5005,7 @@ RectTransform:
   m_LocalScale: {x: 1.2499999, y: 0.9845, z: 0.84231806}
   m_Children:
   - {fileID: 1808805773}
+  - {fileID: 1735922859}
   m_Father: {fileID: 2129243628}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5480,11 +5473,10 @@ MonoBehaviour:
   _isDelayMode: 0
   _delay: 1500
   _isFirstSelectButton: 0
-  _isMustCallNextButton: 0
-  _delayCallButton: 500
   _callNextButtons: []
-  _isMustDeleteButton: 0
   _deleteButtons: []
+  _callPanel: []
+  _deletePanel: []
 --- !u!1 &1408076266
 GameObject:
   m_ObjectHideFlags: 0
@@ -6350,14 +6342,13 @@ MonoBehaviour:
   _isDelayMode: 0
   _delay: 1500
   _isFirstSelectButton: 1
-  _isMustCallNextButton: 1
-  _delayCallButton: 500
   _callNextButtons:
   - {fileID: 177983613}
   - {fileID: 1797667348}
   - {fileID: 1110586546}
-  _isMustDeleteButton: 0
   _deleteButtons: []
+  _callPanel: []
+  _deletePanel: []
 --- !u!320 &1510398139
 PlayableDirector:
   m_ObjectHideFlags: 0
@@ -6498,43 +6489,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1555936830
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1555936831}
-  m_Layer: 5
-  m_Name: Explanation
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1555936831
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1555936830}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1735922859}
-  - {fileID: 1911127871}
-  m_Father: {fileID: 1788004304}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1606438216
 GameObject:
   m_ObjectHideFlags: 0
@@ -7153,7 +7107,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.1764706}
+  m_Color: {r: 0, g: 1, b: 1, a: 0.78431374}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -7216,7 +7170,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1735922859
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7226,16 +7180,16 @@ RectTransform:
   m_GameObject: {fileID: 1735922858}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.3375001, y: 1.6313626, z: 1}
+  m_LocalScale: {x: 0.90677977, y: 1.0356543, z: 1}
   m_Children:
   - {fileID: 946456559}
   - {fileID: 426920800}
-  m_Father: {fileID: 1555936831}
-  m_RootOrder: 0
+  m_Father: {fileID: 1234783233}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 18.00003, y: 40.40001}
+  m_AnchoredPosition: {x: 189.15254, y: 8.12595}
   m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1735922860
@@ -7430,7 +7384,6 @@ RectTransform:
   m_Children:
   - {fileID: 104545732}
   - {fileID: 559421390}
-  - {fileID: 1555936831}
   - {fileID: 2129243628}
   - {fileID: 1200900379}
   - {fileID: 646477670}
@@ -7837,13 +7790,12 @@ MonoBehaviour:
   _isDelayMode: 0
   _delay: 1500
   _isFirstSelectButton: 0
-  _isMustCallNextButton: 0
-  _delayCallButton: 500
   _callNextButtons: []
-  _isMustDeleteButton: 1
   _deleteButtons:
   - {fileID: 177983613}
   - {fileID: 1110586546}
+  _callPanel: []
+  _deletePanel: []
 --- !u!1 &1808805772
 GameObject:
   m_ObjectHideFlags: 0
@@ -8122,7 +8074,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!95 &1911127867
 Animator:
   serializedVersion: 3
@@ -8219,16 +8171,16 @@ RectTransform:
   m_GameObject: {fileID: 1911127866}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.3374, y: 1.6312501, z: 0.9998999}
+  m_LocalScale: {x: 0.90665036, y: 1.0357144, z: 1}
   m_Children:
   - {fileID: 1916416172}
   - {fileID: 492333093}
-  m_Father: {fileID: 1555936831}
+  m_Father: {fileID: 39527238}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 18.00003, y: 39.999996}
+  m_AnchoredPosition: {x: 189.13974, y: 8.126986}
   m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1916416170
@@ -8553,11 +8505,10 @@ MonoBehaviour:
   _isDelayMode: 0
   _delay: 1500
   _isFirstSelectButton: 0
-  _isMustCallNextButton: 0
-  _delayCallButton: 500
   _callNextButtons: []
-  _isMustDeleteButton: 0
   _deleteButtons: []
+  _callPanel: []
+  _deletePanel: []
 --- !u!1 &1973446021
 GameObject:
   m_ObjectHideFlags: 0
@@ -9089,7 +9040,7 @@ RectTransform:
   - {fileID: 1701644760}
   - {fileID: 1234783233}
   m_Father: {fileID: 1788004304}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -9159,19 +9110,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1216401364}
-        m_TargetAssemblyTypeName: UnityEngine.Playables.PlayableDirector, UnityEngine
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1200900384}
+      - m_Target: {fileID: 2129243633}
         m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
         m_MethodName: Click
         m_Mode: 1
@@ -9237,12 +9176,14 @@ MonoBehaviour:
   _isDelayMode: 1
   _delay: 1500
   _isFirstSelectButton: 1
-  _isMustCallNextButton: 1
-  _delayCallButton: 500
   _callNextButtons:
   - {fileID: 1391689428}
-  _isMustDeleteButton: 0
-  _deleteButtons: []
+  _deleteButtons:
+  - {fileID: 1940633021}
+  _callPanel:
+  - {fileID: 1234783232}
+  _deletePanel:
+  - {fileID: 39527237}
 --- !u!222 &767248155780946600
 CanvasRenderer:
   m_ObjectHideFlags: 0
