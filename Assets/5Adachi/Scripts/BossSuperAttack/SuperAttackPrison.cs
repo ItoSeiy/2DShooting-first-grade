@@ -28,6 +28,8 @@ public class SuperAttackPrison : MonoBehaviour
     int _secondPattern = 0;
     /// <summary>弾の見た目の種類</summary>
     int _thirdPattern = 0;
+    /// <summary>回転方向</summary>
+    bool _rotDir = false;
     /// <summary>必殺前に移動するポジション</summary>
     [SerializeField, Header("必殺前に移動するポジション")] Vector2 _superAttackPosition = new Vector2(0f, 4f);
     /// <summary>バレットを発射するポジション</summary>
@@ -44,18 +46,19 @@ public class SuperAttackPrison : MonoBehaviour
     [SerializeField, Header("マズルの角度間隔")] float _rotationInterval = 3f;
     /// <summary>発射する弾を設定できる</summary>
     [SerializeField, Header("発射する弾の設定")] PoolObjectType[] _bullet;
+    /// <summary>回転し始める時間</summary>
+    [SerializeField,Header("回転し始める時間")] float _timeLimit = 5f;
+    /// <summary>左回転の限界</summary>
+    [SerializeField, Header("左回転の限界")] float _leftRotLimit = 270f;
+    /// <summary>右回転の限界</summary>
+    [SerializeField, Header("右回転の限界")] float _rightRotLimit = 180f;
     /// <summary>修正値</summary>
     const float PLAYER_POS_OFFSET = 0.5f;
     /// <summary>判定回数の制限</summary>
     const float JUDGMENT_TIME = 1 / 60f;
     /// <summary>リセットタイマー</summary>
     const float RESET_TIME = 0f;
-    /// <summary>必殺時間の6分の1</summary>
-    const float FIRST_TIME = 6f;
-    /// <summary>必殺時間の3分の1</summary>
-    const float SECOND_TIME = 3f;
-    /// <summary>必殺時間の6分の2</summary>
-    const float THIRD_TIME = 1.5f;
+    
 
     void Start()
     {
@@ -118,24 +121,34 @@ public class SuperAttackPrison : MonoBehaviour
         //必殺技発動
         while (true)
         {            
-            //必殺時間の6分の1
-            if(_timer >= _activationTime / FIRST_TIME)//5f
+            //時間になったら回転
+            if(_timer >= _timeLimit)//5f
             {
-                Debug.Log("start");
+                
                 Vector3 localAngle = _muzzles[1].localEulerAngles;// ローカル座標を基準に取得
+                Debug.Log(localAngle.z);
 
-                //必殺時間の3分の1～必殺時間の3分の2
-                if(_timer >= _activationTime / SECOND_TIME && _timer <= _activationTime / THIRD_TIME)//10f以上20f以下
+                //制限まで来たら逆回転
+                if(localAngle.z >= _leftRotLimit)
+                {
+                    _rotDir = true;
+                    Debug.Log("R");
+                }
+                else if(localAngle.z <= _rightRotLimit)
+                {
+                    _rotDir = false;
+                    Debug.Log("L");
+                }
+                if (!_rotDir)
+                {
+                    localAngle.z += _rotationInterval;// 角度を設定
+                    _muzzles[1].localEulerAngles = localAngle;//回転する
+                }
+                else if(_rotDir)
                 {
                     localAngle.z -= _rotationInterval;// 角度を設定
                     _muzzles[1].localEulerAngles = localAngle;//回転する
                 }
-                else
-                {
-                    //マズルを回転する                  
-                    localAngle.z += _rotationInterval;// 角度を設定
-                    _muzzles[1].localEulerAngles = localAngle;//回転する
-                }               
             }
             //弾の見た目を変える
             _firstPattern = Random.Range(0, _bullet.Length);
