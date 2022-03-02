@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 public class ButtonSelect : MonoBehaviour
 {
     Button _button;
+    Animator _animator;
 
     [SerializeField]
     [Header("クリックしたときに自分を消すかどうか")]
@@ -40,9 +41,14 @@ public class ButtonSelect : MonoBehaviour
     [Header("一緒に消すパネル")]
     GameObject[] _deletePanel = null;
 
+    [SerializeField]
+    [Header("再生するアニメーション")]
+    string _clip = null;
+
     private async void OnEnable()
     {
         _button = GetComponent<Button>();
+        _animator = GetComponent<Animator>();
         if (_isDelayMode)
         {
             await Task.Delay(_delay);
@@ -50,6 +56,10 @@ public class ButtonSelect : MonoBehaviour
         if(_isFirstSelectButton)
         {
             _button.Select();
+        }
+        if(_clip != null)
+        {
+            _animator.Play(_clip);
         }
     }
 
