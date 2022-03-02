@@ -586,6 +586,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 177983618}
+        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
+        m_MethodName: Click
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &177983616
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -636,9 +648,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _firstSelectButton: {fileID: 177983615}
-  _delay: 1500
+  _isDelete: 1
   _isDelayMode: 1
+  _delay: 1500
+  _isFirstSelectButton: 1
+  _isMustCallNextButton: 1
+  _delayCallButton: 500
+  _callNextButtons:
+  - {fileID: 2129243627}
+  - {fileID: 1200900378}
+  - {fileID: 646477669}
+  _isMustDeleteButton: 1
+  _deleteButtons:
+  - {fileID: 1797667348}
+  - {fileID: 1110586546}
 --- !u!82 &177983619
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2323,6 +2346,7 @@ GameObject:
   - component: {fileID: 646477672}
   - component: {fileID: 646477671}
   - component: {fileID: 646477675}
+  - component: {fileID: 646477676}
   m_Layer: 5
   m_Name: Back Buttton
   m_TagString: Untagged
@@ -2414,31 +2438,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1003514362}
-        m_TargetAssemblyTypeName: UnityEngine.Playables.PlayableDirector, UnityEngine
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 642138177}
-        m_TargetAssemblyTypeName: UnityEngine.Playables.PlayableDirector, UnityEngine
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1627073649}
         m_TargetAssemblyTypeName: UnityEngine.Playables.PlayableDirector, UnityEngine
         m_MethodName: Play
         m_Mode: 1
@@ -2462,21 +2462,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1442782264}
-        m_TargetAssemblyTypeName: UnityEngine.Playables.PlayableDirector, UnityEngine
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2091347012}
-        m_TargetAssemblyTypeName: UnityEngine.Playables.PlayableDirector, UnityEngine
-        m_MethodName: Play
+      - m_Target: {fileID: 646477676}
+        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
+        m_MethodName: Click
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2689,6 +2677,32 @@ PlayableDirector:
     value: {fileID: 704063479}
   m_ExposedReferences:
     m_References: []
+--- !u!114 &646477676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 646477669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isDelete: 1
+  _isDelayMode: 0
+  _delay: 1500
+  _isFirstSelectButton: 0
+  _isMustCallNextButton: 1
+  _delayCallButton: 500
+  _callNextButtons:
+  - {fileID: 177983613}
+  - {fileID: 1797667348}
+  - {fileID: 1110586546}
+  _isMustDeleteButton: 1
+  _deleteButtons:
+  - {fileID: 2129243627}
+  - {fileID: 1200900378}
 --- !u!1 &704063475
 GameObject:
   m_ObjectHideFlags: 0
@@ -4090,40 +4104,46 @@ PlayableDirector:
     value: {fileID: 1110586546}
   - key: {fileID: 0}
     value: {fileID: 177983613}
-  - key: {fileID: 0}
+  - key: {fileID: 7069723907113072593, guid: 078deb55e5e298041a90e8454411a577, type: 2}
     value: {fileID: 2031374473}
-  - key: {fileID: 0}
+  - key: {fileID: -4652744636957447412, guid: 078deb55e5e298041a90e8454411a577, type: 2}
     value: {fileID: 722009179}
-  - key: {fileID: 0}
+  - key: {fileID: -2528328089412285959, guid: 078deb55e5e298041a90e8454411a577, type: 2}
     value: {fileID: 737732177}
-  - key: {fileID: 0}
+  - key: {fileID: -339201382797878055, guid: 078deb55e5e298041a90e8454411a577, type: 2}
     value: {fileID: 556518685}
-  - key: {fileID: 0}
+  - key: {fileID: 6317757167247456151, guid: 078deb55e5e298041a90e8454411a577, type: 2}
     value: {fileID: 114807610}
-  - key: {fileID: 0}
+  - key: {fileID: 860504326699850284, guid: 078deb55e5e298041a90e8454411a577, type: 2}
     value: {fileID: 1707750131}
-  - key: {fileID: 0}
+  - key: {fileID: -5050515149298583212, guid: 078deb55e5e298041a90e8454411a577, type: 2}
     value: {fileID: 276973842}
-  - key: {fileID: 0}
+  - key: {fileID: 1760234474595388194, guid: 078deb55e5e298041a90e8454411a577, type: 2}
     value: {fileID: 972811648}
-  - key: {fileID: 0}
+  - key: {fileID: -9212976780013482926, guid: 078deb55e5e298041a90e8454411a577, type: 2}
     value: {fileID: 1973446025}
-  - key: {fileID: 0}
+  - key: {fileID: 2435348646766390744, guid: 078deb55e5e298041a90e8454411a577, type: 2}
     value: {fileID: 465754412}
-  - key: {fileID: 0}
+  - key: {fileID: -5037029199246188772, guid: 078deb55e5e298041a90e8454411a577, type: 2}
     value: {fileID: 1482954189}
-  - key: {fileID: 0}
+  - key: {fileID: -8502974837764018813, guid: 078deb55e5e298041a90e8454411a577, type: 2}
     value: {fileID: 251663996}
-  - key: {fileID: 0}
+  - key: {fileID: -5758585779002340602, guid: 078deb55e5e298041a90e8454411a577, type: 2}
     value: {fileID: 1205279493}
-  - key: {fileID: 0}
+  - key: {fileID: -8938520132526213703, guid: 078deb55e5e298041a90e8454411a577, type: 2}
     value: {fileID: 704063479}
+  - key: {fileID: -2000964437001028132, guid: 078deb55e5e298041a90e8454411a577, type: 2}
+    value: {fileID: 177983620}
+  - key: {fileID: -264959035978317573, guid: 078deb55e5e298041a90e8454411a577, type: 2}
+    value: {fileID: 1797667350}
+  - key: {fileID: -5125813446345853761, guid: 078deb55e5e298041a90e8454411a577, type: 2}
+    value: {fileID: 1110586548}
   - key: {fileID: -3285623090136534248, guid: 078deb55e5e298041a90e8454411a577, type: 2}
-    value: {fileID: 177983613}
+    value: {fileID: 0}
   - key: {fileID: -4457866899620325252, guid: 078deb55e5e298041a90e8454411a577, type: 2}
-    value: {fileID: 1797667348}
+    value: {fileID: 0}
   - key: {fileID: -5098583860969400847, guid: 078deb55e5e298041a90e8454411a577, type: 2}
-    value: {fileID: 1110586546}
+    value: {fileID: 0}
   m_ExposedReferences:
     m_References: []
 --- !u!224 &1068089683
@@ -4161,6 +4181,7 @@ GameObject:
   - component: {fileID: 1110586549}
   - component: {fileID: 1110586548}
   - component: {fileID: 1110586554}
+  - component: {fileID: 1110586555}
   m_Layer: 5
   m_Name: GameQuitButton
   m_TagString: Untagged
@@ -4421,6 +4442,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 177983618}
+        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
+        m_MethodName: Click
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1110586552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4471,6 +4504,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dd510aa22146db4f84d9ec0ec6837a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1110586555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1110586546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isDelete: 1
+  _isDelayMode: 0
+  _delay: 1500
+  _isFirstSelectButton: 0
+  _isMustCallNextButton: 0
+  _delayCallButton: 500
+  _callNextButtons: []
+  _isMustDeleteButton: 1
+  _deleteButtons:
+  - {fileID: 177983613}
+  - {fileID: 1797667348}
 --- !u!1 &1114976579
 GameObject:
   m_ObjectHideFlags: 0
@@ -4586,6 +4642,7 @@ GameObject:
   - component: {fileID: 1200900382}
   - component: {fileID: 1200900381}
   - component: {fileID: 1200900380}
+  - component: {fileID: 1200900384}
   m_Layer: 5
   m_Name: Player02 Butoon
   m_TagString: Untagged
@@ -4689,6 +4746,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1200900384}
+        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
+        m_MethodName: Click
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1200900382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4727,6 +4796,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1200900378}
   m_CullTransparentMesh: 1
+--- !u!114 &1200900384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1200900378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isDelete: 0
+  _isDelayMode: 1
+  _delay: 1500
+  _isFirstSelectButton: 0
+  _isMustCallNextButton: 1
+  _delayCallButton: 500
+  _callNextButtons:
+  - {fileID: 1940633021}
+  _isMustDeleteButton: 0
+  _deleteButtons: []
 --- !u!1 &1205279489
 GameObject:
   m_ObjectHideFlags: 0
@@ -5207,8 +5298,9 @@ GameObject:
   - component: {fileID: 1391689429}
   - component: {fileID: 1391689433}
   - component: {fileID: 1391689434}
+  - component: {fileID: 1391689435}
   m_Layer: 5
-  m_Name: Cerect OK Button
+  m_Name: StageSelectButton1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5261,6 +5353,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1391689434}
         m_TargetAssemblyTypeName: SceneLoadForString, Assembly-CSharp
         m_MethodName: LoadScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1391689435}
+        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
+        m_MethodName: Click
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5360,6 +5464,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sceneName: StageSelectPlayer1
+--- !u!114 &1391689435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1391689428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isDelete: 1
+  _isDelayMode: 0
+  _delay: 1500
+  _isFirstSelectButton: 0
+  _isMustCallNextButton: 0
+  _delayCallButton: 500
+  _callNextButtons: []
+  _isMustDeleteButton: 0
+  _deleteButtons: []
 --- !u!1 &1408076266
 GameObject:
   m_ObjectHideFlags: 0
@@ -5986,6 +6111,7 @@ GameObject:
   - component: {fileID: 1510398137}
   - component: {fileID: 1510398139}
   - component: {fileID: 1510398140}
+  - component: {fileID: 1510398138}
   m_Layer: 5
   m_Name: Start Button
   m_TagString: Untagged
@@ -6059,18 +6185,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1627073649}
-        m_TargetAssemblyTypeName: UnityEngine.Playables.PlayableDirector, UnityEngine
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1510398139}
         m_TargetAssemblyTypeName: UnityEngine.Playables.PlayableDirector, UnityEngine
         m_MethodName: Play
@@ -6131,18 +6245,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 988560971}
-        m_TargetAssemblyTypeName: UnityEngine.Playables.PlayableDirector, UnityEngine
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1662762521}
         m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
         m_MethodName: Play
@@ -6158,6 +6260,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1342991746}
         m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
         m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1510398138}
+        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
+        m_MethodName: Click
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6220,6 +6334,30 @@ MonoBehaviour:
   m_Events:
     m_Signals: []
     m_Events: []
+--- !u!114 &1510398138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1510398132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isDelete: 1
+  _isDelayMode: 0
+  _delay: 1500
+  _isFirstSelectButton: 1
+  _isMustCallNextButton: 1
+  _delayCallButton: 500
+  _callNextButtons:
+  - {fileID: 177983613}
+  - {fileID: 1797667348}
+  - {fileID: 1110586546}
+  _isMustDeleteButton: 0
+  _deleteButtons: []
 --- !u!320 &1510398139
 PlayableDirector:
   m_ObjectHideFlags: 0
@@ -7372,6 +7510,7 @@ GameObject:
   - component: {fileID: 1797667352}
   - component: {fileID: 1797667351}
   - component: {fileID: 1797667350}
+  - component: {fileID: 1797667356}
   m_Layer: 5
   m_Name: Operation settings Button
   m_TagString: Untagged
@@ -7632,6 +7771,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 177983618}
+        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
+        m_MethodName: Click
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1797667354
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7670,6 +7821,29 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1797667348}
   m_CullTransparentMesh: 1
+--- !u!114 &1797667356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1797667348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isDelete: 1
+  _isDelayMode: 0
+  _delay: 1500
+  _isFirstSelectButton: 0
+  _isMustCallNextButton: 0
+  _delayCallButton: 500
+  _callNextButtons: []
+  _isMustDeleteButton: 1
+  _deleteButtons:
+  - {fileID: 177983613}
+  - {fileID: 1110586546}
 --- !u!1 &1808805772
 GameObject:
   m_ObjectHideFlags: 0
@@ -8197,8 +8371,9 @@ GameObject:
   - component: {fileID: 1940633023}
   - component: {fileID: 1940633026}
   - component: {fileID: 1940633027}
+  - component: {fileID: 1940633028}
   m_Layer: 5
-  m_Name: Cerect OK Button
+  m_Name: StageSelectButton2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8280,6 +8455,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1391689435}
+        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
+        m_MethodName: Click
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1940633024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8350,6 +8537,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sceneName: StageSelectPlayer2
+--- !u!114 &1940633028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1940633021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isDelete: 1
+  _isDelayMode: 0
+  _delay: 1500
+  _isFirstSelectButton: 0
+  _isMustCallNextButton: 0
+  _delayCallButton: 500
+  _callNextButtons: []
+  _isMustDeleteButton: 0
+  _deleteButtons: []
 --- !u!1 &1973446021
 GameObject:
   m_ObjectHideFlags: 0
@@ -8462,9 +8670,8 @@ GameObject:
   - component: {fileID: 1991020342}
   - component: {fileID: 1991020341}
   - component: {fileID: 1991020340}
-  - component: {fileID: 1991020343}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Buttons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8553,21 +8760,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &1991020343
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1991020338}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _firstSelectButton: {fileID: 1510398134}
-  _delay: 1500
-  _isDelayMode: 0
 --- !u!1 &2031374469
 GameObject:
   m_ObjectHideFlags: 0
@@ -8979,6 +9171,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1200900384}
+        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
+        m_MethodName: Click
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2129243631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9029,9 +9233,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _firstSelectButton: {fileID: 2129243630}
-  _delay: 1500
+  _isDelete: 0
   _isDelayMode: 1
+  _delay: 1500
+  _isFirstSelectButton: 1
+  _isMustCallNextButton: 1
+  _delayCallButton: 500
+  _callNextButtons:
+  - {fileID: 1391689428}
+  _isMustDeleteButton: 0
+  _deleteButtons: []
 --- !u!222 &767248155780946600
 CanvasRenderer:
   m_ObjectHideFlags: 0
