@@ -65,6 +65,9 @@ public class BossController : EnemyBase
                 RandomPatternChange();
             };
         }
+
+        //必殺技を発動するHPのタイミングの設定ミスを防ぐために降順(大きい順)に並べ替える
+        _superAttackTimingHp = _superAttackTimingHp.OrderByDescending(x => x).ToArray();
     }
 
     void Start()
@@ -91,9 +94,15 @@ public class BossController : EnemyBase
             SuperAttack();
         }
     }
-
+    
+    /// <summary>
+    /// 必殺技の処理
+    /// 通常時のアクションを空にして
+    /// 必殺技のアクションを追加する
+    /// </summary>
     private void SuperAttack()
     {
+        Debug.Log($"ボスのHPは{EnemyHp}\n{_timingIndex}番目の必殺技を実行します");
         _currentAttackAction = null;
         _currentMoveAction = null;
 
