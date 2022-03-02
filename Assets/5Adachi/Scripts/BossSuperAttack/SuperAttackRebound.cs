@@ -2,10 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SuperAttackRebound : MonoBehaviour
+public class SuperAttackRebound : BossAttackAction
 {
-    /// <summary>形状や大きさの概念を持った物質</summary>
-    Rigidbody2D _rb;    
     /// <summary>タイマー</summary>
     float _timer = 0f;
     /// <summary>右側の範囲</summary>
@@ -49,20 +47,32 @@ public class SuperAttackRebound : MonoBehaviour
     /// <summary>最大の回転値</summary>
     const float MAXIMUM_ROTATION_RANGE = 360f;
 
-    void Start()
+    public override System.Action ActinoEnd { get; set; }
+
+    public override void Enter(BossController contlloer)
     {
-        _rb = GetComponent<Rigidbody2D>();//《Start》でゲットコンポーネント
-        StartCoroutine(Rebound()); //コルーチンを発動
+        StartCoroutine(Rebound(contlloer)); //コルーチンを発動
     }
-    void Update()
+
+    public override void ManagedUpdate(BossController contlloer)
     {
         _timer += Time.deltaTime;//タイマー
+
+        if (_timer >= _activationTime)
+        {
+            ActinoEnd?.Invoke();
+        }
+    }
+
+    public override void Exit(BossController contlloer)
+    {
+        StopAllCoroutines();
     }
 
     /// <summary>動きながら発動できる必殺技
     /// <para>劣化版Fireworkで、弾が画面端につくと跳ね返る特殊なものを使っている</para>
     /// <para>Firework = 花火のような軌道、全方位に発射</para></summary>
-    IEnumerator Rebound()
+    IEnumerator Rebound(BossController controller)
     {
         _timer = RESET_TIME;//タイムリセット
 
@@ -71,37 +81,37 @@ public class SuperAttackRebound : MonoBehaviour
         {
             yield return new WaitForSeconds(JUDGMENT_TIME);//判定回数の制限
             //横方向
-            _horizontalDir = _superAttackPosition.x - transform.position.x;
+            _horizontalDir = _superAttackPosition.x - controller.transform.position.x;
             //縦方向
-            _verticalDir = _superAttackPosition.y - transform.position.y;
+            _verticalDir = _superAttackPosition.y - controller.transform.position.y;
             //横の範囲の条件式      
-            _rightRange = transform.position.x < _superAttackPosition.x + PLAYER_POS_OFFSET;
-            _leftRange = transform.position.x > _superAttackPosition.x - PLAYER_POS_OFFSET;
+            _rightRange = controller.transform.position.x < _superAttackPosition.x + PLAYER_POS_OFFSET;
+            _leftRange = controller.transform.position.x > _superAttackPosition.x - PLAYER_POS_OFFSET;
             //縦の範囲の条件式
-            _upperRange = transform.position.y < _superAttackPosition.y + PLAYER_POS_OFFSET;
-            _downRange = transform.position.y > _superAttackPosition.y - PLAYER_POS_OFFSET;
+            _upperRange = controller.transform.position.y < _superAttackPosition.y + PLAYER_POS_OFFSET;
+            _downRange = controller.transform.position.y > _superAttackPosition.y - PLAYER_POS_OFFSET;
             //行きたいポジションに移動する
             //近かったら
             if (_rightRange && _leftRange && _upperRange && _downRange)
             {
                 Debug.Log("結果は" + _rightRange + _leftRange + _upperRange + _downRange);
                 //スムーズに移動
-                _rb.velocity = new Vector2(_horizontalDir, _verticalDir) * _speed;
+                controller.Rb.velocity = new Vector2(_horizontalDir, _verticalDir) * _speed;
             }
             //遠かったら
             else
             {
                 Debug.Log("結果は" + _rightRange + _leftRange + _upperRange + _downRange);
                 //安定して移動
-                _rb.velocity = new Vector2(_horizontalDir, _verticalDir).normalized * _speed;
+                controller.Rb.velocity = new Vector2(_horizontalDir, _verticalDir).normalized * _speed;
             }
 
             //数秒経ったら
             if (_timer >= _waitTime)
             {
                 Debug.Log("stop");
-                _rb.velocity = Vector2.zero;//停止
-                transform.position = _superAttackPosition;//ボスの位置を修正
+                controller.Rb.velocity = Vector2.zero;//停止
+                controller.transform.position = _superAttackPosition;//ボスの位置を修正
                 break;//終わり
             }
         }
@@ -131,4 +141,5 @@ public class SuperAttackRebound : MonoBehaviour
         }
         yield break;//終了
     }
+
 }

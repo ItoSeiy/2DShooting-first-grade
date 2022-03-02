@@ -52,6 +52,8 @@ public class BossNormalAttack01 : BossAttackAction
             
             //ターゲット（プレイヤー）の方向を計算
             _dir = (GameManager.Instance.Player.transform.position - _muzzles[0].transform.position);
+            _dir.x = 0;
+            _dir.y = 0;
             //ターゲット（プレイヤー）の方向に回転
             _muzzles[0].transform.rotation = Quaternion.FromToRotation(Vector3.up, _dir);
 

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6724580298283527616}
   - component: {fileID: 7331940674577777127}
   - component: {fileID: 6950516875007451501}
+  - component: {fileID: -491653068249801864}
   m_Layer: 6
   m_Name: Boss01SuperAttackBullet1
   m_TagString: EnemyBullet
@@ -113,7 +114,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6489730762931892871}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dcfbbb34da785a1408a367b520fc5fa6, type: 3}
   m_Name: 
@@ -140,3 +141,22 @@ CapsuleCollider2D:
   m_Offset: {x: 0.01, y: 0.01}
   m_Size: {x: 0.25, y: 1.2}
   m_Direction: 0
+--- !u!114 &-491653068249801864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6489730762931892871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f8a6131daba81842aac2f901423fd05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _damage: 10
+  _speed: 4
+  _bulletMoveMethod: 1
+  _opponentTag: Player
+  _gameZoneTag: Finish
+  _parentTag: Parent
+  _delayChangeDirTime: 2

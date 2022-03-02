@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class SuperAttackDelayFollow : BossAttackAction
 {
-    /// <summary>剛体</summary>
-    Rigidbody2D _rb;  
     /// <summary>タイマー</summary>
     float _timer = 0f;
     /// <summary>右側の範囲</summary>
@@ -63,6 +61,11 @@ public class SuperAttackDelayFollow : BossAttackAction
     public override void ManagedUpdate(BossController contlloer)
     {
         _timer += Time.deltaTime;//タイマー
+
+        if(_timer >= _activationTime)
+        {
+            ActinoEnd?.Invoke();
+        }
     }
 
     public override void Exit(BossController contlloer)

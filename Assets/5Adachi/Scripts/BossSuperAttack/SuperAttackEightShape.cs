@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class SuperAttackEightShape : BossAttackAction
 {
-    /// <summary>このスクリプトで使うタイマー</summary>
-    float _defaultTimer = 0f;
     /// <summary>タイマー</summary>
     float _timer = 0f;
     /// <summary>右側の範囲</summary>
@@ -44,8 +42,6 @@ public class SuperAttackEightShape : BossAttackAction
     [SerializeField, Header("発射する弾の設定")] PoolObjectType[] _bullet;
     /// <summary>弾の見た目を変える間隔(秒)</summary>
     [SerializeField,Header("弾の見た目を変える間隔(秒)")] float _switchInterval = 2f;
-    /// <summary>この行動から出る時間</summary>
-    [SerializeField, Header("この行動から出る時間")] float _endingTime = 30f;
     /// <summary>修正値</summary>
     const float PLAYER_POS_OFFSET = 0.5f;
     /// <summary>判定回数の制限</summary>
@@ -63,10 +59,9 @@ public class SuperAttackEightShape : BossAttackAction
 
     public override void ManagedUpdate(BossController contlloer)
     {
-        _defaultTimer += Time.deltaTime;//タイマー
-        _timer += Time.deltaTime;
+        _timer += Time.deltaTime;//タイマー
 
-        if(_timer >= _endingTime)
+        if (_timer >= _activationTime)
         {
             ActinoEnd?.Invoke();
         }
@@ -80,7 +75,7 @@ public class SuperAttackEightShape : BossAttackAction
     /// <summary>8の字のような軌道</summary>
     IEnumerator EightShape(BossController controller)
     {
-        _defaultTimer = RESET_TIME;//タイムリセット
+        _timer = RESET_TIME;//タイムリセット
 
         //必殺を放つときはBOSSは放つ前にｘを0、Ｙを2をの位置(笑)に、移動する
         while (true)
@@ -113,7 +108,7 @@ public class SuperAttackEightShape : BossAttackAction
             }
 
             //数秒経ったら
-            if (_defaultTimer >= _waitTime)
+            if (_timer >= _waitTime)
             {
                 Debug.Log("stop");
                 controller.Rb.velocity = Vector2.zero;//停止
@@ -122,13 +117,13 @@ public class SuperAttackEightShape : BossAttackAction
             }
         }
 
-        _defaultTimer = RESET_TIME;//タイムリセット
+        _timer = RESET_TIME;//タイムリセット
 
         //必殺技発動
         while (true)
         {
             //数秒経つごとに弾の見た目を変える
-            if (_defaultTimer >= _switchInterval + _switchIntervalOffset)
+            if (_timer >= _switchInterval + _switchIntervalOffset)
             {
                 //弾の見た目を変える
                 _firstPattern = Random.Range(0, _bullet.Length);
@@ -161,7 +156,7 @@ public class SuperAttackEightShape : BossAttackAction
 
             yield return new WaitForSeconds(_attackInterval);//攻撃頻度(秒)
             //数秒経ったら
-            if (_defaultTimer >= _activationTime)
+            if (_timer >= _activationTime)
             {
                 break;//終了
             }

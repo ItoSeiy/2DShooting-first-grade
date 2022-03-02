@@ -7,8 +7,6 @@ public class BossNormalAttack05 : BossAttackAction
     /// <summary>方向</summary>
     Vector3 _dir;
     /// <summary>このスクリプトで使うタイマー</summary>
-    float _defaultTimer = 0f;
-    /// <summary>タイマー</summary>
     float _timer = 0f;
     /// <summary>プレイヤーのオブジェクト</summary>
     private GameObject _player;
@@ -42,14 +40,14 @@ public class BossNormalAttack05 : BossAttackAction
     
     public override void Enter(BossController contlloer)
     {
-        _defaultTimer = 0f;
+        _timer = 0f;
         _timer = 0f;
         StartCoroutine(Attack(contlloer));
     }
 
     public override void ManagedUpdate(BossController contlloer)
     {
-        _defaultTimer += Time.deltaTime;//タイマー
+        _timer += Time.deltaTime;//タイマー
         _timer += Time.deltaTime;
 
         if(_timer >= _endingTime)
@@ -68,11 +66,11 @@ public class BossNormalAttack05 : BossAttackAction
     {
         while (true)
         {      
-            if (_defaultTimer >= _perfectTime)
+            if (_timer >= _perfectTime)
             {
                 //弾の見た目をランダムで変える
                 _pattern = Random.Range(0, _bullet.Length);
-                _defaultTimer = 0;//タイマーをリセット
+                _timer = 0;//タイマーをリセット
                 _perfect = true;//発動
             }
 
