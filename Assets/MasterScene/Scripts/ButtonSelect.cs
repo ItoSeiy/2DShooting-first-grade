@@ -43,7 +43,7 @@ public class ButtonSelect : MonoBehaviour
 
     [SerializeField]
     [Header("再生するアニメーション")]
-    string _clip = null;
+    string _animStateName = null;
 
     private async void OnEnable()
     {
@@ -57,9 +57,9 @@ public class ButtonSelect : MonoBehaviour
         {
             _button.Select();
         }
-        if(_clip != null)
+        if(_animStateName != null && _animator != null)
         {
-            _animator.Play(_clip);
+            _animator.Play(_animStateName);
         }
     }
 
