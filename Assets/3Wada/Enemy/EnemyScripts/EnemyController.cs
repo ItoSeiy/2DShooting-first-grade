@@ -208,12 +208,12 @@ public class EnemyController : EnemyBase
 
     private void OnDestroy()
     {
-        SoundManager.Instance.UseSound(SoundType.None);
+        SoundManager.Instance.UseSound(_onDestroySFX);
     }
 
     protected override void OnGetDamage()
     {
-        SoundManager.Instance.UseSound(SoundType.None);
+        SoundManager.Instance.UseSound(_getDamageSFX);
     }
 
     enum GeneratePos
