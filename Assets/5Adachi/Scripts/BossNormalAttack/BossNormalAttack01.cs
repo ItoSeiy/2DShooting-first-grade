@@ -49,14 +49,15 @@ public class BossNormalAttack01 : BossAttackAction
         {
             //弾の見た目をランダムで変える
             _pattern = Random.Range(0, _bullet.Length);
-            
+
             //ターゲット（プレイヤー）の方向を計算
             _dir = (GameManager.Instance.Player.transform.position - _muzzles[0].transform.position);
             //ターゲット（プレイヤー）の方向に回転
             _muzzles[0].transform.rotation = Quaternion.FromToRotation(Vector3.up, _dir);
 
+            yield return new WaitForSeconds(1f);
             //親オブジェクトのマズル
-            
+
             //弾をマズル0の向きに合わせて弾を発射
             ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet[_pattern]).transform.rotation = _muzzles[0].rotation;
 

@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class SuperAttackFirework : BossAttackAction
 {   
-    /// <summary>このスクリプトで使うタイマー</summary>
-    float _defaultTimer = 0f;
     /// <summary>タイマー</summary>
     float _timer = 0f;
     /// <summary>右側の範囲</summary>
@@ -58,18 +56,23 @@ public class SuperAttackFirework : BossAttackAction
 
     public override void ManagedUpdate(BossController contlloer)
     {
-        _defaultTimer += Time.deltaTime;//タイマー
+        _timer += Time.deltaTime;//タイマー
+
+        if (_timer >= _activationTime)
+        {
+            ActinoEnd?.Invoke();
+        }
     }
 
     public override void Exit(BossController contlloer)
     {
-        
+        StopAllCoroutines();
     }
 
     /// <summary>花火のような軌道、全方位に発射</summary>
     IEnumerator Firework(BossController controller)
     {
-        _defaultTimer = RESET_TIME;//タイムリセット
+        _timer = RESET_TIME;//タイムリセット
 
         //必殺を放つときはBOSSは放つ前にｘを0、Ｙを2をの位置(笑)に、移動する
         while (true)
@@ -102,7 +105,7 @@ public class SuperAttackFirework : BossAttackAction
             }
 
             //数秒経ったら
-            if (_defaultTimer >= _waitTime)
+            if (_timer >= _waitTime)
             {
                 Debug.Log("stop");
                 controller.Rb.velocity = Vector2.zero;//停止
@@ -110,7 +113,7 @@ public class SuperAttackFirework : BossAttackAction
                 break;//終わり
             }
         }
-        _defaultTimer = 0f;//タイムリセット
+        _timer = 0f;//タイムリセット
 
         //必殺技発動
         while (true)
@@ -130,7 +133,7 @@ public class SuperAttackFirework : BossAttackAction
 
             yield return new WaitForSeconds(_attackInterval);//攻撃頻度(秒)
             //数秒経ったら
-            if (_defaultTimer >= _activationTime)
+            if (_timer >= _activationTime)
             {
                 break;//終了
             }

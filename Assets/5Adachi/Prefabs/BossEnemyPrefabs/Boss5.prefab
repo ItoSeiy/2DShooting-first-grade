@@ -60,7 +60,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1868784747171270441}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.03, y: -0.13, z: -0.22755957}
+  m_LocalPosition: {x: -4.03, y: -0.13, z: 0}
   m_LocalScale: {x: 0.065246, y: 0.065246, z: 0.065246}
   m_Children:
   - {fileID: 1868784747635064904}
@@ -184,19 +184,9 @@ MonoBehaviour:
   _itemDropRangeX: 2
   _itemDropRangeY: 2
   _data:
-    actionPattern:
-    - bossAttackActions:
-      - {fileID: 8692600258348756015}
-      - {fileID: 8692600258348756015}
-      - {fileID: 8692600258348756015}
-      - {fileID: 8692600258348756015}
-      - {fileID: 8692600258348756015}
-      bossMoveActions:
-      - {fileID: 1868784748519432249}
-      - {fileID: 1868784748519432249}
-      - {fileID: 1868784748519432249}
-      - {fileID: 1868784748519432249}
-      - {fileID: 7355050354034090236}
+    actionPatterns: []
+    bossSuperAttackActons: []
+  _superAttackTimingHp: []
 --- !u!1 &1868784747635064903
 GameObject:
   m_ObjectHideFlags: 0
