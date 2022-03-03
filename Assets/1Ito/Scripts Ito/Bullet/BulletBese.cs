@@ -21,7 +21,7 @@ public abstract class BulletBese : MonoBehaviour
     private float _damage = 10f;
 
     [SerializeField, Header("Bulletのスピード")] 
-    float _speed = default;
+    float _speed = 4f;
 
     [SerializeField, Header("Bulletの動きをどの関数で呼び出すか")]
     BulletMoveMethod _bulletMoveMethod = BulletMoveMethod.Update;

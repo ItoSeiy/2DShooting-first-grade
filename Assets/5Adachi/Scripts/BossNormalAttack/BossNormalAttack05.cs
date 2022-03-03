@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossNormalAttack05 : MonoBehaviour
+public class BossNormalAttack05 : BossAttackAction
 {
     /// <summary>方向</summary>
     Vector3 _dir;
-    /// <summary>タイマー</summary>
+    /// <summary>このスクリプトで使うタイマー</summary>
     float _timer = 0f;
     /// <summary>プレイヤーのオブジェクト</summary>
     private GameObject _player;
@@ -23,30 +23,46 @@ public class BossNormalAttack05 : MonoBehaviour
     /// <summary>発射する弾を設定できる</summary>
     [SerializeField, Header("発射する弾の設定")] PoolObjectType[] _bullet;
     /// <summary>発射する弾を設定できる</summary>
-    [SerializeField, Header("発射する弾の設定(Boss05DefaultBullet2)")] PoolObjectType _secondBullet;
+    [SerializeField, Header("発射する弾の設定(Boss05DefaultBullet1)")] PoolObjectType _secondBullet;
     /// <summary>マズルの角度間隔</summary>
     [SerializeField, Header("マズルの角度間隔")] float _rotationInterval = 45f;
+    /// <summary>この行動から出る時間</summary>
+    [SerializeField, Header("この行動から出る時間")] float _endingTime = 20f;
     /// <summary>完全な通常攻撃になり始める時間</summary>
     const float _perfectTime = 3f;
     /// <summary>最小の回転値</summary>
     const float MINIMUM_ROT_RANGE = 0f;
     /// <summary>最大の回転値</summary>
     const float MAXIMUM_ROT_RANGE = 360f;
+   
 
-    void Start()
+    public override System.Action ActinoEnd { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+    
+    public override void Enter(BossController contlloer)
     {
-        _timer = 0;
-        _perfect = false;
-        _player = GameObject.FindGameObjectWithTag(_playerTag);
-        StartCoroutine(Attack());
+        _timer = 0f;
+        _timer = 0f;
+        StartCoroutine(Attack(contlloer));
     }
-    private void Update()
+
+    public override void ManagedUpdate(BossController contlloer)
     {
         _timer += Time.deltaTime;//タイマー
+        _timer += Time.deltaTime;
+
+        if(_timer >= _endingTime)
+        {
+            ActinoEnd?.Invoke();
+        }
+    }
+
+    public override void Exit(BossController contlloer)
+    {
+        StopAllCoroutines();
     }
 
     //Attack関数に入れる通常攻撃
-    IEnumerator Attack()
+    IEnumerator Attack(BossController controller)
     {
         while (true)
         {      
@@ -90,4 +106,5 @@ public class BossNormalAttack05 : MonoBehaviour
             yield return new WaitForSeconds(_attackInterval);
         }
     }
+
 }
