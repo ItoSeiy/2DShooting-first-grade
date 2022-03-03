@@ -2,22 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossNormalAttack03 : MonoBehaviour
+public class BossNormalAttack03 : BossAttackAction
 {
     /// <summary>方向</summary>
     Vector3 _dir;
-    /// <summary>プレイヤーのオブジェクト</summary>
-    private GameObject _player;
     /// <summary>マズルの角度間隔</summary>
     float _rotationInterval = 360f;
     /// <summary>発射した回数</summary>
     int _attackCount = 0;
     /// <summary>弾の見た目の種類</summary>
     int _pattern = 0;
+    /// <summary>タイマー</summary>
+    float _timer = 0f;
     /// <summary>発射する最大回数</summary>
     [SerializeField,Header("発射する最大回数")] int _maxAttackCount = 7;
-    /// <summary>プレイヤーのタグ</summary>
-    [SerializeField, Header("playerのtag")] string _playerTag = null;
     /// <summary>バレットを発射するポジション</summary>
     [SerializeField, Header("Bulletを発射するポジション")] Transform[] _muzzles = null;
     /// <summary>攻撃頻度</summary>
@@ -26,6 +24,8 @@ public class BossNormalAttack03 : MonoBehaviour
     [SerializeField, Header("発射する弾の設定")] PoolObjectType[] _bullet;
     /// <summary>最大の弾数</summary>
     [SerializeField,Header("最大の弾数")] int _maximumBulletRange = 11;
+    /// <summary>この行動から出る時間</summary>
+    [SerializeField, Header("この行動から出る時間")] float _endingTime = 20f;
     /// <summary>最小の回転値</summary>
     const float MINIMUM_ROTATION_RANGE = 0f;
     /// <summary>最大の回転値</summary>
@@ -36,14 +36,33 @@ public class BossNormalAttack03 : MonoBehaviour
     const int MAX_BULLET_RANGE_OFFSET = 1;
     /// <summary>発射回数をリセット</summary>
     const int ATTACK_COUNT_RESET = 0;
-    void Start()
+    
+
+    public override System.Action ActinoEnd { get; set; }
+
+    public override void Enter(BossController contlloer)
     {
-        _player = GameObject.FindGameObjectWithTag(_playerTag);//プレイヤーのタグをとってくる
-        StartCoroutine(Attack());
+        _timer = 0f;
+        StartCoroutine(Attack(contlloer));
+    }
+
+    public override void ManagedUpdate(BossController contlloer)
+    {
+        _timer += Time.deltaTime;
+
+        if(_timer >= _endingTime)
+        {
+            ActinoEnd?.Invoke();
+        }
+    }
+
+    public override void Exit(BossController contlloer)
+    {
+        StopAllCoroutines();
     }
 
     //Attack関数に入れる通常攻撃
-    IEnumerator Attack()
+    IEnumerator Attack(BossController controller)
     {
         while (true)
         {
@@ -57,7 +76,7 @@ public class BossNormalAttack03 : MonoBehaviour
                 _attackCount = ATTACK_COUNT_RESET;//発射回数をリセット
             }
             //ターゲット（プレイヤー）の方向を計算
-            _dir = (_player.transform.position - _muzzles[0].transform.position);
+            _dir = (GameManager.Instance.Player.transform.position - _muzzles[0].transform.position);
             //ターゲット（プレイヤー）の方向に回転
             _muzzles[0].transform.rotation = Quaternion.FromToRotation(Vector3.up, _dir);
 
@@ -79,4 +98,5 @@ public class BossNormalAttack03 : MonoBehaviour
             yield return new WaitForSeconds(_attackInterval);//攻撃頻度(秒)
         }
     }
+
 }

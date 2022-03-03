@@ -2,10 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SuperAttackParty : MonoBehaviour
+public class SuperAttackParty : BossAttackAction
 {
-    /// <summary>形状や大きさの概念を持った物質</summary>
-    Rigidbody2D _rb;   
     /// <summary>タイマー</summary>
     float _timer = 0f;
     /// <summary>右側の範囲</summary>
@@ -20,6 +18,8 @@ public class SuperAttackParty : MonoBehaviour
     float _horizontalDir = 0f;
     /// <summary>縦方向</summary>
     float _verticalDir = 0f;
+    /// <summary>弾の見た目の種類</summary>
+    int _pattern = 0;
     /// <summary>必殺前に移動するポジション</summary>
     [SerializeField, Header("必殺前に移動するポジション")] Vector2 _superAttackPosition = new Vector2(0f, 4f);
     /// <summary>バレットを発射するポジション</summary>
@@ -33,7 +33,7 @@ public class SuperAttackParty : MonoBehaviour
     /// <summary>マズルの角度間隔</summary>
     [SerializeField, Header("マズルの角度間隔")] float _rotationInterval = 4f;
     /// <summary>発射する弾を設定できる</summary>
-    [SerializeField, Header("発射する弾の設定(リバウンド)")] PoolObjectType _bullet; 
+    [SerializeField, Header("発射する弾の設定(リバウンド)")] PoolObjectType[] _bullet;
     /// <summary>修正値</summary>
     const float PLAYER_POS_OFFSET = 0.5f;
     /// <summary>判定回数の制限</summary>
@@ -44,18 +44,31 @@ public class SuperAttackParty : MonoBehaviour
     const float MINIMUM_ROTATION_RANGE = 0f;
     /// <summary>最大の回転値</summary>
     const float MAXIMUM_ROTATION_RANGE = 360f;
-    void Start()
+
+    public override System.Action ActinoEnd { get; set; }
+ 
+    public override void Enter(BossController contlloer)
     {
-        _rb = GetComponent<Rigidbody2D>();//《スタート》でゲットコンポーネント
-        StartCoroutine(Party()); //コルーチンを発動    
+        StartCoroutine(Party(contlloer)); //コルーチンを発動
     }
-    void Update()
+
+    public override void ManagedUpdate(BossController contlloer)
     {
         _timer += Time.deltaTime;//タイマー
+
+        if (_timer >= _activationTime)
+        {
+            ActinoEnd?.Invoke();
+        }
+    }
+
+    public override void Exit(BossController contlloer)
+    {
+        StopAllCoroutines();
     }
 
     /// <summary>ランダムな方向に跳ね返る弾を発射する必殺技</summary>
-    IEnumerator Party()
+    IEnumerator Party(BossController controller)
     {
         _timer = RESET_TIME;//タイムリセット
 
@@ -64,37 +77,37 @@ public class SuperAttackParty : MonoBehaviour
         {
             yield return new WaitForSeconds(JUDGMENT_TIME);//判定回数の制限
             //横方向
-            _horizontalDir = _superAttackPosition.x - transform.position.x;
+            _horizontalDir = _superAttackPosition.x - controller.transform.position.x;
             //縦方向
-            _verticalDir = _superAttackPosition.y - transform.position.y;
+            _verticalDir = _superAttackPosition.y - controller.transform.position.y;
             //横の範囲の条件式      
-            _rightRange = transform.position.x < _superAttackPosition.x + PLAYER_POS_OFFSET;
-            _leftRange = transform.position.x > _superAttackPosition.x - PLAYER_POS_OFFSET;
+            _rightRange = controller.transform.position.x < _superAttackPosition.x + PLAYER_POS_OFFSET;
+            _leftRange = controller.transform.position.x > _superAttackPosition.x - PLAYER_POS_OFFSET;
             //縦の範囲の条件式
-            _upperRange = transform.position.y < _superAttackPosition.y + PLAYER_POS_OFFSET;
-            _downRange = transform.position.y > _superAttackPosition.y - PLAYER_POS_OFFSET;
+            _upperRange = controller.transform.position.y < _superAttackPosition.y + PLAYER_POS_OFFSET;
+            _downRange = controller.transform.position.y > _superAttackPosition.y - PLAYER_POS_OFFSET;
             //行きたいポジションに移動する
             //近かったら
             if (_rightRange && _leftRange && _upperRange && _downRange)
             {
                 Debug.Log("結果は" + _rightRange + _leftRange + _upperRange + _downRange);
                 //スムーズに移動
-                _rb.velocity = new Vector2(_horizontalDir, _verticalDir) * _speed;
+                controller.Rb.velocity = new Vector2(_horizontalDir, _verticalDir) * _speed;
             }
             //遠かったら
             else
             {
                 Debug.Log("結果は" + _rightRange + _leftRange + _upperRange + _downRange);
                 //安定して移動
-                _rb.velocity = new Vector2(_horizontalDir, _verticalDir).normalized * _speed;
+                controller.Rb.velocity = new Vector2(_horizontalDir, _verticalDir).normalized * _speed;
             }
 
             //数秒経ったら
             if (_timer >= _waitTime)
             {
                 Debug.Log("stop");
-                _rb.velocity = Vector2.zero;//停止
-                transform.position = _superAttackPosition;//ボスの位置を修正
+                controller.Rb.velocity = Vector2.zero;//停止
+                controller.transform.position = _superAttackPosition;//ボスの位置を修正
                 break;//終わり
             }
         }
@@ -104,6 +117,7 @@ public class SuperAttackParty : MonoBehaviour
         //必殺技発動
         while (true)
         {
+            _pattern = Random.Range(0, _bullet.Length);
             ///マズルを回転する///
             Vector3 localAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
             //ランダムな角度を設定（（　0度　～　360度/マズルの角度間隔　）* マズルの角度間隔　）の範囲
@@ -111,7 +125,7 @@ public class SuperAttackParty : MonoBehaviour
             _muzzles[0].localEulerAngles = localAngle;//回転する
 
             //弾をマズルの向きに合わせて弾を発射
-            ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet).transform.rotation = _muzzles[0].rotation;
+            ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet[_pattern]).transform.rotation = _muzzles[0].rotation;
 
             yield return new WaitForSeconds(JUDGMENT_TIME);//判定回数の調整
 
@@ -123,4 +137,5 @@ public class SuperAttackParty : MonoBehaviour
         }
         yield break;//終了
     }
+
 }

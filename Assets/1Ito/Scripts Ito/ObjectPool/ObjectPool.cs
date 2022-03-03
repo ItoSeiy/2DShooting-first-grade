@@ -115,7 +115,9 @@ public enum PoolObjectType
     BossDefaultBullet2,
     BossDefaultBullet3,
     BossDefaultBullet4,
-    BossDefaultBullet5, 
+    BossDefaultBullet5,
+    BossDefaultBullet6,
+    BossDefaultBullet7,
     //ボス5専用の弾
     Boss05DefaultBullet1,
 

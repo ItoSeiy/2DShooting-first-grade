@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 793565561773093663}
   m_Layer: 6
   m_Name: BossDefaultBullet5
-  m_TagString: Bullet
+  m_TagString: EnemyBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 118795482415642969}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.2662046, y: 0.31631705, z: -3.7688897}
-  m_LocalScale: {x: 1.1770029, y: 1.1770029, z: 1.1770029}
+  m_LocalScale: {x: 0.39936, y: 0.39936, z: 0.39936}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -84,13 +84,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damage: 10
-  _direction: {x: 0, y: 1}
   _speed: 2
   _bulletMoveMethod: 1
   _opponentTag: Player
   _gameZoneTag: Finish
   _parentTag: Parent
-  _playerTag: Player
 --- !u!212 &793565561773093663
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -131,8 +129,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 43aa5958ff9947e41970b1ab8b556e86, type: 3}
-  m_Color: {r: 0, g: 0.59339666, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 1723a3aaf0068ef4aac453e2077656cc, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
