@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 public class ButtonSelect : MonoBehaviour
 {
     Button _button;
-    Animator _animator;
+    Animator _animator = null;
 
     [SerializeField]
     [Header("ƒNƒŠƒbƒN‚µ‚½‚Æ‚«‚É©•ª‚ğÁ‚·‚©‚Ç‚¤‚©")]
@@ -63,7 +63,7 @@ public class ButtonSelect : MonoBehaviour
         }
     }
 
-    public void Click()
+    public async void Click()
     {
         if(_isDelete)
         {
