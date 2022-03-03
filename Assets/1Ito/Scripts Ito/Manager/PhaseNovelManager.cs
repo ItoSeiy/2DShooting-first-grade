@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
 {
-
-    public NovelPhase NovelePhaesState => _novelPhaseState;
+    public NovelPhase NovelePhaesState => _novelPhase;
 
     /// <summary>スプレッドシートシートを読み込むスクリプト(戦闘前)</summary>
     [SerializeField]
@@ -45,14 +44,14 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
 
     /// <summary>モブ敵の出現場所</summary>
     [SerializeField] 
-    Transform _generateTransform;
+    Transform _enemyGeneretePos;
     /// <summary>ボスの出現位置</summary>
     [SerializeField] 
-    Transform _bossgenerateTransform;
+    Transform _bossGeneretePos;
 
     /// <summary>ノベルの状態</summary>
     [SerializeField]
-    NovelPhase _novelPhaseState = NovelPhase.None;
+    NovelPhase _novelPhase = NovelPhase.None;
 
     /// <summary>背景</summary>
     [SerializeField] 
@@ -78,8 +77,6 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
 
     private int _phaseIndex = default;
 
-    private bool _isGenerateFirstTime = true;
-
     protected override void Awake()
     {
         base.Awake();
@@ -92,7 +89,8 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
         _backGroundClone = Instantiate(_backGround, _backGroundParent.transform);
         _backGroundClone.transform.Translate(0f, _backGround.bounds.size.y, 0f);
 
-        EnemyGenerate();
+        const bool ISLOOP = false;
+        EnemyGenerate(ISLOOP);
     }
 
     private void Update()
@@ -101,8 +99,7 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
         {
             case true:
                 Debug.Log("ボス開始");
-                _novelPhaseState = NovelPhase.Before;
-
+                Novel();
                 break;
 
             case false:
@@ -115,108 +112,140 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
                     _gameOverCanavas.gameObject.SetActive(true);
                     //UIキャンバス
                     _uiCanvas.gameObject.SetActive(false);
-                    return;
                 }
                 break;
         }
     }
 
-    void EnemyGenerate()
+    void EnemyGenerate(bool isLoop)
     {
+        //ボスのフェイズだったらノベルを生成してから
+        if (_stageParam.PhaseParms[_phaseIndex].IsBoss) return;
 
+        //通常のモブ敵の処理
+        Instantiate(_stageParam.PhaseParms[_phaseIndex].Prefab).transform.position = _enemyGeneretePos.position;
+
+        //ループをする場合はインデックスをカウントアップしない
+        if (isLoop) return;
+        _phaseIndex++;
+    }
+
+    void Novel<T, T2, T3>(T gssReader, T ) where T : GSSReader where T2 : NovelRenderer where T3 : Canvas
+    {
+        //ゲームクリアであればノベルのフェイズを変える
+        if (GameManager.Instance.IsStageClear) _novelPhase = NovelPhase.Win;
+        //ゲームオーバーであればノベルのフェイズを変える
+        if (GameManager.Instance.IsGameOver) _novelPhase = NovelPhase.Lose;
+
+        if(T.gameObject.)
+        {
+
+        }
     }
 
     /// <summary>
-    /// ボスステージの処理
+    /// ノベルの処理を行う
+    /// ボスの生成を行う
+    /// 勝利,敗北等のUIの表示も行う
     /// </summary>
-    void BossStage()
+    void Novel()
     {
-        if (GameManager.Instance.IsStageClear)
+        //ゲームクリアであればノベルのフェイズを変える
+        if (GameManager.Instance.IsStageClear) _novelPhase = NovelPhase.Win;
+        //ゲームオーバーであればノベルのフェイズを変える
+        if (GameManager.Instance.IsGameOver) _novelPhase = NovelPhase.Lose;
+
+        switch (_novelPhase)
         {
-            _novelPhaseState = NovelPhase.Win;
-        }
+            case NovelPhase.Before://戦闘前のノベル
 
-        if (GameManager.Instance.IsGameOver)
-        {
-            _novelPhaseState = NovelPhase.Lose;
-        }
-    }
-
-
-    void Novel(NovelPhase novelPhase)
-    {
-        switch (novelPhase)
-        {
-            case NovelPhase.Before:
-
-                if (_beforeNovelRenderer.gameObject.activeSelf == false)
-                {
-                    _beforeNovelRenderer.gameObject.SetActive(true);
+                if (_beforeGSSReader.gameObject.activeSelf == false)
+                {   
+                    //ノベル関係のスクリプトがアタッチされているオブジェクトを有効化する
+                    _beforeGSSReader.gameObject.SetActive(true);
                 }
 
                 if (!_beforeGSSReader.IsLoading)
                 {
+                    //ノベルのデータのロードが終わったら
                     _novelCanvas.gameObject.SetActive(true);
+                    _uiCanvas.gameObject.SetActive(false);
                 }
 
                 if(_beforeNovelRenderer.IsNovelFinish)
                 {
+                    //ノベルの書き出しがすべて終わったら
+                    //ノベル関係のスクリプトがアタッチされているオブジェクトを無効化する
+                    _beforeGSSReader.gameObject.SetActive(false);
                     _novelCanvas.gameObject.SetActive(false);
-                    _beforeNovelRenderer.gameObject.SetActive(false);
-                    _uiCanvas.gameObject.SetActive(false);
-                    _novelPhaseState = NovelPhase.None;
-                    Instantiate(_stageParam.PhaseParms[_phaseIndex].Prefab).transform.position = _bossgenerateTransform.position;
-                }
 
+                    _uiCanvas.gameObject.SetActive(true);
+                    _novelPhase = NovelPhase.None;
+                }
                 break;
 
-            case NovelPhase.Win:
+            case NovelPhase.Win://勝利後のノベル
 
-                if(_winNovelRenderer.gameObject.activeSelf == false)
+                if (_winGSSReader.gameObject.activeSelf == false)
                 {
-                    _winNovelRenderer.gameObject.SetActive(true);
-                    _novelCanvas.gameObject.SetActive(true);
+                    //ノベル関係のスクリプトがアタッチされているオブジェクトを有効化する
+                    _winGSSReader.gameObject.SetActive(true);
                 }
 
                 if(!_winGSSReader.IsLoading)
                 {
+                    //ノベルのデータのロードが終わったら
                     _novelCanvas.gameObject.SetActive(true);
+                    _uiCanvas.gameObject.SetActive(false);
                 }
 
                 if(_winNovelRenderer.IsNovelFinish)
                 {
+                    //ノベルの書き出しがすべて終わったら
+                    //ノベル関係のスクリプトがアタッチされているオブジェクトを無効化する
+                    _winGSSReader.gameObject.SetActive(false);
                     _novelCanvas.gameObject.SetActive(false);
-                    _winNovelRenderer.gameObject.SetActive(false);
-                    _uiCanvas.gameObject.SetActive(false);
+
                     _gameClearCanvas.gameObject.SetActive(true);
                 }
 
                 break;
 
-            case NovelPhase.Lose:
+            case NovelPhase.Lose://敗北後のノベル
 
-                if(_loseNovelRenderer.gameObject.activeSelf == false)
+                if(_loseGSSReader.gameObject.activeSelf == false)
                 {
-                    _loseNovelRenderer.gameObject.SetActive(true);
+                    //ノベル関係のスクリプトがアタッチされているオブジェクトを有効化する
+                    _loseGSSReader.gameObject.SetActive(true);
                 }
 
                 if (!_loseGSSReader.IsLoading)
                 {
+                    //ノベルのデータのロードが終わったら
                     _novelCanvas.gameObject.SetActive(true);
+                    _uiCanvas.gameObject.SetActive(false);
                 }
 
                 if(_loseNovelRenderer.IsNovelFinish)
                 {
+                    //ノベルの書き出しがすべて終わったら
+                    //ノベル関係のスクリプトがアタッチされているオブジェクトを無効化する
+                    _loseGSSReader.gameObject.SetActive(false);
                     _novelCanvas.gameObject.SetActive(false);
-                    _loseNovelRenderer.gameObject.SetActive(false);
-                    _uiCanvas.gameObject.SetActive(false);
+
                     _gameOverCanavas.gameObject.SetActive(true);
                 }
 
                 break;
+
+            default:
+                break;
         }
     }
 
+    /// <summary>
+    /// 背景の処理を行う
+    /// </summary>
     void BackGround()
     {
         _backGround.transform.Translate(0f, _scrollSpeed * -Time.deltaTime, 0f);

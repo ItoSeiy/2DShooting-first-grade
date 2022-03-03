@@ -14,6 +14,11 @@ public class GSSReader : MonoBehaviour
     public bool IsLoading { get; private set; }
     public string[][] Datas { get; private set; }
 
+    void Awake()
+    {
+        StartCoroutine(GetFromWeb());    
+    }
+
     IEnumerator GetFromWeb()
     {
         IsLoading = true;
@@ -48,8 +53,8 @@ public class GSSReader : MonoBehaviour
         var rows = new List<string[]>();
         while (reader.Peek() >= 0)
         {
-            var line = reader.ReadLine();        // ˆês‚¸‚Â“Ç‚İ‚İ
-            var elements = line.Split(',');    // s‚ÌƒZƒ‹‚Í,‚Å‹æØ‚ç‚ê‚é
+            var line = reader.ReadLine();
+            var elements = line.Split(',');
             for (var i = 0; i < elements.Length; i++)
             {
                 elements[i] = elements[i].TrimStart('"').TrimEnd('"');

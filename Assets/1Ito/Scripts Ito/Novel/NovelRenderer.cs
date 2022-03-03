@@ -30,13 +30,6 @@ public class NovelRenderer : MonoBehaviour
     const int MAIN_TEXT_COLUMN = 1;
     const int ACTION_TEXT_COLUMN = 2;
 
-    private void Start()
-    {
-        _gssReader.Reload();
-        _mainText.text = "";
-        _oldTextInterval = _textInterval;
-    }
-
     private void Update()
     {
         if (_gssReader.IsLoading || CheckNovelFinish()) return;
