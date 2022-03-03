@@ -63,7 +63,7 @@ public class ButtonSelect : MonoBehaviour
         }
     }
 
-    public async void Click()
+    public void Click()
     {
         if(_isDelete)
         {
