@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2484158140422642641}
   m_Layer: 6
   m_Name: BossDefaultBullet2
-  m_TagString: Bullet
+  m_TagString: EnemyBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -54,7 +54,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!58 &8918006054927779382
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -84,13 +84,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damage: 10
-  _direction: {x: 0, y: 1}
   _speed: 2
   _bulletMoveMethod: 1
   _opponentTag: Player
   _gameZoneTag: Finish
   _parentTag: Parent
-  _playerTag: Player
 --- !u!212 &2484158140422642641
 SpriteRenderer:
   m_ObjectHideFlags: 0

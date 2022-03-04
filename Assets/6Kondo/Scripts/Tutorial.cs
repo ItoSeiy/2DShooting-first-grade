@@ -52,7 +52,7 @@ public class Tutorial : SingletonMonoBehaviour<Tutorial>
     }
     private void ShotTutorial()
     {
-        _inputShot.performed += _ =>
+        _inputShot.started += _ =>
         {
             _shotCheck.SetActive(true);
             CheckClear();

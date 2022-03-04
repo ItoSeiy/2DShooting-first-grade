@@ -6,10 +6,8 @@ using System;
 [Serializable]
 public class StageParam
 {
-    public int BossPhaseIndex => bossPhaseIndex;
     public List<PhaseParm> PhaseParms => phaseParms;
-    [SerializeField, Header("ボスのフェイズのIndexを指定する(0から始まる数字)")]
-    private int bossPhaseIndex;
+
     [SerializeField]
     private List<PhaseParm> phaseParms = new List<PhaseParm>();
 }
@@ -19,23 +17,15 @@ public class StageParam
 [Serializable]
 public class PhaseParm
 {
+    public string PhaseName => PhaseName;
     public GameObject Prefab => phasePrefab;
-    public float StartTime => startTime;
-    public bool UseInterval => useInterval;
-    public float Interval => interval;
-    public float FinishTime => finishTime;
+    public bool IsBoss => _isBoss;
 
     [SerializeField] 
-    public string PhaseName = "Phase";
+    private string phaseName = "Phase";
     [SerializeField]
     private GameObject phasePrefab;
-    [SerializeField]
-    private float startTime;
-    [SerializeField, Header("インターバルを用いて何度も生成するか")]
-    private bool useInterval;
-    [SerializeField, Header("UseIntevalにチェックが入っていないと使用できない")]
-    private float interval;
-    [SerializeField]
-    private float finishTime;
+    [SerializeField, Header("ボスだったらチェックを付ける")]
+    private bool _isBoss = false;
 }
 
