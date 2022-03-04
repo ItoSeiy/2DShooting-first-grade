@@ -1366,14 +1366,49 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2599224002639035787, guid: 393a44c487d8bb845ac836ab4d32c7ab,
         type: 3}
+      propertyPath: _inputSlowMove.m_SingletonActionBindings.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2599224002639035787, guid: 393a44c487d8bb845ac836ab4d32c7ab,
+        type: 3}
+      propertyPath: _inputChargeShot.m_SingletonActionBindings.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2599224002639035787, guid: 393a44c487d8bb845ac836ab4d32c7ab,
+        type: 3}
       propertyPath: _inputShot.m_SingletonActionBindings.Array.data[3].m_Path
       value: <Gamepad>/buttonNorth
+      objectReference: {fileID: 0}
+    - target: {fileID: 2599224002639035787, guid: 393a44c487d8bb845ac836ab4d32c7ab,
+        type: 3}
+      propertyPath: _inputSlowMove.m_SingletonActionBindings.Array.data[0].m_Id
+      value: 3bcd64da-ee02-4880-9d65-2a7fcc68d62a
+      objectReference: {fileID: 0}
+    - target: {fileID: 2599224002639035787, guid: 393a44c487d8bb845ac836ab4d32c7ab,
+        type: 3}
+      propertyPath: _inputChargeShot.m_SingletonActionBindings.Array.data[0].m_Id
+      value: a0ceff73-7f08-4911-9427-f431c3f508a4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2599224002639035787, guid: 393a44c487d8bb845ac836ab4d32c7ab,
+        type: 3}
+      propertyPath: _inputSlowMove.m_SingletonActionBindings.Array.data[0].m_Path
+      value: <Gamepad>/leftTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 2599224002639035787, guid: 393a44c487d8bb845ac836ab4d32c7ab,
+        type: 3}
+      propertyPath: _inputChargeShot.m_SingletonActionBindings.Array.data[0].m_Path
+      value: <Gamepad>/rightTrigger
       objectReference: {fileID: 0}
     - target: {fileID: 3479827611246550020, guid: 393a44c487d8bb845ac836ab4d32c7ab,
         type: 3}
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1271316246}
+    - target: {fileID: 3479827611748077766, guid: 393a44c487d8bb845ac836ab4d32c7ab,
+        type: 3}
+      propertyPath: m_Text
+      value: "R\u30C8\u30EA\u30AC\u30FC\u9577\u62BC\u3057\u3067\u30C1\u30E3\u30FC\u30B8\n\u96E2\u3059\u3068\u5F37\u529B\u306A\u5F3E\u3092\u767A\u5C04"
+      objectReference: {fileID: 0}
     - target: {fileID: 3479827611808640532, guid: 393a44c487d8bb845ac836ab4d32c7ab,
         type: 3}
       propertyPath: _sceneName

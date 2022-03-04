@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Threading.Tasks;
 using UnityEngine.InputSystem;
 using Cinemachine;
-
+using UnityEditor.Rendering.LookDev;
 
 /// <summary>
 /// Playerの基底クラス
@@ -135,6 +135,7 @@ public class PlayerBase : MonoBehaviour
     /// <summary>InvincibleObjectを初期化する定数</summary>
     const int INVENCIBLEDEFAULT = -150;
 
+
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -226,20 +227,20 @@ public class PlayerBase : MonoBehaviour
     {
         if (!_canMove) return;
         Vector2 inputMoveMent = context.ReadValue<Vector2>();
-        _dir = new Vector2(inputMoveMent.x, inputMoveMent.y);
+        _dir = new Vector2(inputMoveMent.x, inputMoveMent.y).normalized;
         Inversion();
     }
 
     public void OnLateMove(InputAction.CallbackContext context)//精密操作時の移動
     {
         if (!_canMove) return;
-        if (context.started)//LeftShiftKeyが押された瞬間の処理
+        if (context.started && !_isLateMode)//LeftShiftKeyが押された瞬間の処理
         {
             _isLateMode = true;
             GamingPlayer();
             Debug.Log(_isLateMode);
         }
-        if (context.performed || context.canceled)//LeftShiftKeyが離された瞬間の処理
+        if (_isLateMode && context.performed || _isLateMode && context.canceled)//LeftShiftKeyが離された瞬間の処理
         {
             _isLateMode = false;
             GamingFalse();
@@ -247,7 +248,7 @@ public class PlayerBase : MonoBehaviour
         }
     }
 
-
+    
     public async void OnJump(InputAction.CallbackContext context)//SpaceKeyが押された瞬間の処理
     {
         _bombCount = GameManager.Instance.PlayerBombCount;
