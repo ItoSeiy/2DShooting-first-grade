@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Novel;
 
 public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
 {
@@ -117,30 +118,20 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
         }
     }
 
+    /// <summary>
+    /// 次のフェイズのプレハブを生成する
+    /// </summary>
+    /// <param name="isLoop">現在のフェイズのプレハブをもう一度生成するかどうか</param>
     void EnemyGenerate(bool isLoop)
     {
         //ボスのフェイズだったらノベルを生成してから
         if (_stageParam.PhaseParms[_phaseIndex].IsBoss) return;
 
-        //通常のモブ敵の処理
         Instantiate(_stageParam.PhaseParms[_phaseIndex].Prefab).transform.position = _enemyGeneretePos.position;
 
         //ループをする場合はインデックスをカウントアップしない
         if (isLoop) return;
         _phaseIndex++;
-    }
-
-    void Novel<T, T2, T3>(T gssReader, T ) where T : GSSReader where T2 : NovelRenderer where T3 : Canvas
-    {
-        //ゲームクリアであればノベルのフェイズを変える
-        if (GameManager.Instance.IsStageClear) _novelPhase = NovelPhase.Win;
-        //ゲームオーバーであればノベルのフェイズを変える
-        if (GameManager.Instance.IsGameOver) _novelPhase = NovelPhase.Lose;
-
-        if(T.gameObject.)
-        {
-
-        }
     }
 
     /// <summary>

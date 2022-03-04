@@ -9,6 +9,8 @@ public class EnemyController : EnemyBase
 {
     [SerializeField, Header("このオブジェクトが破棄されたときに次のフェイズに移るか")]
     bool _isPhaseTriger = false;
+    [SerializeField, Header("次のフェイズに移らず同じプレハブを生成するかどうか _isPhaseTrigerがオンになっているときにのみに発動")]
+    bool _isPhaseLoop = false;
 
     [SerializeField, Header("球の出る位置")]
     Transform[] _muzzle = null;
@@ -206,14 +208,13 @@ public class EnemyController : EnemyBase
         }
     }
 
-    private void OnDestroy()
-    {
-        SoundManager.Instance.UseSound(_onDestroySFX);
-    }
-
     protected override void OnGetDamage()
     {
         SoundManager.Instance.UseSound(_getDamageSFX);
+        if(EnemyHp <= 0)
+        {
+            SoundManager.Instance.UseSound(_onDestroySFX);
+        }
     }
 
     enum GeneratePos

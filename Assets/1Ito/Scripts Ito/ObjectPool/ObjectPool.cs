@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -17,14 +16,14 @@ public class ObjectPool : SingletonMonoBehaviour<ObjectPool>
         base.Awake();
         _poolCountIndex = 0;
         CreatePool();
-
         //デバッグ用
-        //foreach (var pool in _pool)
-        //{
-        //    Debug.Log($"オブジェクト名:{pool.Object.name} 種類:{pool.Type}");
-        //}
+        //_pool.ForEach(x => Debug.Log($"オブジェクト名:{x.Object.name} 種類:{x.Type}"));
     }
 
+    /// <summary>
+    /// 設定したオブジェクトの種類,数だけプールにオブジェクトを生成して追加する
+    /// 再帰呼び出しを用いている
+    /// </summary>
     private void CreatePool()
     {
         if(_poolCountIndex >= _poolObjParam.Params.Count)
