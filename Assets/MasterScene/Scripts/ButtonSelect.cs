@@ -49,6 +49,10 @@ public class ButtonSelect : MonoBehaviour
     {
         _button = GetComponent<Button>();
         _animator = GetComponent<Animator>();
+        if(_animStateName != null && _animator != null)
+        {
+            _animator.Play(_animStateName);
+        }
         if (_isDelayMode)
         {
             await Task.Delay(_delay);
@@ -56,10 +60,6 @@ public class ButtonSelect : MonoBehaviour
         if(_isFirstSelectButton)
         {
             _button.Select();
-        }
-        if(_animStateName != null && _animator != null)
-        {
-            _animator.Play(_animStateName);
         }
     }
 

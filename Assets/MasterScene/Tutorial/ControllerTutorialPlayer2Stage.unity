@@ -857,6 +857,18 @@ Camera:
     type: 3}
   m_PrefabInstance: {fileID: 1271316245}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1287452926 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4551802122371824449, guid: a0fba6d711617884f8bb908d7b6035ab,
+    type: 3}
+  m_PrefabInstance: {fileID: 36539992}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1558533744
 GameObject:
   m_ObjectHideFlags: 0
@@ -1236,6 +1248,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1684132987068084058, guid: 7a102d9f29907194aaa033c889946f5f,
         type: 3}
+      propertyPath: _cmvcam1
+      value: 
+      objectReference: {fileID: 1287452926}
+    - target: {fileID: 1684132987068084058, guid: 7a102d9f29907194aaa033c889946f5f,
+        type: 3}
       propertyPath: _isGodMode
       value: 1
       objectReference: {fileID: 0}
@@ -1350,7 +1367,67 @@ PrefabInstance:
     - target: {fileID: 3479827611808640532, guid: 393a44c487d8bb845ac836ab4d32c7ab,
         type: 3}
       propertyPath: _sceneName
-      value: StageSlectPlayer2
+      value: StageSelectPlayer2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3479827611808640535, guid: 393a44c487d8bb845ac836ab4d32c7ab,
+        type: 3}
+      propertyPath: m_Colors.m_SelectedColor.b
+      value: 0.78431374
+      objectReference: {fileID: 0}
+    - target: {fileID: 3479827611808640535, guid: 393a44c487d8bb845ac836ab4d32c7ab,
+        type: 3}
+      propertyPath: m_Colors.m_SelectedColor.g
+      value: 0.78431374
+      objectReference: {fileID: 0}
+    - target: {fileID: 3479827611808640535, guid: 393a44c487d8bb845ac836ab4d32c7ab,
+        type: 3}
+      propertyPath: m_Colors.m_SelectedColor.r
+      value: 0.78431374
+      objectReference: {fileID: 0}
+    - target: {fileID: 3479827611808640535, guid: 393a44c487d8bb845ac836ab4d32c7ab,
+        type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.b
+      value: 0.78431374
+      objectReference: {fileID: 0}
+    - target: {fileID: 3479827611808640535, guid: 393a44c487d8bb845ac836ab4d32c7ab,
+        type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.g
+      value: 0.78431374
+      objectReference: {fileID: 0}
+    - target: {fileID: 3479827611808640535, guid: 393a44c487d8bb845ac836ab4d32c7ab,
+        type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.r
+      value: 0.78431374
+      objectReference: {fileID: 0}
+    - target: {fileID: 3479827612013194756, guid: 393a44c487d8bb845ac836ab4d32c7ab,
+        type: 3}
+      propertyPath: m_Colors.m_SelectedColor.b
+      value: 0.78431374
+      objectReference: {fileID: 0}
+    - target: {fileID: 3479827612013194756, guid: 393a44c487d8bb845ac836ab4d32c7ab,
+        type: 3}
+      propertyPath: m_Colors.m_SelectedColor.g
+      value: 0.78431374
+      objectReference: {fileID: 0}
+    - target: {fileID: 3479827612013194756, guid: 393a44c487d8bb845ac836ab4d32c7ab,
+        type: 3}
+      propertyPath: m_Colors.m_SelectedColor.r
+      value: 0.78431374
+      objectReference: {fileID: 0}
+    - target: {fileID: 3479827612013194756, guid: 393a44c487d8bb845ac836ab4d32c7ab,
+        type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.b
+      value: 0.78431374
+      objectReference: {fileID: 0}
+    - target: {fileID: 3479827612013194756, guid: 393a44c487d8bb845ac836ab4d32c7ab,
+        type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.g
+      value: 0.78431374
+      objectReference: {fileID: 0}
+    - target: {fileID: 3479827612013194756, guid: 393a44c487d8bb845ac836ab4d32c7ab,
+        type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.r
+      value: 0.78431374
       objectReference: {fileID: 0}
     - target: {fileID: 3479827612013194757, guid: 393a44c487d8bb845ac836ab4d32c7ab,
         type: 3}
