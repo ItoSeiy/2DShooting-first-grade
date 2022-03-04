@@ -119,7 +119,7 @@ public enum PoolObjectType
     BossDefaultBullet6,
     BossDefaultBullet7,
     //ボス5専用の弾
-    Boss05DefaultBullet1,
+    Boss05DefaultBullet,
 
     //ボス1の必殺技の弾
     Boss01SuperAttackBullet1,
@@ -146,6 +146,9 @@ public enum PoolObjectType
     Boss05SuperAttackBullet1,
     Boss05SuperAttackBullet2,
     Boss05SupetAttackBullet3,
+    Boss05SuperAttackBullet4,
+    Boss05SuperAttackBullet5,
+    Boss05SupetAttackBullet6,
 
     OneUpItem,
     BombItem,

@@ -35,9 +35,9 @@ public class SuperAttackEightShape : BossAttackAction
     /// <summary>必殺技発動時間</summary>
     [SerializeField, Header("必殺技発動時間")] float _activationTime = 30f;
     /// <summary>攻撃頻度</summary>
-    [SerializeField, Header("攻撃頻度(秒)")] private float _attackInterval = 0.6f;
+    [SerializeField, Header("攻撃頻度(秒)")] private float _attackInterval = 0.16f;
     /// <summary>マズルの角度間隔</summary>
-    [SerializeField, Header("マズルの角度間隔")] float _rotationInterval = 10f;
+    [SerializeField, Header("マズルの角度間隔")] float _angleInterval = 10f;
     /// <summary>発射する弾を設定できる</summary>
     [SerializeField, Header("発射する弾の設定")] PoolObjectType[] _bullet;
     /// <summary>弾の見た目を変える間隔(秒)</summary>
@@ -134,7 +134,7 @@ public class SuperAttackEightShape : BossAttackAction
 
                 //マズル0（親オブジェクト）を反時計回り（+）に回転する
                 Vector3 upperLocalAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
-                upperLocalAngle.z += _rotationInterval;// 角度を設定
+                upperLocalAngle.z += _angleInterval;// 角度を設定
                 _muzzles[0].localEulerAngles = upperLocalAngle;//回転する
 
                 //弾をマズル0（親オブジェクト）の向きに合わせて弾を発射
@@ -145,7 +145,7 @@ public class SuperAttackEightShape : BossAttackAction
 
                 //マズル2（親オブジェクト）を時計回り（-）に回転する
                 Vector3 rightLocalAngle = _muzzles[2].localEulerAngles;// ローカル座標を基準に取得
-                rightLocalAngle.z -= _rotationInterval;// 角度を設定
+                rightLocalAngle.z -= _angleInterval;// 角度を設定
                 _muzzles[2].localEulerAngles = rightLocalAngle;//回転する
 
                 //弾をマズル2（親オブジェクト）の向きに合わせて弾を発射
