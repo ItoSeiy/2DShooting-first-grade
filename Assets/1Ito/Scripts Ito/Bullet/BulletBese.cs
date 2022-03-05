@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Collider2D))]
-public abstract class BulletBese : MonoBehaviour
+public abstract class BulletBese : MonoBehaviour, IPauseable
 {
     public float Damage { get => _damage;}
     public float Speed { get => _speed;}
@@ -38,7 +38,9 @@ public abstract class BulletBese : MonoBehaviour
 
     Rigidbody2D _rb = null;
     BulletParent _bulletParent = null;
-   
+
+    Vector2 _oldVelocity;
+
     protected virtual void Awake()
     {
         if(string.IsNullOrWhiteSpace(_opponentTag))
@@ -51,10 +53,16 @@ public abstract class BulletBese : MonoBehaviour
 
     protected virtual void OnEnable()
     {
+        PauseManager.Instance.SetEvent(this);
         if(_bulletMoveMethod == BulletMoveMethod.Start)
         {
             BulletMove();
         }
+    }
+
+    private void OnDisable()
+    {
+        PauseManager.Instance.RemoveEvent(this);
     }
 
     protected virtual void Update()
@@ -108,6 +116,20 @@ public abstract class BulletBese : MonoBehaviour
         var target = col.gameObject.GetComponent<IDamage>();
         target?.AddDamage(_damage, col);
     }
+
+    void IPauseable.PauseResume(bool isPause)
+    {
+        if(isPause)
+        {
+            _oldVelocity = _rb.velocity;
+            _rb.velocity = Vector2.zero;
+        }
+        else
+        {
+            _rb.velocity = _oldVelocity;
+        }
+    }
+
 
     enum BulletMoveMethod
     {

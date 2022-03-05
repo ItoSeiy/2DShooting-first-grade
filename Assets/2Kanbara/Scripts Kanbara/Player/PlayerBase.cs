@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Overdose.Novel;
 
 /// <summary>
 /// Playerの基底クラス
@@ -12,8 +13,11 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Collider2D))]
 
-public class PlayerBase : MonoBehaviour
+public class PlayerBase : MonoBehaviour, IPauseable
 {
+    /// <summary>無敵モードのフラグ</summary>
+    [SerializeField, Header("無敵モード")] bool _isGodMode = false;
+
     [SerializeField, Header("プレイヤーの音")] protected AudioData[] _audioData;
     Rigidbody2D _rb;
     SpriteRenderer _sp;
@@ -82,8 +86,6 @@ public class PlayerBase : MonoBehaviour
     [SerializeField, Header("ボムアイテム獲得時の音")] string _getBombAudio = "BombGet";
     [SerializeField, Header("レベルアップ時の音")] public readonly string _levelUpAudio = "LevelUp";
     [SerializeField, Header("Invincibleモードの時の音")] string _invincibleModeAudio = "Invincible";
-    /// <summary>無敵モードのフラグ</summary>
-    [SerializeField, Header("無敵モード")] bool _isGodMode = false;
 
     protected const int _level1 = 1;
     protected const int _level2 = 2;
@@ -131,6 +133,8 @@ public class PlayerBase : MonoBehaviour
     const int DEFAULT = 0;
     /// <summary>InvincibleObjectを初期化する定数</summary>
     const int INVENCIBLEDEFAULT = -150;
+
+    Vector2 _oldVerocity;
 
     private void Start()
     {
@@ -182,6 +186,7 @@ public class PlayerBase : MonoBehaviour
             case false:
                 break;
             case true:
+                if (PhaseNovelManager.Instance.NovelePhaesState != NovelPhase.None) return;
                 switch (_isLateMode)
                 {
                     case false:
@@ -201,6 +206,17 @@ public class PlayerBase : MonoBehaviour
         }
 
     }
+
+    private void OnEnable()
+    {
+        PauseManager.Instance.SetEvent(this);
+    }
+
+    private void OnDisable()
+    {
+        PauseManager.Instance.RemoveEvent(this);
+    }
+
     public void OnMove(InputAction.CallbackContext context)//通常の移動
     {
         if (!_canMove) return;
@@ -523,5 +539,19 @@ public class PlayerBase : MonoBehaviour
             _playerPower = GameManager.Instance.PlayerPowerItemCount;
         }
         _isPowerMax = false;
+    }
+    void IPauseable.PauseResume(bool isPause)
+    {
+        if(isPause)
+        {
+            _oldVerocity = _rb.velocity;
+            _rb.velocity = Vector2.zero;
+            _canMove = false;
+        }
+        else
+        {
+            _rb.velocity = _oldVerocity;
+            _canMove = true;
+        }
     }
 }
