@@ -9,8 +9,7 @@ public class BossEnemyMoveThunder : BossMoveAction
     /// <summary>垂直、縦方向</summary>
     float _vertical = 1f;
     /// <summary>タイマー</summary>
-    float _timer = 0f;    
-    
+    float _timer = 0f;       
     /// <summary>現在のパターン</summary>
     int _pattern = 0;
     /// <summary>正常位置に軌道修正する</summary>

@@ -23,7 +23,7 @@ public class SuperAttackRebound : BossAttackAction
     /// <summary>必殺前に移動するポジション</summary>
     [SerializeField, Header("必殺前に移動するポジション")] Vector2 _superAttackPosition = new Vector2(0f, 4f);
     /// <summary>バレットを発射するポジション</summary>
-    [SerializeField, Header("Bulletを発射するポジション")] Transform[] _muzzles = null;
+    [SerializeField, Header("Bulletを発射するポジション")] Transform _muzzle = null;
     /// <summary>必殺前に移動するときのスピード</summary>
     [SerializeField, Header("必殺前に移動するときのスピード")] float _speed = 4f;
     /// <summary>必殺技待機時間</summary>
@@ -31,7 +31,7 @@ public class SuperAttackRebound : BossAttackAction
     /// <summary>必殺技発動時間</summary>
     [SerializeField, Header("必殺技発動時間")] float _activationTime = 30f;
     /// <summary>マズルの角度間隔</summary>
-    [SerializeField, Header("マズルの角度間隔")] float _rotationInterval = 20f;
+    [SerializeField, Header("マズルの角度間隔")] float _angleInterval = 10f;
     /// <summary>攻撃頻度</summary>
     [SerializeField, Header("攻撃頻度(秒)")] float _attackInterval = 1f;
     /// <summary>発射する弾を設定できる</summary>
@@ -122,14 +122,14 @@ public class SuperAttackRebound : BossAttackAction
         while (true)
         {
             //全方位に発射
-            for (float rotation = MINIMUM_ROTATION_RANGE; rotation <= MAXIMUM_ROTATION_RANGE; rotation += _rotationInterval)
+            for (float angle = MINIMUM_ROTATION_RANGE; angle <= MAXIMUM_ROTATION_RANGE; angle += _angleInterval)
             {
                 _pattern = Random.Range(0, _bullet.Length);
-                Vector3 localAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
-                localAngle.z = rotation;// 角度を設定
-                _muzzles[0].localEulerAngles = localAngle;//回転する
+                Vector3 localAngle = _muzzle.localEulerAngles;// ローカル座標を基準に取得
+                localAngle.z = angle;// 角度を設定
+                _muzzle.localEulerAngles = localAngle;//回転する
                 //弾をマズルの向きに合わせて弾を発射（リバウンドするBulletを使います）
-                ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet[_pattern]).transform.rotation = _muzzles[0].rotation;
+                ObjectPool.Instance.UseObject(_muzzle.position, _bullet[_pattern]).transform.rotation = _muzzle.rotation;
             }
 
             yield return new WaitForSeconds(_attackInterval);//攻撃頻度(秒)

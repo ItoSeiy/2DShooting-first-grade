@@ -19,7 +19,9 @@ public class SuperAttackWindmill : BossAttackAction
     /// <summary>縦方向</summary>
     float _verticalDir = 0f;
     /// <summary>弾の見た目の種類</summary>
-    int _pattern = 0;
+    int _firstPattern = 0;
+    /// <summary>弾の見た目の種類</summary>
+    int _secondPattern = 0;
     /// <summary>必殺前に移動するポジション</summary>
     [SerializeField, Header("必殺前に移動するポジション")] Vector2 _superAttackPosition = new Vector2(0f, 4f);
     /// <summary>バレットを発射するポジション</summary>
@@ -33,7 +35,7 @@ public class SuperAttackWindmill : BossAttackAction
     /// <summary>攻撃頻度</summary>
     [SerializeField, Header("攻撃頻度(秒)")] float _attackInterval = 0.2f;
     /// <summary>マズルの角度間隔</summary>
-    [SerializeField, Header("マズルの角度間隔")] float _rotationInterval = 10f;
+    [SerializeField, Header("マズルの角度間隔")] float _angleInterval = 10f;
     /// <summary>発射する弾を設定できる</summary>
     [SerializeField, Header("発射する弾の設定")] PoolObjectType[] _bullet;
     /// <summary>修正値</summary>
@@ -116,28 +118,28 @@ public class SuperAttackWindmill : BossAttackAction
         while (true)
         {
             //弾の見た目を変える
-            _pattern = Random.Range(0, _bullet.Length);
-
+            _firstPattern = Random.Range(0, _bullet.Length);
+            _secondPattern = Random.Range(0, _bullet.Length);
             //親オブジェクト
 
             //マズルを回転する
             Vector3 firstLocalAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
-            firstLocalAngle.z += _rotationInterval;// 角度を設定
+            firstLocalAngle.z += _angleInterval;// 角度を設定
             _muzzles[0].localEulerAngles = firstLocalAngle;//回転する
 
             //弾をマズル0の向きに合わせて弾を発射
-            ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet[_pattern]).transform.rotation = _muzzles[0].rotation;
+            ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet[_firstPattern]).transform.rotation = _muzzles[0].rotation;
 
             //子オブジェクト
 
             //弾をマズル1の向きに合わせて弾を発射
-            ObjectPool.Instance.UseObject(_muzzles[1].position, _bullet[_pattern]).transform.rotation = _muzzles[1].rotation;
+            ObjectPool.Instance.UseObject(_muzzles[1].position, _bullet[_secondPattern]).transform.rotation = _muzzles[1].rotation;
 
             //弾をマズル2の向きに合わせて弾を発射
-            ObjectPool.Instance.UseObject(_muzzles[2].position, _bullet[_pattern]).transform.rotation = _muzzles[2].rotation;
+            ObjectPool.Instance.UseObject(_muzzles[2].position, _bullet[_firstPattern]).transform.rotation = _muzzles[2].rotation;
 
             //弾をマズル3の向きに合わせて弾を発射
-            ObjectPool.Instance.UseObject(_muzzles[3].position, _bullet[_pattern]).transform.rotation = _muzzles[3].rotation;
+            ObjectPool.Instance.UseObject(_muzzles[3].position, _bullet[_secondPattern]).transform.rotation = _muzzles[3].rotation;
 
             yield return new WaitForSeconds(_attackInterval);//攻撃頻度(秒)
 

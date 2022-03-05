@@ -33,7 +33,7 @@ public class SuperAttackRestriction: BossAttackAction
     /// <summary>攻撃頻度</summary>
     [SerializeField, Header("攻撃頻度(秒)")] private float _attackInterval = 0.6f;
     /// <summary>マズルの角度間隔</summary>
-    [SerializeField, Header("マズルの角度間隔")] float _rotationInterval = 4f;
+    [SerializeField, Header("マズルの角度間隔")] float _angleInterval = 4f;
     /// <summary>発射する弾を設定できる</summary>
     [SerializeField, Header("発射する弾の設定")] PoolObjectType[] _bullet;
     /// <summary>この行動から出る時間</summary>
@@ -41,7 +41,7 @@ public class SuperAttackRestriction: BossAttackAction
     /// <summary>修正値</summary>
     float _rotOffset = 0f;
     /// <summary>修正値</summary>
-    const float PLAYER_POS_OFFSET = 0.5f;
+    const float PLAYER_POS_OFFSET = 0.7f;
     /// <summary>判定回数の制限</summary>
     const float JUDGMENT_TIME = 1 / 60f;
     /// <summary>リセットタイマー</summary>
@@ -135,7 +135,7 @@ public class SuperAttackRestriction: BossAttackAction
             if (_timer >= _activationTime / HALF_TIME)
             {
                 //360度全方位に発射
-                for (float rot = MINIMUM_ROT_RANGE + _rotOffset + MUZZLE_ROT_OFFSET; rot <= MAXIMUM_ROT_RANGE + _rotOffset + MUZZLE_ROT_OFFSET; rot += _rotationInterval)
+                for (float rot = MINIMUM_ROT_RANGE + _rotOffset + MUZZLE_ROT_OFFSET; rot <= MAXIMUM_ROT_RANGE + _rotOffset + MUZZLE_ROT_OFFSET; rot += _angleInterval)
                 {
                     //マズルを回転する
                     Vector3 localAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
@@ -151,11 +151,11 @@ public class SuperAttackRestriction: BossAttackAction
             else
             {
                 //360度全方位に発射
-                for (float rotation = MINIMUM_ROT_RANGE + _rotOffset; rotation <= MAXIMUM_ROT_RANGE + _rotOffset; rotation += _rotationInterval)
+                for (float angle = MINIMUM_ROT_RANGE + _rotOffset; angle <= MAXIMUM_ROT_RANGE + _rotOffset; angle += _angleInterval)
                 {
                     //マズルを回転する
                     Vector3 localAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
-                    localAngle.z = rotation;// 角度を設定
+                    localAngle.z = angle;// 角度を設定
                     _muzzles[0].localEulerAngles = localAngle;//回転する
                                        
                     //弾をマズルの向きに合わせて弾を発射

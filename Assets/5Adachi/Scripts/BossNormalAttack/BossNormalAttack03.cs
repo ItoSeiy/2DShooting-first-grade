@@ -31,9 +31,7 @@ public class BossNormalAttack03 : BossAttackAction
     /// <summary>最大の回転値</summary>
     const float MAX_ROTATION_RANGE = 360f;
     /// <summary>最小の弾数</summary>
-    const int MINIMUM_BULLET_RANGE = 3;
-    /// <summary>最大の弾数の修正値</summary>
-    const int MAX_BULLET_RANGE_OFFSET = 1;
+    const int MINIMUM_BULLET_RANGE = 2;
     /// <summary>発射回数をリセット</summary>
     const int ATTACK_COUNT_RESET = 0;
     
@@ -72,16 +70,13 @@ public class BossNormalAttack03 : BossAttackAction
                 //弾の見た目をランダムで変える
                 _pattern = Random.Range(0, _bullet.Length);
                 //1回の攻撃で弾を飛ばす数(3～?)
-                _rotationInterval = MAX_ROTATION_RANGE / Random.Range(MINIMUM_BULLET_RANGE, _maximumBulletRange + MAX_BULLET_RANGE_OFFSET);
+                _rotationInterval = MAX_ROTATION_RANGE / Random.Range(MINIMUM_BULLET_RANGE, _maximumBulletRange);
                 _attackCount = ATTACK_COUNT_RESET;//発射回数をリセット
             }
             //ターゲット（プレイヤー）の方向を計算
             _dir = (GameManager.Instance.Player.transform.position - _muzzles[0].transform.position);
             //ターゲット（プレイヤー）の方向に回転
             _muzzles[0].transform.rotation = Quaternion.FromToRotation(Vector3.up, _dir);
-
-            //弾をマズル0の向きに合わせて弾を発射
-            //ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet[_pattern]).transform.rotation = _muzzles[0].rotation;
 
             Vector3 firstLocalAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
 
