@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -19,12 +18,13 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
         _poolCountIndex = 0;
         CreatePool();
         //デバッグ用
-        //foreach(var pool in _pool)
-        //{
-        //    Debug.Log($"オブジェクト名:{pool.Object.name} 種類:{pool.Type}");
-        //}
+        //_pool.ForEach(x => Debug.Log($"オブジェクト名:{x.Object.name}種類: {x.Type}"));
     }
 
+    /// <summary>
+    /// 設定したオブジェクトの種類,数だけプールにオブジェクトを生成して追加する
+    /// 再帰呼び出しを用いている
+    /// </summary>
     private void CreatePool()
     {
         if(_poolCountIndex >= _soundObjParam.Params.Count)
@@ -53,7 +53,7 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
     {
         foreach(var pool in _pool)
         {
-            if (pool.Object.activeSelf == false && pool.Type == soundType)
+            if(pool.Object.activeSelf == false && pool.Type == soundType)
             {
                 pool.Object.SetActive(true);
                 return pool.Object;
@@ -61,8 +61,8 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
         }
 
         var newSound = Instantiate(_soundObjParam.Params.Find(x => x.Type == soundType).Prefab, this.transform);
-        newSound.SetActive(true);
         _pool.Add(new Pool { Object = newSound, Type = soundType});
+        newSound.SetActive(true);
         return newSound;
     }
 
@@ -93,20 +93,26 @@ public enum SoundType
 [System.Serializable]
 public class SoundPoolParams
 {
-    [SerializeField] public List<SoundPoolParam> Params = new List<SoundPoolParam>();
+    public List<SoundPoolParam> Params => soundPoolParams;
+    [SerializeField] public List<SoundPoolParam> soundPoolParams = new List<SoundPoolParam>();
 }
 
 
 [System.Serializable]
 public class SoundPoolParam
 {
-    [SerializeField] public string Name;
+    public SoundType Type => type;
+    public GameObject Prefab => prefab;
+    public int MaxCount => maxCount;
 
-    [SerializeField] public SoundType Type;
-
-    [SerializeField] public GameObject Prefab;
-
-    [SerializeField] public int MaxCount;
+    [SerializeField] 
+    private string name;
+    [SerializeField]
+    private SoundType type;
+    [SerializeField]
+    private GameObject prefab;
+    [SerializeField]
+    private int maxCount;
 }
 
 
