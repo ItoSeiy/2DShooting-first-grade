@@ -711,6 +711,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6494737051310223061, guid: 10a33638c10cfed4e92520afc0212a26,
         type: 3}
+    - target: {fileID: 1533588425705065806, guid: 03ee70c6eee84834babf631082b1865f,
+        type: 3}
+      propertyPath: _stageParam.phaseParms.Array.data[3].phasePrefab
+      value: 
+      objectReference: {fileID: 4612961997328467803, guid: d3206896d7a9fea4c848fb509d0c5552,
+        type: 3}
     - target: {fileID: 1583375995355731039, guid: 03ee70c6eee84834babf631082b1865f,
         type: 3}
       propertyPath: m_RootOrder
@@ -1104,6 +1110,16 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 5945671118179735921, guid: 8ee05df372273d4459d3d9c93ded8522,
+        type: 3}
+      propertyPath: _pauseButton.m_Interactions
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5945671118179735921, guid: 8ee05df372273d4459d3d9c93ded8522,
+        type: 3}
+      propertyPath: _pauseButton.m_SingletonActionBindings.Array.data[0].m_Path
+      value: <Keyboard>/1
+      objectReference: {fileID: 0}
     - target: {fileID: 7580270615308553180, guid: 8ee05df372273d4459d3d9c93ded8522,
         type: 3}
       propertyPath: m_Color.a
@@ -1211,7 +1227,7 @@ MonoBehaviour:
     type: 3}
   m_SubmitAction: {fileID: -1947661484666500515, guid: f59e2dc9be2d97648b098d4f0cd5f664,
     type: 3}
-  m_CancelAction: {fileID: 5257005336417336840, guid: f59e2dc9be2d97648b098d4f0cd5f664,
+  m_CancelAction: {fileID: 5926972742382190856, guid: f59e2dc9be2d97648b098d4f0cd5f664,
     type: 3}
   m_LeftClickAction: {fileID: -1079425455217381942, guid: f59e2dc9be2d97648b098d4f0cd5f664,
     type: 3}
@@ -1271,7 +1287,7 @@ PrefabInstance:
     - target: {fileID: 8073652284958033806, guid: 9e9962444e183474597e568b85370ae6,
         type: 3}
       propertyPath: _isGodMode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8073652284958033810, guid: 9e9962444e183474597e568b85370ae6,
         type: 3}

@@ -84,6 +84,12 @@ public class EnemyController : EnemyBase
 
     protected override void Update()
      {
+        if (IsPause)
+        {
+            Rb.velocity = Vector2.zero;
+            return;
+        }
+
         if(Rb.velocity.x < 0f)
         {
             _spriteRenderer.flipX = true;
