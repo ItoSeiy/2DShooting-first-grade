@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PauseGame : MonoBehaviour
+public class PauseGame : MonoBehaviour, IPause
 {
     [SerializeField] InputAction _pauseButton;
     [SerializeField] Canvas _canvas;
@@ -20,22 +20,20 @@ public class PauseGame : MonoBehaviour
         _pauseButton.Disable();
     }
 
-    void Start()
+    public void OnClick()
     {
-        _pauseButton.performed += _ => Pause();
+
     }
 
-    public void Pause()
+    void IPause.Pause(bool pause)
     {
         _paused = !_paused;
         if(_paused)
         {
-            Time.timeScale = 0;
             _canvas.enabled = true;
         }
         else
         {
-            Time.timeScale = 1;
             _canvas.enabled = false;
         }
         Debug.Log(_paused);
