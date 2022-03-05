@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 422083484784541039}
   - component: {fileID: 9188340174714335777}
-  - component: {fileID: 4508989130467046453}
   - component: {fileID: -8201632760338897031}
   - component: {fileID: 8666166322165994676}
+  - component: {fileID: 6882119087371913108}
   m_Layer: 6
   m_Name: Bomb01Child
   m_TagString: Bomb
@@ -74,33 +74,17 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 3a53b1cee5433b14da19236a919394b2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a27610c95e7ac4049888e9ea3fb34e52, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
-  m_FlipY: 0
+  m_FlipY: 1
   m_DrawMode: 0
-  m_Size: {x: 5, y: 3.53}
+  m_Size: {x: 12.8, y: 12.8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &4508989130467046453
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1080062419905580683}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.21
 --- !u!50 &-8201632760338897031
 Rigidbody2D:
   serializedVersion: 4
@@ -134,12 +118,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db360a3e3ab61ed4c91f21c00532da3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 1
-  _direction: {x: 0, y: 1}
+  _damage: 50
   _speed: 2
   _bulletMoveMethod: 1
   _opponentTag: Enemy
   _gameZoneTag: Finish
   _parentTag: Parent
-  _playerTag: Player
   _enemyBulletTag: EnemyBullet
+--- !u!70 &6882119087371913108
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1080062419905580683}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.29}
+  m_Size: {x: 0.18, y: 0.8}
+  m_Direction: 0

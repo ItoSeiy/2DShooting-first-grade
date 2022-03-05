@@ -791,12 +791,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 8b709420911e224498b3f5c59e059281, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 003fd511cc80f2f4fa6e6bd33eab3603, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2.95, y: 2.95}
+  m_Size: {x: 12.8, y: 12.8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -830,14 +830,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45a8d7fabf0e58d46a88322e828df88e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 10
-  _direction: {x: 0, y: 1}
+  _damage: 200
   _speed: 5
   _bulletMoveMethod: 0
   _opponentTag: Enemy
   _gameZoneTag: Finish
   _parentTag: Parent
-  _playerTag: Player
   _explosionPrefab: {fileID: 8634964597311154803, guid: c3e69dce7169a0d4bbe33064dfac4276,
     type: 3}
   _childBulletDelay: 0.05
