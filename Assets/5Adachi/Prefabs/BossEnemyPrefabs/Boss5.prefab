@@ -224,7 +224,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 5
-  _enemyHp: 7000
+  _enemyHp: 70000
   _attackInterval: 1
   _damageTakenRatio: 1
   _playerBulletTag: PlayerBullet
@@ -303,8 +303,8 @@ MonoBehaviour:
     - {fileID: 920663452041829219}
     - {fileID: 959436985281620010}
   _superAttackTimingHp:
-  - 5000
-  - 2500
+  - 50000
+  - 25000
 --- !u!1 &1868784747635064903
 GameObject:
   m_ObjectHideFlags: 0
@@ -484,6 +484,7 @@ MonoBehaviour:
   _angleInterval: 20
   _attackInterval: 0.5
   _bullet: 2d0000002e0000002f000000
+  _damageTakenRationRange: 0.5
 --- !u!1 &3533165039299305463
 GameObject:
   m_ObjectHideFlags: 0
