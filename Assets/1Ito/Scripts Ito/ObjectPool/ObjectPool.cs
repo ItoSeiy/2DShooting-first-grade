@@ -17,7 +17,7 @@ public class ObjectPool : SingletonMonoBehaviour<ObjectPool>
         _poolCountIndex = 0;
         CreatePool();
         //デバッグ用
-        //_pool.ForEach(x => Debug.Log($"オブジェクト名:{x.Object.name} 種類:{x.Type}"));
+        _pool.ForEach(x => Debug.Log($"オブジェクト名:{x.Object.name} 種類:{x.Type}"));
     }
 
     /// <summary>
@@ -55,8 +55,8 @@ public class ObjectPool : SingletonMonoBehaviour<ObjectPool>
         {
             if (pool.Object.activeSelf == false && pool.Type == bulletType)
             {
-                pool.Object.transform.position = position;
                 pool.Object.SetActive(true);
+                pool.Object.transform.position = position;
                 return pool.Object;
             }
         }

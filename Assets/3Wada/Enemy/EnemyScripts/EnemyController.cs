@@ -7,9 +7,11 @@ using DG.Tweening;
 /// </summary>
 public class EnemyController : EnemyBase 
 {
+    /// <summary>このオブジェクトが破棄されたときに次のフェイズに移るか</summary>
     [SerializeField, Header("このオブジェクトが破棄されたときに次のフェイズに移るか")]
     bool _isPhaseTriger = false;
-    [SerializeField, Header("次のフェイズに移らず同じプレハブを生成するかどうか _isPhaseTrigerがオンになっているときにのみに発動")]
+    /// <summary>次のフェイズに移らず同じプレハブを生成するかどうか</summary>
+    [SerializeField, Header("次のフェイズに移らず同じプレハブを生成するかどうかisPhaseTrigerがオンになっているときにのみに発動")]
     bool _isPhaseLoop = false;
 
     [SerializeField, Header("球の出る位置")]
@@ -137,9 +139,7 @@ public class EnemyController : EnemyBase
         Rb.velocity = Vector2.zero;
         _stopcount -= Time.deltaTime;
         _isMove = false;
-        /// <summary>
-        /// また動き出す時の処理
-        /// </summary>
+        // また動き出す時の処理
         if (_stopcount <= 0)
         {
             Rb.velocity = _afterDir * Speed;
@@ -210,12 +210,19 @@ public class EnemyController : EnemyBase
 
     protected override void OnGetDamage()
     {
-        SoundManager.Instance.UseSound(_getDamageSFX);
-        if(EnemyHp <= 0)
-        {
-            SoundManager.Instance.UseSound(_onDestroySFX);
-        }
+        //SoundManager.Instance.UseSound(_getDamageSFX);
+        //if(EnemyHp <= 0)
+        //{
+        //    SoundManager.Instance.UseSound(_onDestroySFX);
+        //}
     }
+
+    //void OnDestroy()
+    //{
+    //    if (!_isPhaseTriger) return;
+    //    //このオブジェクトが破棄されたときに次のフェイズに移る場合だったら
+    //    PhaseNovelManager.Instance.EnemyGenerate(_isPhaseLoop);
+    //}
 
     enum GeneratePos
     {

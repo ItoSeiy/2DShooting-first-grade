@@ -55,15 +55,6 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
         result?.SetActive(true);
         if (result)return result;
 
-        //foreach(var pool in _pool)
-        //{
-        //    if (pool.Object.activeSelf == false && pool.Type == soundType)
-        //    {
-        //        pool.Object.SetActive(true);
-        //        return pool.Object;
-        //    }
-        //}
-
         var newSound = Instantiate(_soundObjParam.Params.Find(x => x.Type == soundType).Prefab, this.transform);
         _pool.Add(new Pool { Object = newSound, Type = soundType});
         newSound.SetActive(true);

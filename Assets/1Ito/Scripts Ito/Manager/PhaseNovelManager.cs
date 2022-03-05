@@ -77,6 +77,7 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
     StageParam _stageParam;
 
     private int _phaseIndex = default;
+    private int _loopCount = default;
 
     protected override void Awake()
     {
@@ -122,16 +123,27 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
     /// 次のフェイズのプレハブを生成する
     /// </summary>
     /// <param name="isLoop">現在のフェイズのプレハブをもう一度生成するかどうか</param>
-    void EnemyGenerate(bool isLoop)
+    public void EnemyGenerate(bool isLoop)
     {
-        //ボスのフェイズだったらノベルを生成してから
+        //ボスのフェイズだったらノベルを再生してから生成するため弾く
         if (_stageParam.PhaseParms[_phaseIndex].IsBoss) return;
 
         Instantiate(_stageParam.PhaseParms[_phaseIndex].Prefab).transform.position = _enemyGeneretePos.position;
 
         //ループをする場合はインデックスをカウントアップしない
-        if (isLoop) return;
-        _phaseIndex++;
+        if (isLoop)
+        {
+            _loopCount++;
+            //ループするべき回数を超えたらフェイズのインデックスをカウントアップする
+            if(_loopCount >= _stageParam.PhaseParms[_phaseIndex].LoopTime)
+            {
+                _phaseIndex++;
+            }
+        }
+        else
+        {
+            _phaseIndex++;
+        }
     }
 
     /// <summary>
