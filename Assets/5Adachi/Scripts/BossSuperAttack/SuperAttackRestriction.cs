@@ -33,7 +33,7 @@ public class SuperAttackRestriction: BossAttackAction
     /// <summary>UŒ‚•p“x</summary>
     [SerializeField, Header("UŒ‚•p“x(•b)")] private float _attackInterval = 0.6f;
     /// <summary>ƒ}ƒYƒ‹‚ÌŠp“xŠÔŠu</summary>
-    [SerializeField, Header("ƒ}ƒYƒ‹‚ÌŠp“xŠÔŠu")] float _angleInterval = 4f;
+    [SerializeField, Header("ƒ}ƒYƒ‹‚ÌŠp“xŠÔŠu")] float _angleInterval = 10f;
     /// <summary>”­Ë‚·‚é’e‚ğİ’è‚Å‚«‚é</summary>
     [SerializeField, Header("”­Ë‚·‚é’e‚Ìİ’è")] PoolObjectType[] _bullet;
     /// <summary>‚±‚Ìs“®‚©‚ço‚éŠÔ</summary>

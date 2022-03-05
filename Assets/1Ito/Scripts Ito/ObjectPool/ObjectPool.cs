@@ -149,6 +149,7 @@ public enum PoolObjectType
     Boss05SuperAttackBullet5,
     Boss05SupetAttackBullet6,
 
+
     OneUpItem,
     BombItem,
     Invincible,
