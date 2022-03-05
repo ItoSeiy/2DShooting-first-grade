@@ -12,8 +12,8 @@ using UnityEngine;
 /// </summary>
 public class BossController : EnemyBase
 {
-    [SerializeField, Header("死亡時のパーティクル")]
-
+    //[SerializeField, Header("死亡時のパーティクル")]
+    //ParticleSystem _
     /// <summary>ボスのデータ</summary>
     public BossData Data => _data;
     /// <summary>ボスのデータ</summary>
