@@ -66,14 +66,14 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     public event Action OnGameOver
     {
         add { _onGameOver += value; }
-        remove { _onGameOver += value; }
+        remove { _onGameOver -= value; }
     }
      
     /// <summary>ステージクリア時の処理を登録する</summary>
     public event Action OnStageClear
     {
         add { _onStageClear += value; }
-        remove { _onStageClear += value; }
+        remove { _onStageClear -= value; }
     }
 
     Action _onGameOver;
