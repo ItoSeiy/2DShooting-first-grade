@@ -31,7 +31,7 @@ public class SuperAttackRebound : BossAttackAction
     /// <summary>•KE‹Z”­“®ŠÔ</summary>
     [SerializeField, Header("•KE‹Z”­“®ŠÔ")] float _activationTime = 30f;
     /// <summary>ƒ}ƒYƒ‹‚ÌŠp“xŠÔŠu</summary>
-    [SerializeField, Header("ƒ}ƒYƒ‹‚ÌŠp“xŠÔŠu")] float _angleInterval = 20f;
+    [SerializeField, Header("ƒ}ƒYƒ‹‚ÌŠp“xŠÔŠu")] float _angleInterval = 10f;
     /// <summary>UŒ‚•p“x</summary>
     [SerializeField, Header("UŒ‚•p“x(•b)")] float _attackInterval = 1f;
     /// <summary>”­Ë‚·‚é’e‚ğİ’è‚Å‚«‚é</summary>

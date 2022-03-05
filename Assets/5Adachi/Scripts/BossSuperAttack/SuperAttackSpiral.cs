@@ -31,7 +31,7 @@ public class SuperAttackSpiral : BossAttackAction
     /// <summary>必殺技発動時間</summary>
     [SerializeField, Header("必殺技発動時間")] float _activationTime = 30f;
     /// <summary>マズルの角度間隔</summary>
-    [SerializeField,Header("マズルの角度間隔")]　float _rotationInterval = 10f;
+    [SerializeField,Header("マズルの角度間隔")]　float _angleInterval = 10f;
     /// <summary>発射する弾を設定できる</summary>
     [SerializeField, Header("発射する弾の設定")] PoolObjectType[] _bullet;
     /// <summary>修正値</summary>
@@ -117,7 +117,7 @@ public class SuperAttackSpiral : BossAttackAction
             _pattern = Random.Range(0, _bullet.Length);
             //マズルを回転する
             Vector3 localAngle = _muzzle.localEulerAngles;// ローカル座標を基準に取得
-            localAngle.z += _rotationInterval;// 角度を設定
+            localAngle.z += _angleInterval;// 角度を設定
             _muzzle.localEulerAngles = localAngle;//回転する           
             //弾をマズルの向きに合わせて弾を発射
             ObjectPool.Instance.UseObject(_muzzle.position, _bullet[_pattern]).transform.rotation = _muzzle.rotation;

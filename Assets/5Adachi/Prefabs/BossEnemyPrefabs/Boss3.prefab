@@ -48,7 +48,7 @@ MonoBehaviour:
   _muzzle: {fileID: 1090210382385643170}
   _waitTime: 5
   _activationTime: 30
-  _rotationInterval: 2
+  _angleInterval: 2
   _bullet: 240000002500000026000000
   _maximumCount: 2
 --- !u!1 &2129082579279083244
@@ -227,9 +227,9 @@ MonoBehaviour:
   - {fileID: 6376707828936186838}
   - {fileID: 9140426780355275699}
   _attackInterval: 0.64
-  _bullet: 190000001a0000001b0000001c000000
+  _bullet: 17000000180000001c000000
   _maximumBulletRange: 11
-  _endingTime: 20
+  _endingTime: 10
 --- !u!1 &4249261378582883710
 GameObject:
   m_ObjectHideFlags: 0
@@ -385,15 +385,19 @@ MonoBehaviour:
     actionPatterns:
     - bossAttackActions:
       - {fileID: 6195819658789178222}
-      - {fileID: 6195819658789178222}
-      - {fileID: 6195819658789178222}
-      - {fileID: 6195819658789178222}
+      bossMoveActions:
+      - {fileID: 4249261377268269678}
+    - bossAttackActions:
       - {fileID: 6195819658789178222}
       bossMoveActions:
       - {fileID: 4249261377268269678}
+    - bossAttackActions:
+      - {fileID: 6195819658789178222}
+      bossMoveActions:
       - {fileID: 4249261377268269678}
-      - {fileID: 4249261377268269678}
-      - {fileID: 4249261377268269678}
+    - bossAttackActions:
+      - {fileID: 6195819658789178222}
+      bossMoveActions:
       - {fileID: 190737987614313098}
     bossSuperAttackActons:
     - {fileID: 3280695927880616156}
@@ -512,7 +516,7 @@ MonoBehaviour:
   _speed: 4
   _waitTime: 5
   _activationTime: 30
-  _rotationInterval: 10
+  _angleInterval: 10
   _bullet: 240000002500000026000000
 --- !u!1001 &3235383207553087461
 PrefabInstance:

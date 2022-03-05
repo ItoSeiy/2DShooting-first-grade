@@ -48,7 +48,7 @@ MonoBehaviour:
   _speed: 4
   _waitTime: 5
   _activationTime: 30
-  _rotationInterval: 4
+  _angleInterval: 4
   _bullet: 270000002800000029000000
 --- !u!1 &1557905931969436095
 GameObject:
@@ -147,7 +147,7 @@ MonoBehaviour:
   _speed: 4
   _waitTime: 5
   _activationTime: 30
-  _rotationInterval: 20
+  _angleInterval: 10
   _attackInterval: 1
   _bullet: 270000002800000029000000
 --- !u!1 &3668928284545267236
@@ -194,11 +194,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _muzzle: {fileID: 8318256088838269715}
-  _attackInterval: 0.64
+  _attackInterval: 0.4
   _bullet: 160000001700000018000000190000001a0000001b0000001c000000
   _rotationInterval: 1
   _maximumCount: 7
-  _endingTime: 20
+  _endingTime: 10
 --- !u!1 &3668928285342510396
 GameObject:
   m_ObjectHideFlags: 0
@@ -418,7 +418,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 5
-  _enemyHp: 10
+  _enemyHp: 100
   _attackInterval: 1
   _damageTakenRatio: 1
   _playerBulletTag: PlayerBullet
@@ -433,13 +433,20 @@ MonoBehaviour:
     actionPatterns:
     - bossAttackActions:
       - {fileID: 544317752282257065}
+      bossMoveActions:
+      - {fileID: 3668928285342510397}
+    - bossAttackActions:
       - {fileID: 544317752282257065}
       bossMoveActions:
       - {fileID: 3668928285342510397}
+    - bossAttackActions:
+      - {fileID: 544317752282257065}
+      bossMoveActions:
+      - {fileID: 3668928285342510397}
+    - bossAttackActions:
+      - {fileID: 544317752282257065}
+      bossMoveActions:
       - {fileID: 5555054152608001528}
-      - {fileID: 3668928285342510397}
-      - {fileID: 3668928285342510397}
-      - {fileID: 3668928285342510397}
     bossSuperAttackActons:
     - {fileID: 3942865692778157245}
     - {fileID: 4233309995412027639}
