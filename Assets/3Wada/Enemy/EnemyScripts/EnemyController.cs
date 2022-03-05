@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using DG.Tweening;
 using UnityEngine;
-using DG.Tweening;
 /// <summary>
 /// Enemyの派生クラス
 /// </summary>
@@ -62,7 +60,7 @@ public class EnemyController : EnemyBase
     [SerializeField, Header("何秒とどまるか")] 
     float _stopcount = 0.0f;
 
-    [SerializeField, Header("モブの攻撃するときを変える")] AttackMode _attackMode;
+    [SerializeField, Header("攻撃方法")] AttackMode _attackMode;
     bool _isBttomposition = false;
     bool _isMove = false;
     SpriteRenderer _spriteRenderer = default;
@@ -209,10 +207,12 @@ public class EnemyController : EnemyBase
     protected override void OnGetDamage()
     {
         SoundManager.Instance.UseSound(_getDamageSFX);
-        if (EnemyHp <= 0)
-        {
-            SoundManager.Instance.UseSound(_onDestroySFX);
-        }
+    }
+
+    protected override void OnKilledByPlayer()
+    {
+        SoundManager.Instance.UseSound(_onDestroySFX);
+        base.OnKilledByPlayer();
     }
 
     void OnDestroy()

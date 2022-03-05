@@ -82,7 +82,6 @@ public abstract class EnemyBase : MonoBehaviour, IDamage
 
     /// <summary>
     /// プレイヤーに殺された際の処理
-    /// Destroyをするためこの処理を
     /// </summary>
     protected virtual void OnKilledByPlayer()
     {
