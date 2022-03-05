@@ -8,8 +8,8 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
 {
     public NovelPhase NovelePhaesState => _novelPhase;
 
-    [SerializeField, Header("ノベル前に待つ時間(ミリ秒)")]
-    int _novelWaitTime = 5000;
+    [SerializeField, Header("ノベル前に待つ時間")]
+    float _novelWaitTime = 8f;
 
     /// <summary>スプレッドシートシートを読み込むスクリプト(戦闘前)</summary>
     [SerializeField]
@@ -83,6 +83,7 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
     private int _phaseIndex = default;
     private int _loopCount = default;
     private bool _isNovelFirstTime = true;
+    private float _timer = default;
 
     protected override void Awake()
     {
@@ -100,29 +101,43 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
         Instantiate(_stageParam.PhaseParms[_phaseIndex].Prefab).transform.position = _enemyGeneretePos.position;
     }
 
-    private void Update()
+    void Update()
     {
         switch (_stageParam.PhaseParms[_phaseIndex].IsBoss)
         {
             case true:
+                _timer += Time.deltaTime;
+
+                if (_timer <= _novelWaitTime)
+                {
+                    CheckGameOver();
+                    return;
+                }
+
                 Debug.Log("ボス開始");
                 Novel();
                 break;
 
             case false:
                 BackGround();
-
-                //ゲームオーバーを判定する
-                if(GameManager.Instance.IsGameOver)
-                {
-                    //ゲームオーバUI表示
-                    _gameOverCanavas.gameObject.SetActive(true);
-                    //UIキャンバス
-                    _uiCanvas.gameObject.SetActive(false);
-                    //プレイヤーを動かせないようにする
-                    GameManager.Instance.Player.CanMove = false;
-                }
+                CheckGameOver();
                 break;
+        }
+    }
+
+    /// <summary>
+    /// ゲームオーバーを判定する
+    /// </summary>
+    void CheckGameOver()
+    {
+        if (GameManager.Instance.IsGameOver)
+        {
+            //ゲームオーバUI表示
+            _gameOverCanavas.gameObject.SetActive(true);
+            //UIキャンバス
+            _uiCanvas.gameObject.SetActive(false);
+            //プレイヤーを動かせないようにする
+            GameManager.Instance.Player.CanMove = false;
         }
     }
 
@@ -132,6 +147,9 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
     /// <param name="isLoop">現在のフェイズのプレハブをもう一度生成するかどうか</param>
     public void EnemyGenerate(bool isLoop)
     {
+        //ゲームオーバー時は実行しない
+        if (GameManager.Instance.IsGameOver) return;
+
         //ボスのフェイズだったらノベルを再生してから生成するため弾く
         if (_stageParam.PhaseParms[_phaseIndex].IsBoss) return;
 
@@ -162,10 +180,8 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
     /// ボスの生成を行う
     /// 勝利,敗北等のUIの表示も行う
     /// </summary>
-    async void Novel()
+  　void Novel()
     {
-        await Task.Delay(_novelWaitTime);
-
         //ノベルの初回実行時にノベルのフェイズを戦闘前イベントにセットする
         if(_isNovelFirstTime)
         {

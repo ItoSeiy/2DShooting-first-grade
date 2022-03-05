@@ -156,5 +156,17 @@ public enum PoolObjectType
     ScoreItem,
     PowerItem,
 
+    //モブ敵の弾
+    EnemyStraightUpBullet,
+    EnemyStraightDownBullet,
+    EnemyStraightRightBullet,
+    EnemyStraightLeftBullet,
+
+    ///AutoBulletは自分にとっての上方向に飛ぶ
+    EnemyAutoBullet,
+    EnemyFastAutoBullet,
+    EnemySlowAutoBullet,
+
+    EnemyFollowBullet,
 }
 
