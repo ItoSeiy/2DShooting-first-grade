@@ -100,7 +100,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: -0.02}
   serializedVersion: 2
-  m_Radius: 0.48
+  m_Radius: 0.3
 --- !u!50 &2470969044458107703
 Rigidbody2D:
   serializedVersion: 4
@@ -134,7 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb61b39803f211a43aa6af24fdf84ed6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 10
+  _damage: 20
   _speed: 10
   _bulletMoveMethod: 0
   _opponentTag: Enemy

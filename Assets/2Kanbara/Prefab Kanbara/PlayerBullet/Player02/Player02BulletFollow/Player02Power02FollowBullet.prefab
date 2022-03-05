@@ -179,13 +179,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af00dd590bddb554ca78ec225acf1b8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 15
+  _damage: 10
   _speed: 10
   _bulletMoveMethod: 1
   _opponentTag: Enemy
   _gameZoneTag: Finish
   _parentTag: Parent
-  _followTime: 2
+  _followTime: 0.5
 --- !u!1 &4940366701055704017
 GameObject:
   m_ObjectHideFlags: 0
@@ -320,10 +320,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af00dd590bddb554ca78ec225acf1b8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 15
+  _damage: 10
   _speed: 10
   _bulletMoveMethod: 1
   _opponentTag: Enemy
   _gameZoneTag: Finish
   _parentTag: Parent
-  _followTime: 2
+  _followTime: 0.5
