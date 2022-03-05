@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Overdose.Calculation;
 
 public class BossNormalAttack02 : BossAttackAction
 {
@@ -20,6 +21,8 @@ public class BossNormalAttack02 : BossAttackAction
     [SerializeField, Header("発射する弾の設定(上と同じ数を設定してください")] PoolObjectType[] _secondBullet;
     /// <summary>この行動から出る時間</summary>
     [SerializeField, Header("この行動から出る時間")] float _endingTime = 20f;
+    /// <summary>アイテムを落とす確率</summary>
+    [SerializeField, Header("アイテムを落とす確率")] int _probability = 50;
     /// <summary>対項角</summary>
     const float OPPOSITE_ANGLE = 180f;
     
@@ -44,7 +47,12 @@ public class BossNormalAttack02 : BossAttackAction
 
     public override void Exit(BossController contlloer)
     {
-        contlloer.ItemDrop();
+        //一定の確率でアイテムを落とす
+        if (Calculator.RandomBool(_probability))
+        {
+            contlloer.ItemDrop();
+        }
+        
         StopAllCoroutines();
     }
 

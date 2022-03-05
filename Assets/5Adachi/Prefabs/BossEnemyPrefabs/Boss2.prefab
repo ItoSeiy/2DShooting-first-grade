@@ -210,7 +210,7 @@ CapsuleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -405,6 +405,7 @@ MonoBehaviour:
   _firstBullet: 170000001600000019000000
   _secondBullet: 17000000180000001a000000
   _endingTime: 10
+  _probability: 50
 --- !u!1 &3057993410719779574
 GameObject:
   m_ObjectHideFlags: 0
@@ -560,6 +561,7 @@ MonoBehaviour:
   _firstBullet: 170000001600000019000000
   _secondBullet: 17000000180000001a000000
   _endingTime: 15
+  _probability: 50
 --- !u!1 &8776048900135494913
 GameObject:
   m_ObjectHideFlags: 0

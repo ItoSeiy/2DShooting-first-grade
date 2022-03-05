@@ -51,6 +51,7 @@ public class SuperAttackRebound : BossAttackAction
 
     public override void Enter(BossController contlloer)
     {
+        contlloer.ItemDrop();
         StartCoroutine(Rebound(contlloer)); //ƒRƒ‹[ƒ`ƒ“‚ğ”­“®
     }
 
@@ -66,7 +67,6 @@ public class SuperAttackRebound : BossAttackAction
 
     public override void Exit(BossController contlloer)
     {
-        contlloer.ItemDrop();
         StopAllCoroutines();
     }
 
