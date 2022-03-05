@@ -29,6 +29,9 @@ public class EnemyController : EnemyBase
     [SerializeField,Header("弾幕")]
     GameObject _bullet;
 
+    [SerializeField, Header("撃つ弾幕の数")]
+    PoolObjectType _bulletType;
+    
     [SerializeField, Header("攻撃頻度をランダムにするか")]
     bool _attackIntervelChange = false;
 
@@ -155,9 +158,7 @@ public class EnemyController : EnemyBase
             case MuzzleTransform.Normal:
                 for (int i = 0; i < _muzzle.Length; i++)
                 {
-                    var bullet = Instantiate(_bullet);
-                    bullet.transform.position = _muzzle[i].position;
-                    bullet.transform.rotation = _muzzle[i].rotation;  
+                    ObjectPool.Instance.UseObject(_muzzle[i].position, _bulletType).transform.rotation = _muzzle[i].rotation; 
                 }
                 switch(_attackIntervelChange)
                 {
@@ -180,9 +181,7 @@ public class EnemyController : EnemyBase
                 Rotate();
                 for (int i = 0; i < _rotateMuzzles.Length; i++)
                 {
-                    var bullet = Instantiate(_bullet);
-                    bullet.transform.position = _rotateMuzzles[i].position;
-                    bullet.transform.rotation = _rotateMuzzles[i].rotation;
+                    ObjectPool.Instance.UseObject(_rotateMuzzles[i].position, _bulletType).transform.rotation = _rotateMuzzles[i].rotation;
                 }
                 switch (_attackIntervelChange)
                 {
