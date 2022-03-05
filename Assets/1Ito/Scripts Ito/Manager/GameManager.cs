@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 /// <summary>
 /// ゲームマネージャー
@@ -63,6 +62,23 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     private bool _isStageClear = false;
     PlayerBase _player;
 
+    /// <summary>ゲームオーバー時の処理を登録する</summary>
+    public event Action OnGameOver
+    {
+        add { _onGameOver += value; }
+        remove { _onGameOver -= value; }
+    }
+     
+    /// <summary>ステージクリア時の処理を登録する</summary>
+    public event Action OnStageClear
+    {
+        add { _onStageClear += value; }
+        remove { _onStageClear -= value; }
+    }
+
+    Action _onGameOver;
+    Action _onStageClear;
+
     protected override void Awake()
     {
         base.Awake();
@@ -99,6 +115,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     /// </summary>
     public void GameOver()
     {
+        _onGameOver?.Invoke();
         _isGameOver = true;
         _isGameStart = false;
     }
@@ -108,6 +125,10 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     /// </summary>
     public void StageClear()
     {
+        //ゲームオーバーと同時にステージをクリアした場合ゲームオーバが優先される
+        if (_isGameOver) return;
+
+        _onStageClear?.Invoke();
         _isStageClear = true;
         _isGameStart = false;
     }

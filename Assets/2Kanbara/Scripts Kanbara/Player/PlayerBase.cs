@@ -1,10 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using Cinemachine;
 using System.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.InputSystem;
-using Cinemachine;
-using Overdose.Novel;
 
 /// <summary>
 /// Playerの基底クラス
@@ -166,25 +163,6 @@ public class PlayerBase : MonoBehaviour
 
     private async void Update()
     {
-        if(PhaseNovelManager.Instance != null)
-        {
-            //ノベルが再生されているかどうか
-            var isNovel = PhaseNovelManager.Instance.NovelePhaesState == NovelPhase.Before
-                       || PhaseNovelManager.Instance.NovelePhaesState == NovelPhase.Win 
-                       || PhaseNovelManager.Instance.NovelePhaesState == NovelPhase.Lose;
-
-            if (PhaseNovelManager.Instance.NovelePhaesState == NovelPhase.None)
-            {
-                //再生していなければ動けるようにする
-                _canMove = true;
-            }
-            else if(isNovel)
-            {
-                //ノベルが再生されていれば
-                _canMove = false;
-            }
-        }
-
         if (!_canMove)
         {
             _rb.velocity = Vector2.zero;
