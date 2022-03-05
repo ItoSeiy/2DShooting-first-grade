@@ -226,11 +226,11 @@ MonoBehaviour:
   _muzzles:
   - {fileID: 6376707828936186838}
   - {fileID: 9140426780355275699}
-  _attackInterval: 0.64
+  _attackInterval: 0.5
   _bullet: 17000000180000001c000000
   _maximumBulletRange: 11
   _endingTime: 10
-  _probability: 30
+  _probability: 40
 --- !u!1 &4249261378582883710
 GameObject:
   m_ObjectHideFlags: 0
@@ -407,15 +407,15 @@ MonoBehaviour:
       bossMoveActions:
       - {fileID: 4249261377268269678}
     - bossAttackActions:
-      - {fileID: 6195819658789178222}
+      - {fileID: 4026004529380936570}
       bossMoveActions:
       - {fileID: 190737987614313098}
     bossSuperAttackActons:
     - {fileID: 3280695927880616156}
     - {fileID: 6079287180197441036}
   _superAttackTimingHp:
-  - 4500
-  - 2500
+  - 4000
+  - 2000
 --- !u!1 &4249261378775214653
 GameObject:
   m_ObjectHideFlags: 0
@@ -581,7 +581,7 @@ MonoBehaviour:
   _bullet: 17000000180000001c000000
   _maximumBulletRange: 11
   _endingTime: 10
-  _probability: 30
+  _probability: 60
 --- !u!1001 &3235383207553087461
 PrefabInstance:
   m_ObjectHideFlags: 0
