@@ -87,8 +87,6 @@ public class BossEnemyMoveUShaped : BossMoveAction
         {           
             if(controller.transform.position.y <= _lowerLimit)
             {
-
-                Debug.Log("f");
                 _dir = Vector2.zero;//’âŽ~
                 yield return new WaitForSeconds(_stopTime);//’âŽ~ŽžŠÔ
                 _dir = new Vector2(-controller.transform.position.x, NO_DIR);//‰æ–Ê‰º’[‚É‚¢‚½‚ç¡‚¢‚éêŠ‚Ì”½‘Î‘¤‚É‰¡ˆÚ“®
@@ -104,7 +102,6 @@ public class BossEnemyMoveUShaped : BossMoveAction
             //”½‘Î‘¤‚É‚Â‚¢‚½‚çã‚És‚­
             if (controller.transform.position.x >= _rightLimit || controller.transform.position.x <= _leftLimit)
             {
-                Debug.Log("g");
                 _dir = Vector2.zero;//’âŽ~
                 yield return new WaitForSeconds(_stopTime);//’âŽ~ŽžŠÔ
                 _dir = Vector2.up;//ã‚Éã‚ª‚é
@@ -121,18 +118,15 @@ public class BossEnemyMoveUShaped : BossMoveAction
             {
                 _dir = Vector2.zero;//’âŽ~
                 yield return new WaitForSeconds(_stopTime);//’âŽ~ŽžŠÔ
-                Debug.Log("h");
-
+          
                 if (controller.transform.position.x < MIDDLE_POS)//¶‚É‚¢‚½‚ç
                 {                   
                     _dir = Vector2.right;//‰E‚És‚­
-                    Debug.Log("a");
                     break;
                 }
                 else//‰E‚É‚¢‚½‚ç
                 {    
                     _dir = Vector2.left;//¶‚És‚­
-                    Debug.Log("b");
                     break;
                 }
             }
