@@ -232,6 +232,69 @@ PrefabInstance:
       propertyPath: _backGroundParent
       value: 
       objectReference: {fileID: 745120044}
+    - target: {fileID: 1533588425705065806, guid: 03ee70c6eee84834babf631082b1865f,
+        type: 3}
+      propertyPath: _stageParam.phaseParms.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1533588425705065806, guid: 03ee70c6eee84834babf631082b1865f,
+        type: 3}
+      propertyPath: _stageParam.phaseParms.Array.data[0].isBoss
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1533588425705065806, guid: 03ee70c6eee84834babf631082b1865f,
+        type: 3}
+      propertyPath: _stageParam.phaseParms.Array.data[1].isBoss
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1533588425705065806, guid: 03ee70c6eee84834babf631082b1865f,
+        type: 3}
+      propertyPath: _stageParam.phaseParms.Array.data[0].loopTime
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1533588425705065806, guid: 03ee70c6eee84834babf631082b1865f,
+        type: 3}
+      propertyPath: _stageParam.phaseParms.Array.data[1].loopTime
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1533588425705065806, guid: 03ee70c6eee84834babf631082b1865f,
+        type: 3}
+      propertyPath: _stageParam.phaseParms.Array.data[0].phaseName
+      value: Phase1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1533588425705065806, guid: 03ee70c6eee84834babf631082b1865f,
+        type: 3}
+      propertyPath: _stageParam.phaseParms.Array.data[1].phaseName
+      value: Phase2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1533588425705065806, guid: 03ee70c6eee84834babf631082b1865f,
+        type: 3}
+      propertyPath: _stageParam.phaseParms.Array.data[2].phaseName
+      value: Phase3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1533588425705065806, guid: 03ee70c6eee84834babf631082b1865f,
+        type: 3}
+      propertyPath: _stageParam.phaseParms.Array.data[3].phaseName
+      value: Boss
+      objectReference: {fileID: 0}
+    - target: {fileID: 1533588425705065806, guid: 03ee70c6eee84834babf631082b1865f,
+        type: 3}
+      propertyPath: _stageParam.phaseParms.Array.data[0].phasePrefab
+      value: 
+      objectReference: {fileID: 7210089290653306216, guid: 401a9ba6198b23b40a1f0e30bdd87544,
+        type: 3}
+    - target: {fileID: 1533588425705065806, guid: 03ee70c6eee84834babf631082b1865f,
+        type: 3}
+      propertyPath: _stageParam.phaseParms.Array.data[1].phasePrefab
+      value: 
+      objectReference: {fileID: 2243441569602164290, guid: 18d614b0630beaa4fbec851f7397bad6,
+        type: 3}
+    - target: {fileID: 1533588425705065806, guid: 03ee70c6eee84834babf631082b1865f,
+        type: 3}
+      propertyPath: _stageParam.phaseParms.Array.data[2].phasePrefab
+      value: 
+      objectReference: {fileID: 548236064620505985, guid: 7cef6ae8f6350e14db7e0a18073436e3,
+        type: 3}
     - target: {fileID: 1957432378263462446, guid: 03ee70c6eee84834babf631082b1865f,
         type: 3}
       propertyPath: SheetName
@@ -262,6 +325,21 @@ PrefabInstance:
       propertyPath: _characterAnimator
       value: 
       objectReference: {fileID: 7158071576059606252}
+    - target: {fileID: 2909174912217678035, guid: 03ee70c6eee84834babf631082b1865f,
+        type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 2130115333}
+    - target: {fileID: 3952536102392535456, guid: 03ee70c6eee84834babf631082b1865f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4496156472604882347, guid: 03ee70c6eee84834babf631082b1865f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4710857687889372998, guid: 03ee70c6eee84834babf631082b1865f,
         type: 3}
       propertyPath: m_Name
@@ -387,6 +465,11 @@ PrefabInstance:
       propertyPath: _characterAnimator
       value: 
       objectReference: {fileID: 7158071576059606252}
+    - target: {fileID: 7111011908835223331, guid: 03ee70c6eee84834babf631082b1865f,
+        type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 2130115333}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 03ee70c6eee84834babf631082b1865f, type: 3}
 --- !u!223 &375067065 stripped

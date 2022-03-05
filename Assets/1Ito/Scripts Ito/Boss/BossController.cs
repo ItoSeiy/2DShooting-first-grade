@@ -1,8 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
-
+using UnityEngine;
 
 /// <summary>
 /// ボス敵を管理するステートパターンのスクリプト
@@ -14,6 +12,8 @@ using System.Linq;
 /// </summary>
 public class BossController : EnemyBase
 {
+    [SerializeField, Header("死亡時のパーティクル")]
+    ParticleSystem _killedParticle;
     /// <summary>ボスのデータ</summary>
     public BossData Data => _data;
     /// <summary>ボスのデータ</summary>
@@ -184,6 +184,7 @@ public class BossController : EnemyBase
 
     protected override void OnKilledByPlayer()
     {
+        Instantiate(_killedParticle).transform.position = transform.position;
         GameManager.Instance.StageClear();
         base.OnKilledByPlayer();
     }
@@ -212,5 +213,4 @@ public class BossController : EnemyBase
 
         IsCast = false;
     }
-
 }

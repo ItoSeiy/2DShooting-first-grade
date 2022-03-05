@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Overdose.Novel;
-using System.Threading.Tasks;
+using System.Linq;
+using UnityEngine;
 
 public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
 {
@@ -84,10 +82,13 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
     private int _loopCount = default;
     private bool _isNovelFirstTime = true;
     private float _timer = default;
+    private bool _isBossStage;
 
     protected override void Awake()
     {
         base.Awake();
+        GameManager.Instance.OnGameOver += OnGameOver;
+        GameManager.Instance.OnStageClear += () => _novelPhase = NovelPhase.Win;
     }
 
     void Start()
@@ -108,37 +109,51 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
             case true:
                 _timer += Time.deltaTime;
 
-                if (_timer <= _novelWaitTime)
-                {
-                    CheckGameOver();
-                    return;
-                }
-
+                if (_timer <= _novelWaitTime) return;
                 Debug.Log("ボス開始");
+                _isBossStage = true;
                 Novel();
                 break;
 
             case false:
                 BackGround();
-                CheckGameOver();
                 break;
         }
     }
 
     /// <summary>
-    /// ゲームオーバーを判定する
+    /// ゲームオーバーの処理を行う
     /// </summary>
-    void CheckGameOver()
+    private void OnGameOver()
     {
-        if (GameManager.Instance.IsGameOver)
+        if (_isBossStage)
+        {
+            //ボスと戦っていればノベルのフェイズを変える
+            _novelPhase = NovelPhase.Lose;
+            return;
+        }
+        else
         {
             //ゲームオーバUI表示
             _gameOverCanavas.gameObject.SetActive(true);
             //UIキャンバス
             _uiCanvas.gameObject.SetActive(false);
-            //プレイヤーを動かせないようにする
-            GameManager.Instance.Player.CanMove = false;
+            AllBulletEnemyDestroy();
         }
+    }
+
+    /// <summary>
+    /// すべての弾,敵を破棄する
+    /// </summary>
+    void AllBulletEnemyDestroy()
+    {
+        var enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        var playerBullets = GameObject.FindGameObjectsWithTag("PlayerBullet");
+        var enemyBullets = GameObject.FindGameObjectsWithTag("EnemyBullet");
+
+        enemies.ToList().ForEach(x => Destroy(x));
+        playerBullets.ToList().ForEach(x => Destroy(x));
+        enemyBullets.ToList().ForEach(x => Destroy(x));
     }
 
     /// <summary>
@@ -150,27 +165,23 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
         //ゲームオーバー時は実行しない
         if (GameManager.Instance.IsGameOver) return;
 
-        //ボスのフェイズだったらノベルを再生してから生成するため弾く
-        if (_stageParam.PhaseParms[_phaseIndex].IsBoss) return;
-
-
         //ループをする場合はインデックスをカウントアップしない
         if (isLoop)
         {
             _loopCount++;
-            Debug.Log("ループする" + _loopCount + "回目");
             //ループするべき回数を超えたらフェイズのインデックスをカウントアップする
             if(_loopCount >= _stageParam.PhaseParms[_phaseIndex].LoopTime)
             {
-                Debug.Log("カウントアップ");
                 _phaseIndex++;
             }
         }
         else
         {
             _phaseIndex++;
-            Debug.Log("ループしない" + _phaseIndex + "インデックス");
         }
+
+        //ボスのフェイズだったらノベルを再生してから生成するため弾く
+        if (_stageParam.PhaseParms[_phaseIndex].IsBoss) return;
 
         Instantiate(_stageParam.PhaseParms[_phaseIndex].Prefab).transform.position = _enemyGeneretePos.position;
     }
@@ -188,15 +199,10 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
             _novelPhase = NovelPhase.Before;
             _isNovelFirstTime = false;
         }
-        //ゲームクリアであればノベルのフェイズを変える
-        if (GameManager.Instance.IsStageClear) _novelPhase = NovelPhase.Win;
-        //ゲームオーバーであればノベルのフェイズを変える
-        if (GameManager.Instance.IsGameOver) _novelPhase = NovelPhase.Lose;
 
         switch (_novelPhase)
         {
             case NovelPhase.Before://戦闘前のノベル
-
                 if (_beforeGSSReader.gameObject.activeSelf == false)
                 {   
                     //ノベル関係のスクリプトがアタッチされているオブジェクトを有効化する
@@ -219,11 +225,11 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
 
                     _uiCanvas.gameObject.SetActive(true);
                     _novelPhase = NovelPhase.None;
+                    Instantiate(_stageParam.PhaseParms[_phaseIndex].Prefab).transform.position = _bossGeneretePos.position;
                 }
                 break;
 
             case NovelPhase.Win://勝利後のノベル
-
                 if (_winGSSReader.gameObject.activeSelf == false)
                 {
                     //ノベル関係のスクリプトがアタッチされているオブジェクトを有効化する
@@ -235,6 +241,7 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
                     //ノベルのデータのロードが終わったら
                     _novelCanvas.gameObject.SetActive(true);
                     _uiCanvas.gameObject.SetActive(false);
+                    AllBulletEnemyDestroy();
                 }
 
                 if(_winNovelRenderer.IsNovelFinish)
@@ -246,11 +253,9 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
 
                     _gameClearCanvas.gameObject.SetActive(true);
                 }
-
                 break;
 
             case NovelPhase.Lose://敗北後のノベル
-
                 if(_loseGSSReader.gameObject.activeSelf == false)
                 {
                     //ノベル関係のスクリプトがアタッチされているオブジェクトを有効化する
@@ -262,6 +267,7 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
                     //ノベルのデータのロードが終わったら
                     _novelCanvas.gameObject.SetActive(true);
                     _uiCanvas.gameObject.SetActive(false);
+                    AllBulletEnemyDestroy();
                 }
 
                 if(_loseNovelRenderer.IsNovelFinish)
@@ -273,10 +279,6 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
 
                     _gameOverCanavas.gameObject.SetActive(true);
                 }
-
-                break;
-
-            default:
                 break;
         }
     }
