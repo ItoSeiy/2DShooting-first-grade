@@ -41,7 +41,7 @@ public class SuperAttackPrison : BossAttackAction
     /// <summary>UŒ‚•p“x</summary>
     [SerializeField, Header("UŒ‚•p“x(•b)")] private float _attackInterval = 0.6f;
     /// <summary>ƒ}ƒYƒ‹‚ÌŠp“xŠÔŠu</summary>
-    [SerializeField, Header("ƒ}ƒYƒ‹‚ÌŠp“xŠÔŠu")] float _rotationInterval = 3f;
+    [SerializeField, Header("ƒ}ƒYƒ‹‚ÌŠp“xŠÔŠu")] float _angleInterval = 3f;
     /// <summary>”­Ë‚·‚é’e‚ğİ’è‚Å‚«‚é</summary>
     [SerializeField, Header("”­Ë‚·‚é’e‚Ìİ’è")] PoolObjectType[] _bullet;
     /// <summary>‰ñ“]‚µn‚ß‚éŠÔ</summary>
@@ -61,6 +61,7 @@ public class SuperAttackPrison : BossAttackAction
    
     public override void Enter(BossController contlloer)
     {
+        contlloer.ItemDrop();
         StartCoroutine(Prison(contlloer));//ƒRƒ‹[ƒ`ƒ“‚ğ”­“®
     }
 
@@ -150,12 +151,12 @@ public class SuperAttackPrison : BossAttackAction
                 }
                 if (!_rotDir)
                 {
-                    localAngle.z += _rotationInterval;// Šp“x‚ğİ’è
+                    localAngle.z += _angleInterval;// Šp“x‚ğİ’è
                     _muzzles[1].localEulerAngles = localAngle;//‰ñ“]‚·‚é
                 }
                 else if(_rotDir)
                 {
-                    localAngle.z -= _rotationInterval;// Šp“x‚ğİ’è
+                    localAngle.z -= _angleInterval;// Šp“x‚ğİ’è
                     _muzzles[1].localEulerAngles = localAngle;//‰ñ“]‚·‚é
                 }
             }

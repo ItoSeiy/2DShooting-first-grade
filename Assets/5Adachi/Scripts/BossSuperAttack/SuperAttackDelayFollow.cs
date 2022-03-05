@@ -23,7 +23,7 @@ public class SuperAttackDelayFollow : BossAttackAction
     /// <summary>必殺前に移動するポジション</summary>
     [SerializeField, Header("必殺前に移動するポジション")] Vector2 _superAttackPosition = new Vector2(0f, 4f);
     /// <summary>バレットを発射するポジション</summary>
-    [SerializeField, Header("Bulletを発射するポジション")] Transform[] _muzzles = null;
+    [SerializeField, Header("Bulletを発射するポジション")] Transform _muzzle = null;
     /// <summary>必殺前に移動するときのスピード</summary>
     [SerializeField, Header("必殺前に移動するときのスピード")] float _speed = 4f;
     /// <summary>必殺技待機時間</summary>
@@ -31,9 +31,9 @@ public class SuperAttackDelayFollow : BossAttackAction
     /// <summary>必殺技発動時間</summary>
     [SerializeField, Header("必殺技発動時間")] float _activationTime = 30f;
     /// <summary>マズルの角度間隔</summary>
-    [SerializeField, Header("マズルの角度間隔")] float _rotationInterval = 20f;
+    [SerializeField, Header("マズルの角度間隔")] float _angleInterval = 20f;
     /// <summary>攻撃頻度</summary>
-    [SerializeField, Header("攻撃頻度(秒)")] float _attackInterval = 1f;
+    [SerializeField, Header("攻撃頻度(秒)")] float _attackInterval = 0.3f;
     /// <summary>発射する弾を設定できる</summary>
     [SerializeField, Header("発射する弾の設定(ディレイフォロ-)")]  PoolObjectType[] _bullet;
     /// <summary>修正値</summary>
@@ -55,6 +55,7 @@ public class SuperAttackDelayFollow : BossAttackAction
 
     public override void Enter(BossController contlloer)
     {
+        contlloer.ItemDrop();
         StartCoroutine(DelayFollow(contlloer)); //コルーチンを発動
     }
 
@@ -125,17 +126,17 @@ public class SuperAttackDelayFollow : BossAttackAction
         {
             _pattern = Random.Range(0, _bullet.Length);
             //下全体に発射
-            for (float rotation = FIRST_ROTATION; rotation <= LAST_ROTATION; rotation += _rotationInterval)//95度～135度、225度～265度の範囲
+            for (float angle = FIRST_ROTATION; angle <= LAST_ROTATION; angle += _angleInterval)//95度～135度、225度～265度の範囲
             {
-                Vector3 localAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
-                localAngle.z = rotation;// 角度を設定
-                _muzzles[0].localEulerAngles = localAngle;//回転する
+                Vector3 localAngle = _muzzle.localEulerAngles;// ローカル座標を基準に取得
+                localAngle.z = angle;// 角度を設定
+                _muzzle.localEulerAngles = localAngle;//回転する
                 //弾をマズルの向きに合わせて弾を発射（時間が経つとプレイヤーに一瞬だけ追従するBulletを使います）
-                ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet[_pattern]).transform.rotation = _muzzles[0].rotation;
+                ObjectPool.Instance.UseObject(_muzzle.position, _bullet[_pattern]).transform.rotation = _muzzle.rotation;
                 //真ん中あたりは発射しない
-                if (rotation == MIDDLE_RANGE)
+                if (angle == MIDDLE_RANGE)
                 {
-                    rotation = MIDDLE_RANGE + MIDDLE_RANGE_OFFSET;//真ん中あたりには発射しないのでスキップする
+                    angle = MIDDLE_RANGE + MIDDLE_RANGE_OFFSET;//真ん中あたりには発射しないのでスキップする
                 }
             }
             yield return new WaitForSeconds(_attackInterval);//攻撃頻度(秒)

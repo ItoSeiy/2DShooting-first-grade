@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Threading.Tasks;
 using UnityEngine.InputSystem;
 using Cinemachine;
-using UnityEditor.Rendering.LookDev;
+using Overdose.Novel;
 
 /// <summary>
 /// Playerの基底クラス
@@ -135,7 +135,6 @@ public class PlayerBase : MonoBehaviour
     /// <summary>InvincibleObjectを初期化する定数</summary>
     const int INVENCIBLEDEFAULT = -150;
 
-
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -167,6 +166,25 @@ public class PlayerBase : MonoBehaviour
 
     private async void Update()
     {
+        if(PhaseNovelManager.Instance != null)
+        {
+            //ノベルが再生されているかどうか
+            var isNovel = PhaseNovelManager.Instance.NovelePhaesState == NovelPhase.Before
+                       || PhaseNovelManager.Instance.NovelePhaesState == NovelPhase.Win 
+                       || PhaseNovelManager.Instance.NovelePhaesState == NovelPhase.Lose;
+
+            if (PhaseNovelManager.Instance.NovelePhaesState == NovelPhase.None)
+            {
+                //再生していなければ動けるようにする
+                _canMove = true;
+            }
+            else if(isNovel)
+            {
+                //ノベルが再生されていれば
+                _canMove = false;
+            }
+        }
+
         if (!_canMove)
         {
             _rb.velocity = Vector2.zero;
@@ -204,43 +222,25 @@ public class PlayerBase : MonoBehaviour
                 break;
         }
 
-        if(PhaseNovelManager.Instance != null)
-        {
-            //ノベルが再生されているかどうか
-            var isNovel = PhaseNovelManager.Instance.NovelePhaesState == NovelPhase.Before
-                       || PhaseNovelManager.Instance.NovelePhaesState == NovelPhase.Win 
-                       || PhaseNovelManager.Instance.NovelePhaesState == NovelPhase.Lose;
-
-            if (PhaseNovelManager.Instance.NovelePhaesState == NovelPhase.None)
-            {
-                //再生していなければ動けるようにする
-                _canMove = true;
-            }
-            else if(isNovel)
-            {
-                //ノベルが再生されていれば
-                _canMove = false;
-            }
-        }
     }
     public void OnMove(InputAction.CallbackContext context)//通常の移動
     {
         if (!_canMove) return;
         Vector2 inputMoveMent = context.ReadValue<Vector2>();
-        _dir = new Vector2(inputMoveMent.x, inputMoveMent.y).normalized;
+        _dir = new Vector2(inputMoveMent.x, inputMoveMent.y);
         Inversion();
     }
 
     public void OnLateMove(InputAction.CallbackContext context)//精密操作時の移動
     {
         if (!_canMove) return;
-        if (context.started && !_isLateMode)//LeftShiftKeyが押された瞬間の処理
+        if (context.started)//LeftShiftKeyが押された瞬間の処理
         {
             _isLateMode = true;
             GamingPlayer();
             Debug.Log(_isLateMode);
         }
-        if (_isLateMode && context.performed || _isLateMode && context.canceled)//LeftShiftKeyが離された瞬間の処理
+        if (context.performed || context.canceled)//LeftShiftKeyが離された瞬間の処理
         {
             _isLateMode = false;
             GamingFalse();
@@ -248,7 +248,7 @@ public class PlayerBase : MonoBehaviour
         }
     }
 
-    
+
     public async void OnJump(InputAction.CallbackContext context)//SpaceKeyが押された瞬間の処理
     {
         _bombCount = GameManager.Instance.PlayerBombCount;
