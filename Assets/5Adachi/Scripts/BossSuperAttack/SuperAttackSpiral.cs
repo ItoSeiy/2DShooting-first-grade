@@ -45,6 +45,7 @@ public class SuperAttackSpiral : BossAttackAction
     
     public override void Enter(BossController contlloer)
     {
+        contlloer.ItemDrop();
         StartCoroutine(Spiral(contlloer)); //ƒRƒ‹[ƒ`ƒ“‚ğ”­“®
     }
 
@@ -60,7 +61,6 @@ public class SuperAttackSpiral : BossAttackAction
 
     public override void Exit(BossController contlloer)
     {
-        contlloer.ItemDrop();
         StopAllCoroutines();
     }
 

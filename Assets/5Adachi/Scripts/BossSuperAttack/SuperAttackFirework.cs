@@ -51,6 +51,7 @@ public class SuperAttackFirework : BossAttackAction
 
     public override void Enter(BossController contlloer)
     {
+        contlloer.ItemDrop();
         StartCoroutine(Firework(contlloer)); //ƒRƒ‹[ƒ`ƒ“‚ğ”­“®  
     }
 
@@ -66,7 +67,6 @@ public class SuperAttackFirework : BossAttackAction
 
     public override void Exit(BossController contlloer)
     {
-        contlloer.ItemDrop();
         StopAllCoroutines();
     }
 

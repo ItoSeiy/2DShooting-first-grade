@@ -49,6 +49,7 @@ public class SuperAttackParty : BossAttackAction
  
     public override void Enter(BossController contlloer)
     {
+        contlloer.ItemDrop();
         StartCoroutine(Party(contlloer)); //ƒRƒ‹[ƒ`ƒ“‚ğ”­“®
     }
 
@@ -64,7 +65,6 @@ public class SuperAttackParty : BossAttackAction
 
     public override void Exit(BossController contlloer)
     {
-        contlloer.ItemDrop();
         StopAllCoroutines();
     }
 

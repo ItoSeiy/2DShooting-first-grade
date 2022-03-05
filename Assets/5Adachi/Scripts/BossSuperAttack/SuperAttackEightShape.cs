@@ -54,6 +54,7 @@ public class SuperAttackEightShape : BossAttackAction
     
     public override void Enter(BossController contlloer)
     {
+        contlloer.ItemDrop();
         StartCoroutine(EightShape(contlloer)); //ƒRƒ‹[ƒ`ƒ“‚ğ”­“®
     }
 
@@ -69,7 +70,6 @@ public class SuperAttackEightShape : BossAttackAction
 
     public override void Exit(BossController contlloer)
     {
-        contlloer.ItemDrop();
         StopAllCoroutines();
     }
 

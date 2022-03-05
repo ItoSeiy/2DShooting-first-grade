@@ -60,6 +60,7 @@ public class SuperAttackRestriction: BossAttackAction
     
     public override void Enter(BossController contlloer)
     {
+        contlloer.ItemDrop();
         StartCoroutine(Restriction(contlloer)); //ƒRƒ‹[ƒ`ƒ“‚ğ”­“®
     }
 
@@ -75,7 +76,6 @@ public class SuperAttackRestriction: BossAttackAction
 
     public override void Exit(BossController contlloer)
     {
-        contlloer.ItemDrop();
         StopAllCoroutines();
     }
 

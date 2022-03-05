@@ -55,6 +55,7 @@ public class SuperAttackDelayFollow : BossAttackAction
 
     public override void Enter(BossController contlloer)
     {
+        contlloer.ItemDrop();
         StartCoroutine(DelayFollow(contlloer)); //ÉRÉãÅ[É`ÉìÇî≠ìÆ
     }
 
@@ -70,7 +71,6 @@ public class SuperAttackDelayFollow : BossAttackAction
 
     public override void Exit(BossController contlloer)
     {
-        contlloer.ItemDrop();
         StopAllCoroutines();
     }
     

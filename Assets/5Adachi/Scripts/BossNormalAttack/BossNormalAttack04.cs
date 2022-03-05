@@ -49,7 +49,7 @@ public class BossNormalAttack04 : BossAttackAction
 
     public override void Exit(BossController contlloer)
     {
-        contlloer.ItemDrop();
+        contlloer.ItemDrop();       
         StopAllCoroutines();
     }
 
