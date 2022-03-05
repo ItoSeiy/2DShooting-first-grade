@@ -4,7 +4,7 @@ using System.Collections;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
 
-namespace Novel
+namespace Overdose.Novel
 {
     [RequireComponent(typeof(GSSReader))]
     public class NovelRenderer : MonoBehaviour
@@ -182,6 +182,18 @@ namespace Novel
                 return false;
             }
         }
+    }
+
+    public enum NovelPhase
+    {
+        /// <summary>ƒmƒxƒ‹‚ğ“Ç‚İ‚Ü‚È‚¢ó‘Ô</summary>
+        None,
+        /// <summary>í“¬‘Oƒmƒxƒ‹</summary>
+        Before,
+        /// <summary>í“¬Œãƒmƒxƒ‹</summary>
+        Win,
+        /// <summary>•‰‚¯ƒmƒxƒ‹</summary>
+        Lose
     }
 }
 

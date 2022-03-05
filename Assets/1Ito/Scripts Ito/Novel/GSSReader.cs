@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Events;
 
-namespace Novel
+namespace Overdose.Novel
 {
     public class GSSReader : MonoBehaviour
     {

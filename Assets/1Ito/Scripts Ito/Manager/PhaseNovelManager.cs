@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Novel;
+using Overdose.Novel;
 using System.Threading.Tasks;
 
 public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
@@ -299,16 +299,4 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
             _backGroundClone.transform.Translate(0f, _backGroundClone.size.y * 2, 0f);
         }
     }
-}
-
-public enum NovelPhase
-{
-    /// <summary>ƒmƒxƒ‹‚ğ“Ç‚İ‚Ü‚È‚¢ó‘Ô</summary>
-    None,
-    /// <summary>í“¬‘Oƒmƒxƒ‹</summary>
-    Before,
-    /// <summary>í“¬Œãƒmƒxƒ‹</summary>
-    Win,
-    /// <summary>•‰‚¯ƒmƒxƒ‹</summary>
-    Lose
 }

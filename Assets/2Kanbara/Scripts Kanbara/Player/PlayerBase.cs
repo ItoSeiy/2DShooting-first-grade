@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Threading.Tasks;
 using UnityEngine.InputSystem;
 using Cinemachine;
-
+using Overdose.Novel;
 
 /// <summary>
 /// Playerの基底クラス
