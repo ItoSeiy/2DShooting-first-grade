@@ -182,6 +182,12 @@ public class BossController : EnemyBase
         //ボスはゲームゾーンに触れても破棄してほしくないため記述をしない
     }
 
+    protected override void OnKilledByPlayer()
+    {
+        GameManager.Instance.StageClear();
+        base.OnKilledByPlayer();
+    }
+
     /// <summary>
     /// 待つことを実行する関数
     /// アップデートの実行を待つ
@@ -189,7 +195,7 @@ public class BossController : EnemyBase
     /// <param name="castTime">待つ時間</param>
     public void Cast(float castTime)
     {
-        StopAllCoroutines();
+        StopCoroutine(Casting(castTime));
         StartCoroutine(Casting(castTime));
     }
 

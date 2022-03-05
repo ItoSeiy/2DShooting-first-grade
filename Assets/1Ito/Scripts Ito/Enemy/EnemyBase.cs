@@ -71,29 +71,23 @@ public abstract class EnemyBase : MonoBehaviour, IDamage
         }
     }
 
-    /// <summary>
-    /// 攻撃の処理を書いてください
-    /// 例)Bulletプレハブを生成するなど
-    /// </summary>
-    protected virtual void Attack()
-    {
-        Debug.LogError($"{gameObject.name}の攻撃が実装されていません\n実装してください");
-    }
-
-    /// <summary>
-    /// ダメージを受けた際に行う処理を書いてください
-    /// 例)ダメージを受けた際のアニメーションなど
-    /// </summary>
-    protected abstract void OnGetDamage();
-
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if(EnemyHp <= 0)
         {
-            ItemDrop();
-            Destroy(gameObject);
+            OnKilledByPlayer();
         }
         OnGameZoneTag(collision);
+    }
+
+    /// <summary>
+    /// プレイヤーに殺された際の処理
+    /// Destroyをするためこの処理を
+    /// </summary>
+    protected virtual void OnKilledByPlayer()
+    {
+        ItemDrop();
+        Destroy(gameObject);
     }
 
     /// <summary>
@@ -114,6 +108,20 @@ public abstract class EnemyBase : MonoBehaviour, IDamage
                 Destroy(gameObject);
             }
         }
+    }
+    /// <summary>
+    /// ダメージを受けた際に行う処理を書いてください
+    /// 例)ダメージを受けた際のアニメーションなど
+    /// </summary>
+    protected abstract void OnGetDamage();
+
+    /// <summary>
+    /// 攻撃の処理を書いてください
+    /// 例)Bulletプレハブを生成するなど
+    /// </summary>
+    protected virtual void Attack()
+    {
+        Debug.LogError($"{gameObject.name}の攻撃が実装されていません\n実装してください");
     }
 
     /// <summary>
@@ -148,7 +156,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamage
         _enemyHp -= damage;
         OnGetDamage();
     }
-   
+
     public void ChangeAttackInterval(float interval)
     {
         _attackInterval = interval;
