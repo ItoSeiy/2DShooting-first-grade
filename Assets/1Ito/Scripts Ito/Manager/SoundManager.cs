@@ -87,7 +87,10 @@ public enum SoundType
     Tinnitus,
     /// <summary>銃</summary>
     Gun,
-
+    /// <summary>ボス1,2,4,5の死亡サウンド</summary>
+    BossKilled,
+    /// <summary>ボスの死亡サウンド</summary>
+    Boss3Killed,
 }
 
 [System.Serializable]

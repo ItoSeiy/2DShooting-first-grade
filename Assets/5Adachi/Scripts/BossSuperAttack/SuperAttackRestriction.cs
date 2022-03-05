@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class SuperAttackRestriction: BossAttackAction
 {
-    /// <summary>タイマー</summary>
-    float _timer = 0f;
+    
     /// <summary>右側の範囲</summary>
     bool _rightRange;
     /// <summary>左側の範囲</summary>
@@ -14,8 +13,12 @@ public class SuperAttackRestriction: BossAttackAction
     bool _upperRange;
     /// <summary>下側の範囲</summary>
     bool _downRange;
+    /// <summary>タイマー</summary>
+    float _timer = 0f;
     /// <summary>横方向</summary>
     float _horizontalDir = 0f;
+    /// <summary>通常時の被ダメージの割合を保存する</summary>
+    float _saveDamageTakenRation = 1f;
     /// <summary>縦方向</summary>
     float _verticalDir = 0f;
     /// <summary>弾の見た目の種類</summary>
@@ -38,6 +41,8 @@ public class SuperAttackRestriction: BossAttackAction
     [SerializeField, Header("発射する弾の設定")] PoolObjectType[] _bullet;
     /// <summary>この行動から出る時間</summary>
     [SerializeField, Header("この行動から出る時間")] float _endingTime = 30f;
+    /// <summary>被ダメージの割合</summary>
+    [SerializeField, Header("被ダメージの割合"), Range(0, 1)] float _damageTakenRationRange = 0.5f;
     /// <summary>修正値</summary>
     float _rotOffset = 0f;
     /// <summary>修正値</summary>
@@ -61,6 +66,10 @@ public class SuperAttackRestriction: BossAttackAction
     public override void Enter(BossController contlloer)
     {
         contlloer.ItemDrop();
+        //通常時の被ダメージの割合を保存する
+        _saveDamageTakenRation = contlloer.DamageTakenRation;
+        //被ダメージの割合を変更する
+        contlloer.DamageTakenRation = _damageTakenRationRange;
         StartCoroutine(Restriction(contlloer)); //コルーチンを発動
     }
 
@@ -76,6 +85,8 @@ public class SuperAttackRestriction: BossAttackAction
 
     public override void Exit(BossController contlloer)
     {
+        //被ダメージの割合割合を元に戻す
+        contlloer.DamageTakenRation = _saveDamageTakenRation;
         StopAllCoroutines();
     }
 

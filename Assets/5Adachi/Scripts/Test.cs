@@ -21,7 +21,7 @@ public class Test : MonoBehaviour
         while(true)
         {
             yield return new WaitForSeconds(1f/ 60f);
-            if(_timer >= 2f)
+            if(_timer >= 0f)
             {
                 Instantiate(_particleObject, transform.position, Quaternion.identity); //パーティクル用ゲームオブジェクト生成
                 Destroy(gameObject);

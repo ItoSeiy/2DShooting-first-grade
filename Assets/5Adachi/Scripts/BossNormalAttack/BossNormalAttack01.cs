@@ -64,6 +64,7 @@ public class BossNormalAttack01 : BossAttackAction
             _muzzles[0].transform.rotation = Quaternion.FromToRotation(Vector3.up, _dir);
 
             yield return new WaitForSeconds(1f);
+
             //親オブジェクトのマズル
 
             //弾をマズル0の向きに合わせて弾を発射

@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class SuperAttackDelayFollow : BossAttackAction
 {
-    /// <summary>タイマー</summary>
-    float _timer = 0f;
+    
     /// <summary>右側の範囲</summary>
     bool _rightRange;
     /// <summary>左側の範囲</summary>
@@ -14,14 +13,16 @@ public class SuperAttackDelayFollow : BossAttackAction
     bool _upperRange;
     /// <summary>下側の範囲</summary>
     bool _downRange;
+    /// <summary>タイマー</summary>
+    float _timer = 0f;
     /// <summary>横方向</summary>
     float _horizontalDir = 0f;
     /// <summary>縦方向</summary>
     float _verticalDir = 0f;
-    /// <summary>弾の見た目の種類</summary>
-    int _pattern = 0;
-    /// <summary>通常時の被ダメージの割合を保存する保存する</summary>
+    /// <summary>通常時の被ダメージの割合を保存する</summary>
     float _saveDamageTakenRation = 1f;
+    /// <summary>弾の見た目の種類</summary>
+    int _pattern = 0;   
     /// <summary>必殺前に移動するポジション</summary>
     [SerializeField, Header("必殺前に移動するポジション")] Vector2 _superAttackPosition = new Vector2(0f, 4f);
     /// <summary>バレットを発射するポジション</summary>
@@ -60,7 +61,7 @@ public class SuperAttackDelayFollow : BossAttackAction
     public override void Enter(BossController contlloer)
     {
         contlloer.ItemDrop();
-        //通常時の被ダメージの割合を保存する保存する
+        //通常時の被ダメージの割合を保存する
         _saveDamageTakenRation = contlloer.DamageTakenRation;
         //被ダメージの割合を変更する
         contlloer.DamageTakenRation = _damageTakenRationRange;
