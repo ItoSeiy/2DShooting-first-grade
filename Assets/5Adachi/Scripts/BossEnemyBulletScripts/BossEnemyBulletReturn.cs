@@ -33,7 +33,7 @@ public class BossEnemyBulletReturn : BulletBese
     /// <summary>ƒ{ƒX‚Ì•ûŒü‚Éˆêu’Ç]‚·‚éŠÔ</summary>
     float _secondReturnTime = 1.2f;
     /// <summary>á‚ª‰ğ‚¯‚éŠÔ</summary>
-    float _snowmeltTime = 4.7f;
+    float _snowmeltTime = 4f;
 
     protected override void OnEnable()
     {

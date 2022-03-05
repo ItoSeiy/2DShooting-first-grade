@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Overdose.Calculation;
 
 public class BossNormalAttack04 : BossAttackAction
 {
@@ -11,7 +12,7 @@ public class BossNormalAttack04 : BossAttackAction
     /// <summary>タイマー</summary>
     float _timer = 0f;
     /// <summary>バレットを発射するポジション</summary>
-    [SerializeField, Header("Bulletを発射するポジション")] Transform[] _muzzles = null;
+    [SerializeField, Header("Bulletを発射するポジション")] Transform _muzzle = null;
     /// <summary>攻撃頻度</summary>
     [SerializeField, Header("攻撃頻度(秒)")] private float _attackInterval = 0.64f;
     /// <summary>発射する弾を設定できる</summary>
@@ -22,6 +23,8 @@ public class BossNormalAttack04 : BossAttackAction
     [SerializeField, Header("1回の処理で弾を発射する回数")] int _maximumCount = 7;
     /// <summary>この行動から出る時間</summary>
     [SerializeField, Header("この行動から出る時間")] float _endingTime = 20f;
+    /// <summary>アイテムを落とす確率</summary>
+    [SerializeField, Header("アイテムを落とす確率")] int _probability = 50;
     /// <summary>最小の回転値</summary>
     const float MINIMUM_ROTATION_RANGE = 0f;
     /// <summary>最大の回転値</summary>
@@ -49,6 +52,12 @@ public class BossNormalAttack04 : BossAttackAction
 
     public override void Exit(BossController contlloer)
     {
+        //一定の確率でアイテムを落とす
+        if (Calculator.RandomBool(_probability))
+        {
+            contlloer.ItemDrop();
+        }
+
         StopAllCoroutines();
     }
 
@@ -58,11 +67,11 @@ public class BossNormalAttack04 : BossAttackAction
         while (true)
         {
             //ターゲット（プレイヤー）の方向を計算
-            _dir = (GameManager.Instance.Player.transform.position - _muzzles[0].transform.position);
+            _dir = (GameManager.Instance.Player.transform.position - _muzzle.transform.position);
             //ターゲット（プレイヤー）の方向に回転
-            _muzzles[0].transform.rotation = Quaternion.FromToRotation(Vector3.up, _dir);
+            _muzzle.transform.rotation = Quaternion.FromToRotation(Vector3.up, _dir);
             //弾をマズル0の向きに合わせて弾を発射
-            ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet[_pattern]).transform.rotation = _muzzles[0].rotation;
+            ObjectPool.Instance.UseObject(_muzzle.position, _bullet[_pattern]).transform.rotation = _muzzle.rotation;
 
             //同じ処理を数回(_maximumCount)繰り返す
             for (int count = INITIAL_COUNT; count < _maximumCount; count++)
@@ -70,12 +79,12 @@ public class BossNormalAttack04 : BossAttackAction
                 //弾の見た目をランダムで変える
                 _pattern = Random.Range(0, _bullet.Length);
                 ///マズルを回転する///
-                Vector3 localAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
+                Vector3 localAngle = _muzzle.localEulerAngles;// ローカル座標を基準に取得
                 // ランダムな角度を設定（（　0度　～　360度/マズルの角度間隔　）* マズルの角度間隔　)
                 localAngle.z = Random.Range(MINIMUM_ROTATION_RANGE, MAXIMUM_ROTATION_RANGE / _rotationInterval) * _rotationInterval;
-                _muzzles[0].localEulerAngles = localAngle;//回転する
+                _muzzle.localEulerAngles = localAngle;//回転する
                 //弾をマズルの向きに合わせて弾を発射
-                ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet[_pattern]).transform.rotation = _muzzles[0].rotation;
+                ObjectPool.Instance.UseObject(_muzzle.position, _bullet[_pattern]).transform.rotation = _muzzle.rotation;
             }
 
             yield return new WaitForSeconds(_attackInterval);

@@ -23,7 +23,7 @@ public class SuperAttackSpiral : BossAttackAction
     /// <summary>必殺前に移動するポジション</summary>
     [SerializeField, Header("必殺前に移動するポジション")] Vector2 _superAttackPosition = new Vector2(0f, 4f);
     /// <summary>バレットを発射するポジション</summary>
-    [SerializeField, Header("Bulletを発射するポジション")] Transform[] _muzzles = null;
+    [SerializeField, Header("Bulletを発射するポジション")] Transform _muzzle = null;
     /// <summary>必殺前に移動するときのスピード</summary>
     [SerializeField, Header("必殺前に移動するときのスピード")] float _speed = 4f;    
     /// <summary>必殺技待機時間</summary>
@@ -31,7 +31,7 @@ public class SuperAttackSpiral : BossAttackAction
     /// <summary>必殺技発動時間</summary>
     [SerializeField, Header("必殺技発動時間")] float _activationTime = 30f;
     /// <summary>マズルの角度間隔</summary>
-    [SerializeField,Header("マズルの角度間隔")]　float _rotationInterval = 10f;
+    [SerializeField,Header("マズルの角度間隔")]　float _angleInterval = 10f;
     /// <summary>発射する弾を設定できる</summary>
     [SerializeField, Header("発射する弾の設定")] PoolObjectType[] _bullet;
     /// <summary>修正値</summary>
@@ -45,6 +45,7 @@ public class SuperAttackSpiral : BossAttackAction
     
     public override void Enter(BossController contlloer)
     {
+        contlloer.ItemDrop();
         StartCoroutine(Spiral(contlloer)); //コルーチンを発動
     }
 
@@ -116,11 +117,11 @@ public class SuperAttackSpiral : BossAttackAction
             //弾の見た目を変える
             _pattern = Random.Range(0, _bullet.Length);
             //マズルを回転する
-            Vector3 localAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
-            localAngle.z += _rotationInterval;// 角度を設定
-            _muzzles[0].localEulerAngles = localAngle;//回転する           
+            Vector3 localAngle = _muzzle.localEulerAngles;// ローカル座標を基準に取得
+            localAngle.z += _angleInterval;// 角度を設定
+            _muzzle.localEulerAngles = localAngle;//回転する           
             //弾をマズルの向きに合わせて弾を発射
-            ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet[_pattern]).transform.rotation = _muzzles[0].rotation;
+            ObjectPool.Instance.UseObject(_muzzle.position, _bullet[_pattern]).transform.rotation = _muzzle.rotation;
 
             yield return new WaitForSeconds(JUDGMENT_TIME);//判定回数の調整
 
