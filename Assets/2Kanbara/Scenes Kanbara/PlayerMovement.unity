@@ -6171,6 +6171,7 @@ GameObject:
   - component: {fileID: 1839686402}
   - component: {fileID: 1839686401}
   - component: {fileID: 1839686400}
+  - component: {fileID: 1839686404}
   m_Layer: 8
   m_Name: TestEnemy
   m_TagString: Enemy
@@ -6275,12 +6276,36 @@ Transform:
   m_GameObject: {fileID: 1839686399}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 3, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 10, y: 3, z: 1}
   m_Children:
   - {fileID: 414264386}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1839686404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1839686399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe2a8ddffbe57714aa89c19ce73b3925, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speed: 5
+  _enemyHp: 10
+  _attackInterval: 1
+  _damageTakenRatio: 1
+  _playerBulletTag: PlayerBullet
+  _playerTag: Player
+  _gameZoneTag: Finish
+  _sprite: {fileID: 0}
+  _dropItems:
+    items: []
+  _itemDropRangeX: 2
+  _itemDropRangeY: 2
 --- !u!114 &1840163312 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4551802122371824449, guid: a0fba6d711617884f8bb908d7b6035ab,
@@ -6545,7 +6570,7 @@ PrefabInstance:
     - target: {fileID: 8073652284958033810, guid: 9e9962444e183474597e568b85370ae6,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8073652285846561726, guid: 9e9962444e183474597e568b85370ae6,
         type: 3}
@@ -6555,7 +6580,7 @@ PrefabInstance:
     - target: {fileID: 8073652285846561726, guid: 9e9962444e183474597e568b85370ae6,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.019
       objectReference: {fileID: 0}
     - target: {fileID: 8073652285846561726, guid: 9e9962444e183474597e568b85370ae6,
         type: 3}
@@ -6694,7 +6719,7 @@ PrefabInstance:
     - target: {fileID: 1684132987068084059, guid: 7a102d9f29907194aaa033c889946f5f,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7a102d9f29907194aaa033c889946f5f, type: 3}
