@@ -47,7 +47,7 @@ public class SuperAttackRestriction: BossAttackAction
     /// <summary>リセットタイマー</summary>
     const float RESET_TIME = 0f;
     /// <summary>逆回転時のマズルの修正値</summary>
-    const float MUZZLE_ROT_OFFSET = 4f;
+    const float MUZZLE_ROT_OFFSET = 0.4f;
     /// <summary>半分の時間</summary>
     const float HALF_TIME = 2;
     /// <summary>最小の回転値</summary>
