@@ -93,6 +93,16 @@ public abstract class EnemyBase : MonoBehaviour, IDamage
             ItemDrop();
             Destroy(gameObject);
         }
+        OnGameZoneTag(collision);
+    }
+
+    /// <summary>
+    /// ゲームゾーンに触れた際の処理
+    /// 2回触れたら破棄する仕様
+    /// </summary>
+    /// <param name="collision"></param>
+    protected virtual void OnGameZoneTag(Collider2D collision)
+    {
         if(collision.tag == _gameZoneTag)
         {
             if(!_destroyAble)
