@@ -10,7 +10,7 @@ public class BossNormalAttack01 : BossAttackAction
     /// <summary>弾の見た目の種類</summary>
     int _pattern = 0;
     /// <summary>タイマー</summary>
-    float _timer = 0f;
+    public float _timer = 0f;
     /// <summary>バレットを発射するポジション</summary>
     [SerializeField, Header("Bulletを発射するポジション")] Transform[] _muzzles = null;
     /// <summary>攻撃頻度</summary>
