@@ -3,8 +3,7 @@ using UnityEngine;
 
 public class SuperAttackDelayFollow : BossAttackAction
 {
-    /// <summary>タイマー</summary>
-    float _timer = 0f;
+    
     /// <summary>右側の範囲</summary>
     bool _rightRange;
     /// <summary>左側の範囲</summary>
@@ -13,12 +12,16 @@ public class SuperAttackDelayFollow : BossAttackAction
     bool _upperRange;
     /// <summary>下側の範囲</summary>
     bool _downRange;
+    /// <summary>タイマー</summary>
+    float _timer = 0f;
     /// <summary>横方向</summary>
     float _horizontalDir = 0f;
     /// <summary>縦方向</summary>
     float _verticalDir = 0f;
+    /// <summary>通常時の被ダメージの割合を保存する</summary>
+    float _saveDamageTakenRation = 1f;
     /// <summary>弾の見た目の種類</summary>
-    int _pattern = 0;
+    int _pattern = 0;   
     /// <summary>必殺前に移動するポジション</summary>
     [SerializeField, Header("必殺前に移動するポジション")] Vector2 _superAttackPosition = new Vector2(0f, 4f);
     /// <summary>バレットを発射するポジション</summary>
@@ -35,6 +38,8 @@ public class SuperAttackDelayFollow : BossAttackAction
     [SerializeField, Header("攻撃頻度(秒)")] float _attackInterval = 0.3f;
     /// <summary>発射する弾を設定できる</summary>
     [SerializeField, Header("発射する弾の設定(ディレイフォロ-)")]  PoolObjectType[] _bullet;
+    /// <summary>被ダメージの割合</summary>
+    [SerializeField,Header("被ダメージの割合"),Range(0, 1)] float _damageTakenRationRange = 0.5f;
     /// <summary>修正値</summary>
     const float PLAYER_POS_OFFSET = 0.5f;
     /// <summary>判定回数の制限</summary>
@@ -55,12 +60,16 @@ public class SuperAttackDelayFollow : BossAttackAction
     public override void Enter(BossController contlloer)
     {
         contlloer.ItemDrop();
+        //通常時の被ダメージの割合を保存する
+        _saveDamageTakenRation = contlloer.DamageTakenRation;
+        //被ダメージの割合を変更する
+        contlloer.DamageTakenRation = _damageTakenRationRange;
         StartCoroutine(DelayFollow(contlloer)); //コルーチンを発動
     }
 
     public override void ManagedUpdate(BossController contlloer)
     {
-        _timer += Time.deltaTime;//タイマー
+        _timer += Time.deltaTime;//タイマー       
 
         if(_timer >= _activationTime)
         {
@@ -70,6 +79,8 @@ public class SuperAttackDelayFollow : BossAttackAction
 
     public override void Exit(BossController contlloer)
     {
+        //被ダメージの割合割合を元に戻す
+        contlloer.DamageTakenRation = _saveDamageTakenRation;
         StopAllCoroutines();
     }
     

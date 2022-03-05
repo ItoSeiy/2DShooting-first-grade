@@ -34,10 +34,12 @@ public class BossNormalAttack03 : BossAttackAction
     /// <summary>最大の回転値</summary>
     const float MAX_ROTATION_RANGE = 360f;
     /// <summary>最小の弾数</summary>
-    const int MINIMUM_BULLET_RANGE = 2;
+    const int MINIMUM_BULLET_RANGE = 3;
     /// <summary>発射回数をリセット</summary>
     const int ATTACK_COUNT_RESET = 0;
-    
+    const int MAX_BULLEt_RANGE_OFFSET = 1;
+
+
 
     public override System.Action ActinoEnd { get; set; }
 
@@ -79,7 +81,7 @@ public class BossNormalAttack03 : BossAttackAction
                 //弾の見た目をランダムで変える
                 _pattern = Random.Range(0, _bullet.Length);
                 //1回の攻撃で弾を飛ばす数(3～?)
-                _rotationInterval = MAX_ROTATION_RANGE / Random.Range(MINIMUM_BULLET_RANGE, _maximumBulletRange);
+                _rotationInterval = MAX_ROTATION_RANGE / Random.Range(MINIMUM_BULLET_RANGE, _maximumBulletRange + MAX_BULLEt_RANGE_OFFSET);
                 _attackCount = ATTACK_COUNT_RESET;//発射回数をリセット
             }
             //ターゲット（プレイヤー）の方向を計算

@@ -6,8 +6,7 @@ public class SuperAttackPrison : BossAttackAction
 {
     /// <summary>方向</summary>
     Vector3 _dir;
-    /// <summary>タイマー</summary>
-    float _timer = 0f;
+    
     /// <summary>右側の範囲</summary>
     bool _rightRange;
     /// <summary>左側の範囲</summary>
@@ -16,10 +15,14 @@ public class SuperAttackPrison : BossAttackAction
     bool _upperRange;
     /// <summary>下側の範囲</summary>
     bool _downRange;
+    /// <summary>タイマー</summary>
+    float _timer = 0f;
     /// <summary>横方向</summary>
     float _horizontalDir = 0f;
     /// <summary>縦方向</summary>
     float _verticalDir = 0f;
+    /// <summary>通常時の被ダメージの割合を保存する</summary>
+    float _saveDamageTakenRation = 1f;
     /// <summary>弾の見た目の種類</summary>
     int _firstPattern = 0;
     /// <summary>弾の見た目の種類</summary>
@@ -50,6 +53,8 @@ public class SuperAttackPrison : BossAttackAction
     [SerializeField, Header("左回転の限界")] float _leftRotLimit = 270f;
     /// <summary>右回転の限界</summary>
     [SerializeField, Header("右回転の限界")] float _rightRotLimit = 180f;
+    /// <summary>被ダメージの割合</summary>
+    [SerializeField, Header("被ダメージの割合"), Range(0, 1)] float _damageTakenRationRange = 0.5f;
     /// <summary>修正値</summary>
     const float PLAYER_POS_OFFSET = 0.5f;
     /// <summary>判定回数の制限</summary>
@@ -62,6 +67,10 @@ public class SuperAttackPrison : BossAttackAction
     public override void Enter(BossController contlloer)
     {
         contlloer.ItemDrop();
+        //通常時の被ダメージの割合を保存する
+        _saveDamageTakenRation = contlloer.DamageTakenRation;
+        //被ダメージの割合を変更する
+        contlloer.DamageTakenRation = _damageTakenRationRange;
         StartCoroutine(Prison(contlloer));//コルーチンを発動
     }
 
@@ -77,6 +86,8 @@ public class SuperAttackPrison : BossAttackAction
 
     public override void Exit(BossController contlloer)
     {
+        //被ダメージの割合割合を元に戻す
+        contlloer.DamageTakenRation = _saveDamageTakenRation;
         StopAllCoroutines();
     }
 

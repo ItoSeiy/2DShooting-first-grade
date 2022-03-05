@@ -50,6 +50,7 @@ MonoBehaviour:
   _activationTime: 30
   _angleInterval: 4
   _bullet: 270000002800000029000000
+  _damageTakenRationRange: 0.5
 --- !u!1 &1557905931969436095
 GameObject:
   m_ObjectHideFlags: 0
@@ -150,6 +151,7 @@ MonoBehaviour:
   _angleInterval: 10
   _attackInterval: 1
   _bullet: 270000002800000029000000
+  _damageTakenRationRange: 0.5
 --- !u!1 &3668928284545267236
 GameObject:
   m_ObjectHideFlags: 0
@@ -199,7 +201,7 @@ MonoBehaviour:
   _rotationInterval: 1
   _maximumCount: 7
   _endingTime: 10
-  _probability: 50
+  _probability: 35
 --- !u!1 &3668928285342510396
 GameObject:
   m_ObjectHideFlags: 0
@@ -277,6 +279,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3668928284545267237}
+  - {fileID: 3083222626220946895}
   m_Father: {fileID: 3668928286175380009}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -400,7 +403,7 @@ CapsuleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0.19}
@@ -419,7 +422,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 5
-  _enemyHp: 6500
+  _enemyHp: 65000
   _attackInterval: 1
   _damageTakenRatio: 1
   _playerBulletTag: PlayerBullet
@@ -440,6 +443,8 @@ MonoBehaviour:
       count: 1
   _itemDropRangeX: 2
   _itemDropRangeY: 2
+  _killedParticle: {fileID: 4487535076250934390, guid: 68c13d6f5cc05fd4a90a7b04f759e520,
+    type: 3}
   _data:
     actionPatterns:
     - bossAttackActions:
@@ -462,8 +467,8 @@ MonoBehaviour:
     - {fileID: 3942865692778157245}
     - {fileID: 4233309995412027639}
   _superAttackTimingHp:
-  - 5000
-  - 3000
+  - 50000
+  - 30000
 --- !u!1 &3668928286249649518
 GameObject:
   m_ObjectHideFlags: 0
@@ -496,6 +501,56 @@ Transform:
   m_Father: {fileID: 3668928286175380009}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4348238945874656620
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3083222626220946895}
+  - component: {fileID: 7754865547666754274}
+  m_Layer: 0
+  m_Name: NormalAttack04Thunder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3083222626220946895
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4348238945874656620}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3668928285832039756}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7754865547666754274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4348238945874656620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8210e586883f1b4a954f5f27880afa8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _muzzle: {fileID: 8318256088838269715}
+  _attackInterval: 0.4
+  _bullet: 160000001700000018000000190000001a0000001b0000001c000000
+  _rotationInterval: 1
+  _maximumCount: 7
+  _endingTime: 10
+  _probability: 60
 --- !u!1 &5798824771876401389
 GameObject:
   m_ObjectHideFlags: 0

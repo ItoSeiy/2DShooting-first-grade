@@ -205,7 +205,7 @@ CapsuleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -224,7 +224,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 5
-  _enemyHp: 7000
+  _enemyHp: 70000
   _attackInterval: 1
   _damageTakenRatio: 1
   _playerBulletTag: PlayerBullet
@@ -233,6 +233,8 @@ MonoBehaviour:
   _sprite: {fileID: 0}
   _dropItems:
     items:
+    - itemType: 48
+      count: 1
     - itemType: 49
       count: 1
     - itemType: 50
@@ -243,6 +245,8 @@ MonoBehaviour:
       count: 1
   _itemDropRangeX: 2
   _itemDropRangeY: 2
+  _killedParticle: {fileID: 4487535076250934390, guid: 68c13d6f5cc05fd4a90a7b04f759e520,
+    type: 3}
   _data:
     actionPatterns:
     - bossAttackActions:
@@ -301,8 +305,8 @@ MonoBehaviour:
     - {fileID: 920663452041829219}
     - {fileID: 959436985281620010}
   _superAttackTimingHp:
-  - 5000
-  - 3000
+  - 50000
+  - 25000
 --- !u!1 &1868784747635064903
 GameObject:
   m_ObjectHideFlags: 0
@@ -482,6 +486,7 @@ MonoBehaviour:
   _angleInterval: 20
   _attackInterval: 0.5
   _bullet: 2d0000002e0000002f000000
+  _damageTakenRationRange: 0.5
 --- !u!1 &3533165039299305463
 GameObject:
   m_ObjectHideFlags: 0
@@ -616,7 +621,7 @@ MonoBehaviour:
   _secondBullet: 29
   _rotationInterval: 45
   _endingTime: 15
-  _probability: 50
+  _probability: 30
 --- !u!1 &7704880379730584186
 GameObject:
   m_ObjectHideFlags: 0
@@ -670,6 +675,7 @@ MonoBehaviour:
   _angleInterval: 10
   _bullet: 2a0000002b0000002c000000
   _endingTime: 30
+  _damageTakenRationRange: 0.5
 --- !u!1 &9047327286839786509
 GameObject:
   m_ObjectHideFlags: 0
@@ -723,7 +729,7 @@ MonoBehaviour:
   _secondBullet: 29
   _rotationInterval: 45
   _endingTime: 10
-  _probability: 50
+  _probability: 30
 --- !u!1001 &3221781844798990307
 PrefabInstance:
   m_ObjectHideFlags: 0
