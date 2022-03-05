@@ -51,6 +51,7 @@ MonoBehaviour:
   _angleInterval: 2
   _bullet: 240000002500000026000000
   _maximumCount: 2
+  _damageTakenRationRange: 0.5
 --- !u!1 &2129082579279083244
 GameObject:
   m_ObjectHideFlags: 0
@@ -392,6 +393,8 @@ MonoBehaviour:
       count: 1
   _itemDropRangeX: 2
   _itemDropRangeY: 2
+  _killedParticle: {fileID: 49062057869043983, guid: 36b0a5339bd701d4eb077e60176002b2,
+    type: 3}
   _data:
     actionPatterns:
     - bossAttackActions:
@@ -530,6 +533,7 @@ MonoBehaviour:
   _activationTime: 30
   _angleInterval: 10
   _bullet: 240000002500000026000000
+  _damageTakenRationRange: 0.5
 --- !u!1 &8857107621947881584
 GameObject:
   m_ObjectHideFlags: 0
