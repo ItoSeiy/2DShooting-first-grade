@@ -56,6 +56,7 @@ public class BossNormalAttack05 : BossAttackAction
 
     public override void Exit(BossController contlloer)
     {
+        contlloer.ItemDrop();
         StopAllCoroutines();
     }
 
