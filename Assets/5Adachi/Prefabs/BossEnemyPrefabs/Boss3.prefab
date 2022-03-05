@@ -476,6 +476,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4249261378064472438}
+  - {fileID: 7396733862354260910}
   m_Father: {fileID: 4249261378582883706}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -529,6 +530,58 @@ MonoBehaviour:
   _activationTime: 30
   _angleInterval: 10
   _bullet: 240000002500000026000000
+--- !u!1 &8857107621947881584
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7396733862354260910}
+  - component: {fileID: 4026004529380936570}
+  m_Layer: 0
+  m_Name: NormalAttack03Rush
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7396733862354260910
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8857107621947881584}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4249261379191775775}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4026004529380936570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8857107621947881584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9db4916023d12bb418d732cc9a421818, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxAttackCount: 7
+  _muzzles:
+  - {fileID: 6376707828936186838}
+  - {fileID: 9140426780355275699}
+  _attackInterval: 0.64
+  _bullet: 17000000180000001c000000
+  _maximumBulletRange: 11
+  _endingTime: 10
+  _probability: 30
 --- !u!1001 &3235383207553087461
 PrefabInstance:
   m_ObjectHideFlags: 0
