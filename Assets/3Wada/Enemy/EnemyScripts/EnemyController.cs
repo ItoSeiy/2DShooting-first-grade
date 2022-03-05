@@ -29,7 +29,7 @@ public class EnemyController : EnemyBase
     [SerializeField,Header("弾幕")]
     GameObject _bullet;
 
-    [SerializeField, Header("撃つ弾幕の数")]
+    [SerializeField, Header("撃つ弾幕の種類")]
     PoolObjectType _bulletType;
     
     [SerializeField, Header("攻撃頻度をランダムにするか")]
