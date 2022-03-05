@@ -44,27 +44,19 @@ public class BossController : EnemyBase
     protected override void Awake()
     {
         base.Awake();
-        foreach (var pattern in _data.ActionPatterns)
-        {
-            foreach (var attackAction in pattern.BossAttackActions)
-            {
-                //アクション終了時の処理を登録する
-                attackAction.ActinoEnd = JudgeAction;
-            }
-        }
+        //アクション終了時の処理を登録する
+        _data.ActionPatterns.ForEach(x => x.BossAttackActions.ForEach(x => x.ActinoEnd = JudgeAction));
 
-        foreach(var superAttackAction in _data.BossSuperAttackActions)
+        //必殺技終了時の行動を登録する
+        _data.BossSuperAttackActions.ForEach(x => x.ActinoEnd = () =>
         {
-            superAttackAction.ActinoEnd = () =>//必殺技終了時の行動を登録する
-            {
-                //終了時に呼び出される関数を呼ぶ
-                _currentSuperAttackAction.Exit(this);
-                //中身を空にする(Updateの内容が実行されないようにするため)
-                _currentSuperAttackAction = null;
-                //普段の行動パターンに戻る
-                RandomPatternChange();
-            };
-        }
+            //終了時に呼び出される関数を呼ぶ
+            _currentSuperAttackAction.Exit(this);
+            //中身を空にする(Updateの内容が実行されないようにするため)
+            _currentSuperAttackAction = null;
+            //普段の行動パターンに戻る
+            RandomPatternChange();
+        });
 
         //必殺技を発動するHPのタイミングの設定ミスを防ぐために降順(大きい順)に並べ替える
         _superAttackTimingHp = _superAttackTimingHp.OrderByDescending(x => x).ToArray();
@@ -89,17 +81,14 @@ public class BossController : EnemyBase
 
     protected override void OnGetDamage()
     {
-        if(_timingIndex >= _data.BossSuperAttackActions.Length)
+        if(_timingIndex >= _data.BossSuperAttackActions.Count)
         {
             //必殺技を必要以上に発動させないために配列の要素数以上の時にアクセスしたらReturnする
             return;
         }
 
-        if(_superAttackTimingHp[_timingIndex] >= EnemyHp)
-        {
-
-            SuperAttack();
-        }
+        //必殺わざを発動するHpに到達したら必殺技を実行する
+        if(_superAttackTimingHp[_timingIndex] >= EnemyHp) SuperAttack();
     }
     
     /// <summary>
@@ -136,7 +125,7 @@ public class BossController : EnemyBase
         Debug.Log("アクションを判定します");
         _actionIndex++;
 
-        if(_actionIndex >= _data.ActionPatterns[_patternIndex].BossAttackActions.Length)
+        if(_actionIndex >= _data.ActionPatterns[_patternIndex].BossAttackActions.Count)
         {
             //行動パターンを実行しきったら
             RandomPatternChange();//行動パターンを変える
@@ -155,7 +144,7 @@ public class BossController : EnemyBase
     private void RandomPatternChange()
     {
         //行動パターンのインッデクスを決める
-        _patternIndex = Random.Range(0, _data.ActionPatterns.Length);
+        _patternIndex = Random.Range(0, _data.ActionPatterns.Count);
         Debug.Log($"パターン{_patternIndex}を実行する");
 
         //アクションはリセットされるためIndexを0にする

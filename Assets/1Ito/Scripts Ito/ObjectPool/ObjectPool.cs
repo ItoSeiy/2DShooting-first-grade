@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -17,14 +16,14 @@ public class ObjectPool : SingletonMonoBehaviour<ObjectPool>
         base.Awake();
         _poolCountIndex = 0;
         CreatePool();
-
         //デバッグ用
-        //foreach (var pool in _pool)
-        //{
-        //    Debug.Log($"オブジェクト名:{pool.Object.name} 種類:{pool.Type}");
-        //}
+        //_pool.ForEach(x => Debug.Log($"オブジェクト名:{x.Object.name} 種類:{x.Type}"));
     }
 
+    /// <summary>
+    /// 設定したオブジェクトの種類,数だけプールにオブジェクトを生成して追加する
+    /// 再帰呼び出しを用いている
+    /// </summary>
     private void CreatePool()
     {
         if(_poolCountIndex >= _poolObjParam.Params.Count)
@@ -48,25 +47,25 @@ public class ObjectPool : SingletonMonoBehaviour<ObjectPool>
     /// オブジェクトを使いたいときに呼び出す関数
     /// </summary>
     /// <param name="position">オブジェクトの位置を指定する</param>
-    /// <param name="bulletType">オブジェクトの種類</param>
+    /// <param name="objectType">オブジェクトの種類</param>
     /// <returns>生成したオブジェクト</returns>
-    public GameObject UseObject(Vector2 position, PoolObjectType bulletType)
+    public GameObject UseObject(Vector2 position, PoolObjectType objectType)
     {
         foreach(var pool in _pool)
         {
-            if (pool.Object.activeSelf == false && pool.Type == bulletType)
+            if(pool.Object.activeSelf == false && pool.Type == objectType)
             {
-                pool.Object.transform.position = position;
                 pool.Object.SetActive(true);
+                pool.Object.transform.position = position;
                 return pool.Object;
             }
         }
 
-        var newBullet = Instantiate(_poolObjParam.Params.Find(x => x.Type == bulletType).Prefab, this.transform);
-        newBullet.transform.position = position;
-        newBullet.SetActive(true);
-        _pool.Add(new ObjPool { Object = newBullet, Type = bulletType});
-        return newBullet;
+        var newObj = Instantiate(_poolObjParam.Params.Find(x => x.Type == objectType).Prefab, this.transform);
+        newObj.transform.position = position;
+        newObj.SetActive(true);
+        _pool.Add(new ObjPool { Object = newObj, Type = objectType});
+        return newObj;
     }
 
     private class ObjPool
@@ -157,5 +156,17 @@ public enum PoolObjectType
     ScoreItem,
     PowerItem,
 
+    //モブ敵の弾
+    EnemyStraightUpBullet,
+    EnemyStraightDownBullet,
+    EnemyStraightRightBullet,
+    EnemyStraightLeftBullet,
+
+    ///AutoBulletは自分にとっての上方向に飛ぶ
+    EnemyAutoBullet,
+    EnemyFastAutoBullet,
+    EnemySlowAutoBullet,
+
+    EnemyFollowBullet,
 }
 
