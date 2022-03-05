@@ -185,6 +185,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamage, IPauseable
     {
         if (isPause)
         {
+            _rb.Sleep();
             _oldVelocity = _rb.velocity;
             _rb.velocity = Vector2.zero;
             _oldTimer = _attackTimer;
@@ -193,6 +194,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamage, IPauseable
         }
         else
         {
+            _rb.WakeUp();
             _rb.velocity = _oldVelocity;
             _attackTimer = _oldTimer;
             _isPause = false;

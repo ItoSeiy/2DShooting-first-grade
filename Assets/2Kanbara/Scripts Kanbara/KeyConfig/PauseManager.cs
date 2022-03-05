@@ -6,14 +6,13 @@ using System;
 
 public class PauseManager : SingletonMonoBehaviour<PauseManager>
 {
-    [SerializeField] InputAction _pauseButton;
-    [SerializeField] Canvas _canvas;
+    [SerializeField] RectTransform _pauseUi;
 
-    bool _pauseFlg = false;
+    public bool PauseFlg { get; set; } = false;
 
     Action<bool> _onPauseResume = default;
 
-    public void OnClick(InputAction.CallbackContext context)
+    public void OnPauseResume(InputAction.CallbackContext context)
     {
         if(context.started)
         {
@@ -26,8 +25,9 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager>
     /// </summary>
     void PauseResume()
     {
-        _pauseFlg = !_pauseFlg;
-        _onPauseResume(_pauseFlg);  // これで変数に代入した関数を全て呼び出せる
+        PauseFlg = !PauseFlg;
+        _onPauseResume(PauseFlg);  // これで変数に代入した関数を全て呼び出せる
+        _pauseUi.gameObject.SetActive(PauseFlg);
     }
 
     /// <summary>
