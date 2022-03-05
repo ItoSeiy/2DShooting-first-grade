@@ -177,6 +177,11 @@ public class BossController : EnemyBase
         _currentMoveAction?.Enter(this);
     }
 
+    protected override void OnGameZoneTag(Collider2D collision)
+    {
+        //ボスはゲームゾーンに触れても破棄してほしくないため記述をしない
+    }
+
     /// <summary>
     /// 待つことを実行する関数
     /// アップデートの実行を待つ
