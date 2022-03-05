@@ -150,7 +150,6 @@ public class EnemyController : EnemyBase
 
     protected override void Attack()
     {
-        
         switch (_muzzleTransform)
         {
             case MuzzleTransform.Normal:
@@ -210,19 +209,19 @@ public class EnemyController : EnemyBase
 
     protected override void OnGetDamage()
     {
-        //SoundManager.Instance.UseSound(_getDamageSFX);
-        //if(EnemyHp <= 0)
-        //{
-        //    SoundManager.Instance.UseSound(_onDestroySFX);
-        //}
+        SoundManager.Instance.UseSound(_getDamageSFX);
+        if (EnemyHp <= 0)
+        {
+            SoundManager.Instance.UseSound(_onDestroySFX);
+        }
     }
 
-    //void OnDestroy()
-    //{
-    //    if (!_isPhaseTriger) return;
-    //    //このオブジェクトが破棄されたときに次のフェイズに移る場合だったら
-    //    PhaseNovelManager.Instance.EnemyGenerate(_isPhaseLoop);
-    //}
+    void OnDestroy()
+    {
+        if (!_isPhaseTriger) return;
+        //このオブジェクトが破棄されたときに次のフェイズに移る場合だったら
+        PhaseNovelManager.Instance.EnemyGenerate(_isPhaseLoop);
+    }
 
     enum GeneratePos
     {

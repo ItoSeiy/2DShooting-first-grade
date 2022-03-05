@@ -2,10 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Novel;
+using System.Threading.Tasks;
 
 public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
 {
     public NovelPhase NovelePhaesState => _novelPhase;
+
+    [SerializeField, Header("ノベル前に待つ時間(ミリ秒)")]
+    int _novelWaitTime = 5000;
 
     /// <summary>スプレッドシートシートを読み込むスクリプト(戦闘前)</summary>
     [SerializeField]
@@ -78,6 +82,7 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
 
     private int _phaseIndex = default;
     private int _loopCount = default;
+    private bool _isNovelFirstTime = true;
 
     protected override void Awake()
     {
@@ -91,8 +96,8 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
         _backGroundClone = Instantiate(_backGround, _backGroundParent.transform);
         _backGroundClone.transform.Translate(0f, _backGround.bounds.size.y, 0f);
 
-        const bool ISLOOP = false;
-        EnemyGenerate(ISLOOP);
+        //モブ敵の初回生成
+        Instantiate(_stageParam.PhaseParms[_phaseIndex].Prefab).transform.position = _enemyGeneretePos.position;
     }
 
     private void Update()
@@ -114,6 +119,8 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
                     _gameOverCanavas.gameObject.SetActive(true);
                     //UIキャンバス
                     _uiCanvas.gameObject.SetActive(false);
+                    //プレイヤーを動かせないようにする
+                    GameManager.Instance.Player.CanMove = false;
                 }
                 break;
         }
@@ -128,22 +135,26 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
         //ボスのフェイズだったらノベルを再生してから生成するため弾く
         if (_stageParam.PhaseParms[_phaseIndex].IsBoss) return;
 
-        Instantiate(_stageParam.PhaseParms[_phaseIndex].Prefab).transform.position = _enemyGeneretePos.position;
 
         //ループをする場合はインデックスをカウントアップしない
         if (isLoop)
         {
             _loopCount++;
+            Debug.Log("ループする" + _loopCount + "回目");
             //ループするべき回数を超えたらフェイズのインデックスをカウントアップする
             if(_loopCount >= _stageParam.PhaseParms[_phaseIndex].LoopTime)
             {
+                Debug.Log("カウントアップ");
                 _phaseIndex++;
             }
         }
         else
         {
             _phaseIndex++;
+            Debug.Log("ループしない" + _phaseIndex + "インデックス");
         }
+
+        Instantiate(_stageParam.PhaseParms[_phaseIndex].Prefab).transform.position = _enemyGeneretePos.position;
     }
 
     /// <summary>
@@ -151,8 +162,16 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
     /// ボスの生成を行う
     /// 勝利,敗北等のUIの表示も行う
     /// </summary>
-    void Novel()
+    async void Novel()
     {
+        await Task.Delay(_novelWaitTime);
+
+        //ノベルの初回実行時にノベルのフェイズを戦闘前イベントにセットする
+        if(_isNovelFirstTime)
+        {
+            _novelPhase = NovelPhase.Before;
+            _isNovelFirstTime = false;
+        }
         //ゲームクリアであればノベルのフェイズを変える
         if (GameManager.Instance.IsStageClear) _novelPhase = NovelPhase.Win;
         //ゲームオーバーであればノベルのフェイズを変える

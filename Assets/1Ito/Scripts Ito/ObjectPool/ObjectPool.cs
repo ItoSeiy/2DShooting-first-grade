@@ -17,7 +17,7 @@ public class ObjectPool : SingletonMonoBehaviour<ObjectPool>
         _poolCountIndex = 0;
         CreatePool();
         //デバッグ用
-        _pool.ForEach(x => Debug.Log($"オブジェクト名:{x.Object.name} 種類:{x.Type}"));
+        //_pool.ForEach(x => Debug.Log($"オブジェクト名:{x.Object.name} 種類:{x.Type}"));
     }
 
     /// <summary>
@@ -47,13 +47,13 @@ public class ObjectPool : SingletonMonoBehaviour<ObjectPool>
     /// オブジェクトを使いたいときに呼び出す関数
     /// </summary>
     /// <param name="position">オブジェクトの位置を指定する</param>
-    /// <param name="bulletType">オブジェクトの種類</param>
+    /// <param name="objectType">オブジェクトの種類</param>
     /// <returns>生成したオブジェクト</returns>
-    public GameObject UseObject(Vector2 position, PoolObjectType bulletType)
+    public GameObject UseObject(Vector2 position, PoolObjectType objectType)
     {
         foreach(var pool in _pool)
         {
-            if (pool.Object.activeSelf == false && pool.Type == bulletType)
+            if(pool.Object.activeSelf == false && pool.Type == objectType)
             {
                 pool.Object.SetActive(true);
                 pool.Object.transform.position = position;
@@ -61,11 +61,11 @@ public class ObjectPool : SingletonMonoBehaviour<ObjectPool>
             }
         }
 
-        var newBullet = Instantiate(_poolObjParam.Params.Find(x => x.Type == bulletType).Prefab, this.transform);
-        newBullet.transform.position = position;
-        newBullet.SetActive(true);
-        _pool.Add(new ObjPool { Object = newBullet, Type = bulletType});
-        return newBullet;
+        var newObj = Instantiate(_poolObjParam.Params.Find(x => x.Type == objectType).Prefab, this.transform);
+        newObj.transform.position = position;
+        newObj.SetActive(true);
+        _pool.Add(new ObjPool { Object = newObj, Type = objectType});
+        return newObj;
     }
 
     private class ObjPool

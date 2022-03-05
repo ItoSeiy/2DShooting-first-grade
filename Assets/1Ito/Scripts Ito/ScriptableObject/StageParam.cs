@@ -26,7 +26,7 @@ public class PhaseParm
     private string phaseName = "Phase";
     [SerializeField]
     private GameObject phasePrefab;
-    [SerializeField, Header("このプレハブの生成がループするモードであったら何回ループするか")]
+    [SerializeField, Header("このプレハブの生成がループするモードであったら何回生成するか")]
     private int loopTime;
     [SerializeField, Header("ボスだったらチェックを付ける")]
     private bool isBoss = false;

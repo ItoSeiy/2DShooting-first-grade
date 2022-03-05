@@ -40,6 +40,7 @@ namespace Novel
         public void OnGSSLoadEnd()
         {
             _datas = _gssReader.Datas;
+            _oldTextInterval = _textInterval;
         }
 
         public void ControllText()
