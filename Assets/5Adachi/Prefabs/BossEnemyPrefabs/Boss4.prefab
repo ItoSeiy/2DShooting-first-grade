@@ -288,7 +288,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3668928286175380009}
-  - component: {fileID: 3668928286175380010}
+  - component: {fileID: 2678924243729233481}
   - component: {fileID: 3668928286175380008}
   - component: {fileID: 3668928286175380015}
   - component: {fileID: 3668928286175380014}
@@ -307,8 +307,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3668928286175380013}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.065246, y: 0.065246, z: 0.065246}
+  m_LocalPosition: {x: 0, y: 4, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3668928285832039756}
   - {fileID: 3668928286249649519}
@@ -317,7 +317,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &3668928286175380010
+--- !u!212 &2678924243729233481
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -361,8 +361,8 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 22.516752, y: 27.83}
+  m_DrawMode: 1
+  m_Size: {x: 0.7430625, y: 1.6927605}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -399,11 +399,11 @@ CapsuleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 10, y: 1}
+  m_Offset: {x: 0, y: 0.19}
+  m_Size: {x: 0.7, y: 1.3}
   m_Direction: 0
 --- !u!114 &3668928286175380014
 MonoBehaviour:
@@ -418,15 +418,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 5
-  _enemyHp: 100
+  _enemyHp: 6500
   _attackInterval: 1
   _damageTakenRatio: 1
   _playerBulletTag: PlayerBullet
   _playerTag: PlayerTag
   _gameZoneTag: Finish
-  _sprite: {fileID: 3668928286175380010}
+  _sprite: {fileID: 0}
   _dropItems:
-    items: []
+    items:
+    - itemType: 48
+      count: 1
+    - itemType: 49
+      count: 1
+    - itemType: 50
+      count: 1
+    - itemType: 51
+      count: 4
+    - itemType: 52
+      count: 1
   _itemDropRangeX: 2
   _itemDropRangeY: 2
   _data:
@@ -451,8 +461,8 @@ MonoBehaviour:
     - {fileID: 3942865692778157245}
     - {fileID: 4233309995412027639}
   _superAttackTimingHp:
-  - 99
-  - 50
+  - 5000
+  - 3000
 --- !u!1 &3668928286249649518
 GameObject:
   m_ObjectHideFlags: 0

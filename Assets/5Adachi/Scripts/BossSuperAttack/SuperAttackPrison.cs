@@ -61,6 +61,7 @@ public class SuperAttackPrison : BossAttackAction
    
     public override void Enter(BossController contlloer)
     {
+        contlloer.ItemDrop();
         StartCoroutine(Prison(contlloer));//ƒRƒ‹[ƒ`ƒ“‚ğ”­“®
     }
 

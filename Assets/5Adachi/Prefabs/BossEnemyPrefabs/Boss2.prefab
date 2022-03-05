@@ -116,8 +116,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 937946265074717028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.065246, y: 0.065246, z: 0.065246}
+  m_LocalPosition: {x: 0, y: 4, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 937946265417014789}
   - {fileID: 937946264999826982}
@@ -172,8 +172,8 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 22.516752, y: 27.83}
+  m_DrawMode: 1
+  m_Size: {x: 1.1258374, y: 1.3915}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -210,11 +210,11 @@ CapsuleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 10, y: 1}
+  m_Size: {x: 1, y: 1.3}
   m_Direction: 0
 --- !u!114 &937946265074717031
 MonoBehaviour:
@@ -229,7 +229,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 5
-  _enemyHp: 100
+  _enemyHp: 5500
   _attackInterval: 1
   _damageTakenRatio: 1
   _playerBulletTag: PlayerBullet
@@ -237,7 +237,17 @@ MonoBehaviour:
   _gameZoneTag: Finish
   _sprite: {fileID: 937946265074717027}
   _dropItems:
-    items: []
+    items:
+    - itemType: 48
+      count: 1
+    - itemType: 49
+      count: 1
+    - itemType: 50
+      count: 1
+    - itemType: 51
+      count: 2
+    - itemType: 52
+      count: 1
   _itemDropRangeX: 2
   _itemDropRangeY: 2
   _data:
@@ -262,8 +272,8 @@ MonoBehaviour:
     - {fileID: 8432652914337947155}
     - {fileID: 3028112402746594506}
   _superAttackTimingHp:
-  - 99
-  - 50
+  - 4000
+  - 2000
 --- !u!1 &937946265417014794
 GameObject:
   m_ObjectHideFlags: 0
