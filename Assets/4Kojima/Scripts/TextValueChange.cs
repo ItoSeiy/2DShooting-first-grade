@@ -29,7 +29,6 @@ public class TextValueChange : MonoBehaviour
                 _text.text = GameManager.Instance.PlayerLevel.ToString();
                 break;
         }
-
     }
 
     enum Value
