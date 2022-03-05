@@ -162,7 +162,7 @@ public enum PoolObjectType
     EnemyStraightRightBullet,
     EnemyStraightLeftBullet,
 
-    ///AutoBulletは自分にとっての上方向に飛ぶ
+    //AutoBulletは自分にとっての上方向に飛ぶ
     EnemyAutoBullet,
     EnemyFastAutoBullet,
     EnemySlowAutoBullet,
