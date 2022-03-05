@@ -119,8 +119,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 3a53b1cee5433b14da19236a919394b2, type: 3}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: b80645add2d6734418e1002a04b3bdd8, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -164,9 +164,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.03}
   serializedVersion: 2
-  m_Radius: 0.1
+  m_Radius: 0.2
 --- !u!114 &3464077937873859785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,13 +180,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damage: 15
-  _direction: {x: 0, y: 1}
   _speed: 10
   _bulletMoveMethod: 1
   _opponentTag: Enemy
   _gameZoneTag: Finish
   _parentTag: Parent
-  _playerTag: Player
   _followTime: 2
 --- !u!1 &4940366701055704017
 GameObject:
@@ -262,8 +260,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 3a53b1cee5433b14da19236a919394b2, type: 3}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: b80645add2d6734418e1002a04b3bdd8, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -307,9 +305,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.03}
   serializedVersion: 2
-  m_Radius: 0.1
+  m_Radius: 0.2
 --- !u!114 &949601281519375233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -323,11 +321,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damage: 15
-  _direction: {x: 0, y: 1}
   _speed: 10
   _bulletMoveMethod: 1
   _opponentTag: Enemy
   _gameZoneTag: Finish
   _parentTag: Parent
-  _playerTag: Player
   _followTime: 2
