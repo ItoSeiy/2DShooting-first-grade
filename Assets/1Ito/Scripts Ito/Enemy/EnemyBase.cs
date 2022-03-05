@@ -6,7 +6,7 @@ using UnityEngine;
 /// </summary>
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Collider2D))]
-public abstract class EnemyBase : MonoBehaviour, IDamage
+public abstract class EnemyBase : MonoBehaviour, IDamage, IPauseable
 {
     public float Speed => _speed;
     public float EnemyHp => _enemyHp;
@@ -55,6 +55,10 @@ public abstract class EnemyBase : MonoBehaviour, IDamage
     Rigidbody2D _rb = null;
 　　protected bool _destroyAble = false;
 
+    Vector2 _oldVelocity;
+    float _oldTimer;
+    bool _isPause = false;
+
     protected virtual void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -62,6 +66,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamage
 
     protected virtual void Update()
     {
+        if(_isPause)return;
         _attackTimer += Time.deltaTime;
 
         if(_attackTimer > _attackInterval)
@@ -69,6 +74,16 @@ public abstract class EnemyBase : MonoBehaviour, IDamage
             Attack();
             _attackTimer = 0;
         }
+    }
+
+    private void OnEnable()
+    {
+        PauseManager.Instance.SetEvent(this);
+    }
+
+    private void OnDisable()
+    {
+        PauseManager.Instance.RemoveEvent(this);
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
@@ -164,6 +179,24 @@ public abstract class EnemyBase : MonoBehaviour, IDamage
     public void ChangeAttackIntervalRandom(float min, float max)
     {
         _attackInterval = Random.Range(min, max);
+    }
+
+    void IPauseable.PauseResume(bool isPause)
+    {
+        if (isPause)
+        {
+            _oldVelocity = _rb.velocity;
+            _rb.velocity = Vector2.zero;
+            _oldTimer = _attackTimer;
+            _attackTimer = 0;
+            _isPause = true;
+        }
+        else
+        {
+            _rb.velocity = _oldVelocity;
+            _attackTimer = _oldTimer;
+            _isPause = false;
+        }
     }
 
     /// <summary>

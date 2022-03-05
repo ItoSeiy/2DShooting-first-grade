@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Collider2D))]
 
-public class ItemBase : MonoBehaviour
+public class ItemBase : MonoBehaviour, IPauseable
 {
     Rigidbody2D _rb;
 
@@ -21,6 +21,8 @@ public class ItemBase : MonoBehaviour
     bool _isGetItemMode = false;
     public bool _isTaking = false;
 
+    Vector2 _oldVerocity;
+
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -28,6 +30,7 @@ public class ItemBase : MonoBehaviour
 
     private void OnEnable()
     {
+        PauseManager.Instance.SetEvent(this);
         _isTaking = false;
         if (_stratPS == StartPS.FirstTime)
         {
@@ -37,6 +40,7 @@ public class ItemBase : MonoBehaviour
 
     private void OnDisable()
     {
+        PauseManager.Instance.RemoveEvent(this);
         _isGetItemMode = false;
     }
 
@@ -77,6 +81,19 @@ public class ItemBase : MonoBehaviour
     public void ItemGet()
     {
         _isGetItemMode = true;
+    }
+
+    void IPauseable.PauseResume(bool isPause)
+    {
+        if(isPause)
+        {
+            _oldVerocity = _rb.velocity;
+            _rb.velocity = Vector2.zero;
+        }
+        else
+        {
+            _rb.velocity = _oldVerocity;
+        }
     }
 
     /// <summary>
