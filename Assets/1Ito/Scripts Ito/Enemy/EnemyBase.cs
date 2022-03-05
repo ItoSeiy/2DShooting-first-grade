@@ -11,13 +11,14 @@ public abstract class EnemyBase : MonoBehaviour, IDamage, IPauseable
     public float Speed => _speed;
     public float EnemyHp => _enemyHp;
     public float DamageTakenRation { get => _damageTakenRatio; set => _damageTakenRatio = value; }
-    public Rigidbody2D Rb { get => _rb; set => _rb = value;}
-    public float AttackInterval  => _attackInterval; 
-    public string PlayerBulletTag  => _playerBulletTag; 
-    public string PlayerTag  => _playerTag;
+    public Rigidbody2D Rb { get => _rb; set => _rb = value; }
+    public float AttackInterval => _attackInterval;
+    public string PlayerBulletTag => _playerBulletTag;
+    public string PlayerTag => _playerTag;
     public string GameZoneTag => _gameZoneTag;
     public SpriteRenderer Sprite => _sprite;
 
+    public bool IsPause { get; private set; } = false;
     [SerializeField, Header("動きのスピード")]
     private float _speed = 5f;
 
@@ -57,7 +58,6 @@ public abstract class EnemyBase : MonoBehaviour, IDamage, IPauseable
 
     Vector2 _oldVelocity;
     float _oldTimer;
-    bool _isPause = false;
 
     protected virtual void Awake()
     {
@@ -66,7 +66,8 @@ public abstract class EnemyBase : MonoBehaviour, IDamage, IPauseable
 
     protected virtual void Update()
     {
-        if(_isPause)return;
+        if (IsPause) return;
+
         _attackTimer += Time.deltaTime;
 
         if(_attackTimer > _attackInterval)
@@ -185,19 +186,19 @@ public abstract class EnemyBase : MonoBehaviour, IDamage, IPauseable
     {
         if (isPause)
         {
-            _rb.Sleep();
+            IsPause = true;
             _oldVelocity = _rb.velocity;
             _rb.velocity = Vector2.zero;
             _oldTimer = _attackTimer;
             _attackTimer = 0;
-            _isPause = true;
+            Debug.Log($"{isPause} ポーズ中モブ敵");
         }
         else
         {
-            _rb.WakeUp();
+            IsPause = false;
             _rb.velocity = _oldVelocity;
             _attackTimer = _oldTimer;
-            _isPause = false;
+            Debug.Log($"{isPause} 再開モブ敵");
         }
     }
 
