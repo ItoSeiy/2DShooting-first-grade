@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Overdose.Calculation;
 
 public class BossNormalAttack04 : BossAttackAction
 {
@@ -22,6 +23,8 @@ public class BossNormalAttack04 : BossAttackAction
     [SerializeField, Header("1回の処理で弾を発射する回数")] int _maximumCount = 7;
     /// <summary>この行動から出る時間</summary>
     [SerializeField, Header("この行動から出る時間")] float _endingTime = 20f;
+    /// <summary>アイテムを落とす確率</summary>
+    [SerializeField, Header("アイテムを落とす確率")] int _probability = 50;
     /// <summary>最小の回転値</summary>
     const float MINIMUM_ROTATION_RANGE = 0f;
     /// <summary>最大の回転値</summary>
@@ -49,7 +52,12 @@ public class BossNormalAttack04 : BossAttackAction
 
     public override void Exit(BossController contlloer)
     {
-        contlloer.ItemDrop();       
+        //一定の確率でアイテムを落とす
+        if (Calculator.RandomBool(_probability))
+        {
+            contlloer.ItemDrop();
+        }
+
         StopAllCoroutines();
     }
 
