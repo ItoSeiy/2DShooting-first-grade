@@ -203,15 +203,22 @@ public class PlayerBase : MonoBehaviour
                 break;
         }
 
-        if(PhaseNovelManager.Instance)
+        if(PhaseNovelManager.Instance != null)
         {
-            if (PhaseNovelManager.Instance.NovelePhaesState == NovelPhase.None)//もしノベルが再生されていなかったらコントロール不能にする
+            //ノベルが再生されているかどうか
+            var isNovel = PhaseNovelManager.Instance.NovelePhaesState == NovelPhase.Before
+                       || PhaseNovelManager.Instance.NovelePhaesState == NovelPhase.Win 
+                       || PhaseNovelManager.Instance.NovelePhaesState == NovelPhase.Lose;
+
+            if (PhaseNovelManager.Instance.NovelePhaesState == NovelPhase.None)
             {
-                _canMove = false;
-            }
-            else if (PhaseNovelManager.Instance.IsBeforeNovelFinish)
-            {
+                //再生していなければ動けるようにする
                 _canMove = true;
+            }
+            else if(isNovel)
+            {
+                //ノベルが再生されていれば
+                _canMove = false;
             }
         }
     }
@@ -437,11 +444,11 @@ public class PlayerBase : MonoBehaviour
 
     void OnItemGetLine(string itemTag)
     {
-        GameObject[]? items = GameObject.FindGameObjectsWithTag(itemTag);
+        GameObject[] items = GameObject.FindGameObjectsWithTag(itemTag);
         foreach(var item in items)
         {
             var itemBase = item.GetComponent<ItemBase>();
-            itemBase.ItemGet();
+            itemBase?.ItemGet();
         }
     }
 

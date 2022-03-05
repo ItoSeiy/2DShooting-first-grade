@@ -184,7 +184,7 @@ MonoBehaviour:
       m_Flags: 0
     - m_Name: 
       m_Id: 8939a128-fd6d-46d6-a46d-b05243d6ac08
-      m_Path: <Gamepad>/buttonEast
+      m_Path: <Gamepad>/buttonNorth
       m_Interactions: 
       m_Processors: 
       m_Groups: Gamepad
@@ -244,7 +244,7 @@ MonoBehaviour:
   _bombCheck: {fileID: 3479827611558294637}
   _residueCheck: {fileID: 3479827612615723105}
   _invisibleCheck: {fileID: 3479827611761418233}
-  _powerCheck: {fileID: 0}
+  _powerCheck: {fileID: 3479827612492840082}
   _scoreCheck: {fileID: 3479827611861981475}
   _tutorialClearCheck: {fileID: 3479827612390513532}
 --- !u!1 &3479827611123013505
@@ -1756,6 +1756,7 @@ GameObject:
   - component: {fileID: 3479827611808640534}
   - component: {fileID: 3479827611808640535}
   - component: {fileID: 3479827611808640532}
+  - component: {fileID: 1851562240758279592}
   m_Layer: 5
   m_Name: StageSelectButton
   m_TagString: Untagged
@@ -1890,6 +1891,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sceneName: StageSlectPlayer1
+--- !u!114 &1851562240758279592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3479827611808640538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isDelete: 0
+  _isDelayMode: 0
+  _delay: 1500
+  _isFirstSelectButton: 1
+  _callNextButtons: []
+  _deleteButtons: []
+  _callPanel: []
+  _deletePanel: []
+  _animStateName: 
 --- !u!1 &3479827611861981475
 GameObject:
   m_ObjectHideFlags: 0

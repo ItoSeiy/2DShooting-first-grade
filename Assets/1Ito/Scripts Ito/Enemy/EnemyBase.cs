@@ -36,7 +36,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamage
     string _playerBulletTag = "PlayerBullet";
 
     [SerializeField, Header("プレイヤーのタグ")]
-    string _playerTag = "PlayerTag";
+    string _playerTag = "Player";
 
     [SerializeField, Header("壁のタグ")] 
     string _gameZoneTag = "Finish";
@@ -86,7 +86,6 @@ public abstract class EnemyBase : MonoBehaviour, IDamage
     /// 例)ダメージを受けた際のアニメーションなど
     /// </summary>
     protected abstract void OnGetDamage();
-
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {

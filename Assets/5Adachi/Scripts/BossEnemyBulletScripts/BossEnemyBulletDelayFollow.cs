@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class BossEnemyBulletDelayFollow : BulletBese
 {
-    /// <summary>PlayerのGameObject</summary>
-    GameObject _player;
+    /// <summary>ターゲットのGameObject</summary>
+    GameObject _opponen;
     /// <summary>タイマー</summary>
     float _timer;
     /// <summary>Playerがいた方向</summary>
@@ -18,7 +18,7 @@ public class BossEnemyBulletDelayFollow : BulletBese
     protected override void OnEnable()
     {
         _timer = 0;//タイマーをリセット
-        _player = GameObject.FindWithTag(OpponenTag);//PlayerのTagをとってくる
+        _opponen = GameObject.FindWithTag(OpponenTag);//PlayerのTagをとってくる
         base.OnEnable();
     }
 
@@ -29,22 +29,20 @@ public class BossEnemyBulletDelayFollow : BulletBese
         //時間になったら
         if (_timer >= _delayChangeDirTime + DELAY_CHANGE_DIR_TIME_OFFSET) return;
 
-        if(_timer < _delayChangeDirTime && _player)//時間になるまでは
+        if(_timer < _delayChangeDirTime && _opponen)//時間になるまでは
         {
             //マズルの向きに合わせた方向に移動
             Rb.velocity = gameObject.transform.rotation * new Vector3(0, Speed, 0);
         }
 
-        else if (_timer >= _delayChangeDirTime && _player)//もし時間になったら
+        else if (_timer >= _delayChangeDirTime && _opponen)//もし時間になったら
         {
-            //プレイヤーの方向を計算
-            Vector2 dir = _player.transform.position - transform.position;
-            //速度が変わらないようにし、スピードを加える
-            dir = dir.normalized * Speed;
-            //方向を変える
-            Rb.velocity = dir;
-            //方向を保存
-            _oldDir = dir;
+            //回転したい方向を計算
+            Vector2 dir = transform.position - _opponen.transform.position;
+            //回転したい方向に回転
+            transform.rotation = Quaternion.FromToRotation(Vector3.down, dir);
+            //回転した方向に移動
+            Rb.velocity = gameObject.transform.rotation * new Vector3(0, Speed, 0);
         }
         else//時間外労働になったら
         {

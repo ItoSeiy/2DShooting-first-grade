@@ -4,43 +4,77 @@ using UnityEngine;
 
 public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
 {
-    public GamePhase GamePhaseState => _gamePhaseState;
+
     public NovelPhase NovelePhaesState => _novelPhaseState;
-    public bool IsBeforeNovelFinish => _beforeNovelRenderer.IsNovelFinish;
 
-    [SerializeField] GSSReader _beforeGSSReader;
-    [SerializeField] NovelRenderer _beforeNovelRenderer;
+    /// <summary>スプレッドシートシートを読み込むスクリプト(戦闘前)</summary>
+    [SerializeField]
+    GSSReader _beforeGSSReader;
+    /// <summary>ノベルを書き出し、制御するスクリプト(戦闘前)</summary>
+    [SerializeField]
+    NovelRenderer _beforeNovelRenderer;
 
-    [SerializeField] GSSReader _winGSSReader;
-    [SerializeField] NovelRenderer _winNovelRenderer;
+    /// <summary>スプレッドシートシートを読み込むスクリプト(勝利時)</summary>
+    [SerializeField] 
+    GSSReader _winGSSReader;
+    /// <summary>ノベルを書き出し、制御するスクリプト(戦闘前)</summary>
+    [SerializeField] 
+    NovelRenderer _winNovelRenderer;
 
-    [SerializeField] GSSReader _loseGSSReader;
-    [SerializeField] NovelRenderer _loseNovelRenderer;
+    /// <summary>スプレッドシートシートを読み込むスクリプト(敗北時)</summary>
+    [SerializeField] 
+    GSSReader _loseGSSReader;
+    /// <summary>ノベルを書き出し、制御するスクリプト(敗北時)</summary>
+    [SerializeField] 
+    NovelRenderer _loseNovelRenderer;
 
-    [SerializeField] Canvas _novelCanvas;
+    /// <summary>ノベルを映し出すキャンバス</summary>
+    [SerializeField]
+    Canvas _novelCanvas;
 
-    [SerializeField] Canvas _gameOverCanavas;
-    [SerializeField] Canvas _gameClearCanvas;
+    /// <summary>ゲームオーバー時に出すUI</summary>
+    [SerializeField]
+    Canvas _gameOverCanavas;
+    /// <summary>ゲームクリア時に出すUI</summary>
+    [SerializeField]
+    Canvas _gameClearCanvas;
 
-    [SerializeField] Canvas _uiCanvas;
+    /// <summary>常にスコアなどが表示されているキャンバス</summary>
+    [SerializeField] 
+    Canvas _uiCanvas;
 
-    [SerializeField] Transform _generateTransform;
-    [SerializeField] Transform _bossgenerateTransform;
+    /// <summary>モブ敵の出現場所</summary>
+    [SerializeField] 
+    Transform _generateTransform;
+    /// <summary>ボスの出現位置</summary>
+    [SerializeField] 
+    Transform _bossgenerateTransform;
 
-    [SerializeField] GamePhase _gamePhaseState;
-    [SerializeField] NovelPhase _novelPhaseState;
+    /// <summary>ノベルの状態</summary>
+    [SerializeField]
+    NovelPhase _novelPhaseState = NovelPhase.None;
 
-    [SerializeField] SpriteRenderer _backGround;
-    [SerializeField] GameObject _backGroundParent;
-    SpriteRenderer _backGroundClone = null;
-    [SerializeField] Vector2 _backGroundDir = Vector2.down;
+    /// <summary>背景</summary>
+    [SerializeField] 
+    SpriteRenderer _backGround;
+    /// <summary背景のコピー</summary>
+    SpriteRenderer 
+    _backGroundClone = null;
+    
+    /// <summary>背景の親オブジェクト</summary>
+    [SerializeField]
+    GameObject _backGroundParent;
+    /// <summary>背景の単位ベクトル</summary>
+    [SerializeField]
+    Vector2 _backGroundDir = Vector2.down;
+    /// <summary>背景のスクロールするスピード</summary>
     [SerializeField] float _scrollSpeed = 0.5f;
-    float _initialPosY;
+    /// <summary>背景のY座標の初期位置</summary>
+    float _bgInitialPosY;
 
-    [SerializeField] StageParam _stageParam;
-
-    private float _timer = 0;
-    private float _intervalTimer = 0;
+    /// <summary>ステージのデータ</summary>
+    [SerializeField] 
+    StageParam _stageParam;
 
     private int _phaseIndex = default;
 
@@ -49,139 +83,53 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
     protected override void Awake()
     {
         base.Awake();
-        SetUp();
     }
 
     void Start()
     {
-        _initialPosY = _backGround.transform.position.y;
+        _bgInitialPosY = _backGround.transform.position.y;
 
         _backGroundClone = Instantiate(_backGround, _backGroundParent.transform);
         _backGroundClone.transform.Translate(0f, _backGround.bounds.size.y, 0f);
+
+        EnemyGenerate();
     }
 
     private void Update()
     {
-        if(GameManager.Instance.IsGameOver)
+        switch (_stageParam.PhaseParms[_phaseIndex].IsBoss)
         {
-            _gameOverCanavas.gameObject.SetActive(true);
-            _uiCanvas.gameObject.SetActive(false);
-            return;
-        }
-
-        BackGround();
-        ChangePhase();
-
-        switch (_gamePhaseState)
-        {
-            case GamePhase.Boss:
+            case true:
                 Debug.Log("ボス開始");
-                BossStage();
+                _novelPhaseState = NovelPhase.Before;
+
                 break;
-            default:
-                EnemyGenerate();
+
+            case false:
+                BackGround();
+
+                //ゲームオーバーを判定する
+                if(GameManager.Instance.IsGameOver)
+                {
+                    //ゲームオーバUI表示
+                    _gameOverCanavas.gameObject.SetActive(true);
+                    //UIキャンバス
+                    _uiCanvas.gameObject.SetActive(false);
+                    return;
+                }
                 break;
         }
     }
 
     void EnemyGenerate()
     {
-        _timer += Time.deltaTime;
-        Debug.Log("スタート待機");
 
-        if (_timer >= _stageParam.PhaseParms[_phaseIndex].StartTime)
-        {
-            Debug.Log("生成待機");
-            _intervalTimer += Time.deltaTime;
-
-            if(_isGenerateFirstTime)
-            {
-                Debug.Log("初回生成");
-                _isGenerateFirstTime = false;
-                Debug.Log(_stageParam.PhaseParms[_phaseIndex].PhaseName);
-                Instantiate(_stageParam.PhaseParms[_phaseIndex].Prefab).transform.position = _generateTransform.position;
-            }
-
-            if (_intervalTimer >= _stageParam.PhaseParms[_phaseIndex].Interval && _stageParam.PhaseParms[_phaseIndex].UseInterval)
-            {
-                Debug.Log("生成");
-                Instantiate(_stageParam.PhaseParms[_phaseIndex].Prefab).transform.position = _generateTransform.position;
-                _intervalTimer = 0;
-            }
-
-            if (_timer >= _stageParam.PhaseParms[_phaseIndex].FinishTime)
-            {
-                _isGenerateFirstTime = true;
-                Debug.Log("生成終了");
-                _timer = 0;
-                ChangePhase((GamePhase)_phaseIndex + 1);
-            }
-        }
-    }
-
-    public void RunNextPhase()
-    {
-        if(_isGenerateFirstTime)
-        {
-            Debug.LogWarning("次のフェイズを始める指示を受けましたがフェイズ移行中のため実行できませんでした");
-            return;
-        }
-
-        ChangePhase((GamePhase)_phaseIndex + 1);
-
-        EnemyGenerate();
     }
 
     /// <summary>
     /// ボスステージの処理
     /// </summary>
     void BossStage()
-    {
-        _timer += Time.deltaTime;
-        if(_timer >= _stageParam.PhaseParms[_phaseIndex].StartTime)
-        {
-            SetNovel();
-        }
-    }
-
-    /// <summary>
-    ///　ステージが読み込まれるたびに呼ばれる
-    /// </summary>
-    public void SetUp()
-    {
-        _isGenerateFirstTime = true;
-        _timer = 0;
-        _intervalTimer = 0;
-
-        _gamePhaseState = GamePhase.Phase01;
-        _phaseIndex = (int)_gamePhaseState;
-
-        _novelPhaseState = NovelPhase.Before;
-    }
-    
-    void ChangePhase(GamePhase phase)
-    {
-        _gamePhaseState = phase;
-
-        _phaseIndex = (int)_gamePhaseState;
-
-        if(_phaseIndex == _stageParam.BossPhaseIndex)
-        {
-            _gamePhaseState = GamePhase.Boss;
-            _phaseIndex = _stageParam.BossPhaseIndex;
-        }
-    }
-
-    void ChangePhase()
-    {
-        if (_phaseIndex == _stageParam.BossPhaseIndex)
-        {
-            _gamePhaseState = GamePhase.Boss;
-            _phaseIndex = _stageParam.BossPhaseIndex;
-        }
-    }
-
-    void SetNovel()
     {
         if (GameManager.Instance.IsStageClear)
         {
@@ -192,8 +140,12 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
         {
             _novelPhaseState = NovelPhase.Lose;
         }
+    }
 
-        switch (_novelPhaseState)
+
+    void Novel(NovelPhase novelPhase)
+    {
+        switch (novelPhase)
         {
             case NovelPhase.Before:
 
@@ -262,48 +214,34 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
                 }
 
                 break;
-            default:
-                break;
         }
     }
 
     void BackGround()
     {
-        if (_gamePhaseState == GamePhase.Boss) return;
-
         _backGround.transform.Translate(0f, _scrollSpeed * -Time.deltaTime, 0f);
         _backGroundClone.transform.Translate(0f, _scrollSpeed * -Time.deltaTime, 0f);
 
-        if(_backGround.transform.position.y < _initialPosY - _backGround.bounds.size.y)
+        if(_backGround.transform.position.y < _bgInitialPosY - _backGround.bounds.size.y)
         {
             _backGround.transform.Translate(0f, _backGround.bounds.size.y * 2, 0f);
         }
 
-        if(_backGroundClone.transform.position.y < _initialPosY - _backGroundClone.size.y)
+        if(_backGroundClone.transform.position.y < _bgInitialPosY - _backGroundClone.size.y)
         {
             _backGroundClone.transform.Translate(0f, _backGroundClone.size.y * 2, 0f);
         }
     }
 }
 
-public enum GamePhase
-{
-    Phase01,
-    Phase02,
-    Phase03,
-    Phase04,
-    Phase05,
-    Boss
-}
-
 public enum NovelPhase
 {
-    /// <summary>戦闘前イベント(デフォルト)</summary>
-    Before,
-    /// <summary>戦闘後イベント</summary>
-    Win,
-    /// <summary>負けイベント</summary>
-    Lose,
     /// <summary>ノベルを読み込まない状態</summary>
-    None
+    None,
+    /// <summary>戦闘前ノベル</summary>
+    Before,
+    /// <summary>戦闘後ノベル</summary>
+    Win,
+    /// <summary>負けノベル</summary>
+    Lose
 }
