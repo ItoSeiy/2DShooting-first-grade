@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using System.Collections.Generic;
 
 /// <summary>
 /// ボスのデータが格納されたクラス
@@ -8,15 +9,15 @@ using UnityEngine;
 public class BossData
 {
     /// <summary>ボスの行動</summary>
-    public BossAcitionPattern[] ActionPatterns => actionPatterns;
+    public List<BossAcitionPattern> ActionPatterns => actionPatterns;
     /// <summary>必殺技の配列</summary>
-    public BossAttackAction[] BossSuperAttackActions => bossSuperAttackActons;
+    public List<BossAttackAction> BossSuperAttackActions => bossSuperAttackActons;
 
     [SerializeField,Header("BossAttackActionとBossAttackActionは同数にすること")]
-    private BossAcitionPattern[] actionPatterns = default;
+    private List<BossAcitionPattern> actionPatterns = new List<BossAcitionPattern>();
 
     [SerializeField, Header("必殺技の行動(基本的に2つ)")]
-    private BossAttackAction[] bossSuperAttackActons = default; 
+    private List<BossAttackAction> bossSuperAttackActons = new List<BossAttackAction>(); 
 }
 
 /// <summary>
@@ -26,15 +27,15 @@ public class BossData
 public class BossAcitionPattern
 {
     /// <summary>攻撃の配列</summary>
-    public BossAttackAction[] BossAttackActions => bossAttackActions;
+    public  List<BossAttackAction> BossAttackActions => bossAttackActions;
     /// <summary>移動の配列</summary>
-    public BossMoveAction[] BossMoveActions => bossMoveActions;
+    public List<BossMoveAction> BossMoveActions => bossMoveActions;
 
     [SerializeField, Header("攻撃の行動")]
-    private BossAttackAction[] bossAttackActions = default;
+    private List<BossAttackAction> bossAttackActions = new List<BossAttackAction>();
 
     [SerializeField, Header("移動の行動")]
-    private BossMoveAction[] bossMoveActions = default;
+    private List<BossMoveAction> bossMoveActions = new List<BossMoveAction>();
 
 }
 

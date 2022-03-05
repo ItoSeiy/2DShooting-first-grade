@@ -7,8 +7,12 @@ using DG.Tweening;
 /// </summary>
 public class EnemyController : EnemyBase 
 {
+    /// <summary>このオブジェクトが破棄されたときに次のフェイズに移るか</summary>
     [SerializeField, Header("このオブジェクトが破棄されたときに次のフェイズに移るか")]
     bool _isPhaseTriger = false;
+    /// <summary>次のフェイズに移らず同じプレハブを生成するかどうか</summary>
+    [SerializeField, Header("次のフェイズに移らず同じプレハブを生成するかどうかisPhaseTrigerがオンになっているときにのみに発動")]
+    bool _isPhaseLoop = false;
 
     [SerializeField, Header("球の出る位置")]
     Transform[] _muzzle = null;
@@ -25,6 +29,9 @@ public class EnemyController : EnemyBase
     [SerializeField,Header("弾幕")]
     GameObject _bullet;
 
+    [SerializeField, Header("撃つ弾幕の種類")]
+    PoolObjectType _bulletType;
+    
     [SerializeField, Header("攻撃頻度をランダムにするか")]
     bool _attackIntervelChange = false;
 
@@ -135,9 +142,7 @@ public class EnemyController : EnemyBase
         Rb.velocity = Vector2.zero;
         _stopcount -= Time.deltaTime;
         _isMove = false;
-        /// <summary>
-        /// また動き出す時の処理
-        /// </summary>
+        // また動き出す時の処理
         if (_stopcount <= 0)
         {
             Rb.velocity = _afterDir * Speed;
@@ -148,15 +153,12 @@ public class EnemyController : EnemyBase
 
     protected override void Attack()
     {
-        
         switch (_muzzleTransform)
         {
             case MuzzleTransform.Normal:
                 for (int i = 0; i < _muzzle.Length; i++)
                 {
-                    var bullet = Instantiate(_bullet);
-                    bullet.transform.position = _muzzle[i].position;
-                    bullet.transform.rotation = _muzzle[i].rotation;  
+                    ObjectPool.Instance.UseObject(_muzzle[i].position, _bulletType).transform.rotation = _muzzle[i].rotation; 
                 }
                 switch(_attackIntervelChange)
                 {
@@ -179,9 +181,7 @@ public class EnemyController : EnemyBase
                 Rotate();
                 for (int i = 0; i < _rotateMuzzles.Length; i++)
                 {
-                    var bullet = Instantiate(_bullet);
-                    bullet.transform.position = _rotateMuzzles[i].position;
-                    bullet.transform.rotation = _rotateMuzzles[i].rotation;
+                    ObjectPool.Instance.UseObject(_rotateMuzzles[i].position, _bulletType).transform.rotation = _rotateMuzzles[i].rotation;
                 }
                 switch (_attackIntervelChange)
                 {
@@ -206,14 +206,20 @@ public class EnemyController : EnemyBase
         }
     }
 
-    private void OnDestroy()
-    {
-        SoundManager.Instance.UseSound(_onDestroySFX);
-    }
-
     protected override void OnGetDamage()
     {
         SoundManager.Instance.UseSound(_getDamageSFX);
+        if (EnemyHp <= 0)
+        {
+            SoundManager.Instance.UseSound(_onDestroySFX);
+        }
+    }
+
+    void OnDestroy()
+    {
+        if (!_isPhaseTriger) return;
+        //このオブジェクトが破棄されたときに次のフェイズに移る場合だったら
+        PhaseNovelManager.Instance.EnemyGenerate(_isPhaseLoop);
     }
 
     enum GeneratePos
