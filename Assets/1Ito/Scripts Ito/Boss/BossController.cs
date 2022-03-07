@@ -71,7 +71,13 @@ public class BossController : EnemyBase
 
     protected override void Update()
     {
-        if(IsCast)
+        if (PauseManager.Instance.PauseFlg == true)
+        {
+            base.OnPauseForSubSlass();
+            return;
+        }
+
+        if (IsCast)
         {
             Debug.Log($"{_currentAttackAction.gameObject.name},と{_currentMoveAction.gameObject.name}\nUpdateの実行はキャスト中のため行っていません");
             return;

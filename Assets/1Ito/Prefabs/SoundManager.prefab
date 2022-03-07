@@ -1,0 +1,97 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &263362387910340565
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 263362387910340571}
+  - component: {fileID: 263362387910340570}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &263362387910340571
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 263362387910340565}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &263362387910340570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 263362387910340565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16e518fccd7c7b440b5cf833afb19c59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _soundObjParam:
+    soundPoolParams:
+    - name: 
+      type: 8
+      prefab: {fileID: 1627059345262153424, guid: d46a3e85dc77987409262974832032bf,
+        type: 3}
+      maxCount: 5
+    - name: 
+      type: 9
+      prefab: {fileID: 1627059345262153424, guid: ef1516f2b4a6a554fa37d147a0460a65,
+        type: 3}
+      maxCount: 5
+    - name: 
+      type: 10
+      prefab: {fileID: 1627059345262153424, guid: e7054ef039adf0f4e9d6cbba47e35cd8,
+        type: 3}
+      maxCount: 5
+    - name: 
+      type: 11
+      prefab: {fileID: 1627059345262153424, guid: cc9db26c050f5bf408a1254239f9a416,
+        type: 3}
+      maxCount: 5
+    - name: 
+      type: 12
+      prefab: {fileID: 1627059345262153424, guid: f33e40c2997156045a61e8471b9f572b,
+        type: 3}
+      maxCount: 5
+    - name: 
+      type: 13
+      prefab: {fileID: 1627059345262153424, guid: 098b471122b21e344940d5e8f33699cc,
+        type: 3}
+      maxCount: 5
+    - name: 
+      type: 14
+      prefab: {fileID: 1627059345262153424, guid: 80f91a164e770a84fac12afe2c1f55ef,
+        type: 3}
+      maxCount: 5
+    - name: 
+      type: 15
+      prefab: {fileID: 1627059345262153424, guid: 73638f9ae7373424cae82962872430ea,
+        type: 3}
+      maxCount: 5
+    - name: 
+      type: 16
+      prefab: {fileID: 1627059345262153424, guid: c30dfd34a7371ea44b7a61cd0c63d987,
+        type: 3}
+      maxCount: 5
+    - name: 
+      type: 16
+      prefab: {fileID: 1627059345262153424, guid: c30dfd34a7371ea44b7a61cd0c63d987,
+        type: 3}
+      maxCount: 5

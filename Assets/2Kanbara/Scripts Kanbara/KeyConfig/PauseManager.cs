@@ -8,9 +8,9 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager>
 {
     [SerializeField] RectTransform _pauseUi;
 
-    public bool PauseFlg { get; set; } = false;
+    public bool PauseFlg { get; private set; } = false;
 
-    Action<bool> _onPauseResume = default;
+    event Action<bool> _onPauseResume = default;
 
     public void OnPauseResume(InputAction.CallbackContext context)
     {
@@ -23,7 +23,7 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager>
     /// <summary>
     /// 一時停止・再開を切り替える
     /// </summary>
-    void PauseResume()
+    public　void PauseResume()
     {
         PauseFlg = !PauseFlg;
         _onPauseResume(PauseFlg);  // これで変数に代入した関数を全て呼び出せる

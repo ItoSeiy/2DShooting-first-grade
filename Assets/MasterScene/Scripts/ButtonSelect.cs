@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Threading.Tasks;
+using System.Linq;
 
 public class ButtonSelect : MonoBehaviour
 {
@@ -45,6 +46,9 @@ public class ButtonSelect : MonoBehaviour
     [Header("再生するアニメーション")]
     string _animStateName = null;
 
+    [SerializeField]
+    SoundType[] _onClickSounds;
+
     private async void OnEnable()
     {
         _button = GetComponent<Button>();
@@ -65,6 +69,13 @@ public class ButtonSelect : MonoBehaviour
 
     public void Click()
     {
+        if (_onClickSounds.Any())
+        {
+            foreach(var sound in _onClickSounds)
+            {
+                SoundManager.Instance.UseSound(sound);
+            }
+        }
         if(_isDelete)
         {
             this.gameObject.SetActive(false);

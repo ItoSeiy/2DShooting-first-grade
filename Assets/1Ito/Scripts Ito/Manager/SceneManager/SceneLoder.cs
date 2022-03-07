@@ -1,18 +1,25 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System;
 
 /// <summary>
 /// シングルトンパターンのシーンを遷移させるスクリプト
 /// </summary>
 public class SceneLoder : SingletonMonoBehaviour<SceneLoder>
 {
-    [SerializeField] Image _fadeImage = null;
-    [SerializeField] float _fadeTime = 1;
+    [SerializeField]
+    Image _fadeImage = null;
+    [SerializeField]
+    float _fadeTime = 1;
     float _timer = 0;
     bool _isLoad = false;
+
+    /// <summary>ロードが始まった際に呼び出されるデリゲート</summary>
+    public event Action OnLoadStart;
+    /// <summary>ロードが終わった際に呼び出されるデリゲート</summary>
+    public event Action OnLoadEnd;
     /// <summary>
     /// シーンをロードする関数
     /// </summary>
@@ -26,6 +33,9 @@ public class SceneLoder : SingletonMonoBehaviour<SceneLoder>
     IEnumerator Fade(string sceneName)
     {
         _isLoad = true;
+
+        OnLoadStart?.Invoke();
+
         Color c;
         while (_fadeImage.color.a < 1)
         {
@@ -38,7 +48,7 @@ public class SceneLoder : SingletonMonoBehaviour<SceneLoder>
 
         yield return SceneManager.LoadSceneAsync(sceneName);
 
-        GameManager.Instance.SettingScene();
+        OnLoadEnd?.Invoke();
 
         while (_fadeImage.color.a >  0)
         {

@@ -186,7 +186,10 @@ public class PlayerBase : MonoBehaviour, IPauseable
             case false:
                 break;
             case true:
-                if (PhaseNovelManager.Instance.NovelePhaesState != NovelPhase.None) return;
+                if (PhaseNovelManager.Instance)
+                {
+                    if(PhaseNovelManager.Instance.NovelePhaesState != NovelPhase.None) return;
+                }
                 switch (_isLateMode)
                 {
                     case false:
@@ -544,12 +547,14 @@ public class PlayerBase : MonoBehaviour, IPauseable
     {
         if(isPause)
         {
+            _anim.speed = 0;
             _oldVerocity = _rb.velocity;
             _rb.velocity = Vector2.zero;
             _canMove = false;
         }
         else
         {
+            _anim.speed = 1;
             _rb.velocity = _oldVerocity;
             _canMove = true;
         }

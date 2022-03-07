@@ -74,21 +74,17 @@ public class EnemyController : EnemyBase
     private void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
-    }
-
-    private void OnEnable()
-    {
         Rb.velocity = _beforeDir * Speed;
-        _isMove = true; 
+        _isMove = true;
     }
 
     protected override void Update()
      {
-        if (IsPause)
+        if(PauseManager.Instance.PauseFlg == true)
         {
-            Rb.velocity = Vector2.zero;
+            base.OnPauseForSubSlass();
             return;
-        }
+        }            
 
         if(Rb.velocity.x < 0f)
         {

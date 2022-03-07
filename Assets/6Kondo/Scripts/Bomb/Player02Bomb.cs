@@ -23,6 +23,10 @@ public class Player02Bomb : BulletBese
 
     IEnumerator UseBombChildBullet()
     {
+        while (PauseManager.Instance.PauseFlg == true)
+        {
+            yield return null;
+        }
         yield return null; //オブジェクトプールの初回生成時に誤生成を起こさないため
         for (int i = 0; i < _muzzle.Length; i++)
         {

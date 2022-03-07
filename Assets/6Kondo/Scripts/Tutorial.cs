@@ -21,6 +21,14 @@ public class Tutorial : SingletonMonoBehaviour<Tutorial>
     [SerializeField, Header("パワーアイテム取得のチュートリアルのチェック")] GameObject _powerCheck;
     [SerializeField, Header("スコアアイテム取得のチュートリアルのチェック")] GameObject _scoreCheck;
     [SerializeField, Header("チュートリアルクリア時に表示")] GameObject _tutorialClearCheck;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        GameManager.Instance.SaveValue();
+        GameManager.Instance.InitValue();
+    }
+
     private void Start()
     {
         MoveTutorial();
@@ -106,11 +114,21 @@ public class Tutorial : SingletonMonoBehaviour<Tutorial>
     }
     private void CheckClear()
     {
-        var isClear = _moveCheck.activeSelf && _shotCheck.activeSelf && _chargeShotCheck.activeSelf && _slowMoveCheck.activeSelf && _itemCheck.activeSelf && _bombCheck.activeSelf && _residueCheck.activeSelf && _invisibleCheck.activeSelf && _powerCheck.activeSelf && _scoreCheck.activeSelf;
+        var isClear = _moveCheck.activeSelf 
+                   && _shotCheck.activeSelf
+                   && _chargeShotCheck.activeSelf
+                   && _slowMoveCheck.activeSelf
+                   && _itemCheck.activeSelf
+                   && _bombCheck.activeSelf
+                   && _residueCheck.activeSelf
+                   && _invisibleCheck.activeSelf
+                   && _powerCheck.activeSelf
+                   && _scoreCheck.activeSelf;
         if (isClear)
         {
             _tutorialClearCheck.SetActive(true);
             GameManager.Instance.Player.CanMove = false;
+            GameManager.Instance.ReturnValue();
         }
     }
 }

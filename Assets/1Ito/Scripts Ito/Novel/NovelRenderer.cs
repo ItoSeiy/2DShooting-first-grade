@@ -34,7 +34,8 @@ namespace Overdose.Novel
 
         private void Update()
         {
-            if (_gssReader.IsLoading || CheckNovelFinish()) return;
+            if (_gssReader.IsLoading || CheckNovelFinish() || PauseManager.Instance.PauseFlg == true) return;
+
             ControllText();
         }
         public void OnGSSLoadEnd()
@@ -126,6 +127,10 @@ namespace Overdose.Novel
 
         IEnumerator MoveText()
         {
+            while(PauseManager.Instance.PauseFlg == true)
+            {
+                yield return null;
+            }
             _isDisplaying = true;
 
             switch (_datas[_ggsRow][NAME_TEXT_COLUMN])
