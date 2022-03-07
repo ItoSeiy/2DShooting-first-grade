@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class SuperAttackSpiral : BossAttackAction
 {
@@ -21,6 +22,8 @@ public class SuperAttackSpiral : BossAttackAction
     float _verticalDir = 0f;
     /// <summary>通常時の被ダメージの割合を保存する</summary>
     float _saveDamageTakenRation = 1f;
+    /// <summary>音に必要なタイマー</summary>
+    float _audioTimer = 0f;
     /// <summary>弾の見た目の種類</summary>
     int _pattern = 0;
     /// <summary>必殺前に移動するポジション</summary>
@@ -39,6 +42,14 @@ public class SuperAttackSpiral : BossAttackAction
     [SerializeField, Header("発射する弾の設定")] PoolObjectType[] _bullet;
     /// <summary>被ダメージの割合</summary>
     [SerializeField, Header("被ダメージの割合"), Range(0, 1)] float _damageTakenRationRange = 0.5f;
+    /// <summary>ボスの必殺技のタイムライン</summary>
+    [SerializeField, Header("ボスの必殺技のタイムライン")] PlayableDirector _Introduction = null;
+    /// <summary>攻撃時の音</summary>
+    [SerializeField, Header("攻撃時の音")] SoundType _superAttack;
+    /// <summary>音を鳴らすタイミング</summary>
+    [SerializeField, Header("音を鳴らすタイミング")] float _audioInterval = 0.4f;
+    /// <summary>タイムラインを消す時間</summary>
+    [SerializeField, Header("タイムラインを消す時間")] float _introductionStopTime = 1f;
     /// <summary>修正値</summary>
     const float PLAYER_POS_OFFSET = 0.5f;
     /// <summary>判定回数の制限</summary>
@@ -61,6 +72,7 @@ public class SuperAttackSpiral : BossAttackAction
     public override void ManagedUpdate(BossController contlloer)
     {
         _timer += Time.deltaTime;//タイマー
+        _audioTimer += Time.deltaTime;
 
         if (_timer >= _activationTime)
         {
@@ -79,7 +91,7 @@ public class SuperAttackSpiral : BossAttackAction
     IEnumerator Spiral(BossController controller)
     {
         _timer = RESET_TIME;//タイムリセット
-
+        
         //必殺を放つときはBOSSは放つ前にｘを0、Ｙを2をの位置(笑)に、移動する
         while (true)
         {
@@ -122,18 +134,36 @@ public class SuperAttackSpiral : BossAttackAction
 
         _timer = 0f;//タイムリセット
 
+        if (_Introduction)
+        {
+            _Introduction.gameObject.SetActive(true);
+        }
+
         //必殺技発動
         while (true)
         {
+            if (_timer >= _introductionStopTime)
+            {
+                _Introduction.gameObject.SetActive(false);
+            }
+
             //弾の見た目を変える
             _pattern = Random.Range(0, _bullet.Length);
             //マズルを回転する
             Vector3 localAngle = _muzzle.localEulerAngles;// ローカル座標を基準に取得
             localAngle.z += _angleInterval;// 角度を設定
-            _muzzle.localEulerAngles = localAngle;//回転する           
+            _muzzle.localEulerAngles = localAngle;//回転する
+
+            if(_audioTimer >= _audioInterval)
+            {
+                //攻撃時のサウンド
+                SoundManager.Instance.UseSound(_superAttack);
+                _audioTimer = 0f;
+            }    
+
             //弾をマズルの向きに合わせて弾を発射
             ObjectPool.Instance.UseObject(_muzzle.position, _bullet[_pattern]).transform.rotation = _muzzle.rotation;
-
+            
             yield return new WaitForSeconds(JUDGMENT_TIME);//判定回数の調整
 
             //数秒経ったら

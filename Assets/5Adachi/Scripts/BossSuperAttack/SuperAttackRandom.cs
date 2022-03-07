@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class SuperAttackRandom : BossAttackAction
 {
@@ -21,6 +22,8 @@ public class SuperAttackRandom : BossAttackAction
     float _verticalDir = 0f;
     /// <summary>通常時の被ダメージの割合を保存する</summary>
     float _saveDamageTakenRation = 1f;
+    /// <summary>音に必要なタイマー</summary>
+    float _audioTimer = 0f;
     /// <summary>弾の見た目の種類</summary>
     int _pattern = 0;
     /// <summary>必殺前に移動するポジション</summary>
@@ -41,6 +44,14 @@ public class SuperAttackRandom : BossAttackAction
     [SerializeField,Header("1回の処理で弾を発射する回数")] int _maximumCount = 2;
     /// <summary>被ダメージの割合</summary>
     [SerializeField, Header("被ダメージの割合"), Range(0, 1)] float _damageTakenRationRange = 0.5f;
+    /// <summary>ボスの必殺技のタイムライン</summary>
+    [SerializeField, Header("ボスの必殺技のタイムライン")] PlayableDirector _Introduction = null;
+    /// <summary>攻撃時の音</summary>
+    [SerializeField, Header("攻撃時の音")] SoundType _superAttack;
+    /// <summary>音を鳴らすタイミング</summary>
+    [SerializeField, Header("音を鳴らすタイミング")] float _audioInterval = 0.4f;
+    /// <summary>タイムラインを消す時間</summary>
+    [SerializeField, Header("タイムラインを消す時間")] float _introductionStopTime = 1f;
     /// <summary>修正値</summary>
     const float PLAYER_POS_OFFSET = 0.5f;
     /// <summary>判定回数の制限</summary>
@@ -69,6 +80,7 @@ public class SuperAttackRandom : BossAttackAction
     public override void ManagedUpdate(BossController contlloer)
     {
         _timer += Time.deltaTime;//タイマー
+        _audioTimer += Time.deltaTime;
 
         if (_timer >= _activationTime)
         {
@@ -130,9 +142,27 @@ public class SuperAttackRandom : BossAttackAction
  
         _timer = 0f;//タイムリセット
 
+        if (_Introduction)
+        {
+            _Introduction.gameObject.SetActive(true);
+        }
+
         //必殺技発動
         while (true)
         {
+            if (_timer >= _introductionStopTime)
+            {
+                _Introduction.gameObject.SetActive(false);
+            }
+
+            if (_audioTimer >= _audioInterval)
+            {
+                //攻撃時のサウンド
+                SoundManager.Instance.UseSound(_superAttack);
+                _audioTimer = 0f;
+            }
+            
+
             //同じ処理を数回(_maximumCount)繰り返す
             for (int count = INITIAL_COUNT; count < _maximumCount; count++)
             {
