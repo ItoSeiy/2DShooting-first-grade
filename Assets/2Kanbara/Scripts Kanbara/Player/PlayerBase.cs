@@ -168,6 +168,9 @@ public class PlayerBase : MonoBehaviour, IPauseable
         _invincibleObjectCount = GameManager.Instance.PlayerInvincibleObjectCount;
 
         GamingFalse();
+
+        GameManager.Instance.OnGameOver += () => _canMove = false;
+        GameManager.Instance.OnStageClear += () => _canMove = false;    
     }
 
     private async void Update()

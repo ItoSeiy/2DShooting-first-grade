@@ -578,22 +578,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14d827093b251d0408562633a1ab2801, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _notAnswer:
-    m_Name: Not Answer
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 2b1edee0-686c-4e20-b42d-3c377abf37c2
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: 51e8ecf6-8ac6-45cd-b8e2-660eebef6d2d
-      m_Path: <Keyboard>/anyKey
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Not Answer
-      m_Flags: 0
   _commandsAnswer1:
     m_Name: Commands Answer 1
     m_Type: 0
@@ -756,6 +740,7 @@ MonoBehaviour:
       m_Flags: 0
   _onCommandSuccessSound: 2
   _onCommandSuccessText: {fileID: 2771520150063215103}
+  _commandFinishTime: 2000
 --- !u!1 &3803157302652053008
 GameObject:
   m_ObjectHideFlags: 0

@@ -66,6 +66,8 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 
         //ボス死亡時                               ノベルが流れるため少し音を残す
         GameManager.Instance.OnStageClear += () => FadeBgm(_bossBgmAudioSource, 0.2f, _bgmFadeTime);
+
+        PhaseNovelManager.Instance.OnEndAfterNovel += () => FadeBgm(_bgmAudioSource, 0f, _bgmFadeTime);
     }
 
     /// <summary>

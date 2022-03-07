@@ -90,6 +90,8 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
     /// <summary>í“¬Œã(Ÿ—˜”s–k‚àŠÜ‚Ş)‚Ìƒmƒxƒ‹‚ªÄ¶‚³‚ê‚é‚Æ‚«‚ÉŒÄ‚Ño‚³‚ê‚éƒfƒŠƒQ[ƒg</summary>
     public event Action OnAfterNovel;
 
+    public event Action OnEndAfterNovel;
+
     private int _phaseIndex = default;
     private int _loopCount = default;
     private bool _isNovelFirstTime = true;
