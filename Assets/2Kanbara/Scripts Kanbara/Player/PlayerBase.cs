@@ -73,6 +73,7 @@ public class PlayerBase : MonoBehaviour, IPauseable
 
     [SerializeField, Header("パワーアイテムの数がカンストしたとき（レベルマックスのとき）の演出")] GameObject _fullPowerModeEffect = default;
     [SerializeField, Header("Invincibleモードのときの演出")] GameObject _invincibleModeEffect = default;
+    [SerializeField, Header("残機がゼロの時の演出")] GameObject _playerDeathEffect = default;
 
     [SerializeField, Header("パワーアイテムのデスペナルティ")] int _powerDeathPenalty = -50;
 
@@ -87,6 +88,7 @@ public class PlayerBase : MonoBehaviour, IPauseable
     [SerializeField, Header("ボムアイテム獲得時の音")] string _getBombAudio = "BombGet";
     [SerializeField, Header("レベルアップ時の音")] public readonly string _levelUpAudio = "LevelUp";
     [SerializeField, Header("Invincibleモードの時の音")] string _invincibleModeAudio = "Invincible";
+    [SerializeField, Header("残機がゼロになった時の音")] string _playerGameOverAudio = "Death";
 
     protected const int _level1 = 1;
     protected const int _level2 = 2;
@@ -338,21 +340,23 @@ public class PlayerBase : MonoBehaviour, IPauseable
             _cmvcam1.Priority = -1;
             _isCharge = false;
             _isAttackMode = false;
-            Play(_playerDestroyAudio);
             GameManager.Instance.ResidueChange(DEFAULTCOUNTDOWN);
             _playerResidue = GameManager.Instance.PlayerResidueCount;
 
             if (_playerResidue >= DEFAULTCOUNTUP)//残機が残っている場合はリスポーンを行う
             {
+                Play(_playerDestroyAudio);
                 Respawn();
                 Debug.Log("残り残機" + _playerResidue);
             }
             else//残機が0であればゲームオーバー処理を呼び出す
             {
                 Debug.LogError("おめぇーの残機ねえから！" + _playerResidue);
+                Play(_playerGameOverAudio);
+                _playerDeathEffect.SetActive(true);
                 GameManager.Instance.GameOver();
                 _sp.enabled = false;
-                _isAttackMode = false;
+                _canMove = false;
             }
         }
 
