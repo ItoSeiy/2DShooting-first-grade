@@ -13,14 +13,15 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
     [SerializeField]
     [Header("BGMを流すAudioSource")]
     AudioSource _bgmAudioSource;
+
     [SerializeField]
-    [Header("通常BGM")]
-    AudioClip _normalBGM;
-    [SerializeField]
-    [Header("ボスBGM")]
-    AudioClip _bossBGM;
+    [Header("BossBGMを流すAudioSource")]
+    AudioSource _bossBgmAudioSource;
+
     [SerializeField]
     float _bgmFadeTime = 2f;
+    [SerializeField]
+    float _bgmFadeOutVol = 0.2f;
 
     List<Pool> _pool = new List<Pool>();
 
@@ -37,22 +38,44 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 
     void Start()
     {
-        _bgmAudioSource.PlayOneShot(_normalBGM);
+        _bgmAudioSource.Play();
 
-        PhaseNovelManager.Instance.OnBoss += () => _bgmAudioSource.PlayOneShot(_bossBGM);
+        PhaseNovelManager.Instance.OnBeforeNovel += () =>
+        {
+            //ノベル時はBGMを小さく流す
+            FadeBgm(_bgmAudioSource, _bgmFadeOutVol, _bgmFadeTime);
+        };
 
-        GameManager.Instance.OnGameOver += () => FadeBgm(0, _bgmFadeTime);
-        GameManager.Instance.OnStageClear += () => FadeBgm(0, _bgmFadeTime);
+        //ボス生成時
+        PhaseNovelManager.Instance.OnBoss += () =>
+        {
+            //ボスが始まったら普通のBGMは消す
+            _bgmAudioSource.Stop();
+            //ボスのBGM再生
+            _bossBgmAudioSource.Play();
+        };
+
+        //キャラ死亡時
+        GameManager.Instance.OnGameOver += () =>
+        {
+            //BGM停止
+            FadeBgm(_bgmAudioSource, 0, _bgmFadeTime);
+            //ボス戦闘中に死んだ際はノベルが流れるため少し音を残す
+            FadeBgm(_bossBgmAudioSource, _bgmFadeOutVol, _bgmFadeTime);   
+        };
+
+        //ボス死亡時                               ノベルが流れるため少し音を残す
+        GameManager.Instance.OnStageClear += () => FadeBgm(_bossBgmAudioSource, 0.2f, _bgmFadeTime);
     }
 
     /// <summary>
-    /// 現在流れているBGMのフェードを行う
+    /// 指定したオーディオソースのフェードを行う
     /// </summary>
     /// <param name="targetVol">設定したい音量</param>
     /// <param name="fadeTime">どのくらい時間をかけるか</param>
-    public void FadeBgm(float targetVol, float fadeTime)
+    private void FadeBgm(AudioSource targetAudioSouece, float targetVol, float fadeTime)
     {
-        _bgmAudioSource.DOFade(targetVol, fadeTime);
+        targetAudioSouece.DOFade(targetVol, fadeTime);
     }
 
     /// <summary>
