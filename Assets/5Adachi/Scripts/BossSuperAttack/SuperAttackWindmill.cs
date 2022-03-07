@@ -43,6 +43,8 @@ public class SuperAttackWindmill : BossAttackAction
     [SerializeField, Header("”­Ë‚·‚é’e‚Ìİ’è")] PoolObjectType[] _bullet;
     /// <summary>”íƒ_ƒ[ƒW‚ÌŠ„‡</summary>
     [SerializeField, Header("”íƒ_ƒ[ƒW‚ÌŠ„‡"), Range(0, 1)] float _damageTakenRationRange = 0.5f;
+    /// <summary>UŒ‚‚Ì‰¹</summary>
+    [SerializeField, Header("UŒ‚‚Ì‰¹")] SoundType _superAttack;
     /// <summary>C³’l</summary>
     const float PLAYER_POS_OFFSET = 0.5f;
     /// <summary>”»’è‰ñ”‚Ì§ŒÀ</summary>
@@ -129,6 +131,9 @@ public class SuperAttackWindmill : BossAttackAction
         //•KE‹Z”­“®
         while (true)
         {
+            //UŒ‚‚ÌƒTƒEƒ“ƒh
+            SoundManager.Instance.UseSound(_superAttack);
+
             //’e‚ÌŒ©‚½–Ú‚ğ•Ï‚¦‚é
             _firstPattern = Random.Range(0, _bullet.Length);
             _secondPattern = Random.Range(0, _bullet.Length);

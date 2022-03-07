@@ -224,7 +224,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 5
-  _enemyHp: 70000
+  _enemyHp: 50000
   _attackInterval: 1
   _damageTakenRatio: 1
   _playerBulletTag: PlayerBullet
@@ -233,16 +233,14 @@ MonoBehaviour:
   _sprite: {fileID: 0}
   _dropItems:
     items:
-    - itemType: 48
-      count: 1
     - itemType: 49
       count: 1
     - itemType: 50
       count: 1
     - itemType: 51
-      count: 5
+      count: 2
     - itemType: 52
-      count: 1
+      count: 20
   _itemDropRangeX: 2
   _itemDropRangeY: 2
   _killedParticle: {fileID: 4487535076250934390, guid: 68c13d6f5cc05fd4a90a7b04f759e520,
@@ -306,8 +304,8 @@ MonoBehaviour:
     - {fileID: 920663452041829219}
     - {fileID: 959436985281620010}
   _superAttackTimingHp:
-  - 50000
-  - 25000
+  - 40000
+  - 20000
 --- !u!1 &1868784747635064903
 GameObject:
   m_ObjectHideFlags: 0
@@ -623,6 +621,8 @@ MonoBehaviour:
   _rotationInterval: 45
   _endingTime: 15
   _probability: 30
+  _normalAttack: 6
+  _audioInterval: 1
 --- !u!1 &7704880379730584186
 GameObject:
   m_ObjectHideFlags: 0
@@ -730,7 +730,9 @@ MonoBehaviour:
   _secondBullet: 29
   _rotationInterval: 45
   _endingTime: 10
-  _probability: 30
+  _probability: 50
+  _normalAttack: 6
+  _audioInterval: 1
 --- !u!1001 &3221781844798990307
 PrefabInstance:
   m_ObjectHideFlags: 0

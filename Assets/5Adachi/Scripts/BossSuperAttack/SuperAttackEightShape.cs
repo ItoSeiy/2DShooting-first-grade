@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SuperAttackEightShape : BossAttackAction
 {
-    
+
     /// <summary>右側の範囲</summary>
     bool _rightRange;
     /// <summary>左側の範囲</summary>
@@ -32,7 +32,7 @@ public class SuperAttackEightShape : BossAttackAction
     /// <summary>必殺前に移動するポジション</summary>
     [SerializeField, Header("必殺前に移動するポジション")] Vector2 _superAttackPosition = new Vector2(0f, 4f);
     /// <summary>必殺前に移動するときのスピード</summary>
-    [SerializeField, Header("必殺前に移動するときのスピード")] float _speed = 4f;    
+    [SerializeField, Header("必殺前に移動するときのスピード")] float _speed = 4f;
     /// <summary>必殺技待機時間</summary>
     [SerializeField, Header("必殺技待機時間")] float _waitTime = 5f;
     /// <summary>必殺技発動時間</summary>
@@ -44,9 +44,11 @@ public class SuperAttackEightShape : BossAttackAction
     /// <summary>発射する弾を設定できる</summary>
     [SerializeField, Header("発射する弾の設定")] PoolObjectType[] _bullet;
     /// <summary>弾の見た目を変える間隔(秒)</summary>
-    [SerializeField,Header("弾の見た目を変える間隔(秒)")] float _switchInterval = 2f;
+    [SerializeField, Header("弾の見た目を変える間隔(秒)")] float _switchInterval = 2f;
     /// <summary>被ダメージの割合</summary>
     [SerializeField, Header("被ダメージの割合"), Range(0, 1)] float _damageTakenRationRange = 0.5f;
+    /// <summary>攻撃時の音</summary>
+    [SerializeField, Header("攻撃時の音")] SoundType _superAttack;
     /// <summary>修正値</summary>
     const float PLAYER_POS_OFFSET = 0.5f;
     /// <summary>判定回数の制限</summary>
@@ -56,9 +58,9 @@ public class SuperAttackEightShape : BossAttackAction
 
     public override System.Action ActinoEnd { get; set; }
 
-    
+
     public override void Enter(BossController contlloer)
-    {      
+    {
         contlloer.ItemDrop();
         //通常時の被ダメージの割合を保存する
         _saveDamageTakenRation = contlloer.DamageTakenRation;
@@ -130,6 +132,8 @@ public class SuperAttackEightShape : BossAttackAction
         }
 
         _timer = RESET_TIME;//タイムリセット
+        //攻撃時のサウンド
+        SoundManager.Instance.UseSound(_superAttack);
 
         //必殺技発動
         while (true)
@@ -142,29 +146,32 @@ public class SuperAttackEightShape : BossAttackAction
                 _secondPattern = Random.Range(0, _bullet.Length);
                 //経過した秒数を追加
                 _switchIntervalOffset += _switchInterval;
+                //攻撃時のサウンド
+                SoundManager.Instance.UseSound(_superAttack);
             }
+            
 
-                //マズル0（親オブジェクト）を反時計回り（+）に回転する
-                Vector3 upperLocalAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
-                upperLocalAngle.z += _angleInterval;// 角度を設定
-                _muzzles[0].localEulerAngles = upperLocalAngle;//回転する
+            //マズル0（親オブジェクト）を反時計回り（+）に回転する
+            Vector3 upperLocalAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
+            upperLocalAngle.z += _angleInterval;// 角度を設定
+            _muzzles[0].localEulerAngles = upperLocalAngle;//回転する
 
-                //弾をマズル0（親オブジェクト）の向きに合わせて弾を発射
-                ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet[_firstPattern]).transform.rotation = _muzzles[0].rotation;
+            //弾をマズル0（親オブジェクト）の向きに合わせて弾を発射
+            ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet[_firstPattern]).transform.rotation = _muzzles[0].rotation;
 
-                //弾をマズル1（子オブジェクト）の向きに合わせて弾を発射
-                ObjectPool.Instance.UseObject(_muzzles[1].position, _bullet[_secondPattern]).transform.rotation = _muzzles[1].rotation;
+            //弾をマズル1（子オブジェクト）の向きに合わせて弾を発射
+            ObjectPool.Instance.UseObject(_muzzles[1].position, _bullet[_secondPattern]).transform.rotation = _muzzles[1].rotation;
 
-                //マズル2（親オブジェクト）を時計回り（-）に回転する
-                Vector3 rightLocalAngle = _muzzles[2].localEulerAngles;// ローカル座標を基準に取得
-                rightLocalAngle.z -= _angleInterval;// 角度を設定
-                _muzzles[2].localEulerAngles = rightLocalAngle;//回転する
+            //マズル2（親オブジェクト）を時計回り（-）に回転する
+            Vector3 rightLocalAngle = _muzzles[2].localEulerAngles;// ローカル座標を基準に取得
+            rightLocalAngle.z -= _angleInterval;// 角度を設定
+            _muzzles[2].localEulerAngles = rightLocalAngle;//回転する
 
-                //弾をマズル2（親オブジェクト）の向きに合わせて弾を発射
-                ObjectPool.Instance.UseObject(_muzzles[2].position, _bullet[_firstPattern]).transform.rotation = _muzzles[2].rotation;
-                
-                //弾をマズル3（子オブジェクト）の向きに合わせて弾を発射
-                ObjectPool.Instance.UseObject(_muzzles[3].position, _bullet[_secondPattern]).transform.rotation = _muzzles[3].rotation;
+            //弾をマズル2（親オブジェクト）の向きに合わせて弾を発射
+            ObjectPool.Instance.UseObject(_muzzles[2].position, _bullet[_firstPattern]).transform.rotation = _muzzles[2].rotation;
+
+            //弾をマズル3（子オブジェクト）の向きに合わせて弾を発射
+            ObjectPool.Instance.UseObject(_muzzles[3].position, _bullet[_secondPattern]).transform.rotation = _muzzles[3].rotation;
 
             yield return new WaitForSeconds(_attackInterval);//攻撃頻度(秒)
             //数秒経ったら

@@ -41,6 +41,8 @@ public class SuperAttackFirework : BossAttackAction
     [SerializeField, Header("発射する弾の設定")] PoolObjectType[] _bullet;
     /// <summary>被ダメージの割合</summary>
     [SerializeField, Header("被ダメージの割合"), Range(0, 1)] float _damageTakenRationRange = 0.5f;
+    /// <summary>攻撃時の音</summary>
+    [SerializeField, Header("攻撃時の音")] SoundType _superAttack;
     /// <summary>修正値</summary>
     const float PLAYER_POS_OFFSET = 0.5f;
     /// <summary>判定回数の制限</summary>
@@ -130,6 +132,8 @@ public class SuperAttackFirework : BossAttackAction
         //必殺技発動
         while (true)
         {
+            //攻撃時のサウンド
+            SoundManager.Instance.UseSound(_superAttack);
             //弾の見た目を変える
             _pattern = Random.Range(0, _bullet.Length);
             //360度全方位に発射

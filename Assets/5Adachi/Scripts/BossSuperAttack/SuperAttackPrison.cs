@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class SuperAttackPrison : BossAttackAction
 {
@@ -54,6 +55,10 @@ public class SuperAttackPrison : BossAttackAction
     [SerializeField, Header("右回転の限界")] float _rightRotLimit = 180f;
     /// <summary>被ダメージの割合</summary>
     [SerializeField, Header("被ダメージの割合"), Range(0, 1)] float _damageTakenRationRange = 0.5f;
+    /// <summary>ボスの必殺技のタイムライン</summary>
+    [SerializeField, Header("ボスの必殺技のタイムライン")] PlayableDirector _Introduction = null;
+    /// <summary>攻撃時の音</summary>
+    [SerializeField, Header("攻撃時の音")] SoundType _superAttack;
     /// <summary>修正値</summary>
     const float PLAYER_POS_OFFSET = 0.5f;
     /// <summary>判定回数の制限</summary>
@@ -138,9 +143,22 @@ public class SuperAttackPrison : BossAttackAction
         _timer = RESET_TIME;//タイムリセット
         _secondPattern = Random.Range(0, _bullet.Length);
         _thirdPattern = Random.Range(0, _bullet.Length);
+        if(_Introduction)
+        {
+            _Introduction.gameObject.SetActive(true);
+        }
+        
+
         //必殺技発動
         while (true)
-        {            
+        {
+            //攻撃時のサウンド
+            SoundManager.Instance.UseSound(_superAttack);
+
+            if (_timer >= 1f)
+            {
+                    _Introduction.gameObject.SetActive(false);
+            }
             //時間になったら回転
             if(_timer >= _timeLimit)//5f
             {

@@ -41,6 +41,8 @@ public class SuperAttackRebound : BossAttackAction
     [SerializeField, Header("発射する弾の設定(リバウンド）")] PoolObjectType[] _bullet;
     /// <summary>被ダメージの割合</summary>
     [SerializeField, Header("被ダメージの割合"), Range(0, 1)] float _damageTakenRationRange = 0.5f;
+    /// <summary>攻撃時の音</summary>
+    [SerializeField, Header("攻撃時の音")] SoundType _superAttack;
     /// <summary>修正値</summary>
     const float PLAYER_POS_OFFSET = 0.5f;
     /// <summary>判定回数の制限</summary>
@@ -133,6 +135,9 @@ public class SuperAttackRebound : BossAttackAction
         //必殺技発動
         while (true)
         {
+            //攻撃時のサウンド
+            SoundManager.Instance.UseSound(_superAttack);
+
             //全方位に発射
             for (float angle = MINIMUM_ROTATION_RANGE; angle <= MAXIMUM_ROTATION_RANGE; angle += _angleInterval)
             {

@@ -152,6 +152,7 @@ MonoBehaviour:
   _attackInterval: 1
   _bullet: 270000002800000029000000
   _damageTakenRationRange: 0.5
+  _superAttack: 1
 --- !u!1 &3668928284545267236
 GameObject:
   m_ObjectHideFlags: 0
@@ -201,7 +202,9 @@ MonoBehaviour:
   _rotationInterval: 1
   _maximumCount: 7
   _endingTime: 10
-  _probability: 35
+  _probability: 50
+  _normalAttack: 1
+  _audioInterval: 2
 --- !u!1 &3668928285342510396
 GameObject:
   m_ObjectHideFlags: 0
@@ -422,7 +425,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 5
-  _enemyHp: 65000
+  _enemyHp: 40000
   _attackInterval: 1
   _damageTakenRatio: 1
   _playerBulletTag: PlayerBullet
@@ -431,16 +434,14 @@ MonoBehaviour:
   _sprite: {fileID: 0}
   _dropItems:
     items:
-    - itemType: 48
-      count: 1
     - itemType: 49
       count: 1
     - itemType: 50
       count: 1
     - itemType: 51
-      count: 4
+      count: 2
     - itemType: 52
-      count: 1
+      count: 20
   _itemDropRangeX: 2
   _itemDropRangeY: 2
   _killedParticle: {fileID: 4487535076250934390, guid: 68c13d6f5cc05fd4a90a7b04f759e520,
@@ -468,8 +469,8 @@ MonoBehaviour:
     - {fileID: 3942865692778157245}
     - {fileID: 4233309995412027639}
   _superAttackTimingHp:
-  - 50000
   - 30000
+  - 15000
 --- !u!1 &3668928286249649518
 GameObject:
   m_ObjectHideFlags: 0
@@ -552,6 +553,8 @@ MonoBehaviour:
   _maximumCount: 7
   _endingTime: 10
   _probability: 60
+  _normalAttack: 7
+  _audioInterval: 2
 --- !u!1 &5798824771876401389
 GameObject:
   m_ObjectHideFlags: 0
