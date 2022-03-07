@@ -4,8 +4,9 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using System.Threading.Tasks;
+using System.Linq;
 
-public class InputCommand : MonoBehaviour
+public class InputCommand : MonoBehaviour, IPauseable
 {
     [SerializeField]
     InputAction _commandsAnswer1 = default;
@@ -29,65 +30,158 @@ public class InputCommand : MonoBehaviour
     InputAction _commandsAnswer10 = default;
 
     bool[] _isCommandSuccess = new bool[9];
+    bool _startCommand = false; 
 
-    [SerializeField,Header("コマンドが成功した際の音")]
+    [SerializeField]
+    [Header("コマンドが成功した際の音")]
     SoundType _onCommandSuccessSound = SoundType.Sword;
 
     [SerializeField]
     Text _onCommandSuccessText;
-    [SerializeField, Header("テキストをしまう時間(ミリ秒)")]
-    int _textDisableTime;
 
-    public async void OnInputCommand(InputAction.CallbackContext context)
+    [SerializeField]
+    [Header("コマンド入力を終わらせないといけない時間(ミリ秒)")]
+    int _commandFinishTime = 1000;
+
+    void Start()
     {
-        if (context.action == _commandsAnswer1 && PauseManager.Instance.PauseFlg == true)
-        {
-            Debug.Log("コマンド開始");
-            _isCommandSuccess[0] = true;
-        }
-        else if(context.action == _commandsAnswer2 && _isCommandSuccess[0] && PauseManager.Instance.PauseFlg == true)
-        {
-            _isCommandSuccess[1] = true;
-        }
-        else if (context.action == _commandsAnswer3 && _isCommandSuccess[1] && PauseManager.Instance.PauseFlg == true)
-        {
-            _isCommandSuccess[2] = true;
-        }
-        else if (context.action == _commandsAnswer4 && _isCommandSuccess[2] && PauseManager.Instance.PauseFlg == true)
-        {
-            _isCommandSuccess[3] = true;
-        }
-        else if (context.action == _commandsAnswer5 && _isCommandSuccess[3] && PauseManager.Instance.PauseFlg == true)
-        {
-            _isCommandSuccess[4] = true;
-        }
-        else if (context.action == _commandsAnswer6 && _isCommandSuccess[4] && PauseManager.Instance.PauseFlg == true)
-        {
-            _isCommandSuccess[5] = true;
-        }
-        else if (context.action == _commandsAnswer7 && _isCommandSuccess[5] && PauseManager.Instance.PauseFlg == true)
-        {
-            _isCommandSuccess[6] = true;
-        }
-        else if (context.action == _commandsAnswer8 && _isCommandSuccess[6] && PauseManager.Instance.PauseFlg == true)
-        {
-            _isCommandSuccess[7] = true;
-        }
-        else if (context.action == _commandsAnswer9 && _isCommandSuccess[7] && PauseManager.Instance.PauseFlg == true)
-        {
-            _isCommandSuccess[8] = true;
-        }
-        else if (context.action == _commandsAnswer10 && _isCommandSuccess[8] && PauseManager.Instance.PauseFlg == true)
-        {
-            Debug.Log("コマンド完了");
-            SoundManager.Instance.UseSound(_onCommandSuccessSound);
-            GameManager.Instance.Player.IsGodMode = !GameManager.Instance.Player.IsGodMode;
+        _commandsAnswer1.Enable();
+        _commandsAnswer2.Enable();
+        _commandsAnswer3.Enable();
+        _commandsAnswer4.Enable();
+        _commandsAnswer5.Enable();
+        _commandsAnswer6.Enable();
+        _commandsAnswer7.Enable();
+        _commandsAnswer8.Enable();
+        _commandsAnswer9.Enable();
+        _commandsAnswer10.Enable();
+        OnInputCommand();
+    }
 
-            var isGodModeState = GameManager.Instance.Player.IsGodMode ? "有効!" : "無効!";
+    private async void StartCommand()
+    {
+        _startCommand = true;
+        await Task.Delay(_commandFinishTime);
+        _startCommand = false;
+    }
 
-            _onCommandSuccessText.text = "無敵モード" + isGodModeState;
-            await Task.Delay(_textDisableTime);
+    private void OnInputCommand()
+    {
+        _commandsAnswer1.started += _ =>
+        {
+            if (PauseManager.Instance.PauseFlg == true)
+            {
+                Debug.Log("コマンド開始");
+                StartCommand();
+                _isCommandSuccess[0] = true;
+            }
+        };
+
+        _commandsAnswer2.started += _ =>
+        {
+            if (_isCommandSuccess[0] && PauseManager.Instance.PauseFlg == true && _startCommand)
+            {
+                _isCommandSuccess[1] = true;
+            }
+        };
+
+        _commandsAnswer3.started += _ =>
+        {
+            if (_isCommandSuccess[1] && PauseManager.Instance.PauseFlg == true && _startCommand)
+            {
+                _isCommandSuccess[2] = true;
+            }
+        };
+
+        _commandsAnswer4.started += _ =>
+        {
+            if (_isCommandSuccess[2] && PauseManager.Instance.PauseFlg == true && _startCommand)
+            {
+                _isCommandSuccess[3] = true;
+            }
+        };
+
+        _commandsAnswer5.started += _ =>
+        {
+            if (_isCommandSuccess[3] && PauseManager.Instance.PauseFlg == true && _startCommand)
+            {
+                _isCommandSuccess[4] = true;
+            }
+        };
+
+        _commandsAnswer6.started += _ =>
+        {
+            if (_isCommandSuccess[4] && PauseManager.Instance.PauseFlg == true && _startCommand)
+            {
+                _isCommandSuccess[5] = true;
+            }
+        };
+
+        _commandsAnswer7.started += _ =>
+        {
+            if (_isCommandSuccess[5] && PauseManager.Instance.PauseFlg == true && _startCommand)
+            {
+                _isCommandSuccess[6] = true;
+            }
+        };
+
+        _commandsAnswer8.started += _ =>
+        {
+            if (_isCommandSuccess[6] && PauseManager.Instance.PauseFlg == true && _startCommand)
+            {
+                _isCommandSuccess[7] = true;
+            }
+        };
+
+        _commandsAnswer9.started += _ =>
+        {
+            if (_isCommandSuccess[7] && PauseManager.Instance.PauseFlg == true && _startCommand)
+            {
+                _isCommandSuccess[8] = true;
+            }
+        };
+
+        _commandsAnswer10.started += _ =>
+        {
+            if (_isCommandSuccess[8] && PauseManager.Instance.PauseFlg == true && _startCommand)
+            {
+                for (int i = 0; i < _isCommandSuccess.Length; i++)
+                {
+                    _isCommandSuccess[i] = false;
+                }
+
+                Debug.Log("コマンド完了");
+                _startCommand = false;
+                SoundManager.Instance.UseSound(_onCommandSuccessSound);
+                GameManager.Instance.Player.IsGodMode = !GameManager.Instance.Player.IsGodMode;
+
+                var isGodModeState = GameManager.Instance.Player.IsGodMode ? "有効!" : "無効!";
+
+                _onCommandSuccessText.text = "無敵モード" + isGodModeState;
+
+            }
+        };
+    }
+
+    public void PauseResume(bool isPause)
+    {
+        if(isPause)
+        {
+
+        }
+        else
+        {
             _onCommandSuccessText.text = "";
         }
+    }
+
+    void OnEnable()
+    {
+        PauseManager.Instance.SetEvent(this);    
+    }
+
+    void OnDisable()
+    {
+        PauseManager.Instance.RemoveEvent(this);
     }
 }

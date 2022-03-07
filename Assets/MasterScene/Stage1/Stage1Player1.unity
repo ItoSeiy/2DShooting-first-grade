@@ -1007,6 +1007,16 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5792861402647104520, guid: 03ee70c6eee84834babf631082b1865f,
+        type: 3}
+      propertyPath: _notAnswer.m_Id
+      value: f8ad9a51-8e4d-4a6c-9576-a91d9f49eeaf
+      objectReference: {fileID: 0}
+    - target: {fileID: 5792861402647104520, guid: 03ee70c6eee84834babf631082b1865f,
+        type: 3}
+      propertyPath: _notAnswer.m_Name
+      value: Not Answer
+      objectReference: {fileID: 0}
     - target: {fileID: 6945246336028955734, guid: 03ee70c6eee84834babf631082b1865f,
         type: 3}
       propertyPath: m_IsActive
@@ -1032,7 +1042,8 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8854299675893422198, guid: 03ee70c6eee84834babf631082b1865f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 03ee70c6eee84834babf631082b1865f, type: 3}
 --- !u!95 &1192482254 stripped
 Animator:

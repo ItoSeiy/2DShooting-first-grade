@@ -1523,8 +1523,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 3567903342063966752}
-        m_TargetAssemblyTypeName: SceneLoadForString, Assembly-CSharp
-        m_MethodName: LoadScene
+        m_TargetAssemblyTypeName: SceneLoadCaller, Assembly-CSharp
+        m_MethodName: LoadSceneString
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1567,7 +1567,8 @@ MonoBehaviour:
   _deleteButtons: []
   _callPanel: []
   _deletePanel: []
-  _clip: 
+  _animStateName: 
+  _onClickSounds: 
 --- !u!1 &3567903342097862831
 GameObject:
   m_ObjectHideFlags: 0
@@ -2980,8 +2981,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 3567903342566983616}
-        m_TargetAssemblyTypeName: SceneLoadForString, Assembly-CSharp
-        m_MethodName: LoadScene
+        m_TargetAssemblyTypeName: SceneLoadCaller, Assembly-CSharp
+        m_MethodName: LoadSameScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
