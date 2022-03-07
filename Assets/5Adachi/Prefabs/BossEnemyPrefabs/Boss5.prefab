@@ -327,7 +327,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 5
-  _enemyHp: 50000
+  _enemyHp: 40000
   _attackInterval: 1
   _damageTakenRatio: 1
   _playerBulletTag: PlayerBullet
@@ -407,8 +407,8 @@ MonoBehaviour:
     - {fileID: 920663452041829219}
     - {fileID: 959436985281620010}
   _superAttackTimingHp:
-  - 40000
-  - 20000
+  - 30000
+  - 15000
 --- !u!1 &1868784747635064903
 GameObject:
   m_ObjectHideFlags: 0
@@ -857,7 +857,7 @@ PrefabInstance:
     - target: {fileID: 4915397243145577605, guid: e0b713ce26877544987eeb9209479f73,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7815128186395861107, guid: e0b713ce26877544987eeb9209479f73,
         type: 3}
