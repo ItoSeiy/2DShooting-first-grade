@@ -16,12 +16,15 @@ public class Bomb02ChildBullet : BulletBese
     float _timer = 0;
     Vector2 _oldDir;
     GameObject _enemy;
+    bool _isFirstTime = true;
+
 
     protected override void OnEnable()
     {
+        _isFirstTime = true;
         _timer = 0;
-        _enemy = GameObject.FindWithTag(OpponenTag);
         base.OnEnable();
+        FindEnemy();
     }
 
     protected override void BulletMove()
@@ -30,23 +33,32 @@ public class Bomb02ChildBullet : BulletBese
 
         if (_timer >= _followFnishTime)
         {
-            Rb.velocity = _oldDir;
+            Rb.velocity = gameObject.transform.rotation * new Vector2(0, Speed);
             return;
         }
 
         if (_enemy && _timer >= _followStartTime)
         {
             Vector2 dir = _enemy.transform.position - this.transform.position;
-            dir = dir.normalized * Speed;
-            Rb.velocity = dir;
-            _oldDir = dir;
+            Rb.velocity = dir.normalized * Speed;
         }
         else
         {
-            Vector2 velocity = gameObject.transform.rotation * new Vector2(0, Speed);
-            Rb.velocity = velocity;
+            if(_isFirstTime)
+            {
+                FindEnemy();
+                _isFirstTime = false;
+                BulletMove();
+            }
+            Rb.velocity = gameObject.transform.rotation * new Vector2(0, Speed);
         }
     }
+
+    private void FindEnemy()
+    {
+        _enemy = GameObject.FindWithTag(OpponenTag);
+    }
+
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == _enemyBulletTag)

@@ -19,12 +19,12 @@ public class TextValueChange : MonoBehaviour
 
                 _text.text = GameManager.Instance.PlayerScore.ToString("00000000");
 
-                //DOTween.To(() => _tempScore,
-                //    x => _tempScore = x,
-                //    GameManager.Instance.PlayerScore,
-                //    _changeSpeed)
-                //    .OnUpdate(() => _text.text = _tempScore.ToString("00000000"))
-                //    .OnComplete(() => _text.text = GameManager.Instance.PlayerScore.ToString("00000000"));
+                DOTween.To(() => _tempScore,
+                    x => _tempScore = x,
+                    GameManager.Instance.PlayerScore,
+                    _changeSpeed)
+                    .OnUpdate(() => _text.text = _tempScore.ToString("00000000"))
+                    .OnComplete(() => _text.text = GameManager.Instance.PlayerScore.ToString("00000000"));
                 break;
 
             case Value.Level:

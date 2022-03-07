@@ -1,51 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &839281011554715288
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8474760381563889323}
-  - component: {fileID: 8076277867804523731}
-  m_Layer: 0
-  m_Name: ScoreConte -GameOver-
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8474760381563889323
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 839281011554715288}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 8474760379932437306}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8076277867804523731
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 839281011554715288}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 646b602e119e7654da4395c8fa06ca01, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _text: {fileID: 0}
-  _changeSpeed: 2
-  _value: 0
 --- !u!1 &893483503850418182
 GameObject:
   m_ObjectHideFlags: 0
@@ -931,7 +885,7 @@ RectTransform:
   - {fileID: 8591964651878100779}
   - {fileID: 4195105359283216348}
   m_Father: {fileID: 8474760379932437306}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1131,7 +1085,7 @@ RectTransform:
   m_Children:
   - {fileID: 9044726655673097361}
   m_Father: {fileID: 8474760379932437306}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -1255,7 +1209,6 @@ RectTransform:
   - {fileID: 8474760380897311250}
   - {fileID: 8474760380955059994}
   - {fileID: 2971891627470576300}
-  - {fileID: 8474760381563889323}
   - {fileID: 8474760379790379669}
   - {fileID: 8474760379832815133}
   - {fileID: 8474760380825408738}
@@ -1360,7 +1313,7 @@ RectTransform:
   m_Children:
   - {fileID: 8529822945707238391}
   m_Father: {fileID: 8474760379932437306}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
