@@ -181,11 +181,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 15
   _speed: 10
+  _direciton: {x: 0, y: 0}
   _bulletMoveMethod: 1
   _opponentTag: Enemy
   _gameZoneTag: Finish
   _parentTag: Parent
-  _followTime: 0.5
+  _followTime: 1
 --- !u!1 &4940366701055704017
 GameObject:
   m_ObjectHideFlags: 0
@@ -322,8 +323,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 15
   _speed: 10
+  _direciton: {x: 0, y: 0}
   _bulletMoveMethod: 1
   _opponentTag: Enemy
   _gameZoneTag: Finish
   _parentTag: Parent
-  _followTime: 0.5
+  _followTime: 1

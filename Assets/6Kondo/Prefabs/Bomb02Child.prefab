@@ -134,12 +134,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 729fb0258218e3044a46f5fe703f5252, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 15
+  _damage: 50
   _speed: 5
+  _direciton: {x: 0, y: 1}
   _bulletMoveMethod: 1
   _opponentTag: Enemy
   _gameZoneTag: Finish
   _parentTag: Parent
-  _followStartTime: 1
-  _followFnishTime: 3
   _enemyBulletTag: EnemyBullet

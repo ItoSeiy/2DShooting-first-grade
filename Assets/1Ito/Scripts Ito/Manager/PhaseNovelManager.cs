@@ -2,6 +2,7 @@ using Overdose.Novel;
 using System.Linq;
 using UnityEngine;
 using System.Threading.Tasks;
+using System;
 
 public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
 {
@@ -82,6 +83,8 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
     [SerializeField] 
     StageParam _stageParam;
 
+    public event Action OnBoss;
+
     private int _phaseIndex = default;
     private int _loopCount = default;
     private bool _isNovelFirstTime = true;
@@ -139,7 +142,6 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
         }
         else
         {
-
             AllBulletEnemyDestroy();
             //UIƒLƒƒƒ“ƒoƒX
             _uiCanvas.gameObject.SetActive(false);
@@ -233,6 +235,7 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
                     _uiCanvas.gameObject.SetActive(true);
                     _novelPhase = NovelPhase.None;
                     Instantiate(_stageParam.PhaseParms[_phaseIndex].Prefab).transform.position = _bossGeneretePos.position;
+                    OnBoss?.Invoke();
                 }
                 break;
 

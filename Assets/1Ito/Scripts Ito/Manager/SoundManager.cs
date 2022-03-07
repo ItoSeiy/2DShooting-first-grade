@@ -1,12 +1,26 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 /// <summary>
 /// サウンドを管理するスクリプト
 /// </summary>
 public class SoundManager : SingletonMonoBehaviour<SoundManager>
 {
-    [SerializeField] SoundPoolParams _soundObjParam = default;
+    [SerializeField]
+    SoundPoolParams _soundObjParam = default;
+
+    [SerializeField]
+    [Header("BGMを流すAudioSource")]
+    AudioSource _bgmAudioSource;
+    [SerializeField]
+    [Header("通常BGM")]
+    AudioClip _normalBGM;
+    [SerializeField]
+    [Header("ボスBGM")]
+    AudioClip _bossBGM;
+    [SerializeField]
+    float _bgmFadeTime = 2f;
 
     List<Pool> _pool = new List<Pool>();
 
@@ -19,6 +33,26 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
         CreatePool();
         //デバッグ用
         //_pool.ForEach(x => Debug.Log($"オブジェクト名:{x.Object.name}種類: {x.Type}"));
+    }
+
+    void Start()
+    {
+        _bgmAudioSource.PlayOneShot(_normalBGM);
+
+        PhaseNovelManager.Instance.OnBoss += () => _bgmAudioSource.PlayOneShot(_bossBGM);
+
+        GameManager.Instance.OnGameOver += () => FadeBgm(0, _bgmFadeTime);
+        GameManager.Instance.OnStageClear += () => FadeBgm(0, _bgmFadeTime);
+    }
+
+    /// <summary>
+    /// 現在流れているBGMのフェードを行う
+    /// </summary>
+    /// <param name="targetVol">設定したい音量</param>
+    /// <param name="fadeTime">どのくらい時間をかけるか</param>
+    public void FadeBgm(float targetVol, float fadeTime)
+    {
+        _bgmAudioSource.DOFade(targetVol, fadeTime);
     }
 
     /// <summary>
@@ -101,7 +135,10 @@ public enum SoundType
     Click07,
     Click08,
     Click09,
-    Click10
+    Click10,
+    Novel,
+    ScoreCount,
+    EnemyKilled
 }
 
 [System.Serializable]

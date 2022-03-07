@@ -61,6 +61,7 @@ public abstract class BulletBese : MonoBehaviour, IPauseable
         {
             if (PauseManager.Instance.PauseFlg == true)
             {
+                Debug.Log(PauseManager.Instance.PauseFlg + "ポーズ");
                 _rb.velocity = Vector2.zero;
                 return;
             }

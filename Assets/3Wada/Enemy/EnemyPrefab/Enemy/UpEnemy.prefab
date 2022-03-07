@@ -486,6 +486,7 @@ MonoBehaviour:
   - {fileID: 1251857373497343413}
   _muzzleTransform: 0
   _bullet: {fileID: 8958319174202463406, guid: ec923d83ccd7868489b880d9313e6c9b, type: 3}
+  _bulletType: 0
   _attackIntervelChange: 0
   _randomIntervalMax: 1
   _randomIntervalMin: 0.1
@@ -498,7 +499,7 @@ MonoBehaviour:
   _stopcount: 1.2
   _attackMode: 0
   _getDamageSFX: 0
-  _onDestroySFX: 0
+  _onDestroySFX: 20
 --- !u!1 &1251857375332982285
 GameObject:
   m_ObjectHideFlags: 0
