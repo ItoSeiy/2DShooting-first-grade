@@ -5,8 +5,7 @@ using UnityEngine;
 public class SuperAttackPrison : BossAttackAction
 {
     /// <summary>•ûŒü</summary>
-    Vector3 _dir;
-    
+    Vector3 _dir;  
     /// <summary>‰E‘¤‚Ì”ÍˆÍ</summary>
     bool _rightRange;
     /// <summary>¶‘¤‚Ì”ÍˆÍ</summary>
