@@ -83,7 +83,12 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
     [SerializeField] 
     StageParam _stageParam;
 
+    /// <summary>ボス生成される時に呼びだされるデリゲート/// </summary>
     public event Action OnBoss;
+    /// <summary>戦闘前ノベルが再生される際に呼び出されるデリゲート</summary>
+    public event Action OnBeforeNovel;
+    /// <summary>戦闘後(勝利敗北も含む)のノベルが再生されるときに呼び出されるデリゲート</summary>
+    public event Action OnAfterNovel;
 
     private int _phaseIndex = default;
     private int _loopCount = default;
@@ -223,6 +228,8 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
                     //ノベルのデータのロードが終わったら
                     _novelCanvas.gameObject.SetActive(true);
                     _uiCanvas.gameObject.SetActive(false);
+                    //ノベル中のデリゲート呼び出し
+                    OnBeforeNovel?.Invoke();
                 }
 
                 if(_beforeNovelRenderer.IsNovelFinish)
@@ -235,6 +242,7 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
                     _uiCanvas.gameObject.SetActive(true);
                     _novelPhase = NovelPhase.None;
                     Instantiate(_stageParam.PhaseParms[_phaseIndex].Prefab).transform.position = _bossGeneretePos.position;
+                    //ボス中のデリゲート呼び出し
                     OnBoss?.Invoke();
                 }
                 break;
@@ -252,6 +260,8 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
                     _novelCanvas.gameObject.SetActive(true);
                     _uiCanvas.gameObject.SetActive(false);
                     AllBulletEnemyDestroy();
+                    //戦闘後デリゲート呼び出し
+                    OnAfterNovel?.Invoke();
                 }
 
                 if(_winNovelRenderer.IsNovelFinish)
@@ -278,6 +288,8 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
                     _novelCanvas.gameObject.SetActive(true);
                     _uiCanvas.gameObject.SetActive(false);
                     AllBulletEnemyDestroy();
+                    //戦闘後デリゲート呼び出し
+                    OnAfterNovel?.Invoke();
                 }
 
                 if(_loseNovelRenderer.IsNovelFinish)
