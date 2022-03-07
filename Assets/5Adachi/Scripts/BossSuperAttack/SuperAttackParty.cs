@@ -61,7 +61,7 @@ public class SuperAttackParty : BossAttackAction
     const float MAXIMUM_ROTATION_RANGE = 360f;
 
     public override System.Action ActinoEnd { get; set; }
- 
+
     public override void Enter(BossController contlloer)
     {
         contlloer.ItemDrop();
@@ -92,10 +92,7 @@ public class SuperAttackParty : BossAttackAction
     /// <summary>ランダムな方向に跳ね返る弾を発射する必殺技</summary>
     IEnumerator Party(BossController controller)
     {
-        if (_timer >= _introductionStopTime)
-        {
-            _Introduction.gameObject.SetActive(false);
-        }
+
 
         _timer = RESET_TIME;//タイムリセット
 
@@ -149,6 +146,10 @@ public class SuperAttackParty : BossAttackAction
         //必殺技発動
         while (true)
         {
+            if (_timer >= _introductionStopTime)
+            {
+                _Introduction.gameObject.SetActive(false);
+            }
             if (_attackCount >= _maxAttackCount)
             {
                 //攻撃時の音
@@ -179,5 +180,4 @@ public class SuperAttackParty : BossAttackAction
         }
         yield break;//終了
     }
-
 }
