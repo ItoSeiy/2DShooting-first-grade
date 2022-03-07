@@ -1421,6 +1421,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _novelWaitTime: 8
+  _gameOverUIWaitTime: 1000
   _beforeGSSReader: {fileID: 4710857688458052429}
   _beforeNovelRenderer: {fileID: 4710857688458052428}
   _winGSSReader: {fileID: 5262463426296239620}
@@ -2115,7 +2116,8 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8076277867804523731, guid: bdae33a36b0503948ab2185b1234d664, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: bdae33a36b0503948ab2185b1234d664, type: 3}
 --- !u!224 &7111011908835223330 stripped
 RectTransform:

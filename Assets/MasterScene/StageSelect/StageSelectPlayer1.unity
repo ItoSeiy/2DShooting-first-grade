@@ -137,6 +137,7 @@ GameObject:
   - component: {fileID: 240392902}
   - component: {fileID: 240392901}
   - component: {fileID: 240392900}
+  - component: {fileID: 240392905}
   m_Layer: 5
   m_Name: Stage5SelectButton
   m_TagString: Untagged
@@ -237,8 +238,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 240392900}
-        m_TargetAssemblyTypeName: SceneLoadForString, Assembly-CSharp
-        m_MethodName: LoadScene
+        m_TargetAssemblyTypeName: SceneLoadCaller, Assembly-CSharp
+        m_MethodName: LoadSceneString
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -248,9 +249,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 379852195}
-        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-        m_MethodName: Play
+      - m_Target: {fileID: 240392905}
+        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
+        m_MethodName: Click
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -299,6 +300,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 240392898}
   m_CullTransparentMesh: 1
+--- !u!114 &240392905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 240392898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isDelete: 0
+  _isDelayMode: 0
+  _delay: 1500
+  _isFirstSelectButton: 0
+  _callNextButtons: []
+  _deleteButtons: []
+  _callPanel: []
+  _deletePanel: []
+  _animStateName: 
+  _onClickSounds: 11000000
 --- !u!1 &344518103
 GameObject:
   m_ObjectHideFlags: 0
@@ -394,133 +417,6 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
---- !u!1 &379852194
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 379852196}
-  - component: {fileID: 379852195}
-  m_Layer: 0
-  m_Name: Audio Source
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!82 &379852195
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 379852194}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: ae1ae6693115e894395cea7951aea255, type: 3}
-  m_PlayOnAwake: 0
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
---- !u!4 &379852196
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 379852194}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.40099546, y: -0.0068814196, z: 575.16254}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &708574002
 GameObject:
   m_ObjectHideFlags: 0
@@ -535,6 +431,7 @@ GameObject:
   - component: {fileID: 708574007}
   - component: {fileID: 708574006}
   - component: {fileID: 708574004}
+  - component: {fileID: 708574009}
   m_Layer: 5
   m_Name: Stage1SelectButton
   m_TagString: Untagged
@@ -666,8 +563,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 708574004}
-        m_TargetAssemblyTypeName: SceneLoadForString, Assembly-CSharp
-        m_MethodName: LoadScene
+        m_TargetAssemblyTypeName: SceneLoadCaller, Assembly-CSharp
+        m_MethodName: LoadSceneString
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -677,9 +574,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 379852195}
-        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-        m_MethodName: Play
+      - m_Target: {fileID: 708574009}
+        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
+        m_MethodName: Click
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -697,6 +594,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 708574002}
   m_CullTransparentMesh: 1
+--- !u!114 &708574009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 708574002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isDelete: 0
+  _isDelayMode: 0
+  _delay: 1500
+  _isFirstSelectButton: 0
+  _callNextButtons: []
+  _deleteButtons: []
+  _callPanel: []
+  _deletePanel: []
+  _animStateName: 
+  _onClickSounds: 11000000
 --- !u!1 &749824695
 GameObject:
   m_ObjectHideFlags: 0
@@ -711,6 +630,7 @@ GameObject:
   - component: {fileID: 749824699}
   - component: {fileID: 749824698}
   - component: {fileID: 749824697}
+  - component: {fileID: 749824702}
   m_Layer: 5
   m_Name: Stage3SelectButton
   m_TagString: Untagged
@@ -811,8 +731,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 749824697}
-        m_TargetAssemblyTypeName: SceneLoadForString, Assembly-CSharp
-        m_MethodName: LoadScene
+        m_TargetAssemblyTypeName: SceneLoadCaller, Assembly-CSharp
+        m_MethodName: LoadSceneString
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -822,9 +742,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 379852195}
-        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-        m_MethodName: Play
+      - m_Target: {fileID: 749824702}
+        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
+        m_MethodName: Click
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -873,6 +793,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 749824695}
   m_CullTransparentMesh: 1
+--- !u!114 &749824702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 749824695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isDelete: 0
+  _isDelayMode: 0
+  _delay: 1500
+  _isFirstSelectButton: 0
+  _callNextButtons: []
+  _deleteButtons: []
+  _callPanel: []
+  _deletePanel: []
+  _animStateName: 
+  _onClickSounds: 11000000
 --- !u!1 &810004443
 GameObject:
   m_ObjectHideFlags: 0
@@ -1129,6 +1071,7 @@ GameObject:
   - component: {fileID: 1041058802}
   - component: {fileID: 1041058801}
   - component: {fileID: 1041058800}
+  - component: {fileID: 1041058804}
   m_Layer: 0
   m_Name: KeybordTutorialButton
   m_TagString: Untagged
@@ -1214,8 +1157,20 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1041058800}
-        m_TargetAssemblyTypeName: SceneLoadForString, Assembly-CSharp
-        m_MethodName: LoadScene
+        m_TargetAssemblyTypeName: SceneLoadCaller, Assembly-CSharp
+        m_MethodName: LoadSceneString
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1041058804}
+        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
+        m_MethodName: Click
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1263,6 +1218,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1041058798}
   m_CullTransparentMesh: 1
+--- !u!114 &1041058804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1041058798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isDelete: 0
+  _isDelayMode: 0
+  _delay: 1500
+  _isFirstSelectButton: 0
+  _callNextButtons: []
+  _deleteButtons: []
+  _callPanel: []
+  _deletePanel: []
+  _animStateName: 
+  _onClickSounds: 11000000
 --- !u!1 &1102707280
 GameObject:
   m_ObjectHideFlags: 0
@@ -1277,6 +1254,7 @@ GameObject:
   - component: {fileID: 1102707284}
   - component: {fileID: 1102707283}
   - component: {fileID: 1102707282}
+  - component: {fileID: 1102707287}
   m_Layer: 5
   m_Name: Stage4SelectButton
   m_TagString: Untagged
@@ -1377,8 +1355,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1102707282}
-        m_TargetAssemblyTypeName: SceneLoadForString, Assembly-CSharp
-        m_MethodName: LoadScene
+        m_TargetAssemblyTypeName: SceneLoadCaller, Assembly-CSharp
+        m_MethodName: LoadSceneString
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1388,9 +1366,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 379852195}
-        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-        m_MethodName: Play
+      - m_Target: {fileID: 1102707287}
+        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
+        m_MethodName: Click
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1439,6 +1417,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1102707280}
   m_CullTransparentMesh: 1
+--- !u!114 &1102707287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1102707280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isDelete: 0
+  _isDelayMode: 0
+  _delay: 1500
+  _isFirstSelectButton: 0
+  _callNextButtons: []
+  _deleteButtons: []
+  _callPanel: []
+  _deletePanel: []
+  _animStateName: 
+  _onClickSounds: 11000000
 --- !u!1 &1139904099
 GameObject:
   m_ObjectHideFlags: 0
@@ -1629,6 +1629,75 @@ MonoBehaviour:
   m_EffectColor: {r: 1, g: 1, b: 1, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
+--- !u!1001 &1175193334
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 263362387910340565, guid: af22813eedcee4145872bbe826b1cd5a,
+        type: 3}
+      propertyPath: m_Name
+      value: SoundManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 263362387910340571, guid: af22813eedcee4145872bbe826b1cd5a,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 263362387910340571, guid: af22813eedcee4145872bbe826b1cd5a,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 263362387910340571, guid: af22813eedcee4145872bbe826b1cd5a,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 263362387910340571, guid: af22813eedcee4145872bbe826b1cd5a,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 263362387910340571, guid: af22813eedcee4145872bbe826b1cd5a,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 263362387910340571, guid: af22813eedcee4145872bbe826b1cd5a,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 263362387910340571, guid: af22813eedcee4145872bbe826b1cd5a,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 263362387910340571, guid: af22813eedcee4145872bbe826b1cd5a,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 263362387910340571, guid: af22813eedcee4145872bbe826b1cd5a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 263362387910340571, guid: af22813eedcee4145872bbe826b1cd5a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 263362387910340571, guid: af22813eedcee4145872bbe826b1cd5a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: af22813eedcee4145872bbe826b1cd5a, type: 3}
 --- !u!1 &1211019908
 GameObject:
   m_ObjectHideFlags: 0
@@ -1744,8 +1813,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1211019910}
-        m_TargetAssemblyTypeName: SceneLoadForString, Assembly-CSharp
-        m_MethodName: LoadScene
+        m_TargetAssemblyTypeName: SceneLoadCaller, Assembly-CSharp
+        m_MethodName: LoadSceneString
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1755,9 +1824,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 379852195}
-        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-        m_MethodName: Play
+      - m_Target: {fileID: 1211019915}
+        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
+        m_MethodName: Click
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1819,7 +1888,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isDelete: 0
-  _isDelayMode: 1
+  _isDelayMode: 0
   _delay: 1500
   _isFirstSelectButton: 1
   _callNextButtons: []
@@ -1827,6 +1896,7 @@ MonoBehaviour:
   _callPanel: []
   _deletePanel: []
   _animStateName: 
+  _onClickSounds: 11000000
 --- !u!1 &1335214657
 GameObject:
   m_ObjectHideFlags: 0
@@ -2046,6 +2116,7 @@ GameObject:
   - component: {fileID: 1436540610}
   - component: {fileID: 1436540609}
   - component: {fileID: 1436540608}
+  - component: {fileID: 1436540612}
   m_Layer: 0
   m_Name: ControllerTutorialButton
   m_TagString: Untagged
@@ -2131,8 +2202,20 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1436540608}
-        m_TargetAssemblyTypeName: SceneLoadForString, Assembly-CSharp
-        m_MethodName: LoadScene
+        m_TargetAssemblyTypeName: SceneLoadCaller, Assembly-CSharp
+        m_MethodName: LoadSceneString
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1436540612}
+        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
+        m_MethodName: Click
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2180,6 +2263,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1436540606}
   m_CullTransparentMesh: 1
+--- !u!114 &1436540612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1436540606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isDelete: 0
+  _isDelayMode: 0
+  _delay: 1500
+  _isFirstSelectButton: 0
+  _callNextButtons: []
+  _deleteButtons: []
+  _callPanel: []
+  _deletePanel: []
+  _animStateName: 
+  _onClickSounds: 11000000
 --- !u!1 &1514549977
 GameObject:
   m_ObjectHideFlags: 0
@@ -2194,6 +2299,7 @@ GameObject:
   - component: {fileID: 1514549981}
   - component: {fileID: 1514549980}
   - component: {fileID: 1514549979}
+  - component: {fileID: 1514549984}
   m_Layer: 5
   m_Name: Stage2SelectButton
   m_TagString: Untagged
@@ -2294,8 +2400,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1514549979}
-        m_TargetAssemblyTypeName: SceneLoadForString, Assembly-CSharp
-        m_MethodName: LoadScene
+        m_TargetAssemblyTypeName: SceneLoadCaller, Assembly-CSharp
+        m_MethodName: LoadSceneString
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2305,9 +2411,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 379852195}
-        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-        m_MethodName: Play
+      - m_Target: {fileID: 1514549984}
+        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
+        m_MethodName: Click
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2356,6 +2462,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1514549977}
   m_CullTransparentMesh: 1
+--- !u!114 &1514549984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1514549977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isDelete: 0
+  _isDelayMode: 0
+  _delay: 1500
+  _isFirstSelectButton: 0
+  _callNextButtons: []
+  _deleteButtons: []
+  _callPanel: []
+  _deletePanel: []
+  _animStateName: 
+  _onClickSounds: 11000000
 --- !u!1 &1727963869
 GameObject:
   m_ObjectHideFlags: 0

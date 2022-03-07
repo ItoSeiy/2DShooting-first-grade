@@ -28,6 +28,7 @@ public class PlayerBase : MonoBehaviour, IPauseable
     [SerializeField, Header("リスポーンするポジション")] Transform _playerRespawn = default;
     [SerializeField, Header("弾を発射するポジション")] protected Transform _muzzle = default;
 
+    [SerializeField, Header("残基が無くなってから自分が消えるまでの時間(ミリ秒)")] int _onDestroyDelay = 1500;
     [SerializeField, Header("精密操作時の発射する間隔(ミリ秒)")] int _superAttackDelay = 200;
     [SerializeField, Header("発射する間隔(ミリ秒)")] int _attackDelay = 200;
     [SerializeField, Header("ボムのクールタイム（ミリ秒）")] int _bombCoolTime = default;
@@ -72,6 +73,7 @@ public class PlayerBase : MonoBehaviour, IPauseable
 
     [SerializeField, Header("パワーアイテムの数がカンストしたとき（レベルマックスのとき）の演出")] GameObject _fullPowerModeEffect = default;
     [SerializeField, Header("Invincibleモードのときの演出")] GameObject _invincibleModeEffect = default;
+    [SerializeField, Header("残機がゼロの時の演出")] GameObject _playerDeathEffect = default;
 
     [SerializeField, Header("パワーアイテムのデスペナルティ")] int _powerDeathPenalty = -50;
 
@@ -86,6 +88,7 @@ public class PlayerBase : MonoBehaviour, IPauseable
     [SerializeField, Header("ボムアイテム獲得時の音")] string _getBombAudio = "BombGet";
     [SerializeField, Header("レベルアップ時の音")] public readonly string _levelUpAudio = "LevelUp";
     [SerializeField, Header("Invincibleモードの時の音")] string _invincibleModeAudio = "Invincible";
+    [SerializeField, Header("残機がゼロになった時の音")] string _playerGameOverAudio = "Death";
 
     protected const int _level1 = 1;
     protected const int _level2 = 2;
@@ -337,20 +340,23 @@ public class PlayerBase : MonoBehaviour, IPauseable
             _cmvcam1.Priority = -1;
             _isCharge = false;
             _isAttackMode = false;
-            Play(_playerDestroyAudio);
             GameManager.Instance.ResidueChange(DEFAULTCOUNTDOWN);
             _playerResidue = GameManager.Instance.PlayerResidueCount;
 
             if (_playerResidue >= DEFAULTCOUNTUP)//残機が残っている場合はリスポーンを行う
             {
+                Play(_playerDestroyAudio);
                 Respawn();
                 Debug.Log("残り残機" + _playerResidue);
             }
             else//残機が0であればゲームオーバー処理を呼び出す
             {
                 Debug.LogError("おめぇーの残機ねえから！" + _playerResidue);
+                Play(_playerGameOverAudio);
+                _playerDeathEffect.SetActive(true);
                 GameManager.Instance.GameOver();
-                gameObject.SetActive(false);
+                _sp.enabled = false;
+                _canMove = false;
             }
         }
 
@@ -534,13 +540,17 @@ public class PlayerBase : MonoBehaviour, IPauseable
 
     void DeathPenalty()
     {
-        GameManager.Instance.PlayerPowerItemCountChange(_powerDeathPenalty);
-        _playerPower = GameManager.Instance.PlayerPowerItemCount;
-        if (_playerPower < DEFAULT)
+        if(GameManager.Instance.PlayerPowerItemCount + _powerDeathPenalty < 0)
         {
-            GameManager.Instance.PlayerPowerItemCountChange(_playerPower * DEFAULTCOUNTDOWN);
-            _playerPower = GameManager.Instance.PlayerPowerItemCount;
+            GameManager.Instance.PlayerPowerItemCountChange(0 - GameManager.Instance.PlayerPowerItemCount);
         }
+        else
+        {
+            Debug.LogError("kintama");
+            GameManager.Instance.PlayerPowerItemCountChange(_powerDeathPenalty);
+        }
+
+        _playerPower = GameManager.Instance.PlayerPowerItemCount;
         _isPowerMax = false;
     }
     void IPauseable.PauseResume(bool isPause)
