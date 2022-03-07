@@ -111,6 +111,8 @@ public class PlayerBase : MonoBehaviour, IPauseable
     protected int _playerPower = default;//プレイヤーのパワーの数を入れておく変数
     protected int _invincibleObjectCount = default;//一定数集めると無敵モードになるアイテムの数を入れておく変数
 
+    public bool IsGodMode { get { return _isGodMode; } set { _isGodMode = value; } }
+
     /// <summary>連続で弾を撃てないようにするフラグ</summary>
     bool _isBulletStop = default;
     /// <summary>精密操作時のフラグ</summary>
