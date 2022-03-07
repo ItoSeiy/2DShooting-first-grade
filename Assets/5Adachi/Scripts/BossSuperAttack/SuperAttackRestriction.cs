@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class SuperAttackRestriction: BossAttackAction
 {
@@ -21,6 +22,8 @@ public class SuperAttackRestriction: BossAttackAction
     float _saveDamageTakenRation = 1f;
     /// <summary>縦方向</summary>
     float _verticalDir = 0f;
+    /// <summary>修正値</summary>
+    float _rotOffset = 0f;
     /// <summary>弾の見た目の種類</summary>
     int _pattern = 0;
     /// <summary>バレットを発射するポジション</summary>
@@ -43,10 +46,12 @@ public class SuperAttackRestriction: BossAttackAction
     [SerializeField, Header("この行動から出る時間")] float _endingTime = 30f;
     /// <summary>被ダメージの割合</summary>
     [SerializeField, Header("被ダメージの割合"), Range(0, 1)] float _damageTakenRationRange = 0.5f;
+    /// <summary>ボスの必殺技のタイムライン</summary>
+    [SerializeField, Header("ボスの必殺技のタイムライン")] PlayableDirector _Introduction = null;
     /// <summary>攻撃時の音</summary>
     [SerializeField, Header("攻撃時の音")] SoundType _superAttack;
-    /// <summary>修正値</summary>
-    float _rotOffset = 0f;
+    /// <summary>タイムラインを消す時間</summary>
+    [SerializeField, Header("タイムラインを消す時間")] float _introductionStopTime = 1f;
     /// <summary>修正値</summary>
     const float PLAYER_POS_OFFSET = 0.7f;
     /// <summary>判定回数の制限</summary>
@@ -54,7 +59,7 @@ public class SuperAttackRestriction: BossAttackAction
     /// <summary>リセットタイマー</summary>
     const float RESET_TIME = 0f;
     /// <summary>逆回転時のマズルの修正値</summary>
-    const float MUZZLE_ROT_OFFSET = 0.1f;
+    const float MUZZLE_ROT_OFFSET = 2f;
     /// <summary>半分の時間</summary>
     const float HALF_TIME = 2;
     /// <summary>最小の回転値</summary>
@@ -99,7 +104,7 @@ public class SuperAttackRestriction: BossAttackAction
     {
         _timer = RESET_TIME;//タイムリセット
 
-        //必殺を放つときはBOSSは放つ前にｘを0、Ｙを2をの位置(笑)に、移動する
+        //必殺を放つときはBOSSは放つ前にｘを0、Ｙを2の位置に、移動する
         while (true)
         {
             yield return new WaitForSeconds(JUDGMENT_TIME);//判定回数の制限
@@ -141,9 +146,19 @@ public class SuperAttackRestriction: BossAttackAction
 
         _timer = RESET_TIME;//タイムリセット
 
+        if (_Introduction)
+        {
+            _Introduction.gameObject.SetActive(true);
+        }
+
         //必殺技発動
         while (true)
         {
+            if (_timer >= _introductionStopTime)
+            {
+                _Introduction.gameObject.SetActive(false);
+            }
+
             //攻撃時のサウンド
             SoundManager.Instance.UseSound(_superAttack);
 
@@ -158,8 +173,8 @@ public class SuperAttackRestriction: BossAttackAction
                     Vector3 localAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
                     localAngle.z = -rot;// 角度を設定
                     _muzzles[0].localEulerAngles = localAngle;//回転する
-                                       
-                    //弾をマズルの向きに合わせて弾を発射（仮でBombにしてます）
+
+                    //弾をマズルの向きに合わせて弾を発射
                     ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet[_pattern]).transform.rotation = _muzzles[0].rotation;
                 }
             }
@@ -174,7 +189,7 @@ public class SuperAttackRestriction: BossAttackAction
                     Vector3 localAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
                     localAngle.z = angle;// 角度を設定
                     _muzzles[0].localEulerAngles = localAngle;//回転する
-                                       
+
                     //弾をマズルの向きに合わせて弾を発射
                     ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet[_pattern]).transform.rotation = _muzzles[0].rotation;
                 }

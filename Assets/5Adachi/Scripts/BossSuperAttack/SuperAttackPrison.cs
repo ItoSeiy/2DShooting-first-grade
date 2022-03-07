@@ -59,6 +59,8 @@ public class SuperAttackPrison : BossAttackAction
     [SerializeField, Header("ボスの必殺技のタイムライン")] PlayableDirector _Introduction = null;
     /// <summary>攻撃時の音</summary>
     [SerializeField, Header("攻撃時の音")] SoundType _superAttack;
+    /// <summary>タイムラインを消す時間</summary>
+    [SerializeField,Header("タイムラインを消す時間")]　float _introductionStopTime = 1f;
     /// <summary>修正値</summary>
     const float PLAYER_POS_OFFSET = 0.5f;
     /// <summary>判定回数の制限</summary>
@@ -143,6 +145,7 @@ public class SuperAttackPrison : BossAttackAction
         _timer = RESET_TIME;//タイムリセット
         _secondPattern = Random.Range(0, _bullet.Length);
         _thirdPattern = Random.Range(0, _bullet.Length);
+
         if(_Introduction)
         {
             _Introduction.gameObject.SetActive(true);
@@ -155,10 +158,11 @@ public class SuperAttackPrison : BossAttackAction
             //攻撃時のサウンド
             SoundManager.Instance.UseSound(_superAttack);
 
-            if (_timer >= 1f)
+            if (_timer >= _introductionStopTime)
             {
-                    _Introduction.gameObject.SetActive(false);
+                _Introduction.gameObject.SetActive(false);
             }
+
             //時間になったら回転
             if(_timer >= _timeLimit)//5f
             {

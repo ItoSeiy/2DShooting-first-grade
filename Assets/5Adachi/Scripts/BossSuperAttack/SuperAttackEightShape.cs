@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class SuperAttackEightShape : BossAttackAction
 {
@@ -47,8 +48,12 @@ public class SuperAttackEightShape : BossAttackAction
     [SerializeField, Header("弾の見た目を変える間隔(秒)")] float _switchInterval = 2f;
     /// <summary>被ダメージの割合</summary>
     [SerializeField, Header("被ダメージの割合"), Range(0, 1)] float _damageTakenRationRange = 0.5f;
+    /// <summary>ボスの必殺技のタイムライン</summary>
+    [SerializeField, Header("ボスの必殺技のタイムライン")] PlayableDirector _Introduction = null;
     /// <summary>攻撃時の音</summary>
     [SerializeField, Header("攻撃時の音")] SoundType _superAttack;
+    /// <summary>タイムラインを消す時間</summary>
+    [SerializeField, Header("タイムラインを消す時間")] float _introductionStopTime = 1f;
     /// <summary>修正値</summary>
     const float PLAYER_POS_OFFSET = 0.5f;
     /// <summary>判定回数の制限</summary>
@@ -135,9 +140,19 @@ public class SuperAttackEightShape : BossAttackAction
         //攻撃時のサウンド
         SoundManager.Instance.UseSound(_superAttack);
 
+        if (_Introduction)
+        {
+            _Introduction.gameObject.SetActive(true);
+        }
+
         //必殺技発動
         while (true)
         {
+            if (_timer >= _introductionStopTime)
+            {
+                _Introduction.gameObject.SetActive(false);
+            }
+
             //数秒経つごとに弾の見た目を変える
             if (_timer >= _switchInterval + _switchIntervalOffset)
             {
