@@ -48,7 +48,7 @@ public class SuperAttackParty : BossAttackAction
     /// <summary>音を鳴らすタイミング</summary>
     [SerializeField, Header("音を鳴らすタイミング")] int _maxAttackCount = 5;
     /// <summary>タイムラインを消す時間</summary>
-    [SerializeField, Header("タイムラインを消す時間")] float _introductionStopTime = 1f;
+    [SerializeField, Header("タイムラインを消す時間")] float _introductionStopTime = 3f;
     /// <summary>修正値</summary>
     const float PLAYER_POS_OFFSET = 0.5f;
     /// <summary>判定回数の制限</summary>
@@ -146,7 +146,7 @@ public class SuperAttackParty : BossAttackAction
         //必殺技発動
         while (true)
         {
-            if (_timer >= _introductionStopTime)
+            if (_timer >= 3f)
             {
                 _Introduction.gameObject.SetActive(false);
             }

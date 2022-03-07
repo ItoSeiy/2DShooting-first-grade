@@ -53,7 +53,7 @@ public class SuperAttackEightShape : BossAttackAction
     /// <summary>攻撃時の音</summary>
     [SerializeField, Header("攻撃時の音")] SoundType _superAttack;
     /// <summary>タイムラインを消す時間</summary>
-    [SerializeField, Header("タイムラインを消す時間")] float _introductionStopTime = 1f;
+    [SerializeField, Header("タイムラインを消す時間")] float _introductionStopTime = 3f;
     /// <summary>修正値</summary>
     const float PLAYER_POS_OFFSET = 0.5f;
     /// <summary>判定回数の制限</summary>
@@ -148,7 +148,7 @@ public class SuperAttackEightShape : BossAttackAction
         //必殺技発動
         while (true)
         {
-            if (_timer >= _introductionStopTime)
+            if (_timer >= 3f)
             {
                 _Introduction.gameObject.SetActive(false);
             }
