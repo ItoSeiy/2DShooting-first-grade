@@ -24,19 +24,17 @@ public class TextValueChange : MonoBehaviour
         {
             case Value.Score:
                 await Task.Delay(_scoreTextChangeDelay);
+                var soundObj = SoundManager.Instance.UseSound(_onScoreCountSoundType);
                 DOTween.To(() => _tempScore,
                     x => _tempScore = x,
                     GameManager.Instance.PlayerScore,
                     _changeSpeed)
-                    .OnUpdate(() =>
-                    {
-                        _text.text = _tempScore.ToString("00000000");
-                        SoundManager.Instance.UseSound(_onScoreCountSoundType);
-                    })
+                    .OnUpdate(() => _text.text = _tempScore.ToString("00000000"))
                     .OnComplete(() =>
                     {
                         _text.text = GameManager.Instance.PlayerScore.ToString("00000000");
                         GameManager.Instance.InitValue();
+                        soundObj.SetActive(false);
                     });
                 break;
 
