@@ -195,7 +195,6 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         _playerPowerItemCount += itemCount;
         UIManager.Instance.UIPowerCountChange(itemCount);
         PlayerLevelSet();
-
     }
 
 

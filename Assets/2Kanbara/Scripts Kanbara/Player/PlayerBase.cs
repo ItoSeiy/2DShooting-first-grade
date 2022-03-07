@@ -28,6 +28,7 @@ public class PlayerBase : MonoBehaviour, IPauseable
     [SerializeField, Header("リスポーンするポジション")] Transform _playerRespawn = default;
     [SerializeField, Header("弾を発射するポジション")] protected Transform _muzzle = default;
 
+    [SerializeField, Header("残基が無くなってから自分が消えるまでの時間(ミリ秒)")] int _onDestroyDelay = 1500;
     [SerializeField, Header("精密操作時の発射する間隔(ミリ秒)")] int _superAttackDelay = 200;
     [SerializeField, Header("発射する間隔(ミリ秒)")] int _attackDelay = 200;
     [SerializeField, Header("ボムのクールタイム（ミリ秒）")] int _bombCoolTime = default;
@@ -350,7 +351,8 @@ public class PlayerBase : MonoBehaviour, IPauseable
             {
                 Debug.LogError("おめぇーの残機ねえから！" + _playerResidue);
                 GameManager.Instance.GameOver();
-                gameObject.SetActive(false);
+                _sp.enabled = false;
+                _isAttackMode = false;
             }
         }
 
@@ -534,13 +536,17 @@ public class PlayerBase : MonoBehaviour, IPauseable
 
     void DeathPenalty()
     {
-        GameManager.Instance.PlayerPowerItemCountChange(_powerDeathPenalty);
-        _playerPower = GameManager.Instance.PlayerPowerItemCount;
-        if (_playerPower < DEFAULT)
+        if(GameManager.Instance.PlayerPowerItemCount + _powerDeathPenalty < 0)
         {
-            GameManager.Instance.PlayerPowerItemCountChange(_playerPower * DEFAULTCOUNTDOWN);
-            _playerPower = GameManager.Instance.PlayerPowerItemCount;
+            GameManager.Instance.PlayerPowerItemCountChange(0 - GameManager.Instance.PlayerPowerItemCount);
         }
+        else
+        {
+            Debug.LogError("kintama");
+            GameManager.Instance.PlayerPowerItemCountChange(_powerDeathPenalty);
+        }
+
+        _playerPower = GameManager.Instance.PlayerPowerItemCount;
         _isPowerMax = false;
     }
     void IPauseable.PauseResume(bool isPause)

@@ -227,9 +227,11 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         int tempPower = int.Parse(_powerItemCountText.text.ToString());
 
         tempPower = Mathf.Min(tempPower + power, _maxPowerItem);
+        
         if(tempPower <= DEFAULT)
         {
-            tempPower = DEFAULT;
+            //“n‚³‚ê‚½’l‚ª•‰‚Ì”‚¾‚Á‚½ê‡‚ÍŒ¸ŽZ‚ð‚µ‚½‚¢‚Æ‚¢‚¤‚±‚Æ‚È‚Ì‚Å•\Ž¦‚·‚é’l‚ð³‚Ì”‚É‚·‚é
+            tempPower *= -1;
         }
         if (tempPower <= _maxPowerItem)
         {

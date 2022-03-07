@@ -11,7 +11,7 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
     float _novelWaitTime = 5f;
 
     [SerializeField, Header("ゲームオーバー後にUI等の表示を待つ時間(ミリ秒)")]
-    int _gameOverWaitTime = 3000;
+    int _gameOverUIWaitTime = 1000;
 
     /// <summary>スプレッドシートシートを読み込むスクリプト(戦闘前)</summary>
     [SerializeField]
@@ -139,12 +139,12 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
         }
         else
         {
-            await Task.Delay(_gameOverWaitTime);
-            //ゲームオーバUI表示
-            _gameOverCanavas.gameObject.SetActive(true);
+            AllBulletEnemyDestroy();
             //UIキャンバス
             _uiCanvas.gameObject.SetActive(false);
-            AllBulletEnemyDestroy();
+            await Task.Delay(_gameOverUIWaitTime);
+            //ゲームオーバUI表示
+            _gameOverCanavas.gameObject.SetActive(true);
         }
     }
 
