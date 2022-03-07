@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class SuperAttackDelayFollow : BossAttackAction
 {
@@ -40,6 +41,12 @@ public class SuperAttackDelayFollow : BossAttackAction
     [SerializeField, Header("発射する弾の設定(ディレイフォロ-)")]  PoolObjectType[] _bullet;
     /// <summary>被ダメージの割合</summary>
     [SerializeField,Header("被ダメージの割合"),Range(0, 1)] float _damageTakenRationRange = 0.5f;
+    /// <summary>ボスの必殺技のタイムライン</summary>
+    [SerializeField, Header("ボスの必殺技のタイムライン")] PlayableDirector _Introduction = null;
+    /// <summary>攻撃時の音</summary>
+    [SerializeField, Header("攻撃時の音")] SoundType _superAttack;
+    /// <summary>タイムラインを消す時間</summary>
+    [SerializeField, Header("タイムラインを消す時間")] float _introductionStopTime = 1f;
     /// <summary>修正値</summary>
     const float PLAYER_POS_OFFSET = 0.5f;
     /// <summary>判定回数の制限</summary>
@@ -131,10 +138,23 @@ public class SuperAttackDelayFollow : BossAttackAction
         
         _timer = 0f;//タイムリセット
 
+        if (_Introduction)
+        {
+            _Introduction.gameObject.SetActive(true);
+        }
+
         //必殺技発動
         while (true)
         {
+            if (_timer >= _introductionStopTime)
+            {
+                _Introduction.gameObject.SetActive(false);
+            }
+
+            //攻撃時のサウンド
+            SoundManager.Instance.UseSound(_superAttack);
             _pattern = Random.Range(0, _bullet.Length);
+
             //下全体に発射
             for (float angle = FIRST_ROTATION; angle <= LAST_ROTATION; angle += _angleInterval)//95度～135度、225度～265度の範囲
             {

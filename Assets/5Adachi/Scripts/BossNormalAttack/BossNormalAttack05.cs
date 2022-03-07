@@ -11,6 +11,8 @@ public class BossNormalAttack05 : BossAttackAction
     float _defaultTimer = 0f;
     /// <summary>タイマー</summary>
     float _timer = 0f;
+    /// <summary>音に必要なタイマー</summary>
+    float _audioTimer = 0f;
     /// <summary>弾の見た目の種類</summary>
     int _pattern = 0;
     /// <summary>完全な通常攻撃になるのが一回しかできないようにする</summary>
@@ -29,6 +31,10 @@ public class BossNormalAttack05 : BossAttackAction
     [SerializeField, Header("この行動から出る時間")] float _endingTime = 20f;
     /// <summary>アイテムを落とす確率</summary>
     [SerializeField, Header("アイテムを落とす確率")] int _probability = 50;
+    /// <summary>攻撃時の音</summary>
+    [SerializeField, Header("攻撃時の音")] SoundType _normalAttack;
+    /// <summary>音を鳴らすタイミング</summary>
+    [SerializeField, Header("音を鳴らすタイミング")] float _audioInterval = 1f;
     /// <summary>完全な通常攻撃になり始める時間</summary>
     const float _perfectTime = 3f;
     /// <summary>最小の回転値</summary>
@@ -43,6 +49,7 @@ public class BossNormalAttack05 : BossAttackAction
     {
         _defaultTimer = 0f;
         _timer = 0f;
+        SoundManager.Instance.UseSound(_normalAttack);
         StartCoroutine(Attack(contlloer));
     }
 
@@ -50,6 +57,7 @@ public class BossNormalAttack05 : BossAttackAction
     {
         _defaultTimer += Time.deltaTime;//タイマー
         _timer += Time.deltaTime;
+        _audioTimer += Time.deltaTime;
 
         if(_timer >= _endingTime)
         {
@@ -90,6 +98,13 @@ public class BossNormalAttack05 : BossAttackAction
                 //弾をマズル2の向きに合わせて弾を発射（親オブジェクトの弾より右側）
                 ObjectPool.Instance.UseObject(_muzzles[2].position, _bullet[_pattern]).transform.rotation = _muzzles[2].rotation;
             }  
+
+            if(_audioTimer >= _audioInterval)
+            {
+                //攻撃時の音
+                SoundManager.Instance.UseSound(_normalAttack);
+                _audioTimer = 0;
+            }
             
             //ターゲット（プレイヤー）の方向を計算
             _dir = (GameManager.Instance.Player.transform.position - _muzzles[0].transform.position);

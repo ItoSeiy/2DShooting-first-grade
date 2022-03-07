@@ -11,6 +11,8 @@ public class BossNormalAttack02 : BossAttackAction
     int _pattern = 0;
     /// <summary>タイマー</summary>
     float _timer = 0f;
+    /// <summary>音に必要なタイマー</summary>
+    float _audioTimer = 0f;
     /// <summary>バレットを発射するポジション</summary>
     [SerializeField, Header("Bulletを発射するポジション")] Transform[] _muzzles = null;
     /// <summary>攻撃頻度</summary>
@@ -23,6 +25,10 @@ public class BossNormalAttack02 : BossAttackAction
     [SerializeField, Header("この行動から出る時間")] float _endingTime = 20f;
     /// <summary>アイテムを落とす確率</summary>
     [SerializeField, Header("アイテムを落とす確率")] int _probability = 50;
+    /// <summary>攻撃時の音</summary>
+    [SerializeField, Header("攻撃時の音")] SoundType _normalAttack;
+    /// <summary>音を鳴らすタイミング</summary>
+    [SerializeField,Header("音を鳴らすタイミング")] float _audioInterval = 2f;
     /// <summary>対項角</summary>
     const float OPPOSITE_ANGLE = 180f;
     
@@ -32,12 +38,15 @@ public class BossNormalAttack02 : BossAttackAction
     public override void Enter(BossController contlloer)
     {
         _timer = 0f;
+        //攻撃時のサウンド
+        SoundManager.Instance.UseSound(_normalAttack);
         StartCoroutine(Attack(contlloer));
     }
 
     public override void ManagedUpdate(BossController contlloer)
     {
         _timer += Time.deltaTime;
+        _audioTimer += Time.deltaTime;
 
         if(_timer >= _endingTime)
         {
@@ -70,6 +79,14 @@ public class BossNormalAttack02 : BossAttackAction
             _dir = (GameManager.Instance.Player.transform.position - _muzzles[0].transform.position);
             //ターゲット（プレイヤー）の方向に回転
             _muzzles[0].transform.rotation = Quaternion.FromToRotation(Vector3.up, _dir);
+
+            if(_audioTimer >= _audioInterval)
+            {         
+                //攻撃時のサウンド
+                SoundManager.Instance.UseSound(_normalAttack);    
+                _audioTimer = 0f;
+            }
+            
 
             //弾をマズル0の向きに合わせて弾を発射
             ObjectPool.Instance.UseObject(_muzzles[0].position, _firstBullet[_pattern]).transform.rotation = _muzzles[0].rotation;
