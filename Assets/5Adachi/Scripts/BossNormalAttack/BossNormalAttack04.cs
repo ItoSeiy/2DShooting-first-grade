@@ -29,8 +29,8 @@ public class BossNormalAttack04 : BossAttackAction
     [SerializeField, Header("アイテムを落とす確率")] int _probability = 50;
     /// <summary>攻撃時の音</summary>
     [SerializeField, Header("攻撃時の音")] SoundType _normalAttack;
-    /// <summary>音を鳴らすタイミング</summary>
-    [SerializeField, Header("音を鳴らすタイミング")] int _attackCount = 0;
+    /// <summary>攻撃回数</summary>
+    [SerializeField, Header("攻撃回数")] int _attackCount = 0;
     /// <summary>音を鳴らすタイミング</summary>
     [SerializeField, Header("音を鳴らすタイミング")] int _maxAttackCount = 2;
     /// <summary>最小の回転値</summary>
