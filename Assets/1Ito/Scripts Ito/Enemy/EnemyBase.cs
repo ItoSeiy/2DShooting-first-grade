@@ -6,18 +6,19 @@ using UnityEngine;
 /// </summary>
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Collider2D))]
-public abstract class EnemyBase : MonoBehaviour, IDamage
+public abstract class EnemyBase : MonoBehaviour, IDamage, IPauseable
 {
     public float Speed => _speed;
     public float EnemyHp => _enemyHp;
     public float DamageTakenRation { get => _damageTakenRatio; set => _damageTakenRatio = value; }
-    public Rigidbody2D Rb { get => _rb; set => _rb = value;}
-    public float AttackInterval  => _attackInterval; 
-    public string PlayerBulletTag  => _playerBulletTag; 
-    public string PlayerTag  => _playerTag;
+    public Rigidbody2D Rb { get => _rb; set => _rb = value; }
+    public float AttackInterval => _attackInterval;
+    public string PlayerBulletTag => _playerBulletTag;
+    public string PlayerTag => _playerTag;
     public string GameZoneTag => _gameZoneTag;
     public SpriteRenderer Sprite => _sprite;
 
+    public bool IsPause { get; private set; } = false;
     [SerializeField, Header("動きのスピード")]
     private float _speed = 5f;
 
@@ -55,6 +56,9 @@ public abstract class EnemyBase : MonoBehaviour, IDamage
     Rigidbody2D _rb = null;
 　　protected bool _destroyAble = false;
 
+    Vector2 _oldVelocity;
+    float _oldTimer;
+
     protected virtual void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -62,6 +66,8 @@ public abstract class EnemyBase : MonoBehaviour, IDamage
 
     protected virtual void Update()
     {
+        if (IsPause) return;
+
         _attackTimer += Time.deltaTime;
 
         if(_attackTimer > _attackInterval)
@@ -69,6 +75,16 @@ public abstract class EnemyBase : MonoBehaviour, IDamage
             Attack();
             _attackTimer = 0;
         }
+    }
+
+    private void OnEnable()
+    {
+        PauseManager.Instance.SetEvent(this);
+    }
+
+    private void OnDisable()
+    {
+        PauseManager.Instance.RemoveEvent(this);
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
@@ -164,6 +180,26 @@ public abstract class EnemyBase : MonoBehaviour, IDamage
     public void ChangeAttackIntervalRandom(float min, float max)
     {
         _attackInterval = Random.Range(min, max);
+    }
+
+    void IPauseable.PauseResume(bool isPause)
+    {
+        if (isPause)
+        {
+            IsPause = true;
+            _oldVelocity = _rb.velocity;
+            _rb.velocity = Vector2.zero;
+            _oldTimer = _attackTimer;
+            _attackTimer = 0;
+            Debug.Log($"{isPause} ポーズ中モブ敵");
+        }
+        else
+        {
+            IsPause = false;
+            _rb.velocity = _oldVelocity;
+            _attackTimer = _oldTimer;
+            Debug.Log($"{isPause} 再開モブ敵");
+        }
     }
 
     /// <summary>

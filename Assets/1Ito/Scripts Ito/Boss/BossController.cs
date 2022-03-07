@@ -14,6 +14,8 @@ public class BossController : EnemyBase
 {
     [SerializeField, Header("死亡時のパーティクル")]
     ParticleSystem _killedParticle;
+    [SerializeField, Header("死亡時の音")]
+    SoundType _soundType;
     /// <summary>ボスのデータ</summary>
     public BossData Data => _data;
     /// <summary>ボスのデータ</summary>
@@ -185,6 +187,7 @@ public class BossController : EnemyBase
     protected override void OnKilledByPlayer()
     {
         Instantiate(_killedParticle).transform.position = transform.position;
+        SoundManager.Instance.UseSound(_soundType);
         GameManager.Instance.StageClear();
         base.OnKilledByPlayer();
     }
