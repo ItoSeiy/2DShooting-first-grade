@@ -28,19 +28,56 @@ public class InputCommand : MonoBehaviour
     [SerializeField]
     InputAction _commandsAnswer10 = default;
 
-    bool[] _isCommandSuccess = new bool[10];
+    bool[] _isCommandSuccess = new bool[9];
 
     [SerializeField,Header("コマンドが成功した際の音")]
     SoundType _onCommandSuccessSound = SoundType.Sword;
 
     [SerializeField]
     Text _onCommandSuccessText;
-    [SerializeField, Header("テキストを出す時間(ミリ秒)")]
-    int _textActiveTime;
+    [SerializeField, Header("テキストをしまう時間(ミリ秒)")]
+    int _textDisableTime;
 
     public async void OnInputCommand(InputAction.CallbackContext context)
     {
-        if (context.action == _commandsAnswer1 && _isCommandSuccess[0] && PauseManager.Instance.PauseFlg == true)
+        if (context.action == _commandsAnswer1 && PauseManager.Instance.PauseFlg == true)
+        {
+            Debug.Log("コマンド開始");
+            _isCommandSuccess[0] = true;
+        }
+        else if(context.action == _commandsAnswer2 && _isCommandSuccess[0] && PauseManager.Instance.PauseFlg == true)
+        {
+            _isCommandSuccess[1] = true;
+        }
+        else if (context.action == _commandsAnswer3 && _isCommandSuccess[1] && PauseManager.Instance.PauseFlg == true)
+        {
+            _isCommandSuccess[2] = true;
+        }
+        else if (context.action == _commandsAnswer4 && _isCommandSuccess[2] && PauseManager.Instance.PauseFlg == true)
+        {
+            _isCommandSuccess[3] = true;
+        }
+        else if (context.action == _commandsAnswer5 && _isCommandSuccess[3] && PauseManager.Instance.PauseFlg == true)
+        {
+            _isCommandSuccess[4] = true;
+        }
+        else if (context.action == _commandsAnswer6 && _isCommandSuccess[4] && PauseManager.Instance.PauseFlg == true)
+        {
+            _isCommandSuccess[5] = true;
+        }
+        else if (context.action == _commandsAnswer7 && _isCommandSuccess[5] && PauseManager.Instance.PauseFlg == true)
+        {
+            _isCommandSuccess[6] = true;
+        }
+        else if (context.action == _commandsAnswer8 && _isCommandSuccess[6] && PauseManager.Instance.PauseFlg == true)
+        {
+            _isCommandSuccess[7] = true;
+        }
+        else if (context.action == _commandsAnswer9 && _isCommandSuccess[7] && PauseManager.Instance.PauseFlg == true)
+        {
+            _isCommandSuccess[8] = true;
+        }
+        else if (context.action == _commandsAnswer10 && _isCommandSuccess[8] && PauseManager.Instance.PauseFlg == true)
         {
             Debug.Log("コマンド完了");
             SoundManager.Instance.UseSound(_onCommandSuccessSound);
@@ -49,12 +86,8 @@ public class InputCommand : MonoBehaviour
             var isGodModeState = GameManager.Instance.Player.IsGodMode ? "有効!" : "無効!";
 
             _onCommandSuccessText.text = "無敵モード" + isGodModeState;
-
-            await Task.Delay(_textActiveTime);
-
+            await Task.Delay(_textDisableTime);
             _onCommandSuccessText.text = "";
-            _isCommandSuccess[0] = false;
         }
-        
     }
 }
