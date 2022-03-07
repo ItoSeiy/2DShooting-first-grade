@@ -43,6 +43,8 @@ public class SuperAttackRestriction: BossAttackAction
     [SerializeField, Header("この行動から出る時間")] float _endingTime = 30f;
     /// <summary>被ダメージの割合</summary>
     [SerializeField, Header("被ダメージの割合"), Range(0, 1)] float _damageTakenRationRange = 0.5f;
+    /// <summary>攻撃時の音</summary>
+    [SerializeField, Header("攻撃時の音")] SoundType _superAttack;
     /// <summary>修正値</summary>
     float _rotOffset = 0f;
     /// <summary>修正値</summary>
@@ -52,7 +54,7 @@ public class SuperAttackRestriction: BossAttackAction
     /// <summary>リセットタイマー</summary>
     const float RESET_TIME = 0f;
     /// <summary>逆回転時のマズルの修正値</summary>
-    const float MUZZLE_ROT_OFFSET = 0.4f;
+    const float MUZZLE_ROT_OFFSET = 0.1f;
     /// <summary>半分の時間</summary>
     const float HALF_TIME = 2;
     /// <summary>最小の回転値</summary>
@@ -142,6 +144,9 @@ public class SuperAttackRestriction: BossAttackAction
         //必殺技発動
         while (true)
         {
+            //攻撃時のサウンド
+            SoundManager.Instance.UseSound(_superAttack);
+
             _pattern = Random.Range(0, _bullet.Length);
             //必殺技発動時間の後半になったら反時計回りに全方位発射
             if (_timer >= _activationTime / HALF_TIME)

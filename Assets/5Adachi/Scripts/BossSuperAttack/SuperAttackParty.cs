@@ -22,6 +22,8 @@ public class SuperAttackParty : BossAttackAction
     float _saveDamageTakenRation = 1f;
     /// <summary>弾の見た目の種類</summary>
     int _pattern = 0;
+    /// <summary>攻撃回数</summary>
+    int _attackCount = 0;
     /// <summary>必殺前に移動するポジション</summary>
     [SerializeField, Header("必殺前に移動するポジション")] Vector2 _superAttackPosition = new Vector2(0f, 4f);
     /// <summary>バレットを発射するポジション</summary>
@@ -38,6 +40,10 @@ public class SuperAttackParty : BossAttackAction
     [SerializeField, Header("発射する弾の設定(リバウンド)")] PoolObjectType[] _bullet;
     /// <summary>被ダメージの割合</summary>
     [SerializeField, Header("被ダメージの割合"), Range(0, 1)] float _damageTakenRationRange = 0.5f;
+    /// <summary>攻撃時の音</summary>
+    [SerializeField, Header("攻撃時の音")] SoundType _superAttack;
+    /// <summary>音を鳴らすタイミング</summary>
+    [SerializeField, Header("音を鳴らすタイミング")] int _maxAttackCount = 5;
     /// <summary>修正値</summary>
     const float PLAYER_POS_OFFSET = 0.5f;
     /// <summary>判定回数の制限</summary>
@@ -128,6 +134,14 @@ public class SuperAttackParty : BossAttackAction
         //必殺技発動
         while (true)
         {
+            if (_attackCount >= _maxAttackCount)
+            {
+                //攻撃時の音
+                SoundManager.Instance.UseSound(_superAttack);
+                _attackCount = 0;
+            }
+
+            //弾の見た目を変える
             _pattern = Random.Range(0, _bullet.Length);
             ///マズルを回転する///
             Vector3 localAngle = _muzzle.localEulerAngles;// ローカル座標を基準に取得
@@ -137,6 +151,8 @@ public class SuperAttackParty : BossAttackAction
 
             //弾をマズルの向きに合わせて弾を発射
             ObjectPool.Instance.UseObject(_muzzle.position, _bullet[_pattern]).transform.rotation = _muzzle.rotation;
+
+            _attackCount++;
 
             yield return new WaitForSeconds(JUDGMENT_TIME);//判定回数の調整
 

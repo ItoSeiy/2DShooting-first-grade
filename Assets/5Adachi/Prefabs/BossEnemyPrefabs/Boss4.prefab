@@ -51,6 +51,8 @@ MonoBehaviour:
   _angleInterval: 4
   _bullet: 270000002800000029000000
   _damageTakenRationRange: 0.5
+  _superAttack: 1
+  _maxAttackCount: 5
 --- !u!1 &1557905931969436095
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,7 +206,7 @@ MonoBehaviour:
   _endingTime: 10
   _probability: 50
   _normalAttack: 1
-  _audioInterval: 2
+  _maxAttackCount: 2
 --- !u!1 &3668928285342510396
 GameObject:
   m_ObjectHideFlags: 0
@@ -553,8 +555,8 @@ MonoBehaviour:
   _maximumCount: 7
   _endingTime: 10
   _probability: 60
-  _normalAttack: 7
-  _audioInterval: 2
+  _normalAttack: 1
+  _maxAttackCount: 2
 --- !u!1 &5798824771876401389
 GameObject:
   m_ObjectHideFlags: 0

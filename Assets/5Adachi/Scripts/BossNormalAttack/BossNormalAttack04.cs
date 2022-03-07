@@ -9,10 +9,10 @@ public class BossNormalAttack04 : BossAttackAction
     Vector3 _dir;
     /// <summary>弾の見た目の種類</summary>
     int _pattern = 0;
+    /// <summary>攻撃回数</summary>
+    int _attackCount = 0;
     /// <summary>タイマー</summary>
     float _timer = 0f;
-    /// <summary>音に必要なタイマー</summary>
-    float _audioTimer = 0f;
     /// <summary>バレットを発射するポジション</summary>
     [SerializeField, Header("Bulletを発射するポジション")] Transform _muzzle = null;
     /// <summary>攻撃頻度</summary>
@@ -28,9 +28,7 @@ public class BossNormalAttack04 : BossAttackAction
     /// <summary>アイテムを落とす確率</summary>
     [SerializeField, Header("アイテムを落とす確率")] int _probability = 50;
     /// <summary>攻撃時の音</summary>
-    [SerializeField, Header("攻撃時の音")] SoundType _normalAttack;
-    /// <summary>攻撃回数</summary>
-    [SerializeField, Header("攻撃回数")] int _attackCount = 0;
+    [SerializeField, Header("攻撃時の音")] SoundType _normalAttack;    
     /// <summary>音を鳴らすタイミング</summary>
     [SerializeField, Header("音を鳴らすタイミング")] int _maxAttackCount = 2;
     /// <summary>最小の回転値</summary>
@@ -53,7 +51,6 @@ public class BossNormalAttack04 : BossAttackAction
     public override void ManagedUpdate(BossController contlloer)
     {
         _timer += Time.deltaTime;
-        _audioTimer += Time.deltaTime;
 
         if(_timer >= _endingTime)
         {
