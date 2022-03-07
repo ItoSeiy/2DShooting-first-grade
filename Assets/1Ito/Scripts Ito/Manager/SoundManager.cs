@@ -1,12 +1,27 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 /// <summary>
 /// サウンドを管理するスクリプト
 /// </summary>
 public class SoundManager : SingletonMonoBehaviour<SoundManager>
 {
-    [SerializeField] SoundPoolParams _soundObjParam = default;
+    [SerializeField]
+    SoundPoolParams _soundObjParam = default;
+
+    [SerializeField]
+    [Header("BGMを流すAudioSource")]
+    AudioSource _bgmAudioSource;
+
+    [SerializeField]
+    [Header("BossBGMを流すAudioSource")]
+    AudioSource _bossBgmAudioSource;
+
+    [SerializeField]
+    float _bgmFadeTime = 2f;
+    [SerializeField]
+    float _bgmFadeOutVol = 0.2f;
 
     List<Pool> _pool = new List<Pool>();
 
@@ -19,6 +34,48 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
         CreatePool();
         //デバッグ用
         //_pool.ForEach(x => Debug.Log($"オブジェクト名:{x.Object.name}種類: {x.Type}"));
+    }
+
+    void Start()
+    {
+        _bgmAudioSource.Play();
+
+        PhaseNovelManager.Instance.OnBeforeNovel += () =>
+        {
+            //ノベル時はBGMを小さく流す
+            FadeBgm(_bgmAudioSource, _bgmFadeOutVol, _bgmFadeTime);
+        };
+
+        //ボス生成時
+        PhaseNovelManager.Instance.OnBoss += () =>
+        {
+            //ボスが始まったら普通のBGMは消す
+            _bgmAudioSource.Stop();
+            //ボスのBGM再生
+            _bossBgmAudioSource.Play();
+        };
+
+        //キャラ死亡時
+        GameManager.Instance.OnGameOver += () =>
+        {
+            //BGM停止
+            FadeBgm(_bgmAudioSource, 0, _bgmFadeTime);
+            //ボス戦闘中に死んだ際はノベルが流れるため少し音を残す
+            FadeBgm(_bossBgmAudioSource, _bgmFadeOutVol, _bgmFadeTime);   
+        };
+
+        //ボス死亡時                               ノベルが流れるため少し音を残す
+        GameManager.Instance.OnStageClear += () => FadeBgm(_bossBgmAudioSource, 0.2f, _bgmFadeTime);
+    }
+
+    /// <summary>
+    /// 指定したオーディオソースのフェードを行う
+    /// </summary>
+    /// <param name="targetVol">設定したい音量</param>
+    /// <param name="fadeTime">どのくらい時間をかけるか</param>
+    private void FadeBgm(AudioSource targetAudioSouece, float targetVol, float fadeTime)
+    {
+        targetAudioSouece.DOFade(targetVol, fadeTime);
     }
 
     /// <summary>
@@ -101,7 +158,10 @@ public enum SoundType
     Click07,
     Click08,
     Click09,
-    Click10
+    Click10,
+    Novel,
+    ScoreCount,
+    EnemyKilled
 }
 
 [System.Serializable]
