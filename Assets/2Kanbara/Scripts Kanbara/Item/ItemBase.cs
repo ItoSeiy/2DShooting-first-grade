@@ -46,6 +46,8 @@ public class ItemBase : MonoBehaviour, IPauseable
 
     private void Update()
     {
+        if (PauseManager.Instance.PauseFlg == true) return;
+
         switch (_isGetItemMode)
         {
             case true:
@@ -89,10 +91,12 @@ public class ItemBase : MonoBehaviour, IPauseable
         {
             _oldVerocity = _rb.velocity;
             _rb.velocity = Vector2.zero;
+            _rb.Sleep();
         }
         else
         {
             _rb.velocity = _oldVerocity;
+            _rb.WakeUp();
         }
     }
 

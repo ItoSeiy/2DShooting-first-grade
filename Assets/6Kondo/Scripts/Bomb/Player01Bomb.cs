@@ -37,6 +37,10 @@ public class Player01Bomb : BulletBese
 
     IEnumerator UseBombChildBullet(Collider2D collision)
     {
+        while(PauseManager.Instance.PauseFlg == true)
+        {
+            yield return null;
+        }
         if (collision.tag == OpponenTag)
         {
             base.BulletAttack(collision);

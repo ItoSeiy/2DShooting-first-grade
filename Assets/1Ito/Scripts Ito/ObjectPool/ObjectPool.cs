@@ -51,6 +51,10 @@ public class ObjectPool : SingletonMonoBehaviour<ObjectPool>
     /// <returns>生成したオブジェクト</returns>
     public GameObject UseObject(Vector2 position, PoolObjectType objectType)
     {
+        if(PauseManager.Instance.PauseFlg == true)
+        {
+            return null;
+        }
         foreach(var pool in _pool)
         {
             if(pool.Object.activeSelf == false && pool.Type == objectType)

@@ -23,6 +23,9 @@ public abstract class BulletBese : MonoBehaviour, IPauseable
     [SerializeField, Header("Bulletのスピード")] 
     float _speed = 4f;
 
+    [SerializeField, Header("基底クラスのStraightBulletの移動方向")]
+    Vector2 _direciton = Vector2.up;
+
     [SerializeField, Header("Bulletの動きをどの関数で呼び出すか")]
     BulletMoveMethod _bulletMoveMethod = BulletMoveMethod.Update;
 
@@ -56,11 +59,16 @@ public abstract class BulletBese : MonoBehaviour, IPauseable
         PauseManager.Instance.SetEvent(this);
         if(_bulletMoveMethod == BulletMoveMethod.Start)
         {
+            if (PauseManager.Instance.PauseFlg == true)
+            {
+                _rb.velocity = Vector2.zero;
+                return;
+            }
             BulletMove();
         }
     }
 
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
         PauseManager.Instance.RemoveEvent(this);
     }
@@ -69,6 +77,11 @@ public abstract class BulletBese : MonoBehaviour, IPauseable
     {
         if (_bulletMoveMethod == BulletMoveMethod.Update)
         {
+            if (PauseManager.Instance.PauseFlg == true)
+            {
+                _rb.velocity = Vector2.zero;
+                return;
+            }
             BulletMove();
         }
     }
@@ -101,8 +114,7 @@ public abstract class BulletBese : MonoBehaviour, IPauseable
     /// </summary>
     protected virtual void BulletMove()
     {
-        //_rb.velocity = _direction.normalized * _speed;
-        _rb.velocity = gameObject.transform.rotation * new Vector3(0, Speed, 0);
+        _rb.velocity = _direciton.normalized * _speed;
     }
 
     /// <summary>
@@ -116,7 +128,6 @@ public abstract class BulletBese : MonoBehaviour, IPauseable
         var target = col.gameObject.GetComponent<IDamage>();
         target?.AddDamage(_damage, col);
     }
-
     void IPauseable.PauseResume(bool isPause)
     {
         if(isPause)

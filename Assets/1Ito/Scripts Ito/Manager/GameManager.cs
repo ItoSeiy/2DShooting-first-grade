@@ -19,7 +19,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     {
         get
         {
-            if(!_player)
+            if (!_player)
             {
                 Debug.LogError("Playerタグ,PlayerBaseがアタッチされたオブジェクトがありません\n追加してください");
                 return null;
@@ -29,33 +29,41 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     }
 
     public int PlayerLevel => _playerLevel;
-    /// <summary>プレイヤーが持っているパワーアイテムの数</summary>
-    public int PlayerPowerItemCount => _playerPowerItemCount;
-
-    /// <summary>プレイヤーのスコア</summary>
-    public int PlayerScore => _playerScore;
-
-    /// <summary>プレイヤーのボムの所持数</summary>
-    public int PlayerBombCount => _playerBombCount;
-
     ///<summary>プレイヤーの残機</summary>
     public int PlayerResidueCount => _playerResidue;
-
+    /// <summary>プレイヤーのスコア</summary>
+    public int PlayerScore => _playerScore;
+    /// <summary>プレイヤーが持っているパワーアイテムの数</summary>
+    public int PlayerPowerItemCount => _playerPowerItemCount;
+    /// <summary>プレイヤーのボムの所持数</summary>
+    public int PlayerBombCount => _playerBombCount;
     ///<summary>一定数獲得すると無敵になるオブジェクトを獲得した数</summary>
     public int PlayerInvincibleObjectCount => _playerInvicibleObjectCount;
+
+
 
     public bool IsGameOver => _isGameOver;
     public bool IsStageClear => _isStageClear;
     public bool IsGameStart => _isGameStart;
 
+    [SerializeField] 
+    private int _playerLevel = default;
+    [SerializeField] 
+    private int _playerResidue =　default;
     private int _playerScore = default;
     private int _playerPowerItemCount = default;
-    [SerializeField] private int _playerLevel = default;
     private int _playerBombCount = default;
+    /// <summary>プレイヤーの残機</summary>
     ///<summary>一定数獲得すると無敵になるオブジェクトを獲得した数///</summary>
     private int _playerInvicibleObjectCount = default;
-    /// <summary>プレイヤーの残機</summary>
-    [SerializeField] private int _playerResidue =　default;
+
+    private int _oldPlayerLevel;
+    private int _oldPlayerResidue;
+    private int _oldPlayerScore;
+    private int _oldPlayerPowerItemCount;
+    private int _oldPlayerBombCount;
+    private int _oldPlayerInvicibleObjectCount;
+
 
     private bool _isGameOver = false;
     private bool _isGameStart = false;
@@ -63,44 +71,39 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     PlayerBase _player;
 
     /// <summary>ゲームオーバー時の処理を登録する</summary>
-    public event Action OnGameOver
-    {
-        add { _onGameOver += value; }
-        remove { _onGameOver -= value; }
-    }
-     
+    public event Action OnGameOver;
     /// <summary>ステージクリア時の処理を登録する</summary>
-    public event Action OnStageClear
-    {
-        add { _onStageClear += value; }
-        remove { _onStageClear -= value; }
-    }
+    public event Action OnStageClear;
 
-    Action _onGameOver;
-    Action _onStageClear;
 
     protected override void Awake()
     {
         base.Awake();
-        SettingScene();
         DontDestroyOnLoad(gameObject);
+
+        SceneLoder.Instance.OnLoadEnd += TrySettingScene;
     }
-    
+
+    void Start()
+    {
+        TrySettingScene();
+    }
+
     /// <summary>
     /// シーン遷移後に呼び出される関数
     /// プレイヤーがいたらゲームスタート関数を呼び出す
     /// </summary> 
-    public void SettingScene()
+    public void TrySettingScene()
     {
         _player = GameObject.FindWithTag("Player")?.GetComponent<PlayerBase>();
         Debug.Log("シーンが読み込まれました");
         if(_player)
         {
-            GameStart();
+            SettingScene();
         }
     }
 
-    public void GameStart()
+    public void SettingScene()
     {
         Debug.Log("プレイヤーを参照できました\nUIとプレイヤーのセットを行います");
         PlayerLevelSet();
@@ -111,11 +114,51 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     }
 
     /// <summary>
+    /// ゲームマネージャーの値を保存する
+    /// </summary>
+    public void SaveValue()
+    {
+        _oldPlayerLevel = _playerLevel;
+        _oldPlayerResidue =_playerResidue;
+        _oldPlayerScore = _playerScore;
+        _oldPlayerPowerItemCount =_playerPowerItemCount;
+        _oldPlayerBombCount = _playerBombCount;
+        _oldPlayerInvicibleObjectCount = _playerInvicibleObjectCount;
+    }
+
+    /// <summary>
+    /// ゲームマネージャーの値を戻す
+    /// </summary>
+    public void ReturnValue()
+    {
+        _playerLevel = _oldPlayerLevel;
+        _playerResidue = _oldPlayerResidue;
+        _playerScore = _oldPlayerScore;
+        _playerPowerItemCount = _oldPlayerPowerItemCount;
+        _playerBombCount = _oldPlayerBombCount;
+        _playerInvicibleObjectCount = _oldPlayerInvicibleObjectCount;
+    }
+
+    /// <summary>
+    /// 変数を初期化する関数
+    /// </summary>
+    public void InitValue()
+    {
+        _playerLevel = 1;
+        _playerResidue = 3;
+        _playerScore = 0;
+        _playerPowerItemCount = 0;
+        _playerBombCount = 0;
+        _playerInvicibleObjectCount = 0;
+    }
+
+    /// <summary>
     /// ゲームオーバー時に行いたいことを記述
     /// </summary>
     public void GameOver()
     {
-        _onGameOver?.Invoke();
+        OnGameOver?.Invoke();
+        InitValue();
         _isGameOver = true;
         _isGameStart = false;
     }
@@ -128,7 +171,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         //ゲームオーバーと同時にステージをクリアした場合ゲームオーバが優先される
         if (_isGameOver) return;
 
-        _onStageClear?.Invoke();
+        OnStageClear?.Invoke();
         _isStageClear = true;
         _isGameStart = false;
     }
@@ -154,6 +197,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         PlayerLevelSet();
 
     }
+
 
     /// <summary>
     /// プレイヤーのレベルを決定する関数
@@ -210,18 +254,4 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         UIManager.Instance.UIResidueChange(residue);
     }
 
-    /// <summary>
-    /// 変数を初期化する関数
-    /// </summary>
-    public void Init()
-    {
-        _playerScore = 0;
-        _playerPowerItemCount = 0;
-        _playerBombCount = 0;
-        _playerInvicibleObjectCount = 0;
-        _playerLevel = 1;
-        _isGameOver = false;
-        _isGameStart = false;
-        _isStageClear = false;
-    }
 }

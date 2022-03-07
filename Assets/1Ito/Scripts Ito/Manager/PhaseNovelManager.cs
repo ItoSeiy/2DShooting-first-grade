@@ -1,13 +1,17 @@
 using Overdose.Novel;
 using System.Linq;
 using UnityEngine;
+using System.Threading.Tasks;
 
 public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
 {
     public NovelPhase NovelePhaesState => _novelPhase;
 
     [SerializeField, Header("ノベル前に待つ時間")]
-    float _novelWaitTime = 8f;
+    float _novelWaitTime = 5f;
+
+    [SerializeField, Header("ゲームオーバー後にUI等の表示を待つ時間(ミリ秒)")]
+    int _gameOverWaitTime = 3000;
 
     /// <summary>スプレッドシートシートを読み込むスクリプト(戦闘前)</summary>
     [SerializeField]
@@ -104,11 +108,12 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
 
     void Update()
     {
+        if (PauseManager.Instance.PauseFlg == true) return;
+
         switch (_stageParam.PhaseParms[_phaseIndex].IsBoss)
         {
             case true:
                 _timer += Time.deltaTime;
-
                 if (_timer <= _novelWaitTime) return;
                 Debug.Log("ボス開始");
                 _isBossStage = true;
@@ -124,7 +129,7 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
     /// <summary>
     /// ゲームオーバーの処理を行う
     /// </summary>
-    private void OnGameOver()
+    private async void OnGameOver()
     {
         if (_isBossStage)
         {
@@ -134,6 +139,7 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
         }
         else
         {
+            await Task.Delay(_gameOverWaitTime);
             //ゲームオーバUI表示
             _gameOverCanavas.gameObject.SetActive(true);
             //UIキャンバス

@@ -91,6 +91,17 @@ public enum SoundType
     BossKilled,
     /// <summary>ボスの死亡サウンド</summary>
     Boss3Killed,
+
+    Click01,
+    Click02,
+    Click03,
+    Click04,
+    Click05,
+    Click06,
+    Click07,
+    Click08,
+    Click09,
+    Click10
 }
 
 [System.Serializable]

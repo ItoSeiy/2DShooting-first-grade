@@ -1,6 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Threading.Tasks;
 
 public class TextValueChange : MonoBehaviour
 {
@@ -10,8 +11,10 @@ public class TextValueChange : MonoBehaviour
     float _changeSpeed = 2f;
     [SerializeField, Header("どの値をテキストに反映させるか")]
     Value _value;
-    private void Start()
+    private async void Start()
     {
+        await Task.Delay(2000);
+
         switch (_value)
         {
             case Value.Score:

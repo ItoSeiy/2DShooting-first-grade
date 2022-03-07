@@ -18,7 +18,6 @@ public abstract class EnemyBase : MonoBehaviour, IDamage, IPauseable
     public string GameZoneTag => _gameZoneTag;
     public SpriteRenderer Sprite => _sprite;
 
-    public bool IsPause { get; private set; } = false;
     [SerializeField, Header("動きのスピード")]
     private float _speed = 5f;
 
@@ -59,6 +58,8 @@ public abstract class EnemyBase : MonoBehaviour, IDamage, IPauseable
     Vector2 _oldVelocity;
     float _oldTimer;
 
+    private bool _isKilledFirstTime = true; 
+
     protected virtual void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -66,7 +67,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamage, IPauseable
 
     protected virtual void Update()
     {
-        if (IsPause) return;
+        if (PauseManager.Instance.PauseFlg == true) return;
 
         _attackTimer += Time.deltaTime;
 
@@ -77,12 +78,12 @@ public abstract class EnemyBase : MonoBehaviour, IDamage, IPauseable
         }
     }
 
-    private void OnEnable()
+    void OnEnable()
     {
         PauseManager.Instance.SetEvent(this);
     }
 
-    private void OnDisable()
+    void OnDisable()
     {
         PauseManager.Instance.RemoveEvent(this);
     }
@@ -101,7 +102,11 @@ public abstract class EnemyBase : MonoBehaviour, IDamage, IPauseable
     /// </summary>
     protected virtual void OnKilledByPlayer()
     {
-        ItemDrop();
+        if(_isKilledFirstTime)
+        {
+            ItemDrop();
+            _isKilledFirstTime = false;
+        }
         Destroy(gameObject);
     }
 
@@ -186,20 +191,20 @@ public abstract class EnemyBase : MonoBehaviour, IDamage, IPauseable
     {
         if (isPause)
         {
-            IsPause = true;
             _oldVelocity = _rb.velocity;
-            _rb.velocity = Vector2.zero;
             _oldTimer = _attackTimer;
             _attackTimer = 0;
-            Debug.Log($"{isPause} ポーズ中モブ敵");
         }
         else
         {
-            IsPause = false;
             _rb.velocity = _oldVelocity;
             _attackTimer = _oldTimer;
-            Debug.Log($"{isPause} 再開モブ敵");
         }
+    }
+
+    protected void OnPauseForSubSlass()
+    {
+        _rb.velocity = Vector2.zero;
     }
 
     /// <summary>
