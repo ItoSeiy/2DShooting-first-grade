@@ -1065,6 +1065,8 @@ GameObject:
   - component: {fileID: 8393607674357870370}
   - component: {fileID: 8567568999862297074}
   - component: {fileID: 6716438059770056367}
+  - component: {fileID: 7625929941804592715}
+  - component: {fileID: 5797758147256591026}
   m_Layer: 5
   m_Name: Button -StageCelect-
   m_TagString: Untagged
@@ -1154,7 +1156,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 1, g: 0.8, b: 0.8, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.3137255, g: 0.8313726, b: 0.6901961, a: 0.6392157}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -1173,7 +1175,54 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8567568999862297074}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4632591857898587873}
+        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
+        m_MethodName: Click
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &7625929941804592715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8474760379832815122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1355c8b4308345840bee84ed6b6b97c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sceneName: 
+--- !u!114 &5797758147256591026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8474760379832815122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isDelete: 0
+  _isDelayMode: 0
+  _delay: 1500
+  _isFirstSelectButton: 0
+  _callNextButtons: []
+  _deleteButtons: []
+  _callPanel: []
+  _deletePanel: []
+  _animStateName: 
+  _onClickSounds: 08000000
 --- !u!1 &8474760379932437310
 GameObject:
   m_ObjectHideFlags: 0
@@ -1293,6 +1342,8 @@ GameObject:
   - component: {fileID: 520065381777949032}
   - component: {fileID: 8945760897045679679}
   - component: {fileID: 2005444036646864810}
+  - component: {fileID: 3905390925630198529}
+  - component: {fileID: 4632591857898587873}
   m_Layer: 5
   m_Name: Button -OneMorePlay-
   m_TagString: Untagged
@@ -1382,8 +1433,8 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9811321, g: 0.7997152, b: 0.7997152, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_SelectedColor: {r: 0.81568635, g: 0.8078432, b: 0.33333334, a: 0.50980395}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.62352943}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -1401,4 +1452,51 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8945760897045679679}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4632591857898587873}
+        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
+        m_MethodName: Click
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &3905390925630198529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8474760380825408739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1355c8b4308345840bee84ed6b6b97c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sceneName: 
+--- !u!114 &4632591857898587873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8474760380825408739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isDelete: 0
+  _isDelayMode: 0
+  _delay: 1500
+  _isFirstSelectButton: 1
+  _callNextButtons: []
+  _deleteButtons: []
+  _callPanel: []
+  _deletePanel: []
+  _animStateName: 
+  _onClickSounds: 08000000

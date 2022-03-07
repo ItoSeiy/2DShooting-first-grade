@@ -139,7 +139,6 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
         }
         else
         {
-
             AllBulletEnemyDestroy();
             //UIƒLƒƒƒ“ƒoƒX
             _uiCanvas.gameObject.SetActive(false);
