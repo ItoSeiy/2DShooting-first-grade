@@ -158,7 +158,6 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     public void GameOver()
     {
         OnGameOver?.Invoke();
-        InitValue();
         _isGameOver = true;
         _isGameStart = false;
     }

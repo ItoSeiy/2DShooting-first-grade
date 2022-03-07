@@ -24,6 +24,7 @@ public class PlayerBulletFollow : BulletBese
 
         if(_enemy)
         {
+            if (_enemy == null) return;
             Vector2 dir = _enemy.transform.position - this.transform.position;
             Rb.velocity = dir.normalized * Speed;
             _oldDir = dir;

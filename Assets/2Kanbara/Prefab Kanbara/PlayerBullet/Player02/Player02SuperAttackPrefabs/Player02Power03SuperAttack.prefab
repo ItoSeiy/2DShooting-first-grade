@@ -24,7 +24,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 845408565079207469}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -182,6 +182,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 30
   _speed: 15
+  _direciton: {x: 0, y: 0}
   _bulletMoveMethod: 0
   _opponentTag: Enemy
   _gameZoneTag: Finish
@@ -322,11 +323,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 15
   _speed: 10
+  _direciton: {x: 0, y: 0}
   _bulletMoveMethod: 1
   _opponentTag: Enemy
   _gameZoneTag: Finish
   _parentTag: Parent
-  _followTime: 0.5
+  _followTime: 1
 --- !u!1 &9180116380697167995
 GameObject:
   m_ObjectHideFlags: 0
@@ -463,8 +465,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 15
   _speed: 10
+  _direciton: {x: 0, y: 0}
   _bulletMoveMethod: 1
   _opponentTag: Enemy
   _gameZoneTag: Finish
   _parentTag: Parent
-  _followTime: 0.5
+  _followTime: 1

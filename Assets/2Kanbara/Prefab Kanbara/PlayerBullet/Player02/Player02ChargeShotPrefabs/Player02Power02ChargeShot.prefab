@@ -182,11 +182,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 15
   _speed: 15
+  _direciton: {x: 0, y: 0}
   _bulletMoveMethod: 1
   _opponentTag: Enemy
   _gameZoneTag: Finish
   _parentTag: Parent
-  _followTime: 0.5
+  _followTime: 1
 --- !u!96 &2342947737954932740
 TrailRenderer:
   serializedVersion: 2
@@ -431,11 +432,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 15
   _speed: 15
+  _direciton: {x: 0, y: 0}
   _bulletMoveMethod: 1
   _opponentTag: Enemy
   _gameZoneTag: Finish
   _parentTag: Parent
-  _followTime: 0.5
+  _followTime: 1
 --- !u!96 &3921085511027043427
 TrailRenderer:
   serializedVersion: 2
