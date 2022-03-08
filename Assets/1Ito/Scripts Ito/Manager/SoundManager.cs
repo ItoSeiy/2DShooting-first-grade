@@ -38,7 +38,7 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 
     void Start()
     {
-        _bgmAudioSource.Play();
+        _bgmAudioSource?.Play();
 
         PhaseNovelManager.Instance.OnBeforeNovel += () =>
         {

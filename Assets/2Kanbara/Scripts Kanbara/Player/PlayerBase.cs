@@ -143,6 +143,21 @@ public class PlayerBase : MonoBehaviour, IPauseable
 
     private void Start()
     {
+        GameManager.Instance.OnGameOver += () =>
+        {
+            _canMove = false;
+            _sp.enabled = false;
+            GamingFalse();
+        };
+
+        GameManager.Instance.OnStageClear += () =>
+        {
+            _canMove = false;
+            _sp.enabled = false;
+            GamingFalse();
+        };
+
+
         _rb = GetComponent<Rigidbody2D>();
         _sp = GetComponent<SpriteRenderer>();
         _audioSource = GetComponent<AudioSource>();
@@ -169,8 +184,6 @@ public class PlayerBase : MonoBehaviour, IPauseable
 
         GamingFalse();
 
-        GameManager.Instance.OnGameOver += () => _canMove = false;
-        GameManager.Instance.OnStageClear += () => _canMove = false;    
     }
 
     private async void Update()
