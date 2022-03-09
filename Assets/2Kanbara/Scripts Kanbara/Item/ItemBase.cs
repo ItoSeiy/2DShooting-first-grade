@@ -18,10 +18,14 @@ public class ItemBase : MonoBehaviour, IPauseable
 
     [SerializeField, Header("演出が再生されるタイミング")] StartPS _stratPS = StartPS.Contact;
 
+    [SerializeField, Header("アイテムの数")] int _itemCount = 1;
+
     bool _isGetItemMode = false;
     public bool _isTaking = false;
 
     Vector2 _oldVerocity;
+
+    public int ItemCount => _itemCount;
 
     private void Start()
     {
