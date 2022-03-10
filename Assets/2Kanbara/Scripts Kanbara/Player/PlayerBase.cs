@@ -90,7 +90,7 @@ public class PlayerBase : MonoBehaviour, IPauseable
     [SerializeField, Header("Invincibleモードの時の音")] string _invincibleModeAudio = "Invincible";
     [SerializeField, Header("残機がゼロになった時の音")] string _playerGameOverAudio = "Death";
 
-    [SerializeField] GameObject _playerCollider = default; 
+    [SerializeField, Header("精密操作時の当たり判定のSprite")] GameObject _playerCollider = default; 
 
     protected const int _level1 = 1;
     protected const int _level2 = 2;
@@ -206,11 +206,9 @@ public class PlayerBase : MonoBehaviour, IPauseable
         switch (_isLateMode)//移動時に精密操作モードかどうか判定する
         {
             case false:
-                _playerCollider.SetActive(false);
                 _rb.velocity = _dir * _moveSpeed;
                 break;
             case true:
-                _playerCollider.SetActive(true);
                 _rb.velocity = _dir * _lateMove;
                 break;
         }
@@ -267,12 +265,14 @@ public class PlayerBase : MonoBehaviour, IPauseable
         if (context.started)//LeftShiftKeyが押された瞬間の処理
         {
             _isLateMode = true;
+            _playerCollider.SetActive(true);
             GamingPlayer();
             Debug.Log(_isLateMode);
         }
         if (context.performed || context.canceled)//LeftShiftKeyが離された瞬間の処理
         {
             _isLateMode = false;
+            _playerCollider.SetActive(false);
             GamingFalse();
             Debug.Log(_isLateMode);
         }
