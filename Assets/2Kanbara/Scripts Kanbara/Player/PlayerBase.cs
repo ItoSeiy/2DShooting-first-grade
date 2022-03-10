@@ -90,6 +90,8 @@ public class PlayerBase : MonoBehaviour, IPauseable
     [SerializeField, Header("Invincibleモードの時の音")] string _invincibleModeAudio = "Invincible";
     [SerializeField, Header("残機がゼロになった時の音")] string _playerGameOverAudio = "Death";
 
+    [SerializeField] GameObject _playerCollider = default; 
+
     protected const int _level1 = 1;
     protected const int _level2 = 2;
     protected const int _level3 = 3;
@@ -188,6 +190,14 @@ public class PlayerBase : MonoBehaviour, IPauseable
 
     private async void Update()
     {
+        //if(PhaseNovelManager.Instance.NovelePhaesState != NovelPhase.None)
+        //{
+        //    _canMove = false;
+        //}
+        //else
+        //{
+        //    _canMove = true;
+        //}
         if (!_canMove)
         {
             _rb.velocity = Vector2.zero;
@@ -196,9 +206,11 @@ public class PlayerBase : MonoBehaviour, IPauseable
         switch (_isLateMode)//移動時に精密操作モードかどうか判定する
         {
             case false:
+                _playerCollider.SetActive(false);
                 _rb.velocity = _dir * _moveSpeed;
                 break;
             case true:
+                _playerCollider.SetActive(true);
                 _rb.velocity = _dir * _lateMove;
                 break;
         }
@@ -373,8 +385,8 @@ public class PlayerBase : MonoBehaviour, IPauseable
                 Play(_playerGameOverAudio);
                 _playerDeathEffect.SetActive(true);
                 GameManager.Instance.GameOver();
-                _sp.enabled = false;
-                _canMove = false;
+                //_sp.enabled = false;
+                //_canMove = false;
             }
         }
 
@@ -383,7 +395,7 @@ public class PlayerBase : MonoBehaviour, IPauseable
             var item = collision.GetComponent<ItemBase>();
             Play(_1UPAudio);
             if (item._isTaking || _is1upMax) return;
-            GameManager.Instance.ResidueChange(DEFAULTCOUNTUP);
+            GameManager.Instance.ResidueChange(item.ItemCount);
             _playerResidue = GameManager.Instance.PlayerResidueCount;
             if(_playerResidue >= _playerResidueLimit)
             {
@@ -398,7 +410,7 @@ public class PlayerBase : MonoBehaviour, IPauseable
             var item = collision.GetComponent<ItemBase>();
             Play(_getBombAudio);
             if (item._isTaking || _isBombMax) return;
-            GameManager.Instance.PlayerBombCountChange(DEFAULTCOUNTUP);
+            GameManager.Instance.PlayerBombCountChange(item.ItemCount);
             _bombCount = GameManager.Instance.PlayerBombCount;
             if(_bombCount >= _playerBombLimit)
             {
@@ -413,7 +425,7 @@ public class PlayerBase : MonoBehaviour, IPauseable
             var item = collision.GetComponent<ItemBase>();
             Play(_itemGetAudio);
             if (item._isTaking) return;
-            GameManager.Instance.PlayerScoreChange(DEFAULTCOUNTUP);
+            GameManager.Instance.PlayerScoreChange(item.ItemCount);
             _playerScore = GameManager.Instance.PlayerScore;
             item._isTaking = true;
             Debug.Log("スコアふえたよー" + _playerScore);
@@ -424,7 +436,7 @@ public class PlayerBase : MonoBehaviour, IPauseable
             var item = collision.GetComponent<ItemBase>();
             Play(_itemGetAudio);
             if (item._isTaking || _isPowerMax) return;
-            GameManager.Instance.PlayerPowerItemCountChange(DEFAULTCOUNTUP);
+            GameManager.Instance.PlayerPowerItemCountChange(item.ItemCount);
             _playerPower = GameManager.Instance.PlayerPowerItemCount;
             if(_playerPower == _playerPowerRequiredNumberLevel2 || _playerPower == _playerPowerRequiredNumberLevel3 || _playerPower == _playerPowerLimit)
             {
@@ -444,7 +456,7 @@ public class PlayerBase : MonoBehaviour, IPauseable
             var item = collision.GetComponent<ItemBase>();
             Play(_itemGetAudio);
             if (item._isTaking) return;
-            GameManager.Instance.PlayerInvicibleObjectValueChange(DEFAULTCOUNTUP);
+            GameManager.Instance.PlayerInvicibleObjectValueChange(item.ItemCount);
             _invincibleObjectCount = GameManager.Instance.PlayerInvincibleObjectCount;
             item._isTaking = true;
             Debug.Log("アイテム名決まってない怪しいやつふえたよー" + _invincibleObjectCount);
@@ -550,11 +562,12 @@ public class PlayerBase : MonoBehaviour, IPauseable
         _parsB.SetActive(false);
         _parsG.SetActive(false);
     }
-    private void OnParticleCollision(GameObject other)
-    {
-        if (_isLateMode || _isGodMode) return;
-        Respawn();
-    }
+
+    //private void OnParticleCollision(GameObject other)
+    //{
+    //    if (_isLateMode || _isGodMode) return;
+    //    Respawn();
+    //}
 
     void DeathPenalty()
     {
@@ -564,7 +577,6 @@ public class PlayerBase : MonoBehaviour, IPauseable
         }
         else
         {
-            Debug.LogError("kintama");
             GameManager.Instance.PlayerPowerItemCountChange(_powerDeathPenalty);
         }
 
