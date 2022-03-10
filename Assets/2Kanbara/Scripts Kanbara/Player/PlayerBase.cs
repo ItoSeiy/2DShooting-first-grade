@@ -65,17 +65,17 @@ public class PlayerBase : MonoBehaviour, IPauseable
 
     [SerializeField, Header("EffectをまとめてあるGameObject")] GameObject _effects;
 
-    [SerializeField, Header("チャージショットのパーティカルシステム（溜め）")] GameObject _chargeps = default;
+    [SerializeField, Header("チャージショットのパーティカルシステム（溜め）")] ParticleSystem _chargeps = default;
 
-    [SerializeField, Header("精密操作時の演出R")] GameObject _parsR;
-    [SerializeField, Header("精密操作時の演出B")] GameObject _parsB;
-    [SerializeField, Header("精密操作時の演出G")] GameObject _parsG;
+    [SerializeField, Header("精密操作時の演出R")] ParticleSystem _parsR;
+    [SerializeField, Header("精密操作時の演出B")] ParticleSystem _parsB;
+    [SerializeField, Header("精密操作時の演出G")] ParticleSystem _parsG;
 
     [SerializeField, Header("精密操作時のPlayerの色をゲーミングにする変数")] int _gameingPlayerColorTime = default;
 
-    [SerializeField, Header("パワーアイテムの数がカンストしたとき（レベルマックスのとき）の演出")] GameObject _fullPowerModeEffect = default;
-    [SerializeField, Header("Invincibleモードのときの演出")] GameObject _invincibleModeEffect = default;
-    [SerializeField, Header("残機がゼロの時の演出")] GameObject _playerDeathEffect = default;
+    [SerializeField, Header("パワーアイテムの数がカンストしたとき（レベルマックスのとき）の演出")] ParticleSystem _fullPowerModeEffect = default;
+    [SerializeField, Header("Invincibleモードのときの演出")] ParticleSystem _invincibleModeEffect = default;
+    [SerializeField, Header("残機がゼロの時の演出")] ParticleSystem _playerDeathEffect = default;
 
     [SerializeField, Header("パワーアイテムのデスペナルティ")] int _powerDeathPenalty = -50;
 
@@ -295,7 +295,7 @@ public class PlayerBase : MonoBehaviour, IPauseable
             _audioSource.Stop();
             Play(_playerChargeBulletAudio);
             _isCharge = true;
-            _chargeps.SetActive(true);
+            _chargeps.gameObject.SetActive(true);
         }
         if(context.performed && _isCharge)
         {
@@ -303,7 +303,7 @@ public class PlayerBase : MonoBehaviour, IPauseable
             if (!_canMove) return;
             PlayerChargeAttack();
             _cmvcam1.Priority = -1;
-            _chargeps.SetActive(false);
+            _chargeps.gameObject.SetActive(false);
         }
         if(context.canceled)
         {
@@ -311,7 +311,7 @@ public class PlayerBase : MonoBehaviour, IPauseable
             if (!_canMove) return;
             _audioSource.Stop();
             _cmvcam1.Priority = -1;
-            _chargeps.SetActive(false);
+            _chargeps.gameObject.SetActive(false);
         }
     }
 
@@ -378,7 +378,7 @@ public class PlayerBase : MonoBehaviour, IPauseable
             {
                 Debug.LogError("おめぇーの残機ねえから！" + _playerResidue);
                 Play(_playerGameOverAudio);
-                _playerDeathEffect.SetActive(true);
+                _playerDeathEffect.gameObject.SetActive(true);
                 AllFalse();
                 GameManager.Instance.GameOver();
             }
@@ -438,7 +438,7 @@ public class PlayerBase : MonoBehaviour, IPauseable
             }
             if (_playerPower >= _playerPowerLimit)
             {
-                _fullPowerModeEffect.SetActive(true);
+                _fullPowerModeEffect.gameObject.SetActive(true);
                 _isPowerMax = true;
             }
             item._isTaking = true;
@@ -491,8 +491,8 @@ public class PlayerBase : MonoBehaviour, IPauseable
         _canMove = false;
         _is1upMax = false;
         _anim.SetBool(_invicibleAnimParamName, true);
-        _chargeps.SetActive(false);
-        _fullPowerModeEffect.SetActive(false);
+        _chargeps.gameObject.SetActive(false);
+        _fullPowerModeEffect.gameObject.SetActive(false);
         GamingFalse();
         DeathPenalty();
         await Task.Delay(_respawnTime);
@@ -510,13 +510,13 @@ public class PlayerBase : MonoBehaviour, IPauseable
         if (_isGodMode) return;
         _isGodMode = true;
         _anim.SetBool(_invicibleAnimParamName, true);
-        _invincibleModeEffect.SetActive(true);
+        _invincibleModeEffect.gameObject.SetActive(true);
         Play(_invincibleModeAudio);
         GameManager.Instance.PlayerInvicibleObjectValueChange(INVENCIBLEDEFAULT);
         await Task.Delay(_invincibleTime);
         _isGodMode = false;
         _anim.SetBool(_invicibleAnimParamName, false);
-        _invincibleModeEffect.SetActive(false);
+        _invincibleModeEffect.gameObject.SetActive(false);
     }
 
     void Inversion()
@@ -547,20 +547,20 @@ public class PlayerBase : MonoBehaviour, IPauseable
     async void GamingPlayer()
     {
         if (!_isLateMode) return;
-        _parsR.SetActive(true);
+        _parsR.gameObject.SetActive(true);
         await Task.Delay(_gameingPlayerColorTime);
         if (!_isLateMode) return;
-        _parsB.SetActive(true);
+        _parsB.gameObject.SetActive(true);
         await Task.Delay(_gameingPlayerColorTime);
         if (!_isLateMode) return;
-        _parsG.SetActive(true);
+        _parsG.gameObject.SetActive(true);
     }
 
     void GamingFalse()
     {
-        _parsR.SetActive(false);
-        _parsB.SetActive(false);
-        _parsG.SetActive(false);
+        _parsR.gameObject.SetActive(false);
+        _parsB.gameObject.SetActive(false);
+        _parsG.gameObject.SetActive(false);
     }
 
     //private void OnParticleCollision(GameObject other)
