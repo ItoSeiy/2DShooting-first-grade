@@ -147,8 +147,6 @@ public class PlayerBase : MonoBehaviour, IPauseable
 
     private void Start()
     {
-        GameManager.Instance.OnGameOver += AllFalse;
-
         GameManager.Instance.OnStageClear += () =>
         {
             AllFalse();
@@ -381,9 +379,8 @@ public class PlayerBase : MonoBehaviour, IPauseable
                 Debug.LogError("おめぇーの残機ねえから！" + _playerResidue);
                 Play(_playerGameOverAudio);
                 _playerDeathEffect.SetActive(true);
+                AllFalse();
                 GameManager.Instance.GameOver();
-                //_sp.enabled = false;
-                //_canMove = false;
             }
         }
 
@@ -576,8 +573,8 @@ public class PlayerBase : MonoBehaviour, IPauseable
     {
         _canMove = false;
         _sp.enabled = false;
-        _effects.SetActive(false);
         GamingFalse();
+        _effects.SetActive(false);
     }
 
     void DeathPenalty()
