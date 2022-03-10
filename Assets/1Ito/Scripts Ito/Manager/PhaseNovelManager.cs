@@ -3,6 +3,7 @@ using System.Linq;
 using UnityEngine;
 using System.Threading.Tasks;
 using System;
+using Overdose.Data;
 
 public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
 {
