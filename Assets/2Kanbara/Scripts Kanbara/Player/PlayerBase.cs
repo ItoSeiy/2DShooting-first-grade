@@ -63,6 +63,8 @@ public class PlayerBase : MonoBehaviour, IPauseable
 
     [SerializeField, Header("揺らすカメラ")] CinemachineVirtualCamera _cmvcam1 = default;
 
+    [SerializeField, Header("EffectをまとめてあるGameObject")] GameObject _effects;
+
     [SerializeField, Header("チャージショットのパーティカルシステム（溜め）")] GameObject _chargeps = default;
 
     [SerializeField, Header("精密操作時の演出R")] GameObject _parsR;
@@ -145,20 +147,13 @@ public class PlayerBase : MonoBehaviour, IPauseable
 
     private void Start()
     {
-        GameManager.Instance.OnGameOver += () =>
-        {
-            _canMove = false;
-            _sp.enabled = false;
-            GamingFalse();
-        };
+        GameManager.Instance.OnGameOver += AllFalse;
 
         GameManager.Instance.OnStageClear += () =>
         {
-            _canMove = false;
-            _sp.enabled = false;
-            GamingFalse();
+            AllFalse();
+            AllItemGet();
         };
-
 
         _rb = GetComponent<Rigidbody2D>();
         _sp = GetComponent<SpriteRenderer>();
@@ -370,6 +365,8 @@ public class PlayerBase : MonoBehaviour, IPauseable
             _cmvcam1.Priority = -1;
             _isCharge = false;
             _isAttackMode = false;
+            _effects.SetActive(false);
+            GamingFalse();
             GameManager.Instance.ResidueChange(DEFAULTCOUNTDOWN);
             _playerResidue = GameManager.Instance.PlayerResidueCount;
 
@@ -468,12 +465,17 @@ public class PlayerBase : MonoBehaviour, IPauseable
 
         if(collision.tag == _playerItemGetLineTag)
         {
+            AllItemGet();
+        }
+    }
+
+    void AllItemGet()
+    {
             string[] itemTags = new string[] {_1upTag, _bombItemTag, _pointTag, _powerTag, _invincibleTag};
             foreach(var itemTag in itemTags)
             {
                 OnItemGetLine(itemTag);
             }
-        }
     }
 
     void OnItemGetLine(string itemTag)
@@ -499,6 +501,7 @@ public class PlayerBase : MonoBehaviour, IPauseable
         await Task.Delay(_respawnTime);
         _dir = Vector2.zero;
         transform.position = _playerRespawn.position;//ここでリスポーン地点に移動
+        _effects.SetActive(true);
         _canMove = true;
         await Task.Delay(_afterRespawnTime);
         _isGodMode = false;
@@ -568,6 +571,14 @@ public class PlayerBase : MonoBehaviour, IPauseable
     //    if (_isLateMode || _isGodMode) return;
     //    Respawn();
     //}
+
+    void AllFalse()
+    {
+        _canMove = false;
+        _sp.enabled = false;
+        _effects.SetActive(false);
+        GamingFalse();
+    }
 
     void DeathPenalty()
     {
