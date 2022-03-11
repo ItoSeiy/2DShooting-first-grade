@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+
 /// <summary>
 /// ゲームマネージャー
 /// ゲーム内に一つのみ存在しなければならない
@@ -9,7 +10,6 @@ using UnityEngine;
 /// </summary>
 public class GameManager : SingletonMonoBehaviour<GameManager>
 {
-
     const int LEVEL1 = 1;
     const int LEVEL2 = 2;
     const int LEVEL3 = 3;
@@ -28,6 +28,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         }
     }
 
+
     public int PlayerLevel => _playerLevel;
     ///<summary>プレイヤーの残機</summary>
     public int PlayerResidueCount => _playerResidue;
@@ -39,8 +40,6 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     public int PlayerBombCount => _playerBombCount;
     ///<summary>一定数獲得すると無敵になるオブジェクトを獲得した数</summary>
     public int PlayerInvincibleObjectCount => _playerInvicibleObjectCount;
-
-
 
     public bool IsGameOver => _isGameOver;
     public bool IsStageClear => _isStageClear;
@@ -57,14 +56,6 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     ///<summary>一定数獲得すると無敵になるオブジェクトを獲得した数///</summary>
     private int _playerInvicibleObjectCount = default;
 
-    private int _oldPlayerLevel;
-    private int _oldPlayerResidue;
-    private int _oldPlayerScore;
-    private int _oldPlayerPowerItemCount;
-    private int _oldPlayerBombCount;
-    private int _oldPlayerInvicibleObjectCount;
-
-
     private bool _isGameOver = false;
     private bool _isGameStart = false;
     private bool _isStageClear = false;
@@ -75,18 +66,20 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     /// <summary>ステージクリア時の処理を登録する</summary>
     public event Action OnStageClear;
 
-
     protected override void Awake()
     {
         base.Awake();
         DontDestroyOnLoad(gameObject);
-
-        SceneLoder.Instance.OnLoadEnd += TrySettingScene;
     }
 
     void Start()
     {
         TrySettingScene();
+        SceneLoder.Instance.OnLoadEnd += () =>
+        {
+            InitValue();
+            TrySettingScene();
+        };
     }
 
     /// <summary>
@@ -114,32 +107,6 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     }
 
     /// <summary>
-    /// ゲームマネージャーの値を保存する
-    /// </summary>
-    public void SaveValue()
-    {
-        _oldPlayerLevel = _playerLevel;
-        _oldPlayerResidue =_playerResidue;
-        _oldPlayerScore = _playerScore;
-        _oldPlayerPowerItemCount =_playerPowerItemCount;
-        _oldPlayerBombCount = _playerBombCount;
-        _oldPlayerInvicibleObjectCount = _playerInvicibleObjectCount;
-    }
-
-    /// <summary>
-    /// ゲームマネージャーの値を戻す
-    /// </summary>
-    public void ReturnValue()
-    {
-        _playerLevel = _oldPlayerLevel;
-        _playerResidue = _oldPlayerResidue;
-        _playerScore = _oldPlayerScore;
-        _playerPowerItemCount = _oldPlayerPowerItemCount;
-        _playerBombCount = _oldPlayerBombCount;
-        _playerInvicibleObjectCount = _oldPlayerInvicibleObjectCount;
-    }
-
-    /// <summary>
     /// 変数を初期化する関数
     /// </summary>
     public void InitValue()
@@ -154,6 +121,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
     /// <summary>
     /// ゲームオーバー時に行いたいことを記述
+    /// スコア等のリセットはリザルトが出る前には書き換えたくないので行わない
     /// </summary>
     public void GameOver()
     {
@@ -164,6 +132,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
     /// <summary>
     /// ステージをクリアした際にボスから呼び出される
+    /// スコア等のリセットはリザルトが出る前には書き換えたくないので行わない
     /// </summary>
     public void StageClear()
     {

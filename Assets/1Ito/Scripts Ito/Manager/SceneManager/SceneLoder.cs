@@ -16,8 +16,6 @@ public class SceneLoder : SingletonMonoBehaviour<SceneLoder>
     float _timer = 0;
     bool _isLoad = false;
 
-    /// <summary>ロードが始まった際に呼び出されるデリゲート</summary>
-    public event Action OnLoadStart;
     /// <summary>ロードが終わった際に呼び出されるデリゲート</summary>
     public event Action OnLoadEnd;
     /// <summary>
@@ -33,8 +31,6 @@ public class SceneLoder : SingletonMonoBehaviour<SceneLoder>
     IEnumerator Fade(string sceneName)
     {
         _isLoad = true;
-
-        OnLoadStart?.Invoke();
 
         Color c;
         while (_fadeImage.color.a < 1)
