@@ -837,6 +837,8 @@ MonoBehaviour:
   _text: {fileID: 9173671781069108829}
   _changeSpeed: 2
   _value: 0
+  _onScoreCountSoundType: 19
+  _scoreTextChangeDelay: 2000
 --- !u!114 &4177704772573151832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -852,6 +854,8 @@ MonoBehaviour:
   _text: {fileID: 594152545486954}
   _changeSpeed: 0.5
   _value: 1
+  _onScoreCountSoundType: 19
+  _scoreTextChangeDelay: 2000
 --- !u!1 &8005347221881432159
 GameObject:
   m_ObjectHideFlags: 0
@@ -1491,7 +1495,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isDelete: 0
-  _isDelayMode: 0
+  _isDelayMode: 1
   _delay: 1500
   _isFirstSelectButton: 1
   _callNextButtons: []
