@@ -45,7 +45,7 @@ Githubをフル活用した制作です
 
 **ここにゲーム面での作業内容を記載すると莫大な分量になりますので[こちらのIssue](https://github.com/ItoSeiy/2DShooting-first-grade/issues?q=is%3Aissue+is%3Aclosed+assignee%3AItoSeiy)をご覧ください**
 
-基底クラスやゲームマネージャーを作る際はとにかく汎用性が高く扱いやすいものを意識してつくりました
+基底クラスやゲームマネージャーなどスクリプトを作成する際は汎用性を上げたり、オブジェクト指向の3大要素(カプセル化, 継承, 多態性)を意識して制作しました。
 
 [EnemyBase](https://github.com/ItoSeiy/2DShooting-first-grade/blob/feature/enemy_bese_class/Assets/1Ito/Scripts%20Ito/Enemy/EnemyBese.cs)
 [BulletBase](https://github.com/ItoSeiy/2DShooting-first-grade/blob/feature/bullet_bese_class/Assets/1Ito/Scripts%20Ito/Bullet/BulletBese.cs)
