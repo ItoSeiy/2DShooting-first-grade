@@ -28,7 +28,7 @@ Issueに当たり前のことが沢山書いてありますがプログラミン
 
 # 概要
 
-制作進行中です
+ブラッシュアップ中です
 
 2021バンタンゲームアカデミー1年次後期審査会に向けたチーム制作の2D-シューティングゲームです
 
@@ -38,7 +38,7 @@ Githubをフル活用した制作です
 
 ## プレイ動画
 
-[未完成ですので完成後記載予定です](https://github.com/ItoSeiy/2DShooting-first-grade/blob/develop/README.md)
+[動画を取り直す予定ですが学内発表用に使用したものを掲載します](https://www.youtube.com/watch?v=wLbu2chwMls)
 
 ## 作業内容(伊東聖矢) こだわり
 
