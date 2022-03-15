@@ -5,8 +5,8 @@ using System;
 namespace Overdose.Data
 {
     /// <summary>ステージのデータを格納したクラス</summary>
-    [Serializable]
-    public class StageData
+    [CreateAssetMenu(fileName = "StageData")]
+    public class StageData : ScriptableObject
     {
         public PhaseData[] PhaseParms => phaseParms;
         public AudioClip NormalBGM => _normalBGM;

@@ -2,6 +2,7 @@
 using UnityEngine;
 using DG.Tweening;
 using System;
+using Overdose.Data;
 
 /// <summary>
 /// サウンドを管理するスクリプト
@@ -25,9 +26,9 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 
     [SerializeField]
     [Header("効果音が格納されたクラス")]
-    SoundPoolParams _soundObjParam = default;
+    SFXPoolData _sfxPoolData = default;
 
-    List<SoundPool> _pool = new List<SoundPool>();
+    List<Pool> _pool = new List<Pool>();
 
     int _poolCountIndex = 0;
 
@@ -95,17 +96,17 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
     /// </summary>
     private void CreatePool()
     {
-        if(_poolCountIndex >= _soundObjParam.Params.Length)
+        if(_poolCountIndex >= _sfxPoolData.Data.Length)
         {
             //Debug.Log("すべてのオーディオを生成しました。");
             return;
         }
 
-        for (int i = 0; i < _soundObjParam.Params[_poolCountIndex].MaxCount; i++)
+        for (int i = 0; i < _sfxPoolData.Data[_poolCountIndex].MaxCount; i++)
         {
-            var sound = Instantiate(_soundObjParam.Params[_poolCountIndex].Audio, this.transform);
+            var sound = Instantiate(_sfxPoolData.Data[_poolCountIndex].Audio, this.transform);
             sound.gameObject.SetActive(false);
-            _pool.Add(new SoundPool { Sound = sound, Type = _soundObjParam.Params[_poolCountIndex].Type });
+            _pool.Add(new Pool { Sound = sound, Type = _sfxPoolData.Data[_poolCountIndex].Type });
         }
 
         _poolCountIndex++;
@@ -119,12 +120,6 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
     /// <returns></returns>
     public AudioSource UseSound(SoundType soundType)
     {
-        if (PauseManager.Instance.PauseFlg == true)
-        {
-            Debug.LogWarning($"{soundType}を再生するリクエストを受けました\nポーズ中なので再生しません");
-            return null;
-        }
-
         foreach (var pool in _pool)
         {
             if(pool.Sound.gameObject.activeSelf == false && pool.Type == soundType)
@@ -134,13 +129,13 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
             }
         }
 
-        var newSound = Instantiate(Array.Find(_soundObjParam.Params, x => x.Type == soundType).Audio, this.transform);
-        _pool.Add(new SoundPool { Sound = newSound, Type = soundType});
+        var newSound = Instantiate(Array.Find(_sfxPoolData.Data, x => x.Type == soundType).Audio, this.transform);
+        _pool.Add(new Pool { Sound = newSound, Type = soundType});
         newSound.gameObject.SetActive(true);
 
         Debug.LogWarning($"{soundType}のプールのオブジェクト数が足りなかったため新たにオブジェクトを生成します" +
             $"\nこのオブジェクトはプールの最大値が少ない可能性があります" +
-            $"\n現在{soundType}の数は{_pool.FindAll(x => x.Type == soundType).Count}です");
+            $"現在{soundType}の数は{_pool.FindAll(x => x.Type == soundType).Count}です");
 
         return newSound;
     }
@@ -148,73 +143,9 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
     /// <summary>
     /// サウンドをプールするためのクラス
     ///</summary>
-    private class SoundPool
+    private class Pool
     {
         public AudioSource Sound { get; set; }
         public SoundType Type { get; set; }
     }
-
-    /// <summary>
-    /// サウンドの情報をまとめたクラス
-    /// </summary>
-    [System.Serializable]
-    public class SoundPoolParams
-    {
-        public SoundPoolParam[] Params => soundPoolParams;
-        [SerializeField] public SoundPoolParam[] soundPoolParams;
-    }
-
-    /// <summary>
-    /// サウンド一つ一つの情報が格納されたクラス
-    /// </summary>
-    [System.Serializable]
-    public class SoundPoolParam
-    {
-        public SoundType Type => type;
-        public AudioSource Audio => audio;
-        public int MaxCount => maxCount;
-
-        [SerializeField] 
-        private string name;
-        [SerializeField]
-        private SoundType type;
-        [SerializeField]
-        private AudioSource audio;
-        [SerializeField]
-        private int maxCount;
-    }
-}
-
-public enum SoundType
-{
-    /// <summary>音無し</summary>
-    None,
-    /// <summary>風</summary>
-    Wind,
-    /// <summary>剣</summary>
-    Sword,
-    /// <summary>キャッチ</summary>
-    Catch,
-    /// <summary>耳鳴り</summary>
-    Tinnitus,
-    /// <summary>銃</summary>
-    Gun,
-    /// <summary>ボス1,2,4,5の死亡サウンド</summary>
-    BossKilled,
-    /// <summary>ボスの死亡サウンド</summary>
-    Boss3Killed,
-
-    Click01,
-    Click02,
-    Click03,
-    Click04,
-    Click05,
-    Click06,
-    Click07,
-    Click08,
-    Click09,
-    Click10,
-    Novel,
-    ScoreCount,
-    EnemyKilled
 }

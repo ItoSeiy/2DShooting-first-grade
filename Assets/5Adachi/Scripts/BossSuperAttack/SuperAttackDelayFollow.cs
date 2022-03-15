@@ -1,3 +1,4 @@
+using Overdose.Data;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Playables;
@@ -146,7 +147,7 @@ public class SuperAttackDelayFollow : BossAttackAction
         //•KŽE‹Z”­“®
         while (true)
         {
-            if (_timer >= 3f)
+            if (_timer >= _introductionStopTime)
             {
                 _Introduction.gameObject.SetActive(false);
             }

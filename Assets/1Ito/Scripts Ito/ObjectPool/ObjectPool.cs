@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Overdose.Data;
 
 /// <summary>
 /// Bulletのオブジェクトプールを管理するスクリプト
@@ -8,9 +9,9 @@ using System;
 public class ObjectPool : SingletonMonoBehaviour<ObjectPool>
 {
     [SerializeField]
-    private PoolObjectParamAsset _poolObjParam = default;
+    private ObjectsPoolData _objectPoolData = default;
 
-    private List<ObjPool> _pool = new List<ObjPool>();
+    private List<Pool> _pool = new List<Pool>();
     private int _poolCountIndex = 0;
 
     protected override void Awake()
@@ -28,17 +29,17 @@ public class ObjectPool : SingletonMonoBehaviour<ObjectPool>
     /// </summary>
     private void CreatePool()
     {
-        if(_poolCountIndex >= _poolObjParam.Params.Length)
+        if(_poolCountIndex >= _objectPoolData.Data.Length)
         {
             //Debug.Log("すべてのオブジェクトを生成しました。");
             return;
         }
 
-        for (int i = 0; i < _poolObjParam.Params[_poolCountIndex].MaxCount; i++)
+        for (int i = 0; i < _objectPoolData.Data[_poolCountIndex].MaxCount; i++)
         {
-            var bullet = Instantiate(_poolObjParam.Params[_poolCountIndex].Prefab, this.transform);
+            var bullet = Instantiate(_objectPoolData.Data[_poolCountIndex].Prefab, this.transform);
             bullet.SetActive(false);
-            _pool.Add(new ObjPool { Object = bullet, Type = _poolObjParam.Params[_poolCountIndex].Type } );
+            _pool.Add(new Pool { Object = bullet, Type = _objectPoolData.Data[_poolCountIndex].Type } );
         }
 
         _poolCountIndex++;
@@ -70,19 +71,20 @@ public class ObjectPool : SingletonMonoBehaviour<ObjectPool>
         }
 
 
-        var newObj = Instantiate(Array.Find(_poolObjParam.Params, x => x.Type == objectType).Prefab, this.transform);
+        var newObj = Instantiate(Array.Find(_objectPoolData.Data, x => x.Type == objectType).Prefab, this.transform);
         newObj.transform.position = position;
         newObj.SetActive(true);
-        _pool.Add(new ObjPool { Object = newObj, Type = objectType});
+        _pool.Add(new Pool { Object = newObj, Type = objectType});
 
         Debug.LogWarning($"{objectType}のプールのオブジェクト数が足りなかったため新たにオブジェクトを生成します" +
         $"\nこのオブジェクトはプールの最大値が少ない可能性があります" +
-        $"\n現在{objectType}の数は{_pool.FindAll(x => x.Type == objectType).Count}です");
+        $"現在{objectType}の数は{_pool.FindAll(x => x.Type == objectType).Count}です");
 
         return newObj;
     }
 
-    private class ObjPool
+    /// <summary>オブジェクトをプールするためのクラス</summary>
+    private class Pool
     {
         public GameObject Object { get; set; }
         public PoolObjectType Type { get; set; }

@@ -1,5 +1,7 @@
 ﻿using DG.Tweening;
 using UnityEngine;
+using Overdose.Data;
+
 /// <summary>
 /// Enemyの派生クラス
 /// </summary>

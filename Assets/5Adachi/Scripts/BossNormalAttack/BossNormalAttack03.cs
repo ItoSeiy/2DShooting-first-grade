@@ -1,7 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Overdose.Calculation;
+using Overdose.Data;
+using System.Collections;
+using UnityEngine;
 
 public class BossNormalAttack03 : BossAttackAction
 {

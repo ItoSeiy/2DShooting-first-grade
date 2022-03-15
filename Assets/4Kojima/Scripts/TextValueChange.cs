@@ -2,6 +2,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Threading.Tasks;
+using Overdose.Data;
 
 public class TextValueChange : MonoBehaviour
 {

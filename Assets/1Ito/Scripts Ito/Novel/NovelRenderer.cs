@@ -1,8 +1,8 @@
-using UnityEngine;
-using UnityEngine.UI;
+using Overdose.Data;
 using System.Collections;
+using UnityEngine;
 using UnityEngine.InputSystem;
-using System.Collections.Generic;
+using UnityEngine.UI;
 
 namespace Overdose.Novel
 {
