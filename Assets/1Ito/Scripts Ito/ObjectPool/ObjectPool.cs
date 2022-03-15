@@ -36,7 +36,7 @@ public class ObjectPool : SingletonMonoBehaviour<ObjectPool>
         {
             var bullet = Instantiate(_poolObjParam.Params[_poolCountIndex].Prefab, this.transform);
             bullet.SetActive(false);
-            _pool.Add(new ObjPool { Audio = bullet, Type = _poolObjParam.Params[_poolCountIndex].Type } );
+            _pool.Add(new ObjPool { Object = bullet, Type = _poolObjParam.Params[_poolCountIndex].Type } );
         }
 
         _poolCountIndex++;
@@ -57,24 +57,24 @@ public class ObjectPool : SingletonMonoBehaviour<ObjectPool>
         }
         foreach(var pool in _pool)
         {
-            if(pool.Audio.activeSelf == false && pool.Type == objectType)
+            if(pool.Object.activeSelf == false && pool.Type == objectType)
             {
-                pool.Audio.SetActive(true);
-                pool.Audio.transform.position = position;
-                return pool.Audio;
+                pool.Object.SetActive(true);
+                pool.Object.transform.position = position;
+                return pool.Object;
             }
         }
 
         var newObj = Instantiate(_poolObjParam.Params.Find(x => x.Type == objectType).Prefab, this.transform);
         newObj.transform.position = position;
         newObj.SetActive(true);
-        _pool.Add(new ObjPool { Audio = newObj, Type = objectType});
+        _pool.Add(new ObjPool { Object = newObj, Type = objectType});
         return newObj;
     }
 
     private class ObjPool
     {
-        public AudioSource Audio { get; set; }
+        public GameObject Object { get; set; }
         public PoolObjectType Type { get; set; }
     }
 }

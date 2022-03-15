@@ -37,7 +37,7 @@ public class TextValueChange : MonoBehaviour
                     .OnComplete(() =>
                     {
                         _text.text = GameManager.Instance.PlayerScore.ToString("00000000");
-                        soundObj.SetActive(false);
+                        soundObj.gameObject.SetActive(false);
                     });
                 break;
 

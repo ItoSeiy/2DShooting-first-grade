@@ -7,8 +7,6 @@ using DG.Tweening;
 /// </summary>
 public class SoundManager : SingletonMonoBehaviour<SoundManager>
 {
-    [SerializeField]
-    SoundPoolParams _soundObjParam = default;
 
     [SerializeField]
     [Header("BGMを流すAudioSource")]
@@ -19,11 +17,17 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
     AudioSource _bossBgmAudioSource;
 
     [SerializeField]
+    [Header("BGMのフェードにかける時間")]
     float _bgmFadeTime = 2f;
     [SerializeField]
+    [Header("BGMを小さく流す際の音量")]
     float _bgmFadeOutVol = 0.2f;
 
-    List<Pool> _pool = new List<Pool>();
+    [SerializeField]
+    [Header("効果音が格納されたクラス")]
+    SoundPoolParams _soundObjParam = default;
+
+    List<SoundPool> _pool = new List<SoundPool>();
 
     int _poolCountIndex = 0;
 
@@ -38,8 +42,12 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
     }
     void Start()
     {
-        _normalBgmAudioSource?.Play();
+        SettingBGM();
+    }
 
+    /// <summary>BGMを流すタイミングをデリゲートに登録するなどの設定を行う関数</summary>
+    private void SettingBGM()
+    {
         PhaseNovelManager.Instance.OnBeforeNovel += () =>
         {
             //ノベル時はBGMを小さく流す
@@ -59,13 +67,13 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
         GameManager.Instance.OnGameOver += () =>
         {
             //BGM停止
-            FadeBgm(_normalBgmAudioSource, 0, _bgmFadeTime);
+            FadeBgm(_normalBgmAudioSource, 0f, _bgmFadeTime);
             //ボス戦闘中に死んだ際はノベルが流れるため少し音を残す
-            FadeBgm(_bossBgmAudioSource, _bgmFadeOutVol, _bgmFadeTime);   
+            FadeBgm(_bossBgmAudioSource, _bgmFadeOutVol, _bgmFadeTime);
         };
 
         //ボス死亡時                               ノベルが流れるため少し音を残す
-        GameManager.Instance.OnStageClear += () => FadeBgm(_bossBgmAudioSource, 0.2f, _bgmFadeTime);
+        GameManager.Instance.OnStageClear += () => FadeBgm(_bossBgmAudioSource, _bgmFadeOutVol, _bgmFadeTime);
 
         PhaseNovelManager.Instance.OnEndAfterNovel += () => FadeBgm(_normalBgmAudioSource, 0f, _bgmFadeTime);
     }
@@ -97,7 +105,7 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
         {
             var sound = Instantiate(_soundObjParam.Params[_poolCountIndex].Audio, this.transform);
             sound.gameObject.SetActive(false);
-            _pool.Add(new Pool { Sound = sound, Type = _soundObjParam.Params[_poolCountIndex].Type });
+            _pool.Add(new SoundPool { Sound = sound, Type = _soundObjParam.Params[_poolCountIndex].Type });
         }
 
         _poolCountIndex++;
@@ -121,15 +129,48 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
         }
 
         var newSound = Instantiate(_soundObjParam.Params.Find(x => x.Type == soundType).Audio, this.transform);
-        _pool.Add(new Pool { Sound = newSound, Type = soundType});
+        _pool.Add(new SoundPool { Sound = newSound, Type = soundType});
         newSound.gameObject.SetActive(true);
         return newSound;
     }
 
-    private class Pool
+    /// <summary>
+    /// サウンドをプールするためのクラス
+    ///</summary>
+    private class SoundPool
     {
         public AudioSource Sound { get; set; }
         public SoundType Type { get; set; }
+    }
+
+    /// <summary>
+    /// サウンドの情報をまとめたクラス
+    /// </summary>
+    [System.Serializable]
+    public class SoundPoolParams
+    {
+        public List<SoundPoolParam> Params => soundPoolParams;
+        [SerializeField] public List<SoundPoolParam> soundPoolParams = new List<SoundPoolParam>();
+    }
+
+    /// <summary>
+    /// サウンド一つ一つの情報が格納されたクラス
+    /// </summary>
+    [System.Serializable]
+    public class SoundPoolParam
+    {
+        public SoundType Type => type;
+        public AudioSource Audio => audio;
+        public int MaxCount => maxCount;
+
+        [SerializeField] 
+        private string name;
+        [SerializeField]
+        private SoundType type;
+        [SerializeField]
+        private AudioSource audio;
+        [SerializeField]
+        private int maxCount;
     }
 }
 
@@ -167,29 +208,5 @@ public enum SoundType
     EnemyKilled
 }
 
-[System.Serializable]
-public class SoundPoolParams
-{
-    public List<SoundPoolParam> Params => soundPoolParams;
-    [SerializeField] public List<SoundPoolParam> soundPoolParams = new List<SoundPoolParam>();
-}
-
-
-[System.Serializable]
-public class SoundPoolParam
-{
-    public SoundType Type => type;
-    public AudioSource Audio => audio;
-    public int MaxCount => maxCount;
-
-    [SerializeField] 
-    private string name;
-    [SerializeField]
-    private SoundType type;
-    [SerializeField]
-    private AudioSource audio;
-    [SerializeField]
-    private int maxCount;
-}
 
 

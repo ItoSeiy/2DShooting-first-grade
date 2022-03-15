@@ -40,10 +40,11 @@ AudioSource:
   m_GameObject: {fileID: 4820405359536055098}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 6709231543892393368, guid: ad5b1f8ac9843f546aae4eb1f456ea7f,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -167,10 +168,11 @@ AudioSource:
   m_GameObject: {fileID: 5155726357256763933}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 6709231543892393368, guid: ad5b1f8ac9843f546aae4eb1f456ea7f,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -478,91 +480,109 @@ MonoBehaviour:
     soundPoolParams:
     - name: None
       type: 0
-      prefab: {fileID: 1627059345262153424, guid: e8ba35ea6c91147459b5f19482444dc5,
+      audio: {fileID: 5682596664213509771, guid: e8ba35ea6c91147459b5f19482444dc5,
         type: 3}
       maxCount: 10
     - name: Wind
       type: 1
-      prefab: {fileID: 1627059345262153424, guid: 53cf87c8cc6d3e140830fbf97ebf27a3,
+      audio: {fileID: 5682596664213509771, guid: 53cf87c8cc6d3e140830fbf97ebf27a3,
         type: 3}
-      maxCount: 0
+      maxCount: 10
     - name: Sword
       type: 2
-      prefab: {fileID: 2088313258231204459, guid: e103f90e6e6d8b34cbfcb7417480a97b,
+      audio: {fileID: 851724284965315322, guid: e103f90e6e6d8b34cbfcb7417480a97b,
         type: 3}
-      maxCount: 0
+      maxCount: 10
     - name: Catch
       type: 3
-      prefab: {fileID: 0}
-      maxCount: 0
+      audio: {fileID: 5682596664213509771, guid: e26ffe6dee31f0645a0c3a8d344476bc,
+        type: 3}
+      maxCount: 10
     - name: Tinnitus
       type: 4
-      prefab: {fileID: 0}
-      maxCount: 0
+      audio: {fileID: 5682596664213509771, guid: b89762c89bcc7ad4689959a872c175b6,
+        type: 3}
+      maxCount: 10
     - name: Gun
       type: 5
-      prefab: {fileID: 0}
-      maxCount: 0
+      audio: {fileID: 5682596664213509771, guid: 04881618c3b92fd43a4fd737c68bf29d,
+        type: 3}
+      maxCount: 10
     - name: BossKilled
       type: 6
-      prefab: {fileID: 0}
-      maxCount: 0
+      audio: {fileID: 5682596664213509771, guid: 742c33b406a6a054eae64ec169cfa29c,
+        type: 3}
+      maxCount: 10
     - name: Boss3Killed
       type: 7
-      prefab: {fileID: 0}
-      maxCount: 0
+      audio: {fileID: 5682596664213509771, guid: 6f75fa9b861ad1c49b3d1d48d6ba39bd,
+        type: 3}
+      maxCount: 10
     - name: Click01
       type: 8
-      prefab: {fileID: 0}
-      maxCount: 0
+      audio: {fileID: 5682596664213509771, guid: d46a3e85dc77987409262974832032bf,
+        type: 3}
+      maxCount: 10
     - name: Click02
       type: 9
-      prefab: {fileID: 0}
-      maxCount: 0
+      audio: {fileID: 5682596664213509771, guid: ef1516f2b4a6a554fa37d147a0460a65,
+        type: 3}
+      maxCount: 10
     - name: Click03
       type: 10
-      prefab: {fileID: 0}
-      maxCount: 0
+      audio: {fileID: 5682596664213509771, guid: e7054ef039adf0f4e9d6cbba47e35cd8,
+        type: 3}
+      maxCount: 10
     - name: Click04
       type: 11
-      prefab: {fileID: 0}
-      maxCount: 0
+      audio: {fileID: 5682596664213509771, guid: cc9db26c050f5bf408a1254239f9a416,
+        type: 3}
+      maxCount: 10
     - name: Click05
       type: 12
-      prefab: {fileID: 0}
-      maxCount: 0
+      audio: {fileID: 5682596664213509771, guid: f33e40c2997156045a61e8471b9f572b,
+        type: 3}
+      maxCount: 10
     - name: Click06
       type: 13
-      prefab: {fileID: 0}
-      maxCount: 0
+      audio: {fileID: 5682596664213509771, guid: 098b471122b21e344940d5e8f33699cc,
+        type: 3}
+      maxCount: 10
     - name: Click07
       type: 14
-      prefab: {fileID: 0}
-      maxCount: 0
+      audio: {fileID: 5682596664213509771, guid: 80f91a164e770a84fac12afe2c1f55ef,
+        type: 3}
+      maxCount: 10
     - name: Click08
       type: 15
-      prefab: {fileID: 0}
-      maxCount: 0
+      audio: {fileID: 5682596664213509771, guid: 73638f9ae7373424cae82962872430ea,
+        type: 3}
+      maxCount: 10
     - name: Click09
       type: 16
-      prefab: {fileID: 0}
-      maxCount: 0
+      audio: {fileID: 5682596664213509771, guid: c30dfd34a7371ea44b7a61cd0c63d987,
+        type: 3}
+      maxCount: 10
     - name: Click10
       type: 17
-      prefab: {fileID: 0}
-      maxCount: 0
+      audio: {fileID: 5682596664213509771, guid: c1fdeb770be60ba4e84c2d8c41f16355,
+        type: 3}
+      maxCount: 10
     - name: Novel
       type: 18
-      prefab: {fileID: 0}
+      audio: {fileID: 5682596664213509771, guid: df0dd8e0da09e674db8a477598d5bf34,
+        type: 3}
       maxCount: 50
     - name: ScoreCount
       type: 19
-      prefab: {fileID: 0}
-      maxCount: 0
+      audio: {fileID: 5682596664213509771, guid: cb0d7e67f690a814f8e27e183c792e52,
+        type: 3}
+      maxCount: 10
     - name: EnemyKilled
       type: 20
-      prefab: {fileID: 0}
-      maxCount: 0
+      audio: {fileID: 5682596664213509771, guid: e6aa244d100a9674b810536e6973d3a4,
+        type: 3}
+      maxCount: 50
   _normalBgmAudioSource: {fileID: 4519879195706693417}
   _bossBgmAudioSource: {fileID: 6385119563603208521}
   _bgmFadeTime: 2
