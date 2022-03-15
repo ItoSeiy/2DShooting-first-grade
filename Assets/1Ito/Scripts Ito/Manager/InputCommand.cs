@@ -30,7 +30,7 @@ public class InputCommand : MonoBehaviour, IPauseable
     InputAction _commandsAnswer10 = default;
 
     bool[] _isCommandSuccess = new bool[9];
-    bool _startCommand = false; 
+    bool _isCommandStarted = false; 
 
     [SerializeField]
     [Header("コマンドが成功した際の音")]
@@ -60,9 +60,9 @@ public class InputCommand : MonoBehaviour, IPauseable
 
     private async void StartCommand()
     {
-        _startCommand = true;
+        _isCommandStarted = true;
         await Task.Delay(_commandFinishTime);
-        _startCommand = false;
+        _isCommandStarted = false;
     }
 
     private void OnInputCommand()
@@ -79,7 +79,7 @@ public class InputCommand : MonoBehaviour, IPauseable
 
         _commandsAnswer2.started += _ =>
         {
-            if (_isCommandSuccess[0] && PauseManager.Instance.PauseFlg == true && _startCommand)
+            if (_isCommandSuccess[0] && PauseManager.Instance.PauseFlg == true && _isCommandStarted)
             {
                 _isCommandSuccess[1] = true;
             }
@@ -87,7 +87,7 @@ public class InputCommand : MonoBehaviour, IPauseable
 
         _commandsAnswer3.started += _ =>
         {
-            if (_isCommandSuccess[1] && PauseManager.Instance.PauseFlg == true && _startCommand)
+            if (_isCommandSuccess[1] && PauseManager.Instance.PauseFlg == true && _isCommandStarted)
             {
                 _isCommandSuccess[2] = true;
             }
@@ -95,7 +95,7 @@ public class InputCommand : MonoBehaviour, IPauseable
 
         _commandsAnswer4.started += _ =>
         {
-            if (_isCommandSuccess[2] && PauseManager.Instance.PauseFlg == true && _startCommand)
+            if (_isCommandSuccess[2] && PauseManager.Instance.PauseFlg == true && _isCommandStarted)
             {
                 _isCommandSuccess[3] = true;
             }
@@ -103,7 +103,7 @@ public class InputCommand : MonoBehaviour, IPauseable
 
         _commandsAnswer5.started += _ =>
         {
-            if (_isCommandSuccess[3] && PauseManager.Instance.PauseFlg == true && _startCommand)
+            if (_isCommandSuccess[3] && PauseManager.Instance.PauseFlg == true && _isCommandStarted)
             {
                 _isCommandSuccess[4] = true;
             }
@@ -111,7 +111,7 @@ public class InputCommand : MonoBehaviour, IPauseable
 
         _commandsAnswer6.started += _ =>
         {
-            if (_isCommandSuccess[4] && PauseManager.Instance.PauseFlg == true && _startCommand)
+            if (_isCommandSuccess[4] && PauseManager.Instance.PauseFlg == true && _isCommandStarted)
             {
                 _isCommandSuccess[5] = true;
             }
@@ -119,7 +119,7 @@ public class InputCommand : MonoBehaviour, IPauseable
 
         _commandsAnswer7.started += _ =>
         {
-            if (_isCommandSuccess[5] && PauseManager.Instance.PauseFlg == true && _startCommand)
+            if (_isCommandSuccess[5] && PauseManager.Instance.PauseFlg == true && _isCommandStarted)
             {
                 _isCommandSuccess[6] = true;
             }
@@ -127,7 +127,7 @@ public class InputCommand : MonoBehaviour, IPauseable
 
         _commandsAnswer8.started += _ =>
         {
-            if (_isCommandSuccess[6] && PauseManager.Instance.PauseFlg == true && _startCommand)
+            if (_isCommandSuccess[6] && PauseManager.Instance.PauseFlg == true && _isCommandStarted)
             {
                 _isCommandSuccess[7] = true;
             }
@@ -135,7 +135,7 @@ public class InputCommand : MonoBehaviour, IPauseable
 
         _commandsAnswer9.started += _ =>
         {
-            if (_isCommandSuccess[7] && PauseManager.Instance.PauseFlg == true && _startCommand)
+            if (_isCommandSuccess[7] && PauseManager.Instance.PauseFlg == true && _isCommandStarted)
             {
                 _isCommandSuccess[8] = true;
             }
@@ -143,7 +143,7 @@ public class InputCommand : MonoBehaviour, IPauseable
 
         _commandsAnswer10.started += _ =>
         {
-            if (_isCommandSuccess[8] && PauseManager.Instance.PauseFlg == true && _startCommand)
+            if (_isCommandSuccess[8] && PauseManager.Instance.PauseFlg == true && _isCommandStarted)
             {
                 for (int i = 0; i < _isCommandSuccess.Length; i++)
                 {
@@ -151,7 +151,7 @@ public class InputCommand : MonoBehaviour, IPauseable
                 }
 
                 Debug.Log("コマンド完了");
-                _startCommand = false;
+                _isCommandStarted = false;
                 SoundManager.Instance.UseSound(_onCommandSuccessSound);
                 GameManager.Instance.Player.IsGodMode = !GameManager.Instance.Player.IsGodMode;
 
