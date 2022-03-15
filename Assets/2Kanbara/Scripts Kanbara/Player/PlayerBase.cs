@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System;
 using Overdose.Novel;
 
 /// <summary>
@@ -16,83 +17,228 @@ using Overdose.Novel;
 public class PlayerBase : MonoBehaviour, IPauseable
 {
     /// <summary>無敵モードのフラグ</summary>
-    [SerializeField, Header("無敵モード")] bool _isGodMode = false;
+    [SerializeField] 
+    [Header("無敵モード")]
+    bool _isGodMode = false;
 
-    [SerializeField, Header("プレイヤーの音")] protected AudioData[] _audioData;
+    [SerializeField]
+    [Header("プレイヤーの音")]
+    protected AudioData[] _audioData;
+
     Rigidbody2D _rb;
     SpriteRenderer _sp;
     protected AudioSource _audioSource;
     Animator _anim;
     Vector2 _dir;
+    Vector2 _oldVerocity;
 
-    [SerializeField, Header("リスポーンするポジション")] Transform _playerRespawn = default;
-    [SerializeField, Header("弾を発射するポジション")] protected Transform _muzzle = default;
+    [SerializeField]
+    [Header("リスポーンするポジション")]
+    Transform _playerRespawn = default;
 
-    [SerializeField, Header("残基が無くなってから自分が消えるまでの時間(ミリ秒)")] int _onDestroyDelay = 1500;
-    [SerializeField, Header("精密操作時の発射する間隔(ミリ秒)")] int _superAttackDelay = 200;
-    [SerializeField, Header("発射する間隔(ミリ秒)")] int _attackDelay = 200;
-    [SerializeField, Header("ボムのクールタイム（ミリ秒）")] int _bombCoolTime = default;
-    [SerializeField, Header("無敵モードのクールタイム(ミリ秒)")] int _invincibleTime = 2800;
+    [SerializeField]
+    [Header("弾を発射するポジション")]
+    protected Transform _muzzle = default;
 
-    [SerializeField, Header("レベル2に上げるために必要なパワーアイテムの数")] int _playerPowerRequiredNumberLevel2 = 50;
-    [SerializeField, Header("レベル3に上げるために必要なパワーアイテムの数")] int _playerPowerRequiredNumberLevel3 = 100;
+    [SerializeField]
+    [Header("残基が無くなってから自分が消えるまでの時間(ミリ秒)")]
+    int _onDestroyDelay = 1500;
 
-    [SerializeField, Header("Enemyのタグ")] string _enemyTag = "Enemy";
-    [SerializeField, Header("EnemyのBulletのタグ")] string _enemyBulletTag = "EnemyBullet";
-    [SerializeField, Header("Powerのタグ")] string _powerTag = "Power";
-    [SerializeField, Header("Pointのタグ")] string _pointTag = "Point";
-    [SerializeField, Header("1upのタグ")] string _1upTag = "1UP";
-    [SerializeField, Header("ボムを増やすアイテムのタグ")] string _bombItemTag = "BombItem";
-    [SerializeField, Header("Invincibleのタグ")] string _invincibleTag = "Invincible";
-    [SerializeField, Header("アイテムを回収するためのコライダーのタグ")] string _playerItemGetLineTag = "ItemGetLine";
+    [SerializeField]
+    [Header("精密操作時の発射する間隔(ミリ秒)")]
+    int _superAttackDelay = 200;
+    
+    [SerializeField]
+    [Header("発射する間隔(ミリ秒)")]
+    int _attackDelay = 200;
+    
+    [SerializeField]
+    [Header("ボムのクールタイム（ミリ秒）")]
+    int _bombCoolTime = default;
+    
+    [SerializeField]
+    [Header("無敵モードのクールタイム(ミリ秒)")]
+    int _invincibleTime = 2800;
 
-    [SerializeField, Header("被弾時に再生するアニメーションのパラメータ名")] string _invicibleAnimParamName = "IsInvicible";
+    [SerializeField]
+    [Header("レベル2に上げるために必要なパワーアイテムの数")]
+    int _playerPowerRequiredNumberLevel2 = 50;
+    
+    [SerializeField]
+    [Header("レベル3に上げるために必要なパワーアイテムの数")]
+    int _playerPowerRequiredNumberLevel3 = 100;
 
-    [SerializeField, Header("動くスピード")] float _moveSpeed = default;
-    [SerializeField, Header("精密操作のスピード")] float _lateMove = default;
+    [SerializeField]
+    [Header("Enemyのタグ")]
+    string _enemyTag = "Enemy";
+    
+    [SerializeField]
+    [Header("EnemyのBulletのタグ")]
+    string _enemyBulletTag = "EnemyBullet";
+    
+    [SerializeField]
+    [Header("Powerのタグ")]
+    string _powerTag = "Power";
+    
+    [SerializeField]
+    [Header("Pointのタグ")]
+    string _pointTag = "Point";
+    
+    [SerializeField]
+    [Header("1upのタグ")]
+    string _1upTag = "1UP";
+    
+    [SerializeField]
+    [Header("ボムを増やすアイテムのタグ")]
+    string _bombItemTag = "BombItem";
+    
+    [SerializeField]
+    [Header("Invincibleのタグ")]
+    string _invincibleTag = "Invincible";
+    
+    [SerializeField]
+    [Header("アイテムを回収するためのコライダーのタグ")]
+    string _playerItemGetLineTag = "ItemGetLine";
 
-    [SerializeField, Header("Plaerの残機の上限")] int _playerResidueLimit = 99;
-    [SerializeField, Header("Playerのボムの上限")] int _playerBombLimit = 99;
-    [SerializeField, Header("Playerのスコアの上限")] int _playerScoreLimit = 999999999;
-    [SerializeField, Header("この数値以上なら、一定時間無敵モードになる変数")] int _invincibleLimit = 150;
-    [SerializeField, Header("Playerのパワーの上限")] int _playerPowerLimit = 150;
-    [SerializeField, Header("リスポーン中の無敵時間")] int _respawnTime = 2800;
-    [SerializeField, Header("リスポーン後の無敵時間")] int _afterRespawnTime = 1400;
+    [SerializeField]
+    [Header("被弾時に再生するアニメーションのパラメータ名")]
+    string _invicibleAnimParamName = "IsInvicible";
 
-    [SerializeField, Header("音量を調節する変数")] protected float _musicVolume = default;
+    [SerializeField]
+    [Header("動くスピード")]
+    float _moveSpeed = default;
+    
+    [SerializeField]
+    [Header("精密操作のスピード")]
+    float _lateMove = default;
 
-    [SerializeField, Header("揺らすカメラ")] CinemachineVirtualCamera _cmvcam1 = default;
+    [SerializeField]
+    [Header("Plaerの残機の上限")]
+    int _playerResidueLimit = 99;
+    
+    [SerializeField]
+    [Header("Playerのボムの上限")]
+    int _playerBombLimit = 99;
+    
+    [SerializeField]
+    [Header("Playerのスコアの上限")]
+    int _playerScoreLimit = 999999999;
+    
+    [SerializeField]
+    [Header("この数値以上なら、一定時間無敵モードになる変数")]
+    int _invincibleLimit = 150;
+    
+    [SerializeField]
+    [Header("Playerのパワーの上限")]
+    int _playerPowerLimit = 150;
+    
+    [SerializeField]
+    [Header("リスポーン中の無敵時間")]
+    int _respawnTime = 2800;
+    
+    [SerializeField]
+    [Header("リスポーン後の無敵時間")]
+    int _afterRespawnTime = 1400;
 
-    [SerializeField, Header("EffectをまとめてあるGameObject")] GameObject _effects;
+    [SerializeField]
+    [Header("音量を調節する変数")]
+    protected float _musicVolume = default;
 
-    [SerializeField, Header("チャージショットのパーティカルシステム（溜め）")] ParticleSystem _chargeps = default;
+    [SerializeField]
+    [Header("揺らすカメラ")]
+    CinemachineVirtualCamera _cmvcam1 = default;
 
-    [SerializeField, Header("精密操作時の演出R")] ParticleSystem _parsR;
-    [SerializeField, Header("精密操作時の演出B")] ParticleSystem _parsB;
-    [SerializeField, Header("精密操作時の演出G")] ParticleSystem _parsG;
+    [SerializeField]
+    [Header("EffectをまとめてあるGameObject")]
+    GameObject _effects;
 
-    [SerializeField, Header("精密操作時のPlayerの色をゲーミングにする変数")] int _gameingPlayerColorTime = default;
+    [SerializeField]
+    [Header("チャージショットのパーティカルシステム（溜め）")]
+    ParticleSystem _chargeps = default;
 
-    [SerializeField, Header("パワーアイテムの数がカンストしたとき（レベルマックスのとき）の演出")] ParticleSystem _fullPowerModeEffect = default;
-    [SerializeField, Header("Invincibleモードのときの演出")] ParticleSystem _invincibleModeEffect = default;
-    [SerializeField, Header("残機がゼロの時の演出")] ParticleSystem _playerDeathEffect = default;
+    [SerializeField]
+    [Header("精密操作時の演出R")]
+    ParticleSystem _parsR;
+    
+    [SerializeField]
+    [Header("精密操作時の演出B")]
+    ParticleSystem _parsB;
+    
+    [SerializeField]
+    [Header("精密操作時の演出G")]
+    ParticleSystem _parsG;
 
-    [SerializeField, Header("パワーアイテムのデスペナルティ")] int _powerDeathPenalty = -50;
+    [SerializeField]
+    [Header("精密操作時のPlayerの色をゲーミングにする変数")]
+    int _gameingPlayerColorTime = default;
 
-    [SerializeField, Header("通常弾の音")] protected string _playerBulletAudio = "Bullet";
-    [SerializeField, Header("チャージ中の音")] protected string _playerChargeBulletAudio = "Charge";
-    [SerializeField, Header("チャージショットの音")] protected string _playerChargeShotBulletAudio = "ChargeShot";
-    [SerializeField, Header("ボムの音")] protected string _playerBombShotAudio = "Bomb";
-    [SerializeField, Header("ボムの着弾時の音")] string _bombOnEnemyAudio = "OnBomb";
-    [SerializeField, Header("プレイヤーの被弾時に流れる音")] string _playerDestroyAudio = "PlayerDestroy";
-    [SerializeField, Header("アイテムを回収したときの音")] string _itemGetAudio = "ItemGet";
-    [SerializeField, Header("１UPの音")] string _1UPAudio = "1UP";
-    [SerializeField, Header("ボムアイテム獲得時の音")] string _getBombAudio = "BombGet";
-    [SerializeField, Header("レベルアップ時の音")] public readonly string _levelUpAudio = "LevelUp";
-    [SerializeField, Header("Invincibleモードの時の音")] string _invincibleModeAudio = "Invincible";
-    [SerializeField, Header("残機がゼロになった時の音")] string _playerGameOverAudio = "Death";
+    [SerializeField]
+    [Header("パワーアイテムの数がカンストしたとき（レベルマックスのとき）の演出")]
+    ParticleSystem _fullPowerModeEffect = default;
+    
+    [SerializeField]
+    [Header("Invincibleモードのときの演出")]
+    ParticleSystem _invincibleModeEffect = default;
+    
+    [SerializeField]
+    [Header("残機がゼロの時の演出")]
+    ParticleSystem _playerDeathEffect = default;
 
-    [SerializeField, Header("精密操作時の当たり判定のSprite")] GameObject _playerCollider = default; 
+    [SerializeField]
+    [Header("パワーアイテムのデスペナルティ")]
+    int _powerDeathPenalty = -50;
+
+    [SerializeField]
+    [Header("通常弾の音")]
+    protected string _playerBulletAudio = "Bullet";
+    
+    [SerializeField]
+    [Header("チャージ中の音")]
+    protected string _playerChargeBulletAudio = "Charge";
+    
+    [SerializeField]
+    [Header("チャージショットの音")]
+    protected string _playerChargeShotBulletAudio = "ChargeShot";
+    
+    [SerializeField]
+    [Header("ボムの音")]
+    protected string _playerBombShotAudio = "Bomb";
+    
+    [SerializeField]
+    [Header("ボムの着弾時の音")]
+    string _bombOnEnemyAudio = "OnBomb";
+    
+    [SerializeField]
+    [Header("プレイヤーの被弾時に流れる音")]
+    string _playerDestroyAudio = "PlayerDestroy";
+    
+    [SerializeField]
+    [Header("アイテムを回収したときの音")]
+    string _itemGetAudio = "ItemGet";
+    
+    [SerializeField]
+    [Header("１UPの音")]
+    string _1UPAudio = "1UP";
+    
+    [SerializeField]
+    [Header("ボムアイテム獲得時の音")]
+    string _getBombAudio = "BombGet";
+    
+    [SerializeField]
+    [Header("レベルアップ時の音")]
+    public readonly string _levelUpAudio = "LevelUp";
+    
+    [SerializeField]
+    [Header("Invincibleモードの時の音")]
+    string _invincibleModeAudio = "Invincible";
+    
+    [SerializeField]
+    [Header("残機がゼロになった時の音")]
+    string _playerGameOverAudio = "Death";
+
+    [SerializeField]
+    [Header("精密操作時の当たり判定のSprite")]
+    GameObject _playerCollider = default;
 
     protected const int _level1 = 1;
     protected const int _level2 = 2;
@@ -129,8 +275,11 @@ public class PlayerBase : MonoBehaviour, IPauseable
     bool _isCharge = default;
     /// <summary>アタックしているかどうか判定するフラグ</summary>
     bool _isAttackMode = default;
+    /// <summary>パワーアイテムがマックスかどうか判定するフラグ</summary>
     bool _isPowerMax = false;
+    /// <summary>1UPアイテムがマックスかどうか判定するフラグ</summary>
     bool _is1upMax = false;
+    /// <summary>ボムアイテムがマックスかどうか判定するフラグ</summary>
     bool _isBombMax = false;
 
 
@@ -143,7 +292,6 @@ public class PlayerBase : MonoBehaviour, IPauseable
     /// <summary>InvincibleObjectを初期化する定数</summary>
     const int INVENCIBLEDEFAULT = -150;
 
-    Vector2 _oldVerocity;
 
     private void Start()
     {
@@ -183,14 +331,6 @@ public class PlayerBase : MonoBehaviour, IPauseable
 
     private async void Update()
     {
-        //if(PhaseNovelManager.Instance.NovelePhaesState != NovelPhase.None)
-        //{
-        //    _canMove = false;
-        //}
-        //else
-        //{
-        //    _canMove = true;
-        //}
         if (!_canMove)
         {
             _rb.velocity = Vector2.zero;
@@ -351,7 +491,6 @@ public class PlayerBase : MonoBehaviour, IPauseable
     {
         _isBomb = true;
         _isBombMax = false;
-        Debug.Log("ボム撃ったよー");
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -447,22 +586,26 @@ public class PlayerBase : MonoBehaviour, IPauseable
 
         if (collision.gameObject.tag == _invincibleTag)//一定数取得すると無敵になるアイテムの所持数を増やす処理
         {
-            var item = collision.GetComponent<ItemBase>();
-            Play(_itemGetAudio);
-            if (item._isTaking) return;
-            GameManager.Instance.PlayerInvicibleObjectValueChange(item.ItemCount);
-            _invincibleObjectCount = GameManager.Instance.PlayerInvincibleObjectCount;
-            item._isTaking = true;
-            Debug.Log("アイテム名決まってない怪しいやつふえたよー" + _invincibleObjectCount);
-            if (_invincibleObjectCount >= _invincibleLimit)//一定数アイテムを集めたら無敵モードに切り替わる
-            {
-                InvincibleMode();
-            }
+            CollisionItem(collision.gameObject, _itemGetAudio, GameManager.Instance.PlayerInvincibleObjectCount,
+                _invincibleLimit, GameManager.Instance.PlayerInvicibleObjectValueChange, InvincibleMode);
         }
 
         if(collision.tag == _playerItemGetLineTag)
         {
             AllItemGet();
+        }
+    }
+
+    void CollisionItem(GameObject go, string audioName, int count, int limit, Action<int> uiAction, Action action)
+    {
+        var item = go.GetComponent<ItemBase>();
+        Play(audioName);
+        if (item._isTaking) return;
+        uiAction(item.ItemCount);
+        item._isTaking = true;
+        if(count >= limit)
+        {
+            action();
         }
     }
 
