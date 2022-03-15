@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System;
 
@@ -7,9 +5,10 @@ using System;
 [CreateAssetMenu(fileName = "PoolObjectParam")]
 public class PoolObjectParamAsset : ScriptableObject
 {
-    public List<PoolObjectParam> Params { get => poolObjectParams;}
+    public PoolObjectParam[] Params => poolObjectParams;
 
-    [SerializeField] private List<PoolObjectParam> poolObjectParams = new List<PoolObjectParam>();
+    [SerializeField]
+    private PoolObjectParam[] poolObjectParams = default;
 }
 
 /// <summary>プールするオブジェクトのデータを格納したクラス</summary>
@@ -19,9 +18,13 @@ public class PoolObjectParam
     public GameObject Prefab { get => objectPrefab;}
     public PoolObjectType Type { get => objectType;}
     public int MaxCount { get => objectMaxCount;}
-    [SerializeField] private string Name;
-    [SerializeField] private PoolObjectType objectType;
-    [SerializeField] private GameObject objectPrefab;
-    [SerializeField] private int objectMaxCount;
+    [SerializeField]
+    private string Name;
+    [SerializeField]
+    private PoolObjectType objectType;
+    [SerializeField]
+    private GameObject objectPrefab;
+    [SerializeField]
+    private int objectMaxCount;
 }
 

@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using System;
 
 /// <summary>
 /// サウンドを管理するスクリプト
 /// </summary>
 public class SoundManager : SingletonMonoBehaviour<SoundManager>
 {
-
     [SerializeField]
     [Header("BGMを流すAudioSource")]
     AudioSource _normalBgmAudioSource;
@@ -95,7 +95,7 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
     /// </summary>
     private void CreatePool()
     {
-        if(_poolCountIndex >= _soundObjParam.Params.Count)
+        if(_poolCountIndex >= _soundObjParam.Params.Length)
         {
             //Debug.Log("すべてのオーディオを生成しました。");
             return;
@@ -119,7 +119,13 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
     /// <returns></returns>
     public AudioSource UseSound(SoundType soundType)
     {
-        foreach(var pool in _pool)
+        if (PauseManager.Instance.PauseFlg == true)
+        {
+            Debug.LogWarning($"{soundType}を再生するリクエストを受けました\nポーズ中なので再生しません");
+            return null;
+        }
+
+        foreach (var pool in _pool)
         {
             if(pool.Sound.gameObject.activeSelf == false && pool.Type == soundType)
             {
@@ -128,9 +134,14 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
             }
         }
 
-        var newSound = Instantiate(_soundObjParam.Params.Find(x => x.Type == soundType).Audio, this.transform);
+        var newSound = Instantiate(Array.Find(_soundObjParam.Params, x => x.Type == soundType).Audio, this.transform);
         _pool.Add(new SoundPool { Sound = newSound, Type = soundType});
         newSound.gameObject.SetActive(true);
+
+        Debug.LogWarning($"{soundType}のプールのオブジェクト数が足りなかったため新たにオブジェクトを生成します" +
+            $"\nこのオブジェクトはプールの最大値が少ない可能性があります" +
+            $"\n現在{soundType}の数は{_pool.FindAll(x => x.Type == soundType).Count}です");
+
         return newSound;
     }
 
@@ -149,8 +160,8 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
     [System.Serializable]
     public class SoundPoolParams
     {
-        public List<SoundPoolParam> Params => soundPoolParams;
-        [SerializeField] public List<SoundPoolParam> soundPoolParams = new List<SoundPoolParam>();
+        public SoundPoolParam[] Params => soundPoolParams;
+        [SerializeField] public SoundPoolParam[] soundPoolParams;
     }
 
     /// <summary>
@@ -207,6 +218,3 @@ public enum SoundType
     ScoreCount,
     EnemyKilled
 }
-
-
-

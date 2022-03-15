@@ -1,15 +1,17 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 /// <summary>
 /// Bulletのオブジェクトプールを管理するスクリプト
 /// </summary>
 public class ObjectPool : SingletonMonoBehaviour<ObjectPool>
 {
-    [SerializeField] PoolObjectParamAsset _poolObjParam = default;
+    [SerializeField]
+    private PoolObjectParamAsset _poolObjParam = default;
 
-    List<ObjPool> _pool = new List<ObjPool>();
-    int _poolCountIndex = 0;
+    private List<ObjPool> _pool = new List<ObjPool>();
+    private int _poolCountIndex = 0;
 
     protected override void Awake()
     {
@@ -26,7 +28,7 @@ public class ObjectPool : SingletonMonoBehaviour<ObjectPool>
     /// </summary>
     private void CreatePool()
     {
-        if(_poolCountIndex >= _poolObjParam.Params.Count)
+        if(_poolCountIndex >= _poolObjParam.Params.Length)
         {
             //Debug.Log("すべてのオブジェクトを生成しました。");
             return;
@@ -53,8 +55,10 @@ public class ObjectPool : SingletonMonoBehaviour<ObjectPool>
     {
         if(PauseManager.Instance.PauseFlg == true)
         {
+            Debug.LogWarning($"{objectType}を使用するリクエストを受けました\nポーズ中なので使用しません");
             return null;
         }
+
         foreach(var pool in _pool)
         {
             if(pool.Object.activeSelf == false && pool.Type == objectType)
@@ -65,10 +69,16 @@ public class ObjectPool : SingletonMonoBehaviour<ObjectPool>
             }
         }
 
-        var newObj = Instantiate(_poolObjParam.Params.Find(x => x.Type == objectType).Prefab, this.transform);
+
+        var newObj = Instantiate(Array.Find(_poolObjParam.Params, x => x.Type == objectType).Prefab, this.transform);
         newObj.transform.position = position;
         newObj.SetActive(true);
         _pool.Add(new ObjPool { Object = newObj, Type = objectType});
+
+        Debug.LogWarning($"{objectType}のプールのオブジェクト数が足りなかったため新たにオブジェクトを生成します" +
+        $"\nこのオブジェクトはプールの最大値が少ない可能性があります" +
+        $"\n現在{objectType}の数は{_pool.FindAll(x => x.Type == objectType).Count}です");
+
         return newObj;
     }
 

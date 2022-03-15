@@ -1,6 +1,9 @@
 using UnityEngine;
 using System.Linq;
 
+/// <summary>
+/// 複数の子をもったオブジェクトがオブジェクトプールに対応できるようにするスクリプト
+/// </summary>
 public class BulletParent : MonoBehaviour
 {
     BulletBese[] _bulletsChildren = new BulletBese[99];

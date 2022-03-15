@@ -6,18 +6,25 @@ namespace Overdose.Data
 {
     /// <summary>ステージのデータを格納したクラス</summary>
     [Serializable]
-    public class StageParam
+    public class StageData
     {
-        public List<PhaseParm> PhaseParms => phaseParms;
+        public PhaseData[] PhaseParms => phaseParms;
+        public AudioClip NormalBGM => _normalBGM;
+        public AudioClip BossBGM => _bossBGM;
 
         [SerializeField]
-        private List<PhaseParm> phaseParms = new List<PhaseParm>();
+        private PhaseData[] phaseParms = default;
+
+        [SerializeField]
+        private AudioClip _normalBGM;
+        [SerializeField]
+        private AudioClip _bossBGM;
     }
 
 
     /// <summary>フェイズのデータを格納したクラス</summary>
     [Serializable]
-    public class PhaseParm
+    public class PhaseData
     {
         public string PhaseName => PhaseName;
         public GameObject Prefab => phasePrefab;
