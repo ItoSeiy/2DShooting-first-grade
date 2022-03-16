@@ -3,6 +3,7 @@ using UnityEngine;
 using DG.Tweening;
 using System;
 using Overdose.Data;
+using System.Linq;
 
 /// <summary>
 /// サウンドを管理するスクリプト
@@ -10,23 +11,29 @@ using Overdose.Data;
 public class SoundManager : SingletonMonoBehaviour<SoundManager>
 {
     [SerializeField]
+    [Header("ステージのデータを格納したスクリプタブルオブジェクト")]
+    private StageData[] _stageData;
+
+    [SerializeField]
     [Header("BGMを流すAudioSource")]
-    AudioSource _normalBgmAudioSource;
+    private AudioSource _normalBgmAudioSource;
 
     [SerializeField]
     [Header("BossBGMを流すAudioSource")]
-    AudioSource _bossBgmAudioSource;
+    private AudioSource _bossBgmAudioSource;
 
     [SerializeField]
     [Header("BGMのフェードにかける時間")]
-    float _bgmFadeTime = 2f;
+    private float _bgmFadeTime = 2f;
+
     [SerializeField]
     [Header("BGMを小さく流す際の音量")]
-    float _bgmFadeOutVol = 0.2f;
+    private float _bgmFadeOutVol = 0.2f;
 
     [SerializeField]
     [Header("効果音が格納されたクラス")]
-    SFXPoolData _sfxPoolData = default;
+    private SFXPoolData _sfxPoolData = default;
+
 
     List<Pool> _pool = new List<Pool>();
 
@@ -49,6 +56,8 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
     /// <summary>BGMを流すタイミングをデリゲートに登録するなどの設定を行う関数</summary>
     private void SettingBGM()
     {
+        SceneLoder.Instance.OnLoadEnd += TryPlayBGM;
+
         PhaseNovelManager.Instance.OnBeforeNovel += () =>
         {
             //ノベル時はBGMを小さく流す
@@ -77,6 +86,23 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
         GameManager.Instance.OnStageClear += () => FadeBgm(_bossBgmAudioSource, _bgmFadeOutVol, _bgmFadeTime);
 
         PhaseNovelManager.Instance.OnEndAfterNovel += () => FadeBgm(_normalBgmAudioSource, 0f, _bgmFadeTime);
+    }
+
+    /// <summary>BGMを流すステージかどうかを判別してBGMを流す関数</summary>
+    private void TryPlayBGM()
+    {
+        _normalBgmAudioSource.clip = null;
+        _bossBgmAudioSource.clip = null;
+
+        Array.ForEach(_stageData, x =>
+        {
+            if (x.SceneName == SceneLoder.Instance.ActiveSceneName)
+            {
+                Debug.Log($"Play{x.NormalBGM.name}");
+                _normalBgmAudioSource.clip = x.NormalBGM;
+                _normalBgmAudioSource.Play();
+            }
+        });
     }
 
     /// <summary>

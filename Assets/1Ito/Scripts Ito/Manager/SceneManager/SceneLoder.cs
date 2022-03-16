@@ -9,10 +9,13 @@ using System;
 /// </summary>
 public class SceneLoder : SingletonMonoBehaviour<SceneLoder>
 {
+    public string ActiveSceneName { get; private set; } = "Title";
+
     [SerializeField]
     Image _fadeImage = null;
     [SerializeField]
     float _fadeTime = 1;
+
     float _timer = 0;
     bool _isLoad = false;
 
@@ -44,6 +47,7 @@ public class SceneLoder : SingletonMonoBehaviour<SceneLoder>
 
         yield return SceneManager.LoadSceneAsync(sceneName);
 
+        ActiveSceneName = SceneManager.GetActiveScene().name;
         OnLoadEnd?.Invoke();
 
         while (_fadeImage.color.a >  0)

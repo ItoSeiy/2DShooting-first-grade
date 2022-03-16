@@ -1,6 +1,5 @@
-using System.Collections.Generic;
-using UnityEngine;
 using System;
+using UnityEngine;
 
 namespace Overdose.Data
 {
@@ -8,17 +7,21 @@ namespace Overdose.Data
     [CreateAssetMenu(fileName = "StageData")]
     public class StageData : ScriptableObject
     {
-        public PhaseData[] PhaseParms => phaseParms;
+        public string SceneName => _sceneName;
         public AudioClip NormalBGM => _normalBGM;
         public AudioClip BossBGM => _bossBGM;
+        public PhaseData[] PhaseParms => _phaseParms;
 
         [SerializeField]
-        private PhaseData[] phaseParms = default;
+        private string _sceneName;
 
         [SerializeField]
         private AudioClip _normalBGM;
         [SerializeField]
         private AudioClip _bossBGM;
+
+        [SerializeField]
+        private PhaseData[] _phaseParms = default;
     }
 
 
@@ -27,18 +30,20 @@ namespace Overdose.Data
     public class PhaseData
     {
         public string PhaseName => PhaseName;
-        public GameObject Prefab => phasePrefab;
-        public int LoopTime => loopTime; 
-        public bool IsBoss => isBoss;
+        public GameObject Prefab => _phasePrefab;
+        public int LoopTime => _loopTime; 
+        public bool IsBoss => _isBoss;
 
         [SerializeField] 
-        private string phaseName = "Phase";
+        private string _phaseName = "Phase";
         [SerializeField]
-        private GameObject phasePrefab;
-        [SerializeField, Header("このプレハブの生成がループするモードであったら何回生成するか")]
-        private int loopTime;
-        [SerializeField, Header("ボスだったらチェックを付ける")]
-        private bool isBoss = false;
+        private GameObject _phasePrefab;
+        [SerializeField] 
+        [Header("このプレハブの生成がループするモードであったら何回生成するか")]
+        private int _loopTime;
+        [SerializeField] 
+        [Header("ボスだったらチェックを付ける")]
+        private bool _isBoss = false;
     }
 }
 
