@@ -1,3 +1,4 @@
+using Overdose.Data;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -146,7 +147,7 @@ public class SuperAttackParty : BossAttackAction
         //•KŽE‹Z”­“®
         while (true)
         {
-            if (_timer >= 3f)
+            if (_timer >= _introductionStopTime)
             {
                 _Introduction.gameObject.SetActive(false);
             }

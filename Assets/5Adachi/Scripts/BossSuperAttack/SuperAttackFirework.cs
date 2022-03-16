@@ -1,3 +1,4 @@
+using Overdose.Data;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,57 +6,57 @@ using UnityEngine.Playables;
 
 public class SuperAttackFirework : BossAttackAction
 {      
-    /// <summary>‰E‘¤‚Ì”ÍˆÍ</summary>
+    /// <summary>å³å´ã®ç¯„å›²</summary>
     bool _rightRange;
-    /// <summary>¶‘¤‚Ì”ÍˆÍ</summary>
+    /// <summary>å·¦å´ã®ç¯„å›²</summary>
     bool _leftRange;
-    /// <summary>ã‘¤‚Ì”ÍˆÍ</summary>
+    /// <summary>ä¸Šå´ã®ç¯„å›²</summary>
     bool _upperRange;
-    /// <summary>‰º‘¤‚Ì”ÍˆÍ</summary>
+    /// <summary>ä¸‹å´ã®ç¯„å›²</summary>
     bool _downRange;
-    /// <summary>ƒ^ƒCƒ}[</summary>
+    /// <summary>ã‚¿ã‚¤ãƒãƒ¼</summary>
     float _timer = 0f;
-    /// <summary>‰¡•ûŒü</summary>
+    /// <summary>æ¨ªæ–¹å‘</summary>
     float _horizontalDir = 0f;
-    /// <summary>c•ûŒü</summary>
+    /// <summary>ç¸¦æ–¹å‘</summary>
     float _verticalDir = 0f;
-    /// <summary>’Êí‚Ì”íƒ_ƒ[ƒW‚ÌŠ„‡‚ğ•Û‘¶‚·‚é</summary>
+    /// <summary>é€šå¸¸æ™‚ã®è¢«ãƒ€ãƒ¡ãƒ¼ã‚¸ã®å‰²åˆã‚’ä¿å­˜ã™ã‚‹</summary>
     float _saveDamageTakenRation = 1f;
-    /// <summary>’e‚ÌŒ©‚½–Ú‚Ìí—Ş</summary>
+    /// <summary>å¼¾ã®è¦‹ãŸç›®ã®ç¨®é¡</summary>
     int _pattern = 0;
-    /// <summary>•KE‘O‚ÉˆÚ“®‚·‚éƒ|ƒWƒVƒ‡ƒ“</summary>
-    [SerializeField, Header("•KE‘O‚ÉˆÚ“®‚·‚éƒ|ƒWƒVƒ‡ƒ“")] Vector2 _superAttackPosition = new Vector2(0f, 4f);
-    /// <summary>ƒoƒŒƒbƒg‚ğ”­Ë‚·‚éƒ|ƒWƒVƒ‡ƒ“</summary>
-    [SerializeField, Header("Bullet‚ğ”­Ë‚·‚éƒ|ƒWƒVƒ‡ƒ“")] Transform _muzzle = null;   
-    /// <summary>•KE‘O‚ÉˆÚ“®‚·‚é‚Æ‚«‚ÌƒXƒs[ƒh</summary>
-    [SerializeField, Header("•KE‘O‚ÉˆÚ“®‚·‚é‚Æ‚«‚ÌƒXƒs[ƒh")] float _speed = 4f;
-    /// <summary>•KE‹Z‘Ò‹@ŠÔ</summary>
-    [SerializeField, Header("•KE‹Z‘Ò‹@ŠÔ")] float _waitTime = 5f;
-    /// <summary>•KE‹Z”­“®ŠÔ</summary>
-    [SerializeField, Header("•KE‹Z”­“®ŠÔ")] float _activationTime = 30f;
-    /// <summary>ƒ}ƒYƒ‹‚ÌŠp“xŠÔŠu</summary>
-    [SerializeField, Header("ƒ}ƒYƒ‹‚ÌŠp“xŠÔŠu")] float _angleInterval = 10f;
-    /// <summary>UŒ‚•p“x</summary>
-    [SerializeField, Header("UŒ‚•p“x(•b)")] float _attackInterval = 1f;
-    /// <summary>”­Ë‚·‚é’e‚ğİ’è‚Å‚«‚é</summary>
-    [SerializeField, Header("”­Ë‚·‚é’e‚Ìİ’è")] PoolObjectType[] _bullet;
-    /// <summary>”íƒ_ƒ[ƒW‚ÌŠ„‡</summary>
-    [SerializeField, Header("”íƒ_ƒ[ƒW‚ÌŠ„‡"), Range(0, 1)] float _damageTakenRationRange = 0.5f;
-    /// <summary>ƒ{ƒX‚Ì•KE‹Z‚Ìƒ^ƒCƒ€ƒ‰ƒCƒ“</summary>
-    [SerializeField, Header("ƒ{ƒX‚Ì•KE‹Z‚Ìƒ^ƒCƒ€ƒ‰ƒCƒ“")] PlayableDirector _Introduction = null;
-    /// <summary>UŒ‚‚Ì‰¹</summary>
-    [SerializeField, Header("UŒ‚‚Ì‰¹")] SoundType _superAttack;
-    /// <summary>ƒ^ƒCƒ€ƒ‰ƒCƒ“‚ğÁ‚·ŠÔ</summary>
-    [SerializeField, Header("ƒ^ƒCƒ€ƒ‰ƒCƒ“‚ğÁ‚·ŠÔ")] float _introductionStopTime = 3f;
-    /// <summary>C³’l</summary>
+    /// <summary>å¿…æ®ºå‰ã«ç§»å‹•ã™ã‚‹ãƒã‚¸ã‚·ãƒ§ãƒ³</summary>
+    [SerializeField, Header("å¿…æ®ºå‰ã«ç§»å‹•ã™ã‚‹ãƒã‚¸ã‚·ãƒ§ãƒ³")] Vector2 _superAttackPosition = new Vector2(0f, 4f);
+    /// <summary>ãƒãƒ¬ãƒƒãƒˆã‚’ç™ºå°„ã™ã‚‹ãƒã‚¸ã‚·ãƒ§ãƒ³</summary>
+    [SerializeField, Header("Bulletã‚’ç™ºå°„ã™ã‚‹ãƒã‚¸ã‚·ãƒ§ãƒ³")] Transform _muzzle = null;   
+    /// <summary>å¿…æ®ºå‰ã«ç§»å‹•ã™ã‚‹ã¨ãã®ã‚¹ãƒ”ãƒ¼ãƒ‰</summary>
+    [SerializeField, Header("å¿…æ®ºå‰ã«ç§»å‹•ã™ã‚‹ã¨ãã®ã‚¹ãƒ”ãƒ¼ãƒ‰")] float _speed = 4f;
+    /// <summary>å¿…æ®ºæŠ€å¾…æ©Ÿæ™‚é–“</summary>
+    [SerializeField, Header("å¿…æ®ºæŠ€å¾…æ©Ÿæ™‚é–“")] float _waitTime = 5f;
+    /// <summary>å¿…æ®ºæŠ€ç™ºå‹•æ™‚é–“</summary>
+    [SerializeField, Header("å¿…æ®ºæŠ€ç™ºå‹•æ™‚é–“")] float _activationTime = 30f;
+    /// <summary>ãƒã‚ºãƒ«ã®è§’åº¦é–“éš”</summary>
+    [SerializeField, Header("ãƒã‚ºãƒ«ã®è§’åº¦é–“éš”")] float _angleInterval = 10f;
+    /// <summary>æ”»æ’ƒé »åº¦</summary>
+    [SerializeField, Header("æ”»æ’ƒé »åº¦(ç§’)")] float _attackInterval = 1f;
+    /// <summary>ç™ºå°„ã™ã‚‹å¼¾ã‚’è¨­å®šã§ãã‚‹</summary>
+    [SerializeField, Header("ç™ºå°„ã™ã‚‹å¼¾ã®è¨­å®š")] PoolObjectType[] _bullet;
+    /// <summary>è¢«ãƒ€ãƒ¡ãƒ¼ã‚¸ã®å‰²åˆ</summary>
+    [SerializeField, Header("è¢«ãƒ€ãƒ¡ãƒ¼ã‚¸ã®å‰²åˆ"), Range(0, 1)] float _damageTakenRationRange = 0.5f;
+    /// <summary>ãƒœã‚¹ã®å¿…æ®ºæŠ€ã®ã‚¿ã‚¤ãƒ ãƒ©ã‚¤ãƒ³</summary>
+    [SerializeField, Header("ãƒœã‚¹ã®å¿…æ®ºæŠ€ã®ã‚¿ã‚¤ãƒ ãƒ©ã‚¤ãƒ³")] PlayableDirector _Introduction = null;
+    /// <summary>æ”»æ’ƒæ™‚ã®éŸ³</summary>
+    [SerializeField, Header("æ”»æ’ƒæ™‚ã®éŸ³")] SoundType _superAttack;
+    /// <summary>ã‚¿ã‚¤ãƒ ãƒ©ã‚¤ãƒ³ã‚’æ¶ˆã™æ™‚é–“</summary>
+    [SerializeField, Header("ã‚¿ã‚¤ãƒ ãƒ©ã‚¤ãƒ³ã‚’æ¶ˆã™æ™‚é–“")] float _introductionStopTime = 3f;
+    /// <summary>ä¿®æ­£å€¤</summary>
     const float PLAYER_POS_OFFSET = 0.5f;
-    /// <summary>”»’è‰ñ”‚Ì§ŒÀ</summary>
+    /// <summary>åˆ¤å®šå›æ•°ã®åˆ¶é™</summary>
     const float JUDGMENT_TIME = 1 / 60f;
-    /// <summary>ƒŠƒZƒbƒgƒ^ƒCƒ}[</summary>
+    /// <summary>ãƒªã‚»ãƒƒãƒˆã‚¿ã‚¤ãƒãƒ¼</summary>
     const float RESET_TIME = 0f;
-    /// <summary>Å¬‚Ì‰ñ“]’l</summary>
+    /// <summary>æœ€å°ã®å›è»¢å€¤</summary>
     const float MINIMUM_ROTATION_RANGE = 0f;
-    /// <summary>Å‘å‚Ì‰ñ“]’l</summary>
+    /// <summary>æœ€å¤§ã®å›è»¢å€¤</summary>
     const float MAXIMUM_ROTATION_RANGE = 360f;
 
     public override System.Action ActinoEnd { get; set; }
@@ -63,16 +64,16 @@ public class SuperAttackFirework : BossAttackAction
     public override void Enter(BossController contlloer)
     {
         contlloer.ItemDrop();
-        //’Êí‚Ì”íƒ_ƒ[ƒW‚ÌŠ„‡‚ğ•Û‘¶‚·‚é
+        //é€šå¸¸æ™‚ã®è¢«ãƒ€ãƒ¡ãƒ¼ã‚¸ã®å‰²åˆã‚’ä¿å­˜ã™ã‚‹
         _saveDamageTakenRation = contlloer.DamageTakenRation;
-        //”íƒ_ƒ[ƒW‚ÌŠ„‡‚ğ•ÏX‚·‚é
+        //è¢«ãƒ€ãƒ¡ãƒ¼ã‚¸ã®å‰²åˆã‚’å¤‰æ›´ã™ã‚‹
         contlloer.DamageTakenRation = _damageTakenRationRange;
-        StartCoroutine(Firework(contlloer)); //ƒRƒ‹[ƒ`ƒ“‚ğ”­“®  
+        StartCoroutine(Firework(contlloer)); //ã‚³ãƒ«ãƒ¼ãƒãƒ³ã‚’ç™ºå‹•  
     }
 
     public override void ManagedUpdate(BossController contlloer)
     {
-        _timer += Time.deltaTime;//ƒ^ƒCƒ}[
+        _timer += Time.deltaTime;//ã‚¿ã‚¤ãƒãƒ¼
 
         if (_timer >= _activationTime)
         {
@@ -82,94 +83,94 @@ public class SuperAttackFirework : BossAttackAction
 
     public override void Exit(BossController contlloer)
     {
-        //”íƒ_ƒ[ƒW‚ÌŠ„‡Š„‡‚ğŒ³‚É–ß‚·
+        //è¢«ãƒ€ãƒ¡ãƒ¼ã‚¸ã®å‰²åˆå‰²åˆã‚’å…ƒã«æˆ»ã™
         contlloer.DamageTakenRation = _saveDamageTakenRation;
         StopAllCoroutines();
     }
 
-    /// <summary>‰Ô‰Î‚Ì‚æ‚¤‚È‹O“¹A‘S•ûˆÊ‚É”­Ë</summary>
+    /// <summary>èŠ±ç«ã®ã‚ˆã†ãªè»Œé“ã€å…¨æ–¹ä½ã«ç™ºå°„</summary>
     IEnumerator Firework(BossController controller)
     {
 
-        _timer = RESET_TIME;//ƒ^ƒCƒ€ƒŠƒZƒbƒg
+        _timer = RESET_TIME;//ã‚¿ã‚¤ãƒ ãƒªã‚»ãƒƒãƒˆ
 
-        //•KE‚ğ•ú‚Â‚Æ‚«‚ÍBOSS‚Í•ú‚Â‘O‚É‚˜‚ğ0A‚x‚ğ2‚ğ‚ÌˆÊ’u(Î)‚ÉAˆÚ“®‚·‚é
+        //å¿…æ®ºã‚’æ”¾ã¤ã¨ãã¯BOSSã¯æ”¾ã¤å‰ã«ï½˜ã‚’0ã€ï¼¹ã‚’2ã‚’ã®ä½ç½®(ç¬‘)ã«ã€ç§»å‹•ã™ã‚‹
         while (true)
         {
-            yield return new WaitForSeconds(JUDGMENT_TIME);//”»’è‰ñ”‚Ì§ŒÀ
-            //‰¡•ûŒü
+            yield return new WaitForSeconds(JUDGMENT_TIME);//åˆ¤å®šå›æ•°ã®åˆ¶é™
+            //æ¨ªæ–¹å‘
             _horizontalDir = _superAttackPosition.x - controller.transform.position.x;
-            //c•ûŒü
+            //ç¸¦æ–¹å‘
             _verticalDir = _superAttackPosition.y - controller.transform.position.y;
-            //‰¡‚Ì”ÍˆÍ‚ÌğŒ®      
+            //æ¨ªã®ç¯„å›²ã®æ¡ä»¶å¼      
             _rightRange = controller.transform.position.x < _superAttackPosition.x + PLAYER_POS_OFFSET;
             _leftRange = controller.transform.position.x > _superAttackPosition.x - PLAYER_POS_OFFSET;
-            //c‚Ì”ÍˆÍ‚ÌğŒ®
+            //ç¸¦ã®ç¯„å›²ã®æ¡ä»¶å¼
             _upperRange = controller.transform.position.y < _superAttackPosition.y + PLAYER_POS_OFFSET;
             _downRange = controller.transform.position.y > _superAttackPosition.y - PLAYER_POS_OFFSET;
-            //s‚«‚½‚¢ƒ|ƒWƒVƒ‡ƒ“‚ÉˆÚ“®‚·‚é
-            //‹ß‚©‚Á‚½‚ç
+            //è¡ŒããŸã„ãƒã‚¸ã‚·ãƒ§ãƒ³ã«ç§»å‹•ã™ã‚‹
+            //è¿‘ã‹ã£ãŸã‚‰
             if (_rightRange && _leftRange && _upperRange && _downRange)
             {
-                Debug.Log("Œ‹‰Ê‚Í" + _rightRange + _leftRange + _upperRange + _downRange);
-                //ƒXƒ€[ƒY‚ÉˆÚ“®
+                Debug.Log("çµæœã¯" + _rightRange + _leftRange + _upperRange + _downRange);
+                //ã‚¹ãƒ ãƒ¼ã‚ºã«ç§»å‹•
                 controller.Rb.velocity = new Vector2(_horizontalDir, _verticalDir) * _speed;
             }
-            //‰“‚©‚Á‚½‚ç
+            //é ã‹ã£ãŸã‚‰
             else
             {
-                Debug.Log("Œ‹‰Ê‚Í" + _rightRange + _leftRange + _upperRange + _downRange);
-                //ˆÀ’è‚µ‚ÄˆÚ“®
+                Debug.Log("çµæœã¯" + _rightRange + _leftRange + _upperRange + _downRange);
+                //å®‰å®šã—ã¦ç§»å‹•
                 controller.Rb.velocity = new Vector2(_horizontalDir, _verticalDir).normalized * _speed;
             }
 
-            //”•bŒo‚Á‚½‚ç
+            //æ•°ç§’çµŒã£ãŸã‚‰
             if (_timer >= _waitTime)
             {
                 Debug.Log("stop");
-                controller.Rb.velocity = Vector2.zero;//’â~
-                controller.transform.position = _superAttackPosition;//ƒ{ƒX‚ÌˆÊ’u‚ğC³
-                break;//I‚í‚è
+                controller.Rb.velocity = Vector2.zero;//åœæ­¢
+                controller.transform.position = _superAttackPosition;//ãƒœã‚¹ã®ä½ç½®ã‚’ä¿®æ­£
+                break;//çµ‚ã‚ã‚Š
             }
         }
-        _timer = 0f;//ƒ^ƒCƒ€ƒŠƒZƒbƒg
+        _timer = 0f;//ã‚¿ã‚¤ãƒ ãƒªã‚»ãƒƒãƒˆ
 
         if (_Introduction)
         {
             _Introduction.gameObject.SetActive(true);
         }
 
-        //•KE‹Z”­“®
+        //å¿…æ®ºæŠ€ç™ºå‹•
         while (true)
         {
-            if (_timer >= 3f)
+            if (_timer >= _introductionStopTime)
             {
                 _Introduction.gameObject.SetActive(false);
             }
 
-            //UŒ‚‚ÌƒTƒEƒ“ƒh
+            //æ”»æ’ƒæ™‚ã®ã‚µã‚¦ãƒ³ãƒ‰
             SoundManager.Instance.UseSound(_superAttack);
-            //’e‚ÌŒ©‚½–Ú‚ğ•Ï‚¦‚é
+            //å¼¾ã®è¦‹ãŸç›®ã‚’å¤‰ãˆã‚‹
             _pattern = Random.Range(0, _bullet.Length);
-            //360“x‘S•ûˆÊ‚É”­Ë
+            //360åº¦å…¨æ–¹ä½ã«ç™ºå°„
             for (float angle = MINIMUM_ROTATION_RANGE; angle <= MAXIMUM_ROTATION_RANGE; angle += _angleInterval)
             {
                 
-                Vector3 localAngle = _muzzle.localEulerAngles;// ƒ[ƒJƒ‹À•W‚ğŠî€‚Éæ“¾
-                localAngle.z = angle;// Šp“x‚ğİ’è
-                _muzzle.eulerAngles = localAngle;//‰ñ“]‚·‚é
-                //’e‚ğƒ}ƒYƒ‹‚ÌŒü‚«‚É‡‚í‚¹‚Ä’e‚ğ”­Ëi‰¼‚ÅBomb‚É‚µ‚Ä‚Ü‚·j
+                Vector3 localAngle = _muzzle.localEulerAngles;// ãƒ­ãƒ¼ã‚«ãƒ«åº§æ¨™ã‚’åŸºæº–ã«å–å¾—
+                localAngle.z = angle;// è§’åº¦ã‚’è¨­å®š
+                _muzzle.eulerAngles = localAngle;//å›è»¢ã™ã‚‹
+                //å¼¾ã‚’ãƒã‚ºãƒ«ã®å‘ãã«åˆã‚ã›ã¦å¼¾ã‚’ç™ºå°„ï¼ˆä»®ã§Bombã«ã—ã¦ã¾ã™ï¼‰
                 ObjectPool.Instance.UseObject(_muzzle.position, _bullet[_pattern]).transform.rotation = _muzzle.rotation;
             }
 
-            yield return new WaitForSeconds(_attackInterval);//UŒ‚•p“x(•b)
-            //”•bŒo‚Á‚½‚ç
+            yield return new WaitForSeconds(_attackInterval);//æ”»æ’ƒé »åº¦(ç§’)
+            //æ•°ç§’çµŒã£ãŸã‚‰
             if (_timer >= _activationTime)
             {
-                break;//I—¹
+                break;//çµ‚äº†
             }
         }
-        yield break;//I—¹
+        yield break;//çµ‚äº†
     }
 
 }

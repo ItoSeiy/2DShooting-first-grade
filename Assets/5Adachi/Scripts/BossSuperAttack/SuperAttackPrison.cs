@@ -1,5 +1,5 @@
+using Overdose.Data;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 
@@ -158,7 +158,7 @@ public class SuperAttackPrison : BossAttackAction
             //UŒ‚Žž‚ÌƒTƒEƒ“ƒh
             SoundManager.Instance.UseSound(_superAttack);
 
-            if (_timer >= 3f)
+            if (_timer >= _introductionStopTime)
             {
                 _Introduction.gameObject.SetActive(false);
             }

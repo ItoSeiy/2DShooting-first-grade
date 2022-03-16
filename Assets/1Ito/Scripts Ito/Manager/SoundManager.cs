@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using System;
+using Overdose.Data;
+using System.Linq;
 
 /// <summary>
 /// サウンドを管理するスクリプト
@@ -8,20 +11,29 @@ using DG.Tweening;
 public class SoundManager : SingletonMonoBehaviour<SoundManager>
 {
     [SerializeField]
-    SoundPoolParams _soundObjParam = default;
+    [Header("ステージのデータを格納したスクリプタブルオブジェクト")]
+    private StageData[] _stageData;
 
     [SerializeField]
     [Header("BGMを流すAudioSource")]
-    AudioSource _bgmAudioSource;
+    private AudioSource _normalBgmAudioSource;
 
     [SerializeField]
     [Header("BossBGMを流すAudioSource")]
-    AudioSource _bossBgmAudioSource;
+    private AudioSource _bossBgmAudioSource;
 
     [SerializeField]
-    float _bgmFadeTime = 2f;
+    [Header("BGMのフェードにかける時間")]
+    private float _bgmFadeTime = 2f;
+
     [SerializeField]
-    float _bgmFadeOutVol = 0.2f;
+    [Header("BGMを小さく流す際の音量")]
+    private float _bgmFadeOutVol = 0.2f;
+
+    [SerializeField]
+    [Header("効果音が格納されたクラス")]
+    private SFXPoolData _sfxPoolData = default;
+
 
     List<Pool> _pool = new List<Pool>();
 
@@ -32,25 +44,31 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
         base.Awake();
         _poolCountIndex = 0;
         CreatePool();
+
         //デバッグ用
         //_pool.ForEach(x => Debug.Log($"オブジェクト名:{x.Object.name}種類: {x.Type}"));
     }
-
     void Start()
     {
-        _bgmAudioSource?.Play();
+        SettingBGM();
+    }
+
+    /// <summary>BGMを流すタイミングをデリゲートに登録するなどの設定を行う関数</summary>
+    private void SettingBGM()
+    {
+        SceneLoder.Instance.OnLoadEnd += TryPlayBGM;
 
         PhaseNovelManager.Instance.OnBeforeNovel += () =>
         {
             //ノベル時はBGMを小さく流す
-            FadeBgm(_bgmAudioSource, _bgmFadeOutVol, _bgmFadeTime);
+            FadeBgm(_normalBgmAudioSource, _bgmFadeOutVol, _bgmFadeTime);
         };
 
         //ボス生成時
         PhaseNovelManager.Instance.OnBoss += () =>
         {
             //ボスが始まったら普通のBGMは消す
-            _bgmAudioSource.Stop();
+            _normalBgmAudioSource.Stop();
             //ボスのBGM再生
             _bossBgmAudioSource.Play();
         };
@@ -59,25 +77,43 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
         GameManager.Instance.OnGameOver += () =>
         {
             //BGM停止
-            FadeBgm(_bgmAudioSource, 0, _bgmFadeTime);
+            FadeBgm(_normalBgmAudioSource, 0f, _bgmFadeTime);
             //ボス戦闘中に死んだ際はノベルが流れるため少し音を残す
-            FadeBgm(_bossBgmAudioSource, _bgmFadeOutVol, _bgmFadeTime);   
+            FadeBgm(_bossBgmAudioSource, _bgmFadeOutVol, _bgmFadeTime);
         };
 
         //ボス死亡時                               ノベルが流れるため少し音を残す
-        GameManager.Instance.OnStageClear += () => FadeBgm(_bossBgmAudioSource, 0.2f, _bgmFadeTime);
+        GameManager.Instance.OnStageClear += () => FadeBgm(_bossBgmAudioSource, _bgmFadeOutVol, _bgmFadeTime);
 
-        PhaseNovelManager.Instance.OnEndAfterNovel += () => FadeBgm(_bgmAudioSource, 0f, _bgmFadeTime);
+        PhaseNovelManager.Instance.OnEndAfterNovel += () => FadeBgm(_normalBgmAudioSource, 0f, _bgmFadeTime);
+    }
+
+    /// <summary>BGMを流すステージかどうかを判別してBGMを流す関数</summary>
+    private void TryPlayBGM()
+    {
+        _normalBgmAudioSource.clip = null;
+        _bossBgmAudioSource.clip = null;
+
+        Array.ForEach(_stageData, x =>
+        {
+            if (x.SceneName == SceneLoder.Instance.ActiveSceneName)
+            {
+                Debug.Log($"Play{x.NormalBGM.name}");
+                _normalBgmAudioSource.clip = x.NormalBGM;
+                _normalBgmAudioSource.Play();
+            }
+        });
     }
 
     /// <summary>
     /// 指定したオーディオソースのフェードを行う
     /// </summary>
-    /// <param name="targetVol">設定したい音量</param>
+    /// <param name="targetVolScale">設定したい音量
+    /// min -> 0 max -> 1 </param>
     /// <param name="fadeTime">どのくらい時間をかけるか</param>
-    private void FadeBgm(AudioSource targetAudioSouece, float targetVol, float fadeTime)
+    private void FadeBgm(AudioSource targetAudioSouece, float targetVolScale, float fadeTime)
     {
-        targetAudioSouece.DOFade(targetVol, fadeTime);
+        targetAudioSouece.DOFade(targetVolScale, fadeTime);
     }
 
     /// <summary>
@@ -86,17 +122,17 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
     /// </summary>
     private void CreatePool()
     {
-        if(_poolCountIndex >= _soundObjParam.Params.Count)
+        if(_poolCountIndex >= _sfxPoolData.Data.Length)
         {
             //Debug.Log("すべてのオーディオを生成しました。");
             return;
         }
 
-        for (int i = 0; i < _soundObjParam.Params[_poolCountIndex].MaxCount; i++)
+        for (int i = 0; i < _sfxPoolData.Data[_poolCountIndex].MaxCount; i++)
         {
-            var sound = Instantiate(_soundObjParam.Params[_poolCountIndex].Prefab, this.transform);
-            sound.SetActive(false);
-            _pool.Add(new Pool { Object = sound, Type = _soundObjParam.Params[_poolCountIndex].Type } );
+            var sound = Instantiate(_sfxPoolData.Data[_poolCountIndex].Audio, this.transform);
+            sound.gameObject.SetActive(false);
+            _pool.Add(new Pool { Sound = sound, Type = _sfxPoolData.Data[_poolCountIndex].Type });
         }
 
         _poolCountIndex++;
@@ -108,87 +144,34 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
     /// </summary>
     /// <param name="soundType">流したいサウンドの種類</param>
     /// <returns></returns>
-    public GameObject UseSound(SoundType soundType)
+    public AudioSource UseSound(SoundType soundType)
     {
-        foreach(var pool in _pool)
+        foreach (var pool in _pool)
         {
-            if(pool.Object.activeSelf == false && pool.Type == soundType)
+            if(pool.Sound.gameObject.activeSelf == false && pool.Type == soundType)
             {
-                pool.Object.SetActive(true);
-                return pool.Object;
+                pool.Sound.gameObject.SetActive(true);
+                return pool.Sound;
             }
         }
 
-        var newSound = Instantiate(_soundObjParam.Params.Find(x => x.Type == soundType).Prefab, this.transform);
-        _pool.Add(new Pool { Object = newSound, Type = soundType});
-        newSound.SetActive(true);
+        var newSound = Instantiate(Array.Find(_sfxPoolData.Data, x => x.Type == soundType).Audio, this.transform);
+        _pool.Add(new Pool { Sound = newSound, Type = soundType});
+        newSound.gameObject.SetActive(true);
+
+        Debug.LogWarning($"{soundType}のプールのオブジェクト数が足りなかったため新たにオブジェクトを生成します" +
+            $"\nこのオブジェクトはプールの最大値が少ない可能性があります" +
+            $"現在{soundType}の数は{_pool.FindAll(x => x.Type == soundType).Count}です");
+
         return newSound;
     }
 
+    /// <summary>
+    /// サウンドをプールするためのクラス
+    ///</summary>
     private class Pool
     {
-        public GameObject Object { get; set; }
+        public AudioSource Sound { get; set; }
         public SoundType Type { get; set; }
     }
 }
-
-public enum SoundType
-{
-    /// <summary>音無し</summary>
-    None,
-    /// <summary>風</summary>
-    Wind,
-    /// <summary>剣</summary>
-    Sword,
-    /// <summary>キャッチ</summary>
-    Catch,
-    /// <summary>耳鳴り</summary>
-    Tinnitus,
-    /// <summary>銃</summary>
-    Gun,
-    /// <summary>ボス1,2,4,5の死亡サウンド</summary>
-    BossKilled,
-    /// <summary>ボスの死亡サウンド</summary>
-    Boss3Killed,
-
-    Click01,
-    Click02,
-    Click03,
-    Click04,
-    Click05,
-    Click06,
-    Click07,
-    Click08,
-    Click09,
-    Click10,
-    Novel,
-    ScoreCount,
-    EnemyKilled
-}
-
-[System.Serializable]
-public class SoundPoolParams
-{
-    public List<SoundPoolParam> Params => soundPoolParams;
-    [SerializeField] public List<SoundPoolParam> soundPoolParams = new List<SoundPoolParam>();
-}
-
-
-[System.Serializable]
-public class SoundPoolParam
-{
-    public SoundType Type => type;
-    public GameObject Prefab => prefab;
-    public int MaxCount => maxCount;
-
-    [SerializeField] 
-    private string name;
-    [SerializeField]
-    private SoundType type;
-    [SerializeField]
-    private GameObject prefab;
-    [SerializeField]
-    private int maxCount;
-}
-
-

@@ -171,7 +171,6 @@ GameObject:
   - component: {fileID: 8768615259247417300}
   - component: {fileID: 8768615259247417305}
   - component: {fileID: 8768615259247417302}
-  - component: {fileID: 8768615259247417303}
   - component: {fileID: 6337354859416630104}
   m_Layer: 5
   m_Name: Boss3IntroductionText
@@ -242,24 +241,6 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: "\u30C0\u30A4\u30C7\u30E9\u2758"
---- !u!114 &8768615259247417303
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8768615259247417301}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c7e9ecdbb19134449c0fc5048828763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NonRotatableCharacters: 3000
-  ShiftCharacters: 3000
-  ShiftXPixels:
-  - 0
-  ShiftYPixels:
-  - 0
 --- !u!95 &6337354859416630104
 Animator:
   serializedVersion: 3
