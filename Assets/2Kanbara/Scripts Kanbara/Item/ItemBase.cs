@@ -9,6 +9,8 @@ public class ItemBase : MonoBehaviour, IPauseable
 {
     Rigidbody2D _rb;
 
+    [SerializeField, Header("アイテム1つあたりの取得個数")] int _itemCount = 1;
+
     [SerializeField, Header("プレイヤーのタグ")] string _playerTag = "Player";
     [SerializeField, Header("アイテムを回収するコライダーのタグ")] string _itemGetColiderTag = "PlayerTrigger";
 
@@ -22,6 +24,8 @@ public class ItemBase : MonoBehaviour, IPauseable
     public bool _isTaking = false;
 
     Vector2 _oldVerocity;
+
+    public int ItemCount => _itemCount;
 
     private void Start()
     {

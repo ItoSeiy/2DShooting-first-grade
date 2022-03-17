@@ -1,5 +1,5 @@
+using Overdose.Data;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 
@@ -22,8 +22,6 @@ public class SuperAttackRebound : BossAttackAction
     float _verticalDir = 0f;
     /// <summary>通常時の被ダメージの割合を保存する</summary>
     float _saveDamageTakenRation = 1f;
-    /// <summary>マズルの角度を調整する</summary>
-    float _angleOffset = 0;
     /// <summary>弾の見た目の種類</summary>
     int _pattern = 0;
     /// <summary>必殺前に移動するポジション</summary>
@@ -147,9 +145,7 @@ public class SuperAttackRebound : BossAttackAction
         //必殺技発動
         while (true)
         {
-            _angleOffset = Random.Range(0f,10f);
-
-            if (_timer >= 3f)
+            if (_timer >= _introductionStopTime)
             {
                 _Introduction.gameObject.SetActive(false);
             }
@@ -158,7 +154,7 @@ public class SuperAttackRebound : BossAttackAction
             SoundManager.Instance.UseSound(_superAttack);
 
             //全方位に発射
-            for (float angle = MINIMUM_ROTATION_RANGE + _angleOffset; angle <= MAXIMUM_ROTATION_RANGE + _angleOffset; angle += _angleInterval)
+            for (float angle = MINIMUM_ROTATION_RANGE; angle <= MAXIMUM_ROTATION_RANGE; angle += _angleInterval)
             {
                 _pattern = Random.Range(0, _bullet.Length);
                 Vector3 localAngle = _muzzle.localEulerAngles;// ローカル座標を基準に取得

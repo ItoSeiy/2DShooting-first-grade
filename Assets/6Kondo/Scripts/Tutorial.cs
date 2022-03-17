@@ -22,13 +22,6 @@ public class Tutorial : SingletonMonoBehaviour<Tutorial>
     [SerializeField, Header("スコアアイテム取得のチュートリアルのチェック")] GameObject _scoreCheck;
     [SerializeField, Header("チュートリアルクリア時に表示")] GameObject _tutorialClearCheck;
 
-    protected override void Awake()
-    {
-        base.Awake();
-        GameManager.Instance.SaveValue();
-        GameManager.Instance.InitValue();
-    }
-
     private void Start()
     {
         MoveTutorial();
@@ -128,7 +121,6 @@ public class Tutorial : SingletonMonoBehaviour<Tutorial>
         {
             _tutorialClearCheck.SetActive(true);
             GameManager.Instance.Player.CanMove = false;
-            GameManager.Instance.ReturnValue();
         }
     }
 }

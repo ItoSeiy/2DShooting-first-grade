@@ -2,6 +2,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Threading.Tasks;
+using Overdose.Data;
 
 public class TextValueChange : MonoBehaviour
 {
@@ -37,8 +38,7 @@ public class TextValueChange : MonoBehaviour
                     .OnComplete(() =>
                     {
                         _text.text = GameManager.Instance.PlayerScore.ToString("00000000");
-                        GameManager.Instance.InitValue();
-                        soundObj.SetActive(false);
+                        soundObj.gameObject.SetActive(false);
                     });
                 break;
 

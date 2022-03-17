@@ -1,3 +1,18 @@
+# 規則
+
+変数名は[キャメルケース](https://e-words.jp/w/%E3%82%AD%E3%83%A3%E3%83%A1%E3%83%AB%E3%82%B1%E3%83%BC%E3%82%B9.html) (先頭小文字)
+
+メンバー変数の接頭辞には「＿」(アンダースコア)を付けること
+
+関数名　クラス名　プロパティの名前は[パスカルケース](https://wa3.i-3-i.info/word13955.html) (先頭大文字)
+
+ブランチの名前は[スネークケース](https://e-words.jp/w/%E3%82%B9%E3%83%8D%E3%83%BC%E3%82%AF%E3%82%B1%E3%83%BC%E3%82%B9.html#:~:text=%E3%82%B9%E3%83%8D%E3%83%BC%E3%82%AF%E3%82%B1%E3%83%BC%E3%82%B9%E3%81%A8%E3%81%AF%E3%80%81%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0,%E3%81%AA%E8%A1%A8%E8%A8%98%E3%81%8C%E3%81%93%E3%82%8C%E3%81%AB%E5%BD%93%E3%81%9F%E3%82%8B%E3%80%82)
+(すべて小文字単語間は「＿」(アンダースコア))
+機能を作成するブランチであれば接頭辞に「feature/」を付けてください
+機能の修正等は接頭辞に「hotfix/」を付けてください
+
+コミットは頻繁に行うこと
+
 # 2Dシューティングゲーム 
 Issueに当たり前のことが沢山書いてありますがプログラミングが苦手な人に教える意図があり行っていますのでご承知おきください
 # 制作意図
@@ -8,13 +23,13 @@ Issueに当たり前のことが沢山書いてありますがプログラミン
 
 そのため自分が技術的にも成長する刺激が少なく困っていました
 
-そのためライバルを作るために技術やチーム開発をするうえで必要な知識(Github, Sourcetree)を教えたかったのです
+そのためライバルを作るために技術(Unity, C#)やチーム開発をするうえで必要な知識(Github, Sourcetree)を教えたかったのです
 
 バンタンゲームアカデミー1年次の審査会(学んできた技術をゲームを発表するという形で発表する場)が近かったこともありこのプロジェクトを立ち上げました
 
 # 概要
 
-制作進行中です
+ブラッシュアップ中です
 
 2021バンタンゲームアカデミー1年次後期審査会に向けたチーム制作の2D-シューティングゲームです
 
@@ -24,13 +39,13 @@ Githubをフル活用した制作です
 
 ## プレイ動画
 
-[未完成ですので完成後記載予定です](https://github.com/ItoSeiy/2DShooting-first-grade/blob/develop/README.md)
+[動画を取り直す予定ですが学内発表用に使用したものを掲載します](https://www.youtube.com/watch?v=wLbu2chwMls)
 
 ## 作業内容(伊東聖矢) こだわり
 
 **ここにゲーム面での作業内容を記載すると莫大な分量になりますので[こちらのIssue](https://github.com/ItoSeiy/2DShooting-first-grade/issues?q=is%3Aissue+is%3Aclosed+assignee%3AItoSeiy)をご覧ください**
 
-基底クラスやゲームマネージャーを作る際はとにかく汎用性が高く扱いやすいものを意識してつくりました
+基底クラスやゲームマネージャーなどスクリプトを作成する際は汎用性を上げたり、オブジェクト指向の3大要素(カプセル化, 継承, 多態性)を意識して制作しました。
 
 [EnemyBase](https://github.com/ItoSeiy/2DShooting-first-grade/blob/feature/enemy_bese_class/Assets/1Ito/Scripts%20Ito/Enemy/EnemyBese.cs)
 [BulletBase](https://github.com/ItoSeiy/2DShooting-first-grade/blob/feature/bullet_bese_class/Assets/1Ito/Scripts%20Ito/Bullet/BulletBese.cs)

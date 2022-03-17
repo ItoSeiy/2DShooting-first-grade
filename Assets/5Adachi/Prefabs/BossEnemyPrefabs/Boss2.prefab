@@ -53,13 +53,13 @@ MonoBehaviour:
   _waitTime: 5
   _activationTime: 30
   _attackInterval: 0.16
-  _angleInterval: 21
+  _angleInterval: 10
   _bullet: 210000002200000023000000
   _switchInterval: 2
   _damageTakenRationRange: 0.5
   _Introduction: {fileID: 1482331271592850444}
-  _superAttack: 4
-  _introductionStopTime: 1
+  _superAttack: 3
+  _introductionStopTime: 3
 --- !u!1 &937946264999826983
 GameObject:
   m_ObjectHideFlags: 0
@@ -407,12 +407,12 @@ MonoBehaviour:
   _muzzles:
   - {fileID: 8035183015970170828}
   - {fileID: 1614845315737542022}
-  _attackInterval: 0.35
+  _attackInterval: 0.2
   _firstBullet: 170000001600000019000000
   _secondBullet: 17000000180000001a000000
   _endingTime: 10
   _probability: 50
-  _normalAttack: 4
+  _normalAttack: 3
   _audioInterval: 2
 --- !u!1 &3057993410719779574
 GameObject:
@@ -517,12 +517,12 @@ MonoBehaviour:
   _waitTime: 5
   _activationTime: 30
   _attackInterval: 0.2
-  _angleInterval: 21
+  _angleInterval: 10
   _bullet: 210000002200000023000000
   _damageTakenRationRange: 0.5
   _Introduction: {fileID: 4277548632520505082}
-  _superAttack: 4
-  _introductionStopTime: 1
+  _superAttack: 1
+  _introductionStopTime: 3
 --- !u!1 &6619467506933895821
 GameObject:
   m_ObjectHideFlags: 0
@@ -671,12 +671,12 @@ MonoBehaviour:
   _muzzles:
   - {fileID: 8035183015970170828}
   - {fileID: 1614845315737542022}
-  _attackInterval: 0.35
+  _attackInterval: 0.2
   _firstBullet: 170000001600000019000000
   _secondBullet: 17000000180000001a000000
   _endingTime: 15
   _probability: 60
-  _normalAttack: 4
+  _normalAttack: 3
   _audioInterval: 2
 --- !u!1 &8776048900135494913
 GameObject:

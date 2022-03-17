@@ -9,15 +9,16 @@ using System;
 /// </summary>
 public class SceneLoder : SingletonMonoBehaviour<SceneLoder>
 {
+    public string ActiveSceneName { get; private set; } = "Title";
+
     [SerializeField]
     Image _fadeImage = null;
     [SerializeField]
     float _fadeTime = 1;
+
     float _timer = 0;
     bool _isLoad = false;
 
-    /// <summary>ロードが始まった際に呼び出されるデリゲート</summary>
-    public event Action OnLoadStart;
     /// <summary>ロードが終わった際に呼び出されるデリゲート</summary>
     public event Action OnLoadEnd;
     /// <summary>
@@ -34,8 +35,6 @@ public class SceneLoder : SingletonMonoBehaviour<SceneLoder>
     {
         _isLoad = true;
 
-        OnLoadStart?.Invoke();
-
         Color c;
         while (_fadeImage.color.a < 1)
         {
@@ -48,6 +47,7 @@ public class SceneLoder : SingletonMonoBehaviour<SceneLoder>
 
         yield return SceneManager.LoadSceneAsync(sceneName);
 
+        ActiveSceneName = SceneManager.GetActiveScene().name;
         OnLoadEnd?.Invoke();
 
         while (_fadeImage.color.a >  0)

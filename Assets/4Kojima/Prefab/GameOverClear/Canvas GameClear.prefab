@@ -81,7 +81,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Gama Clear
+  m_Text: Game Clear
 --- !u!95 &6467913796001597371
 Animator:
   serializedVersion: 3
@@ -954,7 +954,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isDelete: 0
-  _isDelayMode: 0
+  _isDelayMode: 1
   _delay: 1500
   _isFirstSelectButton: 1
   _callNextButtons: []
@@ -1284,6 +1284,8 @@ MonoBehaviour:
   _text: {fileID: 3482648888783472904}
   _changeSpeed: 2
   _value: 0
+  _onScoreCountSoundType: 19
+  _scoreTextChangeDelay: 2000
 --- !u!114 &2222233152357883959
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1299,6 +1301,8 @@ MonoBehaviour:
   _text: {fileID: 632167508311354360}
   _changeSpeed: 0.5
   _value: 1
+  _onScoreCountSoundType: 19
+  _scoreTextChangeDelay: 2000
 --- !u!1 &8700709484159669591
 GameObject:
   m_ObjectHideFlags: 0

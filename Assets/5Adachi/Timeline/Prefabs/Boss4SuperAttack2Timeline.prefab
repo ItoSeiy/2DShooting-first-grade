@@ -70,7 +70,6 @@ GameObject:
   - component: {fileID: 5187175116950349843}
   - component: {fileID: 5187175116950349852}
   - component: {fileID: 5187175116950349853}
-  - component: {fileID: 5187175116950349842}
   - component: {fileID: 9036199713020116237}
   m_Layer: 5
   m_Name: Boss4SuperAttack2Text
@@ -140,24 +139,6 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: "\u307C\u3093\u3058\u308A\u306E\u672C\u8CEA\u306F\n\u3000\u3000\u4ECA\u3082\u6614\u3082\u540C\u3058\u3060"
---- !u!114 &5187175116950349842
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5187175116950349840}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c7e9ecdbb19134449c0fc5048828763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NonRotatableCharacters: 0000
-  ShiftCharacters: 0000
-  ShiftXPixels:
-  - 0
-  ShiftYPixels:
-  - 0
 --- !u!95 &9036199713020116237
 Animator:
   serializedVersion: 3

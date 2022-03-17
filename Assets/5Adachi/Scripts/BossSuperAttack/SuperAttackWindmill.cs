@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
+using Overdose.Data;
 
 public class SuperAttackWindmill : BossAttackAction
 {
@@ -141,7 +142,7 @@ public class SuperAttackWindmill : BossAttackAction
         //•KŽE‹Z”­“®
         while (true)
         {
-            if (_timer >= 3f)
+            if (_timer >= _introductionStopTime)
             {
                 _Introduction.gameObject.SetActive(false);
             }

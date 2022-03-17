@@ -3,6 +3,7 @@ using System.Linq;
 using UnityEngine;
 using System.Threading.Tasks;
 using System;
+using Overdose.Data;
 
 public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
 {
@@ -81,7 +82,7 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
 
     /// <summary>ステージのデータ</summary>
     [SerializeField] 
-    StageParam _stageParam;
+    StageData _stageParam;
 
     /// <summary>ボス生成される時に呼びだされるデリゲート/// </summary>
     public event Action OnBoss;
