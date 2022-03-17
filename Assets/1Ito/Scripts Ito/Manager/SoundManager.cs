@@ -143,7 +143,7 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
     /// サウンドを使いたいときに呼び出す関数
     /// </summary>
     /// <param name="soundType">流したいサウンドの種類</param>
-    /// <returns></returns>
+    /// <returns>流すサウンドのオーディオソース</returns>
     public AudioSource UseSound(SoundType soundType)
     {
         foreach (var pool in _pool)
@@ -157,6 +157,37 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 
         var newSound = Instantiate(Array.Find(_sfxPoolData.Data, x => x.Type == soundType).Audio, this.transform);
         _pool.Add(new Pool { Sound = newSound, Type = soundType});
+        newSound.gameObject.SetActive(true);
+
+        Debug.LogWarning($"{soundType}のプールのオブジェクト数が足りなかったため新たにオブジェクトを生成します" +
+            $"\nこのオブジェクトはプールの最大値が少ない可能性があります" +
+            $"現在{soundType}の数は{_pool.FindAll(x => x.Type == soundType).Count}です");
+
+        return newSound;
+    }
+
+    /// <summary>
+    /// サウンドを使いたいときに呼び出す関数
+    /// 音量を調整できるオーバロード
+    /// </summary>
+    /// <param name="soundType">流したいサウンドの種類</param>
+    /// <param name="volumeScale">流すサウンドの音量</param>
+    /// <returns>流すサウンドのオーディオソース</returns>
+    public AudioSource UseSound(SoundType soundType, float volumeScale)
+    {
+        foreach (var pool in _pool)
+        {
+            if (pool.Sound.gameObject.activeSelf == false && pool.Type == soundType)
+            {
+                pool.Sound.volume = volumeScale;
+                pool.Sound.gameObject.SetActive(true);
+                return pool.Sound;
+            }
+        }
+
+        var newSound = Instantiate(Array.Find(_sfxPoolData.Data, x => x.Type == soundType).Audio, this.transform);
+        _pool.Add(new Pool { Sound = newSound, Type = soundType });
+        newSound.volume = volumeScale;
         newSound.gameObject.SetActive(true);
 
         Debug.LogWarning($"{soundType}のプールのオブジェクト数が足りなかったため新たにオブジェクトを生成します" +
