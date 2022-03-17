@@ -137,7 +137,6 @@ GameObject:
   - component: {fileID: 240392902}
   - component: {fileID: 240392901}
   - component: {fileID: 240392900}
-  - component: {fileID: 240392905}
   m_Layer: 5
   m_Name: Stage5SelectButton
   m_TagString: Untagged
@@ -249,18 +248,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 240392905}
-        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
-        m_MethodName: Click
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &240392903
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -300,28 +287,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 240392898}
   m_CullTransparentMesh: 1
---- !u!114 &240392905
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 240392898}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _isDelete: 0
-  _isDelayMode: 0
-  _delay: 1500
-  _isFirstSelectButton: 0
-  _callNextButtons: []
-  _deleteButtons: []
-  _callPanel: []
-  _deletePanel: []
-  _animStateName: 
-  _onClickSounds: 11000000
 --- !u!1 &344518103
 GameObject:
   m_ObjectHideFlags: 0
@@ -431,7 +396,6 @@ GameObject:
   - component: {fileID: 708574007}
   - component: {fileID: 708574006}
   - component: {fileID: 708574004}
-  - component: {fileID: 708574009}
   m_Layer: 5
   m_Name: Stage1SelectButton
   m_TagString: Untagged
@@ -574,18 +538,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 708574009}
-        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
-        m_MethodName: Click
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!222 &708574008
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -594,28 +546,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 708574002}
   m_CullTransparentMesh: 1
---- !u!114 &708574009
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 708574002}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _isDelete: 0
-  _isDelayMode: 0
-  _delay: 1500
-  _isFirstSelectButton: 0
-  _callNextButtons: []
-  _deleteButtons: []
-  _callPanel: []
-  _deletePanel: []
-  _animStateName: 
-  _onClickSounds: 11000000
 --- !u!1 &749824695
 GameObject:
   m_ObjectHideFlags: 0
@@ -630,7 +560,6 @@ GameObject:
   - component: {fileID: 749824699}
   - component: {fileID: 749824698}
   - component: {fileID: 749824697}
-  - component: {fileID: 749824702}
   m_Layer: 5
   m_Name: Stage3SelectButton
   m_TagString: Untagged
@@ -742,18 +671,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 749824702}
-        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
-        m_MethodName: Click
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &749824700
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -793,28 +710,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 749824695}
   m_CullTransparentMesh: 1
---- !u!114 &749824702
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 749824695}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _isDelete: 0
-  _isDelayMode: 0
-  _delay: 1500
-  _isFirstSelectButton: 0
-  _callNextButtons: []
-  _deleteButtons: []
-  _callPanel: []
-  _deletePanel: []
-  _animStateName: 
-  _onClickSounds: 11000000
 --- !u!1 &810004443
 GameObject:
   m_ObjectHideFlags: 0
@@ -1071,7 +966,6 @@ GameObject:
   - component: {fileID: 1041058802}
   - component: {fileID: 1041058801}
   - component: {fileID: 1041058800}
-  - component: {fileID: 1041058804}
   m_Layer: 0
   m_Name: KeybordTutorialButton
   m_TagString: Untagged
@@ -1168,18 +1062,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1041058804}
-        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
-        m_MethodName: Click
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &1041058802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1218,28 +1100,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1041058798}
   m_CullTransparentMesh: 1
---- !u!114 &1041058804
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1041058798}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _isDelete: 0
-  _isDelayMode: 0
-  _delay: 1500
-  _isFirstSelectButton: 0
-  _callNextButtons: []
-  _deleteButtons: []
-  _callPanel: []
-  _deletePanel: []
-  _animStateName: 
-  _onClickSounds: 11000000
 --- !u!1 &1102707280
 GameObject:
   m_ObjectHideFlags: 0
@@ -1254,7 +1114,6 @@ GameObject:
   - component: {fileID: 1102707284}
   - component: {fileID: 1102707283}
   - component: {fileID: 1102707282}
-  - component: {fileID: 1102707287}
   m_Layer: 5
   m_Name: Stage4SelectButton
   m_TagString: Untagged
@@ -1366,18 +1225,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1102707287}
-        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
-        m_MethodName: Click
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &1102707285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1417,28 +1264,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1102707280}
   m_CullTransparentMesh: 1
---- !u!114 &1102707287
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1102707280}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _isDelete: 0
-  _isDelayMode: 0
-  _delay: 1500
-  _isFirstSelectButton: 0
-  _callNextButtons: []
-  _deleteButtons: []
-  _callPanel: []
-  _deletePanel: []
-  _animStateName: 
-  _onClickSounds: 11000000
 --- !u!1 &1139904099
 GameObject:
   m_ObjectHideFlags: 0
@@ -1643,7 +1468,6 @@ GameObject:
   - component: {fileID: 1211019912}
   - component: {fileID: 1211019911}
   - component: {fileID: 1211019910}
-  - component: {fileID: 1211019915}
   m_Layer: 5
   m_Name: TitleSelectButton
   m_TagString: Untagged
@@ -1755,18 +1579,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1211019915}
-        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
-        m_MethodName: Click
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &1211019913
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1806,28 +1618,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1211019908}
   m_CullTransparentMesh: 1
---- !u!114 &1211019915
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1211019908}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _isDelete: 0
-  _isDelayMode: 0
-  _delay: 1500
-  _isFirstSelectButton: 1
-  _callNextButtons: []
-  _deleteButtons: []
-  _callPanel: []
-  _deletePanel: []
-  _animStateName: 
-  _onClickSounds: 11000000
 --- !u!1 &1335214657
 GameObject:
   m_ObjectHideFlags: 0
@@ -2047,7 +1837,6 @@ GameObject:
   - component: {fileID: 1436540610}
   - component: {fileID: 1436540609}
   - component: {fileID: 1436540608}
-  - component: {fileID: 1436540612}
   m_Layer: 0
   m_Name: ControllerTutorialButton
   m_TagString: Untagged
@@ -2144,18 +1933,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1436540612}
-        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
-        m_MethodName: Click
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &1436540610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2194,28 +1971,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1436540606}
   m_CullTransparentMesh: 1
---- !u!114 &1436540612
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1436540606}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _isDelete: 0
-  _isDelayMode: 0
-  _delay: 1500
-  _isFirstSelectButton: 0
-  _callNextButtons: []
-  _deleteButtons: []
-  _callPanel: []
-  _deletePanel: []
-  _animStateName: 
-  _onClickSounds: 11000000
 --- !u!1 &1514549977
 GameObject:
   m_ObjectHideFlags: 0
@@ -2230,7 +1985,6 @@ GameObject:
   - component: {fileID: 1514549981}
   - component: {fileID: 1514549980}
   - component: {fileID: 1514549979}
-  - component: {fileID: 1514549984}
   m_Layer: 5
   m_Name: Stage2SelectButton
   m_TagString: Untagged
@@ -2342,18 +2096,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1514549984}
-        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
-        m_MethodName: Click
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &1514549982
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2393,28 +2135,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1514549977}
   m_CullTransparentMesh: 1
---- !u!114 &1514549984
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1514549977}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _isDelete: 0
-  _isDelayMode: 0
-  _delay: 1500
-  _isFirstSelectButton: 0
-  _callNextButtons: []
-  _deleteButtons: []
-  _callPanel: []
-  _deletePanel: []
-  _animStateName: 
-  _onClickSounds: 11000000
 --- !u!1 &1727963869
 GameObject:
   m_ObjectHideFlags: 0

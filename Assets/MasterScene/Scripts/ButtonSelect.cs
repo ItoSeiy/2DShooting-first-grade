@@ -96,11 +96,16 @@ public class ButtonSelect : MonoBehaviour
             ActiveChange(_deletePanel, false);
         }
     }
-    void ActiveChange(GameObject[] gameObjects, bool set)
+
+    public void StageSelect()
+    {
+    }
+
+    void ActiveChange(GameObject[] gameObjects, bool active)
     {
         foreach(var go in gameObjects)
         {
-            go.SetActive(set);
+            go.SetActive(active);
         }
     }
 }
