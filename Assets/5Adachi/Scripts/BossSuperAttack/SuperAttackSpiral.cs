@@ -37,7 +37,7 @@ public class SuperAttackSpiral : BossAttackAction
     /// <summary>必殺技発動時間</summary>
     [SerializeField, Header("必殺技発動時間")] float _activationTime = 30f;
     /// <summary>マズルの角度間隔</summary>
-    [SerializeField,Header("マズルの角度間隔")]　float _angleInterval = 10f;
+    [SerializeField,Header("マズルの角度間隔")]　float _angleInterval = 8.5f;
     /// <summary>発射する弾を設定できる</summary>
     [SerializeField, Header("発射する弾の設定")] PoolObjectType[] _bullet;
     /// <summary>被ダメージの割合</summary>

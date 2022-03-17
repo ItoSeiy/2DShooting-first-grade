@@ -67,7 +67,7 @@ public class SuperAttackPrison : BossAttackAction
     const float JUDGMENT_TIME = 1 / 60f;
     /// <summary>リセットタイマー</summary>
     const float RESET_TIME = 0f;
-
+   
     public override System.Action ActinoEnd { get; set; }
    
     public override void Enter(BossController contlloer)

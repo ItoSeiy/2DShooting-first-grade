@@ -41,7 +41,7 @@ public class SuperAttackEightShape : BossAttackAction
     /// <summary>UŒ‚•p“x</summary>
     [SerializeField, Header("UŒ‚•p“x(•b)")] private float _attackInterval = 0.16f;
     /// <summary>ƒ}ƒYƒ‹‚ÌŠp“xŠÔŠu</summary>
-    [SerializeField, Header("ƒ}ƒYƒ‹‚ÌŠp“xŠÔŠu")] float _angleInterval = 10f;
+    [SerializeField, Header("ƒ}ƒYƒ‹‚ÌŠp“xŠÔŠu")] float _angleInterval = 21f;
     /// <summary>”­Ë‚·‚é’e‚ğİ’è‚Å‚«‚é</summary>
     [SerializeField, Header("”­Ë‚·‚é’e‚Ìİ’è")] PoolObjectType[] _bullet;
     /// <summary>’e‚ÌŒ©‚½–Ú‚ğ•Ï‚¦‚éŠÔŠu(•b)</summary>
