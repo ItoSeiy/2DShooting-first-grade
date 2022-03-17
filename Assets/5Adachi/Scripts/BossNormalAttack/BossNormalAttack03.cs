@@ -9,12 +9,12 @@ public class BossNormalAttack03 : BossAttackAction
     Vector3 _dir;
     /// <summary>マズルの角度間隔</summary>
     float _rotationInterval = 360f;
+    /// <summary>タイマー</summary>
+    float _timer = 0f;
     /// <summary>発射した回数</summary>
     int _attackCount = 0;
     /// <summary>弾の見た目の種類</summary>
-    int _pattern = 0;
-    /// <summary>タイマー</summary>
-    float _timer = 0f;
+    int _pattern = 0; 
     /// <summary>発射する最大回数</summary>
     [SerializeField,Header("発射する最大回数")] int _maxAttackCount = 7;
     /// <summary>バレットを発射するポジション</summary>
@@ -31,8 +31,8 @@ public class BossNormalAttack03 : BossAttackAction
     [SerializeField, Header("アイテムを落とす確率")] int _probability = 50;
     /// <summary>攻撃時の音</summary>
     [SerializeField, Header("攻撃時の音")] SoundType _normalAttack;
-        /// <summary>音を鳴らすタイミング</summary>
-        [SerializeField, Header("音を鳴らすタイミング")] float _audioInterval = 2f;
+    /// <summary>音を鳴らすタイミング</summary>
+    [SerializeField, Header("音を鳴らすタイミング")] float _audioInterval = 2f;
     /// <summary>最小の回転値</summary>
     const float MINIMUM_ROTATION_RANGE = 0f;
     /// <summary>最大の回転値</summary>
@@ -101,7 +101,7 @@ public class BossNormalAttack03 : BossAttackAction
             Vector3 firstLocalAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
 
             //攻撃時のサウンド
-            SoundManager.Instance.UseSound(_normalAttack);
+            SoundManager.Instance.UseSound(_normalAttack,0.5f);
 
             //同じ処理を数回(_maximumCount)繰り返す
             for (float rotation = MINIMUM_ROTATION_RANGE + firstLocalAngle.z; rotation <= MAX_ROTATION_RANGE + firstLocalAngle.z; rotation += _rotationInterval)
