@@ -171,7 +171,7 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
     /// 音量を調整できるオーバロード
     /// </summary>
     /// <param name="soundType">流したいサウンドの種類</param>
-    /// <param name="volumeScale">流すサウンドの音量</param>
+    /// <param name="volumeScale">流すサウンドの音量 min -> 0f max -> 1f</param>
     /// <returns>流すサウンドのオーディオソース</returns>
     public AudioSource UseSound(SoundType soundType, float volumeScale)
     {
