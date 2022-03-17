@@ -1,24 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Overdose.Data;
 using System.IO;
+using UnityEngine;
 
 public class SaveDataManager : SingletonMonoBehaviour<SaveDataManager>
 {
-    [SerializeField]
-    private string _jsonPath;
-
-    private SaveData _saveData;
-    void Start()
+    public void Save(SaveData saveData)
     {
-        var saveDataStr = Resources.Load<TextAsset>(_jsonPath).ToString();
-        _saveData = JsonUtility.FromJson<SaveData>(saveDataStr);
+        var jsonSaveDataStr = JsonUtility.ToJson(saveData);
+
+        var writer = new StreamWriter(Application.dataPath + "/SaveData/SaveData.json", false);
+        writer.Write(jsonSaveDataStr);
+        writer.Flush();
+        writer.Close();
     }
 
-    void Save(SaveData saveData)
+    public SaveData Load()
     {
-        var saveDataStr = JsonUtility.ToJson(_saveData);
-        
+        var reader = new StreamReader(Application.dataPath + "/SaveData/SaveData.json");
+        var jsonSaveDataStr = reader.ReadToEnd();
+        reader.Close();
+
+        return JsonUtility.FromJson<SaveData>(jsonSaveDataStr);
     }
 }
