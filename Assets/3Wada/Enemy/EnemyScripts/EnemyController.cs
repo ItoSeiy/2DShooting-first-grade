@@ -1,74 +1,99 @@
 ﻿using DG.Tweening;
 using UnityEngine;
+using Overdose.Data;
+
 /// <summary>
 /// Enemyの派生クラス
 /// </summary>
 public class EnemyController : EnemyBase 
 {
     /// <summary>このオブジェクトが破棄されたときに次のフェイズに移るか</summary>
-    [SerializeField, Header("このオブジェクトが破棄されたときに次のフェイズに移るか")]
+    [SerializeField]
+    [Header("このオブジェクトが破棄されたときに次のフェイズに移るか")]
     bool _isPhaseTriger = false;
     /// <summary>次のフェイズに移らず同じプレハブを生成するかどうか</summary>
-    [SerializeField, Header("次のフェイズに移らず同じプレハブを生成するかどうかisPhaseTrigerがオンになっているときにのみに発動")]
+    [SerializeField]
+    [Header("次のフェイズに移らず同じプレハブを生成するかどうかisPhaseTrigerがオンになっているときにのみに発動")]
     bool _isPhaseLoop = false;
 
-    [SerializeField, Header("球の出る位置")]
+    [SerializeField]
+    [Header("球の出る位置")]
     Transform[] _muzzle = null;
 
-    [SerializeField, Header("ノーマルマズル時回転するかどうか")] 
+    [SerializeField]
+    [ Header("ノーマルマズル時回転するかどうか")] 
     bool _normalMuzzleRotate = false;
 
-    [SerializeField,Header("Muzzleを回しながら球が出る位置")]
+    [SerializeField]
+    [Header("Muzzleを回しながら球が出る位置")]
     Transform[] _rotateMuzzles = null;
 
-    [SerializeField,Header("Muzzleの切り替え")] 
+    [SerializeField]
+    [Header("Muzzleの切り替え")] 
     MuzzleTransform _muzzleTransform;
 
-    [SerializeField,Header("弾幕")]
+    [SerializeField]
+    [Header("弾幕")]
     GameObject _bullet;
 
-    [SerializeField, Header("撃つ弾幕の種類")]
+    [SerializeField]
+    [Header("撃つ弾幕の種類")]
     PoolObjectType _bulletType;
     
-    [SerializeField, Header("攻撃頻度をランダムにするか")]
+    [SerializeField]
+    [Header("攻撃頻度をランダムにするか")]
     bool _attackIntervelChange = false;
 
-    [SerializeField, Header("攻撃頻度がランダム時のmax")] 
+    [SerializeField]
+    [Header("攻撃頻度がランダム時のmax")]
     float _randomIntervalMax = 1f;
 
-    [SerializeField, Header("攻撃頻度がランダム時のmin")] 
+    [SerializeField]
+    [Header("攻撃頻度がランダム時のmin")]
     float _randomIntervalMin = 0.1f;
 
-    [SerializeField,Header("モブ敵の出現位置")]
+    [SerializeField]
+    [Header("モブ敵の出現位置")]
     GeneratePos _generatePos;
 
-    [SerializeField, Header("移動方向が変わるXまたはYの座標")] 
+    [SerializeField]
+    [Header("移動方向が変わるXまたはYの座標")] 
     float _limitPos = 0;
 
-    [SerializeField,Header("Muzzleが一周するまでの秒数")] 
+    [SerializeField]
+    [Header("Muzzleが一周するまでの秒数")] 
     float _rotateSecond = 2f;
 
-    [SerializeField, Header("Muzzleが1秒間で回転する角度")] 
+    [SerializeField]
+    [Header("Muzzleが1秒間で回転する角度")] 
     float _rotsteMuzzleLimit = 360f;
 
-    [SerializeField, Header("出た時の移動方向")] 
+    [SerializeField]
+    [Header("出た時の移動方向")] 
     Vector2 _beforeDir;
 
-    [SerializeField, Header("移動変わった後の移動方向")] 
+    [SerializeField]
+    [Header("移動変わった後の移動方向")] 
     Vector2 _afterDir;
 
-    [SerializeField, Header("何秒とどまるか")] 
+    [SerializeField]
+    [Header("何秒とどまるか")] 
     float _stopcount = 0.0f;
 
-    [SerializeField, Header("攻撃方法")] AttackMode _attackMode;
+    [SerializeField]
+    [Header("攻撃方法")]
+    AttackMode _attackMode;
+
     bool _isBttomposition = false;
     bool _isMove = false;
     SpriteRenderer _spriteRenderer = default;
 
-    [SerializeField, Header("ダメージを受けた際の音")]
+    [SerializeField]
+    [Header("ダメージを受けた際の音")]
     SoundType _getDamageSFX = SoundType.None;
 
-    [SerializeField, Header("死亡時の音")]
+    [SerializeField]
+    [Header("死亡時の音")]
     SoundType _onDestroySFX = SoundType.None;
 
     private void Start()

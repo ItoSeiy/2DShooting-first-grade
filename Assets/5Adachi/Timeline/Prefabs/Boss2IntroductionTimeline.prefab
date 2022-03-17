@@ -165,7 +165,6 @@ GameObject:
   - component: {fileID: 3925617685321785048}
   - component: {fileID: 3925617685321785045}
   - component: {fileID: 3925617685321785050}
-  - component: {fileID: 3925617685321785051}
   - component: {fileID: 8147362629728368200}
   m_Layer: 5
   m_Name: Boss2IntroductionText
@@ -235,24 +234,6 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: "\u9B54\u72D0\n  \u795E\u72D0"
---- !u!114 &3925617685321785051
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3925617685321785049}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c7e9ecdbb19134449c0fc5048828763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NonRotatableCharacters: 0000
-  ShiftCharacters: 0000
-  ShiftXPixels:
-  - 0
-  ShiftYPixels:
-  - 0
 --- !u!95 &8147362629728368200
 Animator:
   serializedVersion: 3

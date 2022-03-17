@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
+using Overdose.Data;
 
 public class SuperAttackRestriction: BossAttackAction
 {
@@ -154,7 +155,7 @@ public class SuperAttackRestriction: BossAttackAction
         //•KŽE‹Z”­“®
         while (true)
         {
-            if (_timer >= 3f)
+            if (_timer >= _introductionStopTime)
             {
                 _Introduction.gameObject.SetActive(false);
             }

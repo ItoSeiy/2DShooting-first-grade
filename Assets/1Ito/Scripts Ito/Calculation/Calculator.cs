@@ -30,4 +30,3 @@ namespace Overdose.Calculation
         }
     }
 }
-

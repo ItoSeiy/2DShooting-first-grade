@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 505009566052475030}
   - component: {fileID: 505009566052475049}
   - component: {fileID: 505009566052475048}
-  - component: {fileID: 505009566052475031}
   - component: {fileID: 3535152939252988700}
   m_Layer: 5
   m_Name: Boss1SuperAttack1Text
@@ -81,24 +80,6 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: "\u4E94\u6708\u96E8\u65AC\u30FB\u4E71"
---- !u!114 &505009566052475031
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 505009566052475029}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c7e9ecdbb19134449c0fc5048828763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NonRotatableCharacters: 0000
-  ShiftCharacters: 0000
-  ShiftXPixels:
-  - 0
-  ShiftYPixels:
-  - 0
 --- !u!95 &3535152939252988700
 Animator:
   serializedVersion: 3

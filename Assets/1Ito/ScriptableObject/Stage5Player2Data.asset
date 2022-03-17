@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca5155e546acb674aabe98df4851ddfd, type: 3}
+  m_Name: Stage5Player2Data
+  m_EditorClassIdentifier: 
+  _sceneName: Stage5Player2
+  _normalBGM: {fileID: 8300000, guid: f730a28e649a1fa4097602906f54e7db, type: 3}
+  _bossBGM: {fileID: 8300000, guid: ba2b49dcba7c5434cba2b87de0527a59, type: 3}
+  _phaseParms:
+  - _phaseName: Phase1
+    _phasePrefab: {fileID: 2425536389864196187, guid: 5f0fc831335ba5c4682c4c8b876990ee,
+      type: 3}
+    _loopTime: 0
+    _isBoss: 0
+  - _phaseName: Phase2
+    _phasePrefab: {fileID: 8843587532143978883, guid: 9acde5c4c70c6fe44924c64d5b13d5e1,
+      type: 3}
+    _loopTime: 0
+    _isBoss: 0
+  - _phaseName: Phase3
+    _phasePrefab: {fileID: 7188111666292838662, guid: 458ff77a70441bb42974c37b965ee1dd,
+      type: 3}
+    _loopTime: 0
+    _isBoss: 0
+  - _phaseName: Phase4
+    _phasePrefab: {fileID: 9051650875049939702, guid: 7591ec8065bb46a4f914ef9c2054d7a1,
+      type: 3}
+    _loopTime: 0
+    _isBoss: 0
+  - _phaseName: Boss
+    _phasePrefab: {fileID: 1868784747171270441, guid: 84f1c78e56086c843985b1fb42ee5322,
+      type: 3}
+    _loopTime: 0
+    _isBoss: 1
