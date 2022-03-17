@@ -168,9 +168,9 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
         var playerBullets = GameObject.FindGameObjectsWithTag("PlayerBullet");
         var enemyBullets = GameObject.FindGameObjectsWithTag("EnemyBullet");
 
-        enemies.ToList().ForEach(x => Destroy(x));
-        playerBullets.ToList().ForEach(x => Destroy(x));
-        enemyBullets.ToList().ForEach(x => Destroy(x));
+        Array.ForEach(enemies, x => Destroy(x));
+        Array.ForEach(playerBullets, x => Destroy(x));
+        Array.ForEach(enemyBullets, x => Destroy(x));
     }
 
     /// <summary>
