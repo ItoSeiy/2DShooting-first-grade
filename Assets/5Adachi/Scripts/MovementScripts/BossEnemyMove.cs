@@ -6,20 +6,13 @@ public class BossEnemyMove : BossMoveAction
 {
     /// <summary>タイマー</summary>
     float _timer = 0f;
+    bool _speedUp = false;
     /// <summary>方向</summary>
     Vector2 _dir;
     /// <summary>停止時間</summary>
     [SerializeField, Header("停止時間")] float _stopTime = 2f;
     /// <summary>移動時間</summary>
-    [SerializeField, Header("移動時間")] float _moveTime = 0.5f;
-    /// <summary>右限</summary>
-    [SerializeField, Header("右限")] float _rightLimit = 4f;
-    /// <summary>左限</summary>
-    [SerializeField, Header("左限")] float _leftLimit = -4f;
-    /// <summary>上限</summary>
-    [SerializeField, Header("上限")] float _upperLimit = 2.5f;
-    /// <summary>下限</summary>
-    [SerializeField, Header("下限")] float _lowerLimit = 1.5f;
+    [SerializeField, Header("ダッシュ時間")] float _moveTime = 0.5f;
     /// <summary>中央位置</summary>
     const float MIDDLE_POS = 0f;
     /// <summary>判定回数の制限</summary>
@@ -27,14 +20,22 @@ public class BossEnemyMove : BossMoveAction
 
     public override void Enter(BossController contlloer)
     {
-        Debug.Log("発動完了");
+        _speedUp = false;
         StartCoroutine(Test(contlloer));
     }
 
     public override void ManagedUpdate(BossController contlloer)
     {
         //その方向に移動
-        contlloer.Rb.velocity = _dir * contlloer.Speed / 2f;
+        if (_speedUp)
+        {
+            contlloer.Rb.velocity = _dir * (contlloer.Speed * 2f);
+        }
+        else
+        {
+            contlloer.Rb.velocity = _dir * contlloer.Speed * 0.5f;
+        }
+        
         //タイマー
         _timer += Time.deltaTime;
 
@@ -60,18 +61,22 @@ public class BossEnemyMove : BossMoveAction
         _timer = 0;
 
         while (true)
-        {
-            Debug.Log("a");
+        { 
+            yield return new WaitForSeconds(JUDGMENT_TIME);
+
             //プレイヤーの方向に移動
             _dir = new Vector2(GameManager.Instance.Player.transform.position.x - controller.transform.position.x, GameManager.Instance.Player.transform.position.y - controller.transform.position.y).normalized;
-            //yield return new WaitForSeconds(1f);
-
-            if (_timer >= 10f)
+            if(_timer >= 2f)
             {
-                break;
+                //ダッシュ時間
+                _speedUp = true;
+                yield return new WaitForSeconds(0.5f);
+                //停止時間
+                _dir = Vector2.zero;
+                yield return new WaitForSeconds(1f);
+                _speedUp = false;
+                _timer = 0;
             }
         }
-        _dir = Vector2.zero;
-        yield break;
     }
 }
