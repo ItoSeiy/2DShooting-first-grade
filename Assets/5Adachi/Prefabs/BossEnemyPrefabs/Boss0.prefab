@@ -61,6 +61,7 @@ MonoBehaviour:
   _Introduction: {fileID: 6334841935541376338}
   _superAttack: 2
   _introductionStopTime: 3
+  _volumeScale: 0.5
 --- !u!1 &690225363277646459
 GameObject:
   m_ObjectHideFlags: 0
@@ -116,6 +117,7 @@ MonoBehaviour:
   _Introduction: {fileID: 8883521838302047215}
   _superAttack: 2
   _introductionStopTime: 3
+  _volumeScale: 0.5
 --- !u!1 &690225363380138791
 GameObject:
   m_ObjectHideFlags: 0
@@ -377,6 +379,7 @@ MonoBehaviour:
   _endingTime: 10
   _probability: 100
   _normalAttack: 2
+  _volumeScale: 0.5
 --- !u!1 &690225364772332851
 GameObject:
   m_ObjectHideFlags: 0
@@ -752,7 +755,7 @@ GameObject:
   - component: {fileID: 4644364035018702641}
   - component: {fileID: 6752653124885942664}
   m_Layer: 0
-  m_Name: Test
+  m_Name: Follow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -784,12 +787,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f289624a38ad3045bdcd7ca1b783d76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _speedUpInterval: 0.5
   _stopTime: 2
-  _moveTime: 0.5
-  _rightLimit: 4
-  _leftLimit: -4
-  _upperLimit: 2.5
-  _lowerLimit: 1.5
+  _speedUpTime: 0.5
 --- !u!1001 &2371229214589897595
 PrefabInstance:
   m_ObjectHideFlags: 0

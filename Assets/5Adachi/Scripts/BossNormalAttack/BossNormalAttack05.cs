@@ -35,6 +35,8 @@ public class BossNormalAttack05 : BossAttackAction
     [SerializeField, Header("攻撃時の音")] SoundType _normalAttack;
     /// <summary>音を鳴らすタイミング</summary>
     [SerializeField, Header("音を鳴らすタイミング")] float _audioInterval = 1f;
+    /// <summary>流すサウンドの音量</summary>
+    [SerializeField, Header("流すサウンドの音量")] float _volumeScale = 0.5f;
     /// <summary>完全な通常攻撃になり始める時間</summary>
     const float _perfectTime = 3f;
     /// <summary>最小の回転値</summary>
@@ -49,7 +51,7 @@ public class BossNormalAttack05 : BossAttackAction
     {
         _defaultTimer = 0f;
         _timer = 0f;
-        SoundManager.Instance.UseSound(_normalAttack);
+        SoundManager.Instance.UseSound(_normalAttack,_volumeScale);
         StartCoroutine(Attack(contlloer));
     }
 
@@ -102,7 +104,7 @@ public class BossNormalAttack05 : BossAttackAction
             if(_audioTimer >= _audioInterval)
             {
                 //攻撃時の音
-                SoundManager.Instance.UseSound(_normalAttack);
+                SoundManager.Instance.UseSound(_normalAttack,_volumeScale);
                 _audioTimer = 0;
             }
             

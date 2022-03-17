@@ -23,6 +23,8 @@ public class BossNormalAttack01 : BossAttackAction
     [SerializeField, Header("アイテムを落とす確率")] int _probability = 50;
     /// <summary>攻撃時の音</summary>
     [SerializeField,Header("攻撃時の音")] SoundType _normalAttack;
+    /// <summary>流すサウンドの音量</summary>
+    [SerializeField, Header("流すサウンドの音量")] float _volumeScale = 0.5f;
 
     public override System.Action ActinoEnd { get; set; }
 
@@ -66,7 +68,7 @@ public class BossNormalAttack01 : BossAttackAction
             _muzzles[0].transform.rotation = Quaternion.FromToRotation(Vector3.up, _dir);
 
             //攻撃時の音
-            SoundManager.Instance.UseSound(_normalAttack);
+            SoundManager.Instance.UseSound(_normalAttack,_volumeScale);
             //親オブジェクトのマズル
 
             //弾をマズル0の向きに合わせて弾を発射

@@ -52,6 +52,8 @@ public class SuperAttackRandom : BossAttackAction
     [SerializeField, Header("音を鳴らすタイミング")] float _audioInterval = 0.4f;
     /// <summary>タイムラインを消す時間</summary>
     [SerializeField, Header("タイムラインを消す時間")] float _introductionStopTime = 3f;
+    /// <summary>流すサウンドの音量</summary>
+    [SerializeField, Header("流すサウンドの音量")] float _volumeScale = 0.2f;
     /// <summary>修正値</summary>
     const float PLAYER_POS_OFFSET = 0.5f;
     /// <summary>判定回数の制限</summary>
@@ -158,7 +160,7 @@ public class SuperAttackRandom : BossAttackAction
             if (_audioTimer >= _audioInterval)
             {
                 //攻撃時のサウンド
-                SoundManager.Instance.UseSound(_superAttack);
+                SoundManager.Instance.UseSound(_superAttack,_volumeScale);
                 _audioTimer = 0f;
             }
             

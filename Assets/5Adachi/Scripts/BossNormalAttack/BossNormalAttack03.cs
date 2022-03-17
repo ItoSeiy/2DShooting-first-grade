@@ -23,6 +23,8 @@ public class BossNormalAttack03 : BossAttackAction
     [SerializeField, Header("攻撃頻度(秒)")] private float _attackInterval = 0.64f;
     /// <summary>発射する弾を設定できる</summary>
     [SerializeField, Header("発射する弾の設定")] PoolObjectType[] _bullet;
+    /// <summary>最小の弾数</summary>
+    [SerializeField, Header("最少の弾数")] int minimumBulletRange = 3;
     /// <summary>最大の弾数</summary>
     [SerializeField,Header("最大の弾数")] int _maximumBulletRange = 11;
     /// <summary>この行動から出る時間</summary>
@@ -33,12 +35,12 @@ public class BossNormalAttack03 : BossAttackAction
     [SerializeField, Header("攻撃時の音")] SoundType _normalAttack;
     /// <summary>音を鳴らすタイミング</summary>
     [SerializeField, Header("音を鳴らすタイミング")] float _audioInterval = 2f;
+    /// <summary>流すサウンドの音量</summary>
+    [SerializeField, Header("流すサウンドの音量")] float _volumeScale = 0.2f;
     /// <summary>最小の回転値</summary>
     const float MINIMUM_ROTATION_RANGE = 0f;
     /// <summary>最大の回転値</summary>
-    const float MAX_ROTATION_RANGE = 360f;
-    /// <summary>最小の弾数</summary>
-    const int MINIMUM_BULLET_RANGE = 3;
+    const float MAX_ROTATION_RANGE = 360f;    
     /// <summary>発射回数をリセット</summary>
     const int ATTACK_COUNT_RESET = 0;
     /// <summary>最大の玉数の調整</summary>
@@ -52,8 +54,7 @@ public class BossNormalAttack03 : BossAttackAction
     {
         _timer = 0f;
         //攻撃時のサウンド
-        SoundManager.Instance.UseSound(_normalAttack);
-        Debug.Log(contlloer);
+        SoundManager.Instance.UseSound(_normalAttack,_volumeScale);
         StartCoroutine(Attack(contlloer));
     }
 
@@ -89,7 +90,7 @@ public class BossNormalAttack03 : BossAttackAction
                 //弾の見た目をランダムで変える
                 _pattern = Random.Range(0, _bullet.Length);
                 //1回の攻撃で弾を飛ばす数(3～?)
-                _rotationInterval = MAX_ROTATION_RANGE / Random.Range(MINIMUM_BULLET_RANGE, _maximumBulletRange + MAX_BULLET_RANGE_OFFSET);
+                _rotationInterval = MAX_ROTATION_RANGE / Random.Range(minimumBulletRange, _maximumBulletRange + MAX_BULLET_RANGE_OFFSET);
                 _attackCount = ATTACK_COUNT_RESET;//発射回数をリセット
                 
             }
@@ -101,7 +102,7 @@ public class BossNormalAttack03 : BossAttackAction
             Vector3 firstLocalAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
 
             //攻撃時のサウンド
-            SoundManager.Instance.UseSound(_normalAttack,0.5f);
+            SoundManager.Instance.UseSound(_normalAttack,_volumeScale);
 
             //同じ処理を数回(_maximumCount)繰り返す
             for (float rotation = MINIMUM_ROTATION_RANGE + firstLocalAngle.z; rotation <= MAX_ROTATION_RANGE + firstLocalAngle.z; rotation += _rotationInterval)

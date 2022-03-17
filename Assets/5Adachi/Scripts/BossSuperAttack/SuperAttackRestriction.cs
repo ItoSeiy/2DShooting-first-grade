@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 using Overdose.Data;
+using Overdose.Calculation;
 
 public class SuperAttackRestriction: BossAttackAction
 {
@@ -23,10 +24,12 @@ public class SuperAttackRestriction: BossAttackAction
     float _saveDamageTakenRation = 1f;
     /// <summary>縦方向</summary>
     float _verticalDir = 0f;
-    /// <summary>修正値</summary>
+    /// <summary>マズル回転時に必要な修正値</summary>
     float _rotOffset = 0f;
     /// <summary>弾の見た目の種類</summary>
     int _pattern = 0;
+    /// <summary>回転方向</summary>
+    int _rotDir = 1;
     /// <summary>バレットを発射するポジション</summary>
     [SerializeField, Header("Bulletを発射するポジション")] Transform[] _muzzles = null;
     /// <summary>必殺前に移動するポジション</summary>
@@ -59,20 +62,26 @@ public class SuperAttackRestriction: BossAttackAction
     const float JUDGMENT_TIME = 1 / 60f;
     /// <summary>リセットタイマー</summary>
     const float RESET_TIME = 0f;
-    /// <summary>逆回転時のマズルの修正値</summary>
-    const float MUZZLE_ROT_OFFSET = 2f;
     /// <summary>半分の時間</summary>
     const float HALF_TIME = 2;
     /// <summary>最小の回転値</summary>
     const float MINIMUM_ROT_RANGE = 0f;
     /// <summary>最大の回転値</summary>
     const float MAXIMUM_ROT_RANGE = 360f;
+    /// <summary>50%の確率</summary>
+    const int FIFTY_PERCENT_PROBABILITY = 50;
 
     public override System.Action ActinoEnd { get; set; }
 
     
     public override void Enter(BossController contlloer)
     {
+        //マズルの回転方向を変更
+        if (Calculator.RandomBool(FIFTY_PERCENT_PROBABILITY))
+        {
+            _rotDir = -_rotDir;
+        }
+
         contlloer.ItemDrop();
         //通常時の被ダメージの割合を保存する
         _saveDamageTakenRation = contlloer.DamageTakenRation;
@@ -84,8 +93,8 @@ public class SuperAttackRestriction: BossAttackAction
     public override void ManagedUpdate(BossController contlloer)
     {
         _timer += Time.deltaTime;//タイマー
-
-        if(_timer >= _activationTime)
+        
+        if (_timer >= _activationTime)
         {
             ActinoEnd?.Invoke();
         }
@@ -167,37 +176,29 @@ public class SuperAttackRestriction: BossAttackAction
             //必殺技発動時間の後半になったら反時計回りに全方位発射
             if (_timer >= _activationTime / HALF_TIME)
             {
-                //360度全方位に発射
-                for (float rot = MINIMUM_ROT_RANGE + _rotOffset + MUZZLE_ROT_OFFSET; rot <= MAXIMUM_ROT_RANGE + _rotOffset + MUZZLE_ROT_OFFSET; rot += _angleInterval)
-                {
-                    //マズルを回転する
-                    Vector3 localAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
-                    localAngle.z = -rot;// 角度を設定
-                    _muzzles[0].localEulerAngles = localAngle;//回転する
-
-                    //弾をマズルの向きに合わせて弾を発射
-                    ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet[_pattern]).transform.rotation = _muzzles[0].rotation;
-                }
+                _rotOffset -= _rotDir;
             }
 
             //必殺技発動時間の前半までは反時計回りに全方位発射
             else
             {
-                //360度全方位に発射
-                for (float angle = MINIMUM_ROT_RANGE + _rotOffset; angle <= MAXIMUM_ROT_RANGE + _rotOffset; angle += _angleInterval)
-                {
-                    //マズルを回転する
-                    Vector3 localAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
-                    localAngle.z = angle;// 角度を設定
-                    _muzzles[0].localEulerAngles = localAngle;//回転する
-
-                    //弾をマズルの向きに合わせて弾を発射
-                    ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet[_pattern]).transform.rotation = _muzzles[0].rotation;
-                }
+                _rotOffset += _rotDir;
             }
-            _rotOffset++;
+
+            //360度全方位に発射
+            for (float angle = MINIMUM_ROT_RANGE + _rotOffset; angle <= MAXIMUM_ROT_RANGE + _rotOffset; angle += _angleInterval)
+            {
+                //マズルを回転する
+                Vector3 localAngle = _muzzles[0].localEulerAngles;// ローカル座標を基準に取得
+                localAngle.z = angle;// 角度を設定
+                _muzzles[0].localEulerAngles = localAngle;//回転する
+
+                //弾をマズルの向きに合わせて弾を発射
+                ObjectPool.Instance.UseObject(_muzzles[0].position, _bullet[_pattern]).transform.rotation = _muzzles[0].rotation;
+            }
 
             yield return new WaitForSeconds(_attackInterval);//攻撃頻度(秒)
+
             //数秒経ったら
             if (_timer >= _activationTime)
             {

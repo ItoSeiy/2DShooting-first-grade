@@ -21,7 +21,11 @@ public class SuperAttackRebound : BossAttackAction
     /// <summary>縦方向</summary>
     float _verticalDir = 0f;
     /// <summary>通常時の被ダメージの割合を保存する</summary>
-    float _saveDamageTakenRation = 1f;
+    float _saveDamageTakenRation = 1f; 
+    /// <summary>マズルの角度をランダムで調整</summary>
+    int _angleOffset = 0;
+    /// <summary>マズルの角度をランダムで調整する最大値</summary>
+    int _maxAngleOffset = 0;
     /// <summary>弾の見た目の種類</summary>
     int _pattern = 0;
     /// <summary>必殺前に移動するポジション</summary>
@@ -48,6 +52,8 @@ public class SuperAttackRebound : BossAttackAction
     [SerializeField, Header("攻撃時の音")] SoundType _superAttack;
     /// <summary>タイムラインを消す時間</summary>
     [SerializeField, Header("タイムラインを消す時間")] float _introductionStopTime = 3f;
+    /// <summary>流すサウンドの音量</summary>
+    [SerializeField, Header("流すサウンドの音量")] float _volumeScale = 0.5f;
     /// <summary>修正値</summary>
     const float PLAYER_POS_OFFSET = 0.5f;
     /// <summary>判定回数の制限</summary>
@@ -55,14 +61,16 @@ public class SuperAttackRebound : BossAttackAction
     /// <summary>リセットタイマー</summary>
     const float RESET_TIME = 0f;
     /// <summary>最小の回転値</summary>
-    const float MINIMUM_ROTATION_RANGE = 0f;
+    const float MIN_ROT_RANGE = 0f;
     /// <summary>最大の回転値</summary>
-    const float MAXIMUM_ROTATION_RANGE = 360f;
+    const float MAX_ROT_RANGE = 360f;
 
     public override System.Action ActinoEnd { get; set; }
 
     public override void Enter(BossController contlloer)
     {
+        //intに変換
+        _maxAngleOffset = (int)_angleInterval;
         contlloer.ItemDrop();
         //通常時の被ダメージの割合を保存する
         _saveDamageTakenRation = contlloer.DamageTakenRation;
@@ -151,10 +159,12 @@ public class SuperAttackRebound : BossAttackAction
             }
 
             //攻撃時のサウンド
-            SoundManager.Instance.UseSound(_superAttack);
+            SoundManager.Instance.UseSound(_superAttack,_volumeScale);
+            //マズルの角度をランダムで調整
+            _angleOffset = Random.Range(0, _maxAngleOffset);
 
             //全方位に発射
-            for (float angle = MINIMUM_ROTATION_RANGE; angle <= MAXIMUM_ROTATION_RANGE; angle += _angleInterval)
+            for (float angle = MIN_ROT_RANGE + _angleOffset; angle <= MAX_ROT_RANGE + _angleOffset; angle += _angleInterval)
             {
                 _pattern = Random.Range(0, _bullet.Length);
                 Vector3 localAngle = _muzzle.localEulerAngles;// ローカル座標を基準に取得

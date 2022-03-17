@@ -1,3 +1,4 @@
+using Overdose.Calculation;
 using Overdose.Data;
 using System.Collections;
 using UnityEngine;
@@ -61,17 +62,27 @@ public class SuperAttackPrison : BossAttackAction
     [SerializeField, Header("攻撃時の音")] SoundType _superAttack;
     /// <summary>タイムラインを消す時間</summary>
     [SerializeField,Header("タイムラインを消す時間")]　float _introductionStopTime = 3f;
+    /// <summary>流すサウンドの音量</summary>
+    [SerializeField, Header("流すサウンドの音量")] float _volumeScale = 0.5f;
     /// <summary>修正値</summary>
     const float PLAYER_POS_OFFSET = 0.5f;
     /// <summary>判定回数の制限</summary>
     const float JUDGMENT_TIME = 1 / 60f;
     /// <summary>リセットタイマー</summary>
     const float RESET_TIME = 0f;
-   
+    /// <summary>50%の確率</summary>
+    const int FIFTY_PERCENT_PROBABILITY = 50;
+
     public override System.Action ActinoEnd { get; set; }
    
     public override void Enter(BossController contlloer)
     {
+        //マズルの回転方向を変更
+        if (Calculator.RandomBool(FIFTY_PERCENT_PROBABILITY))
+        {
+            _rotDir = true;
+        }
+
         contlloer.ItemDrop();
         //通常時の被ダメージの割合を保存する
         _saveDamageTakenRation = contlloer.DamageTakenRation;
@@ -156,7 +167,7 @@ public class SuperAttackPrison : BossAttackAction
         while (true)
         {
             //攻撃時のサウンド
-            SoundManager.Instance.UseSound(_superAttack);
+            SoundManager.Instance.UseSound(_superAttack,_volumeScale);
 
             if (_timer >= _introductionStopTime)
             {
@@ -165,10 +176,8 @@ public class SuperAttackPrison : BossAttackAction
 
             //時間になったら回転
             if(_timer >= _timeLimit)//5f
-            {
-                
+            {               
                 Vector3 localAngle = _muzzles[1].localEulerAngles;// ローカル座標を基準に取得
-                Debug.Log(localAngle.z);
 
                 //制限まで来たら逆回転
                 if(localAngle.z >= _leftRotLimit)

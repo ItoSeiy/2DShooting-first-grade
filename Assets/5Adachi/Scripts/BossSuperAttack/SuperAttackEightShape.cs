@@ -54,6 +54,8 @@ public class SuperAttackEightShape : BossAttackAction
     [SerializeField, Header("攻撃時の音")] SoundType _superAttack;
     /// <summary>タイムラインを消す時間</summary>
     [SerializeField, Header("タイムラインを消す時間")] float _introductionStopTime = 3f;
+    /// <summary>流すサウンドの音量</summary>
+    [SerializeField, Header("流すサウンドの音量")] float _volumeScale = 0.5f;
     /// <summary>修正値</summary>
     const float PLAYER_POS_OFFSET = 0.5f;
     /// <summary>判定回数の制限</summary>
@@ -138,7 +140,7 @@ public class SuperAttackEightShape : BossAttackAction
 
         _timer = RESET_TIME;//タイムリセット
         //攻撃時のサウンド
-        SoundManager.Instance.UseSound(_superAttack);
+        SoundManager.Instance.UseSound(_superAttack,_volumeScale);
 
         if (_Introduction)
         {
@@ -162,7 +164,7 @@ public class SuperAttackEightShape : BossAttackAction
                 //経過した秒数を追加
                 _switchIntervalOffset += _switchInterval;
                 //攻撃時のサウンド
-                SoundManager.Instance.UseSound(_superAttack);
+                SoundManager.Instance.UseSound(_superAttack,_volumeScale);
             }
             
 

@@ -31,6 +31,8 @@ public class BossNormalAttack04 : BossAttackAction
     [SerializeField, Header("攻撃時の音")] SoundType _normalAttack;    
     /// <summary>音を鳴らすタイミング</summary>
     [SerializeField, Header("音を鳴らすタイミング")] int _maxAttackCount = 2;
+    /// <summary>流すサウンドの音量</summary>
+    [SerializeField, Header("流すサウンドの音量")] float _volumeScale = 0.5f;
     /// <summary>最小の回転値</summary>
     const float MINIMUM_ROTATION_RANGE = 0f;
     /// <summary>最大の回転値</summary>
@@ -44,7 +46,7 @@ public class BossNormalAttack04 : BossAttackAction
     {
         _timer = 0f;
 
-        SoundManager.Instance.UseSound(_normalAttack);
+        SoundManager.Instance.UseSound(_normalAttack,_volumeScale);
         StartCoroutine(Attack(contlloer));
     }
 
@@ -84,7 +86,7 @@ public class BossNormalAttack04 : BossAttackAction
             if(_attackCount >= _maxAttackCount)
             {
                 //攻撃時の音
-                SoundManager.Instance.UseSound(_normalAttack);
+                SoundManager.Instance.UseSound(_normalAttack,_volumeScale);
                 _attackCount = 0;
             }
             

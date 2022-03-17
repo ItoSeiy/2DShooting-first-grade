@@ -2,17 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossEnemyMove : BossMoveAction
+public class BossEnemyMoveFollow : BossMoveAction
 {
     /// <summary>タイマー</summary>
     float _timer = 0f;
+    /// <summary>スピードアップするための切り替えスイッチ</summary>
     bool _speedUp = false;
     /// <summary>方向</summary>
     Vector2 _dir;
+    /// <summary>スピードアップするタイミング</summary>
+    [SerializeField, Header("スピードアップするタイミング")] float _speedUpInterval = 0.5f;
     /// <summary>停止時間</summary>
-    [SerializeField, Header("停止時間")] float _stopTime = 2f;
+    [SerializeField, Header("停止時間")] float _stopTime = 1f;
     /// <summary>移動時間</summary>
-    [SerializeField, Header("ダッシュ時間")] float _moveTime = 0.5f;
+    [SerializeField, Header("ダッシュ時間")] float _speedUpTime = 0.5f;
     /// <summary>中央位置</summary>
     const float MIDDLE_POS = 0f;
     /// <summary>判定回数の制限</summary>
@@ -29,11 +32,11 @@ public class BossEnemyMove : BossMoveAction
         //その方向に移動
         if (_speedUp)
         {
-            contlloer.Rb.velocity = _dir * (contlloer.Speed * 2f);
+            contlloer.Rb.velocity = _dir.normalized * contlloer.Speed * 2f;
         }
         else
         {
-            contlloer.Rb.velocity = _dir * contlloer.Speed * 0.5f;
+            contlloer.Rb.velocity = _dir.normalized * contlloer.Speed * 0.5f;
         }
         
         //タイマー
@@ -65,15 +68,16 @@ public class BossEnemyMove : BossMoveAction
             yield return new WaitForSeconds(JUDGMENT_TIME);
 
             //プレイヤーの方向に移動
-            _dir = new Vector2(GameManager.Instance.Player.transform.position.x - controller.transform.position.x, GameManager.Instance.Player.transform.position.y - controller.transform.position.y).normalized;
-            if(_timer >= 2f)
+            _dir = new Vector2(GameManager.Instance.Player.transform.position.x - controller.transform.position.x, GameManager.Instance.Player.transform.position.y - controller.transform.position.y);
+            if(_timer >= _speedUpInterval)
             {
                 //ダッシュ時間
                 _speedUp = true;
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(_speedUpTime);
                 //停止時間
                 _dir = Vector2.zero;
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(_stopTime);
+                //リセット
                 _speedUp = false;
                 _timer = 0;
             }

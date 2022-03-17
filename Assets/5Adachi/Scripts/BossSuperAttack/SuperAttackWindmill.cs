@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 using Overdose.Data;
+using Overdose.Calculation;
 
 public class SuperAttackWindmill : BossAttackAction
 {
@@ -51,17 +52,27 @@ public class SuperAttackWindmill : BossAttackAction
     [SerializeField, Header("攻撃時の音")] SoundType _superAttack;
     /// <summary>タイムラインを消す時間</summary>
     [SerializeField, Header("タイムラインを消す時間")] float _introductionStopTime = 3f;
+    /// <summary>流すサウンドの音量</summary>
+    [SerializeField, Header("流すサウンドの音量")] float _volumeScale = 0.5f;
     /// <summary>修正値</summary>
     const float PLAYER_POS_OFFSET = 0.5f;
     /// <summary>判定回数の制限</summary>
     const float JUDGMENT_TIME = 1 / 60f;
     /// <summary>リセットタイマー</summary>
     const float RESET_TIME = 0f;
+    /// <summary>50%の確率</summary>
+    const int FIFTY_PERCENT_PROBABILITY = 50;
 
     public override System.Action ActinoEnd { get; set; }
 
     public override void Enter(BossController contlloer)
     {
+        //マズルの回転方向を変更
+        if (Calculator.RandomBool(FIFTY_PERCENT_PROBABILITY))
+        {
+            _angleInterval = -_angleInterval;
+        }
+        
         contlloer.ItemDrop();
         //通常時の被ダメージの割合を保存する
         _saveDamageTakenRation = contlloer.DamageTakenRation;
@@ -148,7 +159,7 @@ public class SuperAttackWindmill : BossAttackAction
             }
 
             //攻撃時のサウンド
-            SoundManager.Instance.UseSound(_superAttack);
+            SoundManager.Instance.UseSound(_superAttack, _volumeScale);
 
             //弾の見た目を変える
             _firstPattern = Random.Range(0, _bullet.Length);
