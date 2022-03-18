@@ -575,20 +575,8 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 177983618}
-        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
-        m_MethodName: Click
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 177983618}
-        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
-        m_MethodName: Click
+        m_TargetAssemblyTypeName: ButtonController, Assembly-CSharp
+        m_MethodName: NormalSelect
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -645,24 +633,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 177983613}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
+  m_Script: {fileID: 11500000, guid: 929360c6455df144582eece6eb2335eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _isDelete: 1
   _isDelayMode: 1
-  _delay: 3000
-  _isFirstSelectButton: 1
+  _delay: 1500
+  _isFirstSelectButton: 0
   _callNextButtons:
   - {fileID: 2129243627}
   - {fileID: 1200900378}
   - {fileID: 646477669}
-  _deleteButtons:
-  - {fileID: 1797667348}
-  - {fileID: 1110586546}
+  _deleteButtons: []
   _callPanel: []
   _deletePanel: []
-  _animStateName: CharacterButton
+  _animStateName: 
   _onClickSounds: 08000000
+  _stageSelectWarningPanel: {fileID: 0}
+  _stageNum: 0
+  _playerNum: 0
 --- !u!95 &177983620
 Animator:
   serializedVersion: 3
@@ -2593,25 +2582,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isDelete: 1
-  _isDelayMode: 0
-  _delay: 1500
-  _isFirstSelectButton: 0
-  _callNextButtons:
-  - {fileID: 177983613}
-  - {fileID: 1797667348}
-  - {fileID: 1110586546}
-  _deleteButtons:
-  - {fileID: 2129243627}
-  - {fileID: 1200900378}
-  - {fileID: 1391689428}
-  - {fileID: 1940633021}
-  _callPanel: []
-  _deletePanel:
-  - {fileID: 1234783232}
-  - {fileID: 39527237}
-  _animStateName: 
-  _onClickSounds: 08000000
 --- !u!1 &704063475
 GameObject:
   m_ObjectHideFlags: 0
@@ -4024,20 +3994,8 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 177983618}
-        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
-        m_MethodName: Click
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 177983618}
-        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
-        m_MethodName: Click
+        m_TargetAssemblyTypeName: ButtonController, Assembly-CSharp
+        m_MethodName: NormalSelect
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4106,21 +4064,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 1110586546}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
+  m_Script: {fileID: 11500000, guid: 929360c6455df144582eece6eb2335eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _isDelete: 1
-  _isDelayMode: 0
-  _delay: 3000
+  _isDelayMode: 1
+  _delay: 1500
   _isFirstSelectButton: 0
-  _callNextButtons: []
-  _deleteButtons:
-  - {fileID: 177983613}
-  - {fileID: 1797667348}
+  _callNextButtons:
+  - {fileID: 2129243627}
+  - {fileID: 1200900378}
+  - {fileID: 646477669}
+  _deleteButtons: []
   _callPanel: []
   _deletePanel: []
-  _animStateName: GameQuit
+  _animStateName: 
   _onClickSounds: 08000000
+  _stageSelectWarningPanel: {fileID: 0}
+  _stageNum: 0
+  _playerNum: 0
 --- !u!1 &1114976579
 GameObject:
   m_ObjectHideFlags: 0
@@ -4390,20 +4352,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isDelete: 0
-  _isDelayMode: 1
-  _delay: 1500
-  _isFirstSelectButton: 0
-  _callNextButtons:
-  - {fileID: 1940633021}
-  _deleteButtons:
-  - {fileID: 1391689428}
-  _callPanel:
-  - {fileID: 39527237}
-  _deletePanel:
-  - {fileID: 1234783232}
-  _animStateName: 
-  _onClickSounds: 08000000
 --- !u!1 &1205279489
 GameObject:
   m_ObjectHideFlags: 0
@@ -4926,16 +4874,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isDelete: 1
-  _isDelayMode: 0
-  _delay: 1500
-  _isFirstSelectButton: 0
-  _callNextButtons: []
-  _deleteButtons: []
-  _callPanel: []
-  _deletePanel: []
-  _animStateName: 
-  _onClickSounds: 11000000
 --- !u!1 &1408076266
 GameObject:
   m_ObjectHideFlags: 0
@@ -5421,8 +5359,8 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1510398138}
-        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
-        m_MethodName: Click
+        m_TargetAssemblyTypeName: ButtonController, Assembly-CSharp
+        m_MethodName: NormalSelect
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5494,22 +5432,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 1510398132}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
+  m_Script: {fileID: 11500000, guid: 929360c6455df144582eece6eb2335eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _isDelete: 1
   _isDelayMode: 0
   _delay: 1500
-  _isFirstSelectButton: 1
+  _isFirstSelectButton: 0
   _callNextButtons:
   - {fileID: 177983613}
   - {fileID: 1797667348}
   - {fileID: 1110586546}
-  _deleteButtons: []
+  _deleteButtons:
+  - {fileID: 1510398132}
   _callPanel: []
   _deletePanel: []
   _animStateName: 
-  _onClickSounds: 0c0000000a000000
+  _onClickSounds: 11000000
+  _stageSelectWarningPanel: {fileID: 0}
+  _stageNum: 0
+  _playerNum: 0
 --- !u!320 &1510398139
 PlayableDirector:
   m_ObjectHideFlags: 0
@@ -6602,8 +6544,8 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 177983618}
-        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
-        m_MethodName: Click
+        m_TargetAssemblyTypeName: ButtonController, Assembly-CSharp
+        m_MethodName: NormalSelect
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6660,21 +6602,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 1797667348}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
+  m_Script: {fileID: 11500000, guid: 929360c6455df144582eece6eb2335eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _isDelete: 1
-  _isDelayMode: 0
-  _delay: 3000
+  _isDelayMode: 1
+  _delay: 1500
   _isFirstSelectButton: 0
-  _callNextButtons: []
-  _deleteButtons:
-  - {fileID: 177983613}
-  - {fileID: 1110586546}
+  _callNextButtons:
+  - {fileID: 2129243627}
+  - {fileID: 1200900378}
+  - {fileID: 646477669}
+  _deleteButtons: []
   _callPanel: []
   _deletePanel: []
-  _animStateName: OperationSettingButton
+  _animStateName: 
   _onClickSounds: 08000000
+  _stageSelectWarningPanel: {fileID: 0}
+  _stageNum: 0
+  _playerNum: 0
 --- !u!1 &1808805772
 GameObject:
   m_ObjectHideFlags: 0
@@ -7368,16 +7314,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isDelete: 1
-  _isDelayMode: 0
-  _delay: 1500
-  _isFirstSelectButton: 0
-  _callNextButtons: []
-  _deleteButtons: []
-  _callPanel: []
-  _deletePanel: []
-  _animStateName: 
-  _onClickSounds: 02000000
 --- !u!1 &1973446021
 GameObject:
   m_ObjectHideFlags: 0
@@ -8041,23 +7977,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2129243627}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
+  m_Script: {fileID: 0}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isDelete: 0
-  _isDelayMode: 1
-  _delay: 3000
-  _isFirstSelectButton: 1
-  _callNextButtons:
-  - {fileID: 1391689428}
-  _deleteButtons:
-  - {fileID: 1940633021}
-  _callPanel:
-  - {fileID: 1234783232}
-  _deletePanel:
-  - {fileID: 39527237}
-  _animStateName: 
-  _onClickSounds: 08000000
 --- !u!222 &767248155780946600
 CanvasRenderer:
   m_ObjectHideFlags: 0

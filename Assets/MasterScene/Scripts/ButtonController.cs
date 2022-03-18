@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ButtonSelect : MonoBehaviour
+public class ButtonController : MonoBehaviour
 {
     Button _button;
     Animator _animator = null;
@@ -45,11 +45,26 @@ public class ButtonSelect : MonoBehaviour
     [Header("再生するアニメーション")]
     string _animStateName = null;
 
+
     [SerializeField]
     SoundType[] _onClickSounds;
 
+    [SerializeField]
+    [Header("[ステージ選択時] ステージが解放されていなかった時に出すパネル")]
+    GameObject _stageSelectWarningPanel = null;
+
+    [SerializeField]
+    [Header("[ステージ選択時] ステージ番号")]
+    int _stageNum;
+
+    [SerializeField]
+    [Header("[ステージ選択時] プレイヤー番号")]
+    int _playerNum;
+
+    SceneLoadCaller _sceneLoadCaller;
     private async void OnEnable()
     {
+        _sceneLoadCaller = GetComponent<SceneLoadCaller>();
         _button = GetComponent<Button>();
         _animator = GetComponent<Animator>();
         if(_animStateName != null && _animator != null)
@@ -66,7 +81,7 @@ public class ButtonSelect : MonoBehaviour
         }
     }
 
-    public void Click()
+    public void NormalSelect()
     {
         if (_onClickSounds.Any())
         {
@@ -99,9 +114,44 @@ public class ButtonSelect : MonoBehaviour
 
     public void StageSelect()
     {
+        switch (_playerNum)
+        {
+            case 1:
+
+                if(SaveDataManager.Instance.SaveData.Player1StageActives[_stageNum - 1])
+                {
+                    NormalSelect();
+                    _sceneLoadCaller.LoadSceneString();
+                }
+                else if(_stageNum <= 0 || _stageNum > SaveDataManager.Instance.Player1StageConut)
+                {
+                    Debug.LogError($"ステージ{_stageNum}は存在しません");
+                }
+                else _stageSelectWarningPanel.SetActive(true);
+
+                break;
+
+            case 2:
+
+                if (SaveDataManager.Instance.SaveData.Player2StageActives[_stageNum - 1])
+                {
+                    NormalSelect();
+                    _sceneLoadCaller.LoadSceneString();
+                }
+                else if(_stageNum <= 0 || _stageNum > SaveDataManager.Instance.Player2StageCount)
+                {
+                    Debug.LogError($"ステージ{_stageNum}は存在しません");
+                }
+                else _stageSelectWarningPanel.SetActive(true);
+
+                break;
+            default:
+                Debug.LogError($"プレイヤー{_playerNum}は存在しません");
+                break;
+        }
     }
 
-    void ActiveChange(GameObject[] gameObjects, bool active)
+    private void ActiveChange(GameObject[] gameObjects, bool active)
     {
         foreach(var go in gameObjects)
         {

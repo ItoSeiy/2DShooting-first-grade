@@ -1070,7 +1070,7 @@ GameObject:
   - component: {fileID: 8567568999862297074}
   - component: {fileID: 6716438059770056367}
   - component: {fileID: 7625929941804592715}
-  - component: {fileID: 5797758147256591026}
+  - component: {fileID: 6184578315343013053}
   m_Layer: 5
   m_Name: Button -StageCelect-
   m_TagString: Untagged
@@ -1091,7 +1091,7 @@ RectTransform:
   m_Children:
   - {fileID: 9044726655673097361}
   m_Father: {fileID: 8474760379932437306}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -1180,9 +1180,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4632591857898587873}
-        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
-        m_MethodName: Click
+      - m_Target: {fileID: 7625929941804592715}
+        m_TargetAssemblyTypeName: SceneLoadCaller, Assembly-CSharp
+        m_MethodName: LoadSceneString
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1205,7 +1205,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sceneName: 
---- !u!114 &5797758147256591026
+--- !u!114 &6184578315343013053
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1214,10 +1214,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8474760379832815122}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
+  m_Script: {fileID: 11500000, guid: 929360c6455df144582eece6eb2335eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isDelete: 0
+  _isDelete: 1
   _isDelayMode: 0
   _delay: 1500
   _isFirstSelectButton: 0
@@ -1227,6 +1227,9 @@ MonoBehaviour:
   _deletePanel: []
   _animStateName: 
   _onClickSounds: 08000000
+  _stageSelectWarningPanel: {fileID: 0}
+  _stageNum: 0
+  _playerNum: 0
 --- !u!1 &8474760379932437310
 GameObject:
   m_ObjectHideFlags: 0
@@ -1263,8 +1266,8 @@ RectTransform:
   - {fileID: 8474760380955059994}
   - {fileID: 2971891627470576300}
   - {fileID: 8474760379790379669}
-  - {fileID: 8474760379832815133}
   - {fileID: 8474760380825408738}
+  - {fileID: 8474760379832815133}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1347,7 +1350,7 @@ GameObject:
   - component: {fileID: 8945760897045679679}
   - component: {fileID: 2005444036646864810}
   - component: {fileID: 3905390925630198529}
-  - component: {fileID: 4632591857898587873}
+  - component: {fileID: 3539697826686650573}
   m_Layer: 5
   m_Name: Button -OneMorePlay-
   m_TagString: Untagged
@@ -1368,7 +1371,7 @@ RectTransform:
   m_Children:
   - {fileID: 8529822945707238391}
   m_Father: {fileID: 8474760379932437306}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -1457,9 +1460,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4632591857898587873}
-        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
-        m_MethodName: Click
+      - m_Target: {fileID: 3905390925630198529}
+        m_TargetAssemblyTypeName: SceneLoadCaller, Assembly-CSharp
+        m_MethodName: LoadSameScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1482,7 +1485,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sceneName: 
---- !u!114 &4632591857898587873
+--- !u!114 &3539697826686650573
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1491,16 +1494,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 8474760380825408739}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
+  m_Script: {fileID: 11500000, guid: 929360c6455df144582eece6eb2335eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isDelete: 0
-  _isDelayMode: 1
+  _isDelete: 1
+  _isDelayMode: 0
   _delay: 1500
-  _isFirstSelectButton: 1
+  _isFirstSelectButton: 0
   _callNextButtons: []
   _deleteButtons: []
   _callPanel: []
   _deletePanel: []
   _animStateName: 
   _onClickSounds: 08000000
+  _stageSelectWarningPanel: {fileID: 0}
+  _stageNum: 0
+  _playerNum: 0
