@@ -136,7 +136,7 @@ public class ButtonController : MonoBehaviour
                 if (SaveDataManager.Instance.SaveData.Player2StageActives[_stageNum - 1])
                 {
                     NormalSelect();
-                    _sceneLoadCaller.LoadSceneString();
+                    _sceneLoadCaller.LoadSceneString(); 
                 }
                 else if(_stageNum <= 0 || _stageNum > SaveDataManager.Instance.Player2StageCount)
                 {
