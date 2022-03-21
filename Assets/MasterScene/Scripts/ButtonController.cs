@@ -26,20 +26,12 @@ public class ButtonController : MonoBehaviour
     bool _isFirstSelectButton = false;
 
     [SerializeField]
-    [Header("呼び出すボタン")]
+    [Header("呼び出すオブジェクト")]
     GameObject[] _callNextButtons = null;
 
     [SerializeField]
-    [Header("一緒に消えるButton")]
+    [Header("選択時に消えるオブジェクト")]
     GameObject[] _deleteButtons = null;
-
-    [SerializeField]
-    [Header("呼び出すパネル")]
-    GameObject[] _callPanel = null;
-
-    [SerializeField]
-    [Header("一緒に消すパネル")]
-    GameObject[] _deletePanel = null;
 
     [SerializeField]
     [Header("再生するアニメーション")]
@@ -102,14 +94,8 @@ public class ButtonController : MonoBehaviour
         {
             ActiveChange(_callNextButtons, true);
         }
-        if(_callPanel != null)
-        {
-            ActiveChange(_callPanel, true);
-        }
-        if(_deletePanel != null)
-        {
-            ActiveChange(_deletePanel, false);
-        }
+
+        _sceneLoadCaller.LoadSceneString();
     }
 
     public void StageSelect()
@@ -121,7 +107,6 @@ public class ButtonController : MonoBehaviour
                 if(SaveDataManager.Instance.SaveData.Player1StageActives[_stageNum - 1])
                 {
                     NormalSelect();
-                    _sceneLoadCaller.LoadSceneString();
                 }
                 else if(_stageNum <= 0 || _stageNum > SaveDataManager.Instance.Player1StageConut)
                 {
@@ -136,7 +121,6 @@ public class ButtonController : MonoBehaviour
                 if (SaveDataManager.Instance.SaveData.Player2StageActives[_stageNum - 1])
                 {
                     NormalSelect();
-                    _sceneLoadCaller.LoadSceneString(); 
                 }
                 else if(_stageNum <= 0 || _stageNum > SaveDataManager.Instance.Player2StageCount)
                 {

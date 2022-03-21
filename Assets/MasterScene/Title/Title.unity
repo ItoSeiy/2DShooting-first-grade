@@ -647,8 +647,6 @@ MonoBehaviour:
   _deleteButtons:
   - {fileID: 1797667348}
   - {fileID: 1110586546}
-  _callPanel: []
-  _deletePanel: []
   _animStateName: CharacterButton
   _onClickSounds: 08000000
   _stageSelectWarningPanel: {fileID: 0}
@@ -975,7 +973,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 11, y: 0.0008653567}
-  m_SizeDelta: {x: 9.61662, y: 335.8333}
+  m_SizeDelta: {x: 9.61662, y: 368.3333}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &269693469
 MonoBehaviour:
@@ -2593,10 +2591,6 @@ MonoBehaviour:
   - {fileID: 1797667348}
   - {fileID: 1110586546}
   _deleteButtons: []
-  _callPanel: []
-  _deletePanel:
-  - {fileID: 2129243627}
-  - {fileID: 1200900378}
   _animStateName: 
   _onClickSounds: 
   _stageSelectWarningPanel: {fileID: 0}
@@ -3022,7 +3016,7 @@ RectTransform:
   m_Father: {fileID: 1679765855}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.4044639}
+  m_AnchorMin: {x: 0, y: 0.45701122}
   m_AnchorMax: {x: 1, y: 0.9999974}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
@@ -3227,8 +3221,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 875071855}
   m_HandleRect: {fileID: 875071853}
   m_Direction: 2
-  m_Value: 0.9999935
-  m_Size: 0.59553343
+  m_Value: 0.99999475
+  m_Size: 0.5429864
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -4098,8 +4092,6 @@ MonoBehaviour:
   _deleteButtons:
   - {fileID: 177983613}
   - {fileID: 1797667348}
-  _callPanel: []
-  _deletePanel: []
   _animStateName: GameQuit
   _onClickSounds: 08000000
   _stageSelectWarningPanel: {fileID: 0}
@@ -4374,17 +4366,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 929360c6455df144582eece6eb2335eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isDelete: 1
+  _isDelete: 0
   _isDelayMode: 0
   _delay: 1500
   _isFirstSelectButton: 0
   _callNextButtons:
   - {fileID: 1940633021}
+  - {fileID: 39527237}
   _deleteButtons:
-  - {fileID: 2129243627}
-  - {fileID: 646477669}
-  _callPanel: []
-  _deletePanel: []
+  - {fileID: 39527237}
   _animStateName: 
   _onClickSounds: 
   _stageSelectWarningPanel: {fileID: 0}
@@ -4786,21 +4776,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1391689434}
-        m_TargetAssemblyTypeName: SceneLoadCaller, Assembly-CSharp
-        m_MethodName: LoadSceneString
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1391689435}
-        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
-        m_MethodName: Click
+        m_TargetAssemblyTypeName: ButtonController, Assembly-CSharp
+        m_MethodName: NormalSelect
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4909,9 +4887,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 1391689428}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
+  m_Script: {fileID: 11500000, guid: 929360c6455df144582eece6eb2335eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isDelete: 1
+  _isDelayMode: 0
+  _delay: 1500
+  _isFirstSelectButton: 0
+  _callNextButtons: []
+  _deleteButtons: []
+  _animStateName: 
+  _onClickSounds: 
+  _stageSelectWarningPanel: {fileID: 0}
+  _stageNum: 0
+  _playerNum: 0
 --- !u!1 &1408076266
 GameObject:
   m_ObjectHideFlags: 0
@@ -5482,8 +5471,6 @@ MonoBehaviour:
   - {fileID: 1797667348}
   - {fileID: 1110586546}
   _deleteButtons: []
-  _callPanel: []
-  _deletePanel: []
   _animStateName: 
   _onClickSounds: 11000000
   _stageSelectWarningPanel: {fileID: 0}
@@ -6428,6 +6415,7 @@ GameObject:
   - component: {fileID: 1797667351}
   - component: {fileID: 1797667350}
   - component: {fileID: 1797667356}
+  - component: {fileID: 1797667352}
   m_Layer: 5
   m_Name: Operation settings Button
   m_TagString: Untagged
@@ -6512,6 +6500,19 @@ PlayableDirector:
     value: {fileID: 1797667348}
   m_ExposedReferences:
     m_References: []
+--- !u!114 &1797667352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1797667348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1355c8b4308345840bee84ed6b6b97c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sceneName: Title
 --- !u!114 &1797667353
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6653,8 +6654,6 @@ MonoBehaviour:
   _deleteButtons:
   - {fileID: 177983613}
   - {fileID: 1110586546}
-  _callPanel: []
-  _deletePanel: []
   _animStateName: OperationSettingButton
   _onClickSounds: 08000000
   _stageSelectWarningPanel: {fileID: 0}
@@ -7260,8 +7259,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1940633028}
-        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
-        m_MethodName: Click
+        m_TargetAssemblyTypeName: ButtonController, Assembly-CSharp
+        m_MethodName: NormalSelect
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7350,9 +7349,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 1940633021}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
+  m_Script: {fileID: 11500000, guid: 929360c6455df144582eece6eb2335eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isDelete: 1
+  _isDelayMode: 0
+  _delay: 1500
+  _isFirstSelectButton: 0
+  _callNextButtons: []
+  _deleteButtons: []
+  _animStateName: 
+  _onClickSounds: 
+  _stageSelectWarningPanel: {fileID: 0}
+  _stageNum: 0
+  _playerNum: 0
 --- !u!1 &1973446021
 GameObject:
   m_ObjectHideFlags: 0
@@ -8019,17 +8029,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 929360c6455df144582eece6eb2335eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isDelete: 1
+  _isDelete: 0
   _isDelayMode: 0
   _delay: 1500
   _isFirstSelectButton: 0
   _callNextButtons:
   - {fileID: 1391689428}
+  - {fileID: 1234783232}
   _deleteButtons:
-  - {fileID: 1200900378}
-  - {fileID: 646477669}
-  _callPanel: []
-  _deletePanel: []
+  - {fileID: 1234783232}
   _animStateName: 
   _onClickSounds: 
   _stageSelectWarningPanel: {fileID: 0}
@@ -8059,8 +8067,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 109.39765, y: -167.91666}
-  m_SizeDelta: {x: 188.61662, y: 335.8333}
+  m_AnchoredPosition: {x: 109.39765, y: -184.16666}
+  m_SizeDelta: {x: 188.61662, y: 368.3333}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &767248155780946603
 MonoBehaviour:
