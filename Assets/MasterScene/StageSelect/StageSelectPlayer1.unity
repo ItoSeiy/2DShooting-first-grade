@@ -303,12 +303,14 @@ MonoBehaviour:
   _isDelete: 0
   _isDelayMode: 0
   _delay: 1500
-  _isFirstSelectButton: 0
+  _isFirstSelectMode: 0
   _callNextButtons: []
   _deleteButtons: []
   _animStateName: 
-  _onClickSounds: 02000000
-  _stageSelectWarningPanel: {fileID: 0}
+  _onClickSounds: 11000000
+  _isStageSelectMode: 0
+  _onClickSoundsUnknownStage: 02000000
+  _unknownStageSelectWarningPanel: {fileID: 1358025437}
   _unknownStagePanel: {fileID: 0}
   _stageNum: 5
   _playerNum: 1
@@ -587,12 +589,14 @@ MonoBehaviour:
   _isDelete: 0
   _isDelayMode: 0
   _delay: 1500
-  _isFirstSelectButton: 1
+  _isFirstSelectMode: 0
   _callNextButtons: []
   _deleteButtons: []
   _animStateName: 
   _onClickSounds: 11000000
-  _stageSelectWarningPanel: {fileID: 0}
+  _isStageSelectMode: 0
+  _onClickSoundsUnknownStage: 
+  _unknownStageSelectWarningPanel: {fileID: 0}
   _unknownStagePanel: {fileID: 0}
   _stageNum: 1
   _playerNum: 1
@@ -776,12 +780,14 @@ MonoBehaviour:
   _isDelete: 0
   _isDelayMode: 0
   _delay: 1500
-  _isFirstSelectButton: 0
+  _isFirstSelectMode: 0
   _callNextButtons: []
   _deleteButtons: []
   _animStateName: 
-  _onClickSounds: 02000000
-  _stageSelectWarningPanel: {fileID: 0}
+  _onClickSounds: 11000000
+  _isStageSelectMode: 0
+  _onClickSoundsUnknownStage: 02000000
+  _unknownStageSelectWarningPanel: {fileID: 1358025437}
   _unknownStagePanel: {fileID: 0}
   _stageNum: 3
   _playerNum: 1
@@ -1191,12 +1197,14 @@ MonoBehaviour:
   _isDelete: 0
   _isDelayMode: 0
   _delay: 1500
-  _isFirstSelectButton: 0
+  _isFirstSelectMode: 0
   _callNextButtons: []
   _deleteButtons: []
   _animStateName: 
   _onClickSounds: 08000000
-  _stageSelectWarningPanel: {fileID: 0}
+  _isStageSelectMode: 0
+  _onClickSoundsUnknownStage: 
+  _unknownStageSelectWarningPanel: {fileID: 0}
   _unknownStagePanel: {fileID: 0}
   _stageNum: 1
   _playerNum: 1
@@ -1380,12 +1388,14 @@ MonoBehaviour:
   _isDelete: 0
   _isDelayMode: 0
   _delay: 1500
-  _isFirstSelectButton: 0
+  _isFirstSelectMode: 0
   _callNextButtons: []
   _deleteButtons: []
   _animStateName: 
-  _onClickSounds: 02000000
-  _stageSelectWarningPanel: {fileID: 0}
+  _onClickSounds: 11000000
+  _isStageSelectMode: 0
+  _onClickSoundsUnknownStage: 02000000
+  _unknownStageSelectWarningPanel: {fileID: 1358025437}
   _unknownStagePanel: {fileID: 0}
   _stageNum: 4
   _playerNum: 1
@@ -1759,12 +1769,14 @@ MonoBehaviour:
   _isDelete: 0
   _isDelayMode: 0
   _delay: 1500
-  _isFirstSelectButton: 0
+  _isFirstSelectMode: 0
   _callNextButtons: []
   _deleteButtons: []
   _animStateName: 
   _onClickSounds: 08000000
-  _stageSelectWarningPanel: {fileID: 0}
+  _isStageSelectMode: 0
+  _onClickSoundsUnknownStage: 
+  _unknownStageSelectWarningPanel: {fileID: 0}
   _unknownStagePanel: {fileID: 0}
   _stageNum: 1
   _playerNum: 1
@@ -1896,6 +1908,12 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &1358025437 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 452971903548703962, guid: 2bc765c300bcfe940bd995fc48ac268c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1937649425}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1380912854
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2138,12 +2156,14 @@ MonoBehaviour:
   _isDelete: 0
   _isDelayMode: 0
   _delay: 1500
-  _isFirstSelectButton: 0
+  _isFirstSelectMode: 0
   _callNextButtons: []
   _deleteButtons: []
   _animStateName: 
   _onClickSounds: 08000000
-  _stageSelectWarningPanel: {fileID: 0}
+  _isStageSelectMode: 0
+  _onClickSoundsUnknownStage: 
+  _unknownStageSelectWarningPanel: {fileID: 0}
   _unknownStagePanel: {fileID: 0}
   _stageNum: 1
   _playerNum: 1
@@ -2327,12 +2347,14 @@ MonoBehaviour:
   _isDelete: 0
   _isDelayMode: 0
   _delay: 1500
-  _isFirstSelectButton: 0
+  _isFirstSelectMode: 0
   _callNextButtons: []
   _deleteButtons: []
   _animStateName: 
-  _onClickSounds: 02000000
-  _stageSelectWarningPanel: {fileID: 0}
+  _onClickSounds: 11000000
+  _isStageSelectMode: 0
+  _onClickSoundsUnknownStage: 02000000
+  _unknownStageSelectWarningPanel: {fileID: 1358025437}
   _unknownStagePanel: {fileID: 0}
   _stageNum: 2
   _playerNum: 1
@@ -2721,7 +2743,7 @@ PrefabInstance:
     - target: {fileID: 452971903548703961, guid: 2bc765c300bcfe940bd995fc48ac268c,
         type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 452971903548703961, guid: 2bc765c300bcfe940bd995fc48ac268c,
         type: 3}

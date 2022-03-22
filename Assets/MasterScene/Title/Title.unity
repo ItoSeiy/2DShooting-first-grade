@@ -639,7 +639,7 @@ MonoBehaviour:
   _isDelete: 1
   _isDelayMode: 1
   _delay: 3000
-  _isFirstSelectButton: 1
+  _isFirstSelectMode: 1
   _callNextButtons:
   - {fileID: 2129243627}
   - {fileID: 1200900378}
@@ -649,7 +649,10 @@ MonoBehaviour:
   - {fileID: 1110586546}
   _animStateName: CharacterButton
   _onClickSounds: 08000000
-  _stageSelectWarningPanel: {fileID: 0}
+  _isStageSelectMode: 0
+  _onClickSoundsUnknownStage: 
+  _unknownStageSelectWarningPanel: {fileID: 0}
+  _unknownStagePanel: {fileID: 0}
   _stageNum: 0
   _playerNum: 0
 --- !u!95 &177983620
@@ -2585,7 +2588,7 @@ MonoBehaviour:
   _isDelete: 1
   _isDelayMode: 0
   _delay: 1500
-  _isFirstSelectButton: 0
+  _isFirstSelectMode: 0
   _callNextButtons:
   - {fileID: 177983613}
   - {fileID: 1797667348}
@@ -2599,7 +2602,10 @@ MonoBehaviour:
   - {fileID: 39527237}
   _animStateName: 
   _onClickSounds: 08000000
-  _stageSelectWarningPanel: {fileID: 0}
+  _isStageSelectMode: 0
+  _onClickSoundsUnknownStage: 
+  _unknownStageSelectWarningPanel: {fileID: 0}
+  _unknownStagePanel: {fileID: 0}
   _stageNum: 0
   _playerNum: 0
 --- !u!1 &704063475
@@ -4090,14 +4096,17 @@ MonoBehaviour:
   _isDelete: 1
   _isDelayMode: 0
   _delay: 1500
-  _isFirstSelectButton: 0
+  _isFirstSelectMode: 0
   _callNextButtons: []
   _deleteButtons:
   - {fileID: 177983613}
   - {fileID: 1797667348}
   _animStateName: GameQuit
   _onClickSounds: 08000000
-  _stageSelectWarningPanel: {fileID: 0}
+  _isStageSelectMode: 0
+  _onClickSoundsUnknownStage: 
+  _unknownStageSelectWarningPanel: {fileID: 0}
+  _unknownStagePanel: {fileID: 0}
   _stageNum: 0
   _playerNum: 0
 --- !u!1 &1114976579
@@ -4372,7 +4381,7 @@ MonoBehaviour:
   _isDelete: 0
   _isDelayMode: 1
   _delay: 1500
-  _isFirstSelectButton: 0
+  _isFirstSelectMode: 0
   _callNextButtons:
   - {fileID: 1940633021}
   - {fileID: 39527237}
@@ -4382,7 +4391,10 @@ MonoBehaviour:
   - {fileID: 2091407887}
   _animStateName: 
   _onClickSounds: 08000000
-  _stageSelectWarningPanel: {fileID: 0}
+  _isStageSelectMode: 0
+  _onClickSoundsUnknownStage: 
+  _unknownStageSelectWarningPanel: {fileID: 0}
+  _unknownStagePanel: {fileID: 0}
   _stageNum: 0
   _playerNum: 0
 --- !u!1 &1205279489
@@ -4898,12 +4910,15 @@ MonoBehaviour:
   _isDelete: 1
   _isDelayMode: 0
   _delay: 1500
-  _isFirstSelectButton: 0
+  _isFirstSelectMode: 0
   _callNextButtons: []
   _deleteButtons: []
   _animStateName: 
   _onClickSounds: 11000000
-  _stageSelectWarningPanel: {fileID: 0}
+  _isStageSelectMode: 0
+  _onClickSoundsUnknownStage: 
+  _unknownStageSelectWarningPanel: {fileID: 0}
+  _unknownStagePanel: {fileID: 0}
   _stageNum: 0
   _playerNum: 0
 --- !u!1 &1408076266
@@ -5470,7 +5485,7 @@ MonoBehaviour:
   _isDelete: 1
   _isDelayMode: 0
   _delay: 1500
-  _isFirstSelectButton: 1
+  _isFirstSelectMode: 1
   _callNextButtons:
   - {fileID: 177983613}
   - {fileID: 1797667348}
@@ -5478,7 +5493,10 @@ MonoBehaviour:
   _deleteButtons: []
   _animStateName: 
   _onClickSounds: 0c0000000a000000
-  _stageSelectWarningPanel: {fileID: 0}
+  _isStageSelectMode: 0
+  _onClickSoundsUnknownStage: 
+  _unknownStageSelectWarningPanel: {fileID: 0}
+  _unknownStagePanel: {fileID: 0}
   _stageNum: 0
   _playerNum: 0
 --- !u!320 &1510398139
@@ -6651,14 +6669,17 @@ MonoBehaviour:
   _isDelete: 1
   _isDelayMode: 0
   _delay: 3000
-  _isFirstSelectButton: 0
+  _isFirstSelectMode: 0
   _callNextButtons: []
   _deleteButtons:
   - {fileID: 177983613}
   - {fileID: 1110586546}
   _animStateName: OperationSettingButton
   _onClickSounds: 08000000
-  _stageSelectWarningPanel: {fileID: 0}
+  _isStageSelectMode: 0
+  _onClickSoundsUnknownStage: 
+  _unknownStageSelectWarningPanel: {fileID: 0}
+  _unknownStagePanel: {fileID: 0}
   _stageNum: 0
   _playerNum: 0
 --- !u!1 &1808805772
@@ -7357,12 +7378,15 @@ MonoBehaviour:
   _isDelete: 1
   _isDelayMode: 0
   _delay: 1500
-  _isFirstSelectButton: 0
+  _isFirstSelectMode: 0
   _callNextButtons: []
   _deleteButtons: []
   _animStateName: 
   _onClickSounds: 02000000
-  _stageSelectWarningPanel: {fileID: 0}
+  _isStageSelectMode: 0
+  _onClickSoundsUnknownStage: 
+  _unknownStageSelectWarningPanel: {fileID: 0}
+  _unknownStagePanel: {fileID: 0}
   _stageNum: 0
   _playerNum: 0
 --- !u!1 &1973446021
@@ -8034,7 +8058,7 @@ MonoBehaviour:
   _isDelete: 0
   _isDelayMode: 1
   _delay: 3000
-  _isFirstSelectButton: 1
+  _isFirstSelectMode: 1
   _callNextButtons:
   - {fileID: 1391689428}
   - {fileID: 1234783232}
@@ -8044,7 +8068,10 @@ MonoBehaviour:
   - {fileID: 2091407887}
   _animStateName: 
   _onClickSounds: 08000000
-  _stageSelectWarningPanel: {fileID: 0}
+  _isStageSelectMode: 0
+  _onClickSoundsUnknownStage: 
+  _unknownStageSelectWarningPanel: {fileID: 0}
+  _unknownStagePanel: {fileID: 0}
   _stageNum: 0
   _playerNum: 0
 --- !u!222 &767248155780946600

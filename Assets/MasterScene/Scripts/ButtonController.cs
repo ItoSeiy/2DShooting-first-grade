@@ -1,14 +1,12 @@
 using Overdose.Data;
+using System;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
-using System;
+using DG.Tweening;
 
 public class ButtonController : MonoBehaviour
 {
-    Button _button;
-    Animator _animator = null;
-
     [SerializeField]
     [Header("クリックしたときに自分を消すかどうか")]
     bool _isDelete = true;
@@ -23,7 +21,7 @@ public class ButtonController : MonoBehaviour
 
     [SerializeField]
     [Header("最初にセレクトされるかどうか")]
-    bool _isFirstSelectButton = false;
+    bool _isFirstSelectMode = false;
 
     [SerializeField]
     [Header("呼び出すオブジェクト")]
@@ -42,6 +40,10 @@ public class ButtonController : MonoBehaviour
     SoundType[] _onClickSounds;
 
     [SerializeField]
+    [Header("ステージ選択用に使用するボタンかどうか")]
+    bool _isStageSelectMode = false;
+
+    [SerializeField]
     [Header("[ステージ選択時]解放されていないステージを選択したときの音")]
     SoundType[] _onClickSoundsUnknownStage;
 
@@ -50,8 +52,12 @@ public class ButtonController : MonoBehaviour
     GameObject _unknownStageSelectWarningPanel = null;
 
     [SerializeField]
-    [Header("[ステージ選択時]ステージが解放されていないときに常に出すパネル")]
+    [Header("[ステージ選択時]ステージが解放されてた時に出すボタン")]
     GameObject _unknownStagePanel = null;
+
+    [SerializeField]
+    [Header("[ステージ選択時]ステージが解放された時のパネルの演出の時間")]
+    float _fadeTime = 1f;
 
     [SerializeField]
     [Header("[ステージ選択時] ステージ番号")]
@@ -61,6 +67,10 @@ public class ButtonController : MonoBehaviour
     [Header("[ステージ選択時] プレイヤー番号")]
     int _playerNum = 0;
 
+    Button _button;
+    Animator _animator = null;
+    Text _buttonText;
+
     SceneLoadCaller _sceneLoadCaller;
 
     private async void OnEnable()
@@ -68,6 +78,7 @@ public class ButtonController : MonoBehaviour
         _sceneLoadCaller = GetComponent<SceneLoadCaller>();
         _button = GetComponent<Button>();
         _animator = GetComponent<Animator>();
+        _buttonText = GetComponentInChildren<Text>();
 
         if(_animStateName != null && _animator != null)
         {
@@ -77,22 +88,21 @@ public class ButtonController : MonoBehaviour
         {
             await Task.Delay(_delay);
         }
-        if(_isFirstSelectButton)
+        if(_isFirstSelectMode)
         {
             _button.Select();
         }
-
-        
+        if(_isStageSelectMode)
+        {
+            CheckButtonState();
+        }
     }
 
     public void NormalSelect()
     {
         if (_onClickSounds != null)
         {
-            foreach(var sound in _onClickSounds)
-            {
-                SoundManager.Instance.UseSound(sound);
-            }
+            UseSounds(_onClickSounds);
         }
         if(_isDelete)
         {
@@ -126,10 +136,7 @@ public class ButtonController : MonoBehaviour
                 }
                 else
                 {
-                    foreach (var sound in _onClickSounds)
-                    {
-                        SoundManager.Instance.UseSound(sound);
-                    }
+                    UseSounds(_onClickSoundsUnknownStage);
                     _unknownStageSelectWarningPanel.SetActive(true);
                 }
 
@@ -147,7 +154,7 @@ public class ButtonController : MonoBehaviour
                 }
                 else
                 {
-
+                    UseSounds(_onClickSoundsUnknownStage);
                     _unknownStageSelectWarningPanel.SetActive(true);
                 }
 
@@ -158,8 +165,51 @@ public class ButtonController : MonoBehaviour
         }
     }
 
-    private void CheckButtonText()
+    private void CheckButtonState()
     {
+        switch(_playerNum)
+        {
+            case 1:
+
+                if (SaveDataManager.Instance.SaveData.Player1StageActives[_stageNum - 1] == true)
+                {
+                    DoButtonColor();
+                }
+                else if (_stageNum <= 0 || _stageNum > SaveDataManager.Instance.Player1StageConut)
+                {
+                    Debug.LogError($"ステージ{_stageNum}は存在しません");
+                }
+
+                break;
+
+            case 2:
+
+                if (SaveDataManager.Instance.SaveData.Player2StageActives[_stageNum - 1] == true)
+                {
+                    DoButtonColor();
+                }
+                else if (_stageNum <= 0 || _stageNum > SaveDataManager.Instance.Player2StageCount)
+                {
+                    Debug.LogError($"ステージ{_stageNum}は存在しません");
+                }
+
+                break;
+            default:
+                Debug.LogError($"プレイヤー{_playerNum}は存在しません");
+                break;
+        }
+    }
+
+    private void DoButtonColor()
+    {
+        var colorBlock = _button.colors;
+
+        DOTween.To(() => colorBlock.normalColor,
+            c => colorBlock.normalColor = c,
+            Color.white,
+            _fadeTime)
+            .OnUpdate(() => _button.colors = colorBlock)
+            .OnComplete(() => _button.colors = new ColorBlock { normalColor = Color.white });
 
     }
 
