@@ -1,8 +1,8 @@
 using Overdose.Data;
-using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class ButtonController : MonoBehaviour
 {
@@ -37,28 +37,38 @@ public class ButtonController : MonoBehaviour
     [Header("再生するアニメーション")]
     string _animStateName = null;
 
-
     [SerializeField]
+    [Header("通常のボタン音")]
     SoundType[] _onClickSounds;
 
     [SerializeField]
-    [Header("[ステージ選択時] ステージが解放されていなかった時に出すパネル")]
-    GameObject _stageSelectWarningPanel = null;
+    [Header("[ステージ選択時]解放されていないステージを選択したときの音")]
+    SoundType[] _onClickSoundsUnknownStage;
+
+    [SerializeField]
+    [Header("[ステージ選択時] 解放されていないステージを選択したら出すパネル")]
+    GameObject _unknownStageSelectWarningPanel = null;
+
+    [SerializeField]
+    [Header("[ステージ選択時]ステージが解放されていないときに常に出すパネル")]
+    GameObject _unknownStagePanel = null;
 
     [SerializeField]
     [Header("[ステージ選択時] ステージ番号")]
-    int _stageNum;
+    int _stageNum = 0;
 
     [SerializeField]
     [Header("[ステージ選択時] プレイヤー番号")]
-    int _playerNum;
+    int _playerNum = 0;
 
     SceneLoadCaller _sceneLoadCaller;
+
     private async void OnEnable()
     {
         _sceneLoadCaller = GetComponent<SceneLoadCaller>();
         _button = GetComponent<Button>();
         _animator = GetComponent<Animator>();
+
         if(_animStateName != null && _animator != null)
         {
             _animator.Play(_animStateName);
@@ -71,11 +81,13 @@ public class ButtonController : MonoBehaviour
         {
             _button.Select();
         }
+
+        
     }
 
     public void NormalSelect()
     {
-        if (_onClickSounds.Any())
+        if (_onClickSounds != null)
         {
             foreach(var sound in _onClickSounds)
             {
@@ -88,11 +100,11 @@ public class ButtonController : MonoBehaviour
         }
         if(_deleteButtons　!= null)
         {
-            ActiveChange(_deleteButtons, false);
+            ObjectsActiveChange(_deleteButtons, false);
         }
         if (_callNextButtons != null)
         {
-            ActiveChange(_callNextButtons, true);
+            ObjectsActiveChange(_callNextButtons, true);
         }
 
         _sceneLoadCaller.LoadSceneString();
@@ -104,29 +116,40 @@ public class ButtonController : MonoBehaviour
         {
             case 1:
 
-                if(SaveDataManager.Instance.SaveData.Player1StageActives[_stageNum - 1])
+                if (SaveDataManager.Instance.SaveData.Player1StageActives[_stageNum - 1] == true)
                 {
                     NormalSelect();
                 }
-                else if(_stageNum <= 0 || _stageNum > SaveDataManager.Instance.Player1StageConut)
+                else if (_stageNum <= 0 || _stageNum > SaveDataManager.Instance.Player1StageConut)
                 {
                     Debug.LogError($"ステージ{_stageNum}は存在しません");
                 }
-                else _stageSelectWarningPanel.SetActive(true);
+                else
+                {
+                    foreach (var sound in _onClickSounds)
+                    {
+                        SoundManager.Instance.UseSound(sound);
+                    }
+                    _unknownStageSelectWarningPanel.SetActive(true);
+                }
 
                 break;
 
             case 2:
 
-                if (SaveDataManager.Instance.SaveData.Player2StageActives[_stageNum - 1])
+                if (SaveDataManager.Instance.SaveData.Player2StageActives[_stageNum - 1] == true)
                 {
                     NormalSelect();
                 }
-                else if(_stageNum <= 0 || _stageNum > SaveDataManager.Instance.Player2StageCount)
+                else if (_stageNum <= 0 || _stageNum > SaveDataManager.Instance.Player2StageCount)
                 {
                     Debug.LogError($"ステージ{_stageNum}は存在しません");
                 }
-                else _stageSelectWarningPanel.SetActive(true);
+                else
+                {
+
+                    _unknownStageSelectWarningPanel.SetActive(true);
+                }
 
                 break;
             default:
@@ -135,11 +158,12 @@ public class ButtonController : MonoBehaviour
         }
     }
 
-    private void ActiveChange(GameObject[] gameObjects, bool active)
+    private void CheckButtonText()
     {
-        foreach(var go in gameObjects)
-        {
-            go.SetActive(active);
-        }
+
     }
+
+    private void ObjectsActiveChange(GameObject[] gameObjects, bool active) => Array.ForEach(gameObjects, x => x.SetActive(active));
+
+    private void UseSounds(SoundType[] soundTypes) => Array.ForEach(soundTypes, x => SoundManager.Instance.UseSound(x));
 }
