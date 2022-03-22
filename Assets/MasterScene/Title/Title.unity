@@ -638,7 +638,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isDelete: 1
   _isDelayMode: 1
-  _delay: 1500
+  _delay: 3000
   _isFirstSelectButton: 1
   _callNextButtons:
   - {fileID: 2129243627}
@@ -2590,9 +2590,15 @@ MonoBehaviour:
   - {fileID: 177983613}
   - {fileID: 1797667348}
   - {fileID: 1110586546}
-  _deleteButtons: []
+  _deleteButtons:
+  - {fileID: 2129243627}
+  - {fileID: 1200900378}
+  - {fileID: 1391689428}
+  - {fileID: 1940633021}
+  - {fileID: 1234783232}
+  - {fileID: 39527237}
   _animStateName: 
-  _onClickSounds: 
+  _onClickSounds: 08000000
   _stageSelectWarningPanel: {fileID: 0}
   _stageNum: 0
   _playerNum: 0
@@ -4082,13 +4088,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isDelete: 1
-  _isDelayMode: 1
+  _isDelayMode: 0
   _delay: 1500
   _isFirstSelectButton: 0
-  _callNextButtons:
-  - {fileID: 2129243627}
-  - {fileID: 1200900378}
-  - {fileID: 646477669}
+  _callNextButtons: []
   _deleteButtons:
   - {fileID: 177983613}
   - {fileID: 1797667348}
@@ -4367,16 +4370,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isDelete: 0
-  _isDelayMode: 0
+  _isDelayMode: 1
   _delay: 1500
   _isFirstSelectButton: 0
   _callNextButtons:
   - {fileID: 1940633021}
   - {fileID: 39527237}
   _deleteButtons:
-  - {fileID: 39527237}
+  - {fileID: 1391689428}
+  - {fileID: 1234783232}
+  - {fileID: 2091407887}
   _animStateName: 
-  _onClickSounds: 
+  _onClickSounds: 08000000
   _stageSelectWarningPanel: {fileID: 0}
   _stageNum: 0
   _playerNum: 0
@@ -4897,7 +4902,7 @@ MonoBehaviour:
   _callNextButtons: []
   _deleteButtons: []
   _animStateName: 
-  _onClickSounds: 
+  _onClickSounds: 11000000
   _stageSelectWarningPanel: {fileID: 0}
   _stageNum: 0
   _playerNum: 0
@@ -5465,14 +5470,14 @@ MonoBehaviour:
   _isDelete: 1
   _isDelayMode: 0
   _delay: 1500
-  _isFirstSelectButton: 0
+  _isFirstSelectButton: 1
   _callNextButtons:
   - {fileID: 177983613}
   - {fileID: 1797667348}
   - {fileID: 1110586546}
   _deleteButtons: []
   _animStateName: 
-  _onClickSounds: 11000000
+  _onClickSounds: 0c0000000a000000
   _stageSelectWarningPanel: {fileID: 0}
   _stageNum: 0
   _playerNum: 0
@@ -6644,13 +6649,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isDelete: 1
-  _isDelayMode: 1
-  _delay: 1500
+  _isDelayMode: 0
+  _delay: 3000
   _isFirstSelectButton: 0
-  _callNextButtons:
-  - {fileID: 2129243627}
-  - {fileID: 1200900378}
-  - {fileID: 646477669}
+  _callNextButtons: []
   _deleteButtons:
   - {fileID: 177983613}
   - {fileID: 1110586546}
@@ -7339,7 +7341,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1355c8b4308345840bee84ed6b6b97c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sceneName: StageSelectPlayer2
+  _sceneName: Title
 --- !u!114 &1940633028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7359,7 +7361,7 @@ MonoBehaviour:
   _callNextButtons: []
   _deleteButtons: []
   _animStateName: 
-  _onClickSounds: 
+  _onClickSounds: 02000000
   _stageSelectWarningPanel: {fileID: 0}
   _stageNum: 0
   _playerNum: 0
@@ -8030,16 +8032,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isDelete: 0
-  _isDelayMode: 0
-  _delay: 1500
-  _isFirstSelectButton: 0
+  _isDelayMode: 1
+  _delay: 3000
+  _isFirstSelectButton: 1
   _callNextButtons:
   - {fileID: 1391689428}
   - {fileID: 1234783232}
   _deleteButtons:
-  - {fileID: 1234783232}
+  - {fileID: 1940633021}
+  - {fileID: 39527237}
+  - {fileID: 2091407887}
   _animStateName: 
-  _onClickSounds: 
+  _onClickSounds: 08000000
   _stageSelectWarningPanel: {fileID: 0}
   _stageNum: 0
   _playerNum: 0
