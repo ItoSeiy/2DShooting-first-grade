@@ -52,11 +52,15 @@ public class ButtonController : MonoBehaviour
     GameObject _unknownStageSelectWarningPanel = null;
 
     [SerializeField]
-    [Header("[ステージ選択時]ステージが解放されてた時に出すボタン")]
-    GameObject _unknownStagePanel = null;
+    [Header("[ステージ選択時]ステージ解放後のボタンの色")]
+    Color _buttonTargetColor = Color.white;
 
     [SerializeField]
-    [Header("[ステージ選択時]ステージが解放された時のパネルの演出の時間")]
+    [Header("[ステージ選択時]ステージ解放後のテキストの色")]
+    Color _textTargetColor; 
+
+    [SerializeField]
+    [Header("[ステージ選択時]ステージが解放された時のボタンの変色の時間")]
     float _fadeTime = 1f;
 
     [SerializeField]
@@ -202,15 +206,23 @@ public class ButtonController : MonoBehaviour
 
     private void DoButtonColor()
     {
-        var colorBlock = _button.colors;
+        var color = _button.colors.normalColor;
 
-        DOTween.To(() => colorBlock.normalColor,
-            c => colorBlock.normalColor = c,
-            Color.white,
+        DOTween.To(() => color,
+            c => color = c,
+            _buttonTargetColor,
             _fadeTime)
-            .OnUpdate(() => _button.colors = colorBlock)
-            .OnComplete(() => _button.colors = new ColorBlock { normalColor = Color.white });
+            .OnUpdate(() => _button.colors = new ColorBlock { normalColor = color })
+            .OnComplete(() => _button.colors = new ColorBlock { normalColor = _buttonTargetColor });
+    }
 
+    private void DoTextColor()
+    {
+        DOTween.To(() => _buttonText.color,
+            c => _buttonText.color = c,
+            _textTargetColor,
+            _fadeTime)
+            .OnComplete(() => _buttonText.color = _textTargetColor);
     }
 
     private void ObjectsActiveChange(GameObject[] gameObjects, bool active) => Array.ForEach(gameObjects, x => x.SetActive(active));
