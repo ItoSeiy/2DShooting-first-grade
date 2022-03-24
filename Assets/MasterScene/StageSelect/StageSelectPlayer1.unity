@@ -304,6 +304,7 @@ MonoBehaviour:
   _isDelayMode: 0
   _delay: 1500
   _isFirstSelectMode: 0
+  _nextSelectButton: {fileID: 0}
   _callNextButtons: []
   _deleteButtons: []
   _animStateName: 
@@ -311,6 +312,7 @@ MonoBehaviour:
   _isStageSelectMode: 1
   _onClickSoundsUnknownStage: 02000000
   _unknownStageSelectWarningPanel: {fileID: 1358025437}
+  _playable: {fileID: 1166915158}
   _buttonTargetColor: {r: 1, g: 1, b: 1, a: 1}
   _textTargetColor: {r: 0.32941177, g: 0.84313726, b: 0.8862745, a: 1}
   _fadeTime: 1
@@ -591,14 +593,16 @@ MonoBehaviour:
   _isDelete: 0
   _isDelayMode: 0
   _delay: 1500
-  _isFirstSelectMode: 0
+  _isFirstSelectMode: 1
+  _nextSelectButton: {fileID: 0}
   _callNextButtons: []
   _deleteButtons: []
   _animStateName: 
   _onClickSounds: 11000000
-  _isStageSelectMode: 1
+  _isStageSelectMode: 0
   _onClickSoundsUnknownStage: 02000000
-  _unknownStageSelectWarningPanel: {fileID: 1358025437}
+  _unknownStageSelectWarningPanel: {fileID: 0}
+  _playable: {fileID: 0}
   _buttonTargetColor: {r: 1, g: 1, b: 1, a: 1}
   _textTargetColor: {r: 0.7372549, g: 0, b: 0, a: 1}
   _fadeTime: 1
@@ -743,7 +747,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.28235295, g: 0.28235295, b: 0.28235295, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -785,6 +789,7 @@ MonoBehaviour:
   _isDelayMode: 0
   _delay: 1500
   _isFirstSelectMode: 0
+  _nextSelectButton: {fileID: 0}
   _callNextButtons: []
   _deleteButtons: []
   _animStateName: 
@@ -792,6 +797,7 @@ MonoBehaviour:
   _isStageSelectMode: 1
   _onClickSoundsUnknownStage: 02000000
   _unknownStageSelectWarningPanel: {fileID: 1358025437}
+  _playable: {fileID: 1166915158}
   _buttonTargetColor: {r: 1, g: 1, b: 1, a: 1}
   _textTargetColor: {r: 0.28235295, g: 0.28235295, b: 0.28235295, a: 1}
   _fadeTime: 1
@@ -1204,6 +1210,7 @@ MonoBehaviour:
   _isDelayMode: 0
   _delay: 1500
   _isFirstSelectMode: 0
+  _nextSelectButton: {fileID: 0}
   _callNextButtons: []
   _deleteButtons: []
   _animStateName: 
@@ -1211,6 +1218,7 @@ MonoBehaviour:
   _isStageSelectMode: 0
   _onClickSoundsUnknownStage: 
   _unknownStageSelectWarningPanel: {fileID: 0}
+  _playable: {fileID: 0}
   _buttonTargetColor: {r: 0, g: 0, b: 0, a: 0}
   _textTargetColor: {r: 0, g: 0, b: 0, a: 0}
   _fadeTime: 1
@@ -1397,6 +1405,7 @@ MonoBehaviour:
   _isDelayMode: 0
   _delay: 1500
   _isFirstSelectMode: 0
+  _nextSelectButton: {fileID: 0}
   _callNextButtons: []
   _deleteButtons: []
   _animStateName: 
@@ -1404,6 +1413,7 @@ MonoBehaviour:
   _isStageSelectMode: 1
   _onClickSoundsUnknownStage: 02000000
   _unknownStageSelectWarningPanel: {fileID: 1358025437}
+  _playable: {fileID: 1166915158}
   _buttonTargetColor: {r: 1, g: 1, b: 1, a: 1}
   _textTargetColor: {r: 0, g: 0, b: 0, a: 1}
   _fadeTime: 1
@@ -1599,6 +1609,213 @@ MonoBehaviour:
   m_EffectColor: {r: 1, g: 1, b: 1, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
+--- !u!1001 &1166915152
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1335214658}
+    m_Modifications:
+    - target: {fileID: 9194280062857918372, guid: f7946d0b931365644871a74da816124c,
+        type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9194280062857918372, guid: f7946d0b931365644871a74da816124c,
+        type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9194280062857918372, guid: f7946d0b931365644871a74da816124c,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 9194280062857918372, guid: f7946d0b931365644871a74da816124c,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9194280062857918372, guid: f7946d0b931365644871a74da816124c,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9194280062857918372, guid: f7946d0b931365644871a74da816124c,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9194280062857918372, guid: f7946d0b931365644871a74da816124c,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9194280062857918372, guid: f7946d0b931365644871a74da816124c,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 9194280062857918372, guid: f7946d0b931365644871a74da816124c,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 1080
+      objectReference: {fileID: 0}
+    - target: {fileID: 9194280062857918372, guid: f7946d0b931365644871a74da816124c,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9194280062857918372, guid: f7946d0b931365644871a74da816124c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9194280062857918372, guid: f7946d0b931365644871a74da816124c,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9194280062857918372, guid: f7946d0b931365644871a74da816124c,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9194280062857918372, guid: f7946d0b931365644871a74da816124c,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9194280062857918372, guid: f7946d0b931365644871a74da816124c,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9194280062857918372, guid: f7946d0b931365644871a74da816124c,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9194280062857918372, guid: f7946d0b931365644871a74da816124c,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9194280062857918372, guid: f7946d0b931365644871a74da816124c,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9194280062857918372, guid: f7946d0b931365644871a74da816124c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9194280062857918372, guid: f7946d0b931365644871a74da816124c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9194280062857918372, guid: f7946d0b931365644871a74da816124c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9194280062857918373, guid: f7946d0b931365644871a74da816124c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9194280062857918373, guid: f7946d0b931365644871a74da816124c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9194280062857918373, guid: f7946d0b931365644871a74da816124c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1166915155}
+    - target: {fileID: 9194280062857918373, guid: f7946d0b931365644871a74da816124c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9194280062857918373, guid: f7946d0b931365644871a74da816124c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: NormalSelect
+      objectReference: {fileID: 0}
+    - target: {fileID: 9194280062857918373, guid: f7946d0b931365644871a74da816124c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: ButtonController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 9194280062857918373, guid: f7946d0b931365644871a74da816124c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 9194280062857918375, guid: f7946d0b931365644871a74da816124c,
+        type: 3}
+      propertyPath: m_Name
+      value: Stage Open Button
+      objectReference: {fileID: 0}
+    - target: {fileID: 9194280062857918375, guid: f7946d0b931365644871a74da816124c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f7946d0b931365644871a74da816124c, type: 3}
+--- !u!224 &1166915153 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 9194280062857918372, guid: f7946d0b931365644871a74da816124c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1166915152}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1166915154 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9194280062857918375, guid: f7946d0b931365644871a74da816124c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1166915152}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1166915155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1166915154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 929360c6455df144582eece6eb2335eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isDelete: 1
+  _isDelayMode: 0
+  _delay: 1500
+  _isFirstSelectMode: 1
+  _nextSelectButton: {fileID: 708574007}
+  _callNextButtons: []
+  _deleteButtons: []
+  _animStateName: 
+  _onClickSounds: 
+  _isStageSelectMode: 0
+  _onClickSoundsUnknownStage: 
+  _unknownStageSelectWarningPanel: {fileID: 0}
+  _playable: {fileID: 0}
+  _buttonTargetColor: {r: 1, g: 1, b: 1, a: 1}
+  _textTargetColor: {r: 0, g: 0, b: 0, a: 0}
+  _fadeTime: 1
+  _stageNum: 0
+  _playerNum: 0
+--- !u!320 &1166915158 stripped
+PlayableDirector:
+  m_CorrespondingSourceObject: {fileID: 9194280062857918368, guid: f7946d0b931365644871a74da816124c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1166915152}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1211019908
 GameObject:
   m_ObjectHideFlags: 0
@@ -1780,6 +1997,7 @@ MonoBehaviour:
   _isDelayMode: 0
   _delay: 1500
   _isFirstSelectMode: 0
+  _nextSelectButton: {fileID: 0}
   _callNextButtons: []
   _deleteButtons: []
   _animStateName: 
@@ -1787,6 +2005,7 @@ MonoBehaviour:
   _isStageSelectMode: 0
   _onClickSoundsUnknownStage: 
   _unknownStageSelectWarningPanel: {fileID: 0}
+  _playable: {fileID: 0}
   _buttonTargetColor: {r: 0, g: 0, b: 0, a: 0}
   _textTargetColor: {r: 0, g: 0, b: 0, a: 0}
   _fadeTime: 1
@@ -1832,6 +2051,7 @@ RectTransform:
   - {fileID: 1041058799}
   - {fileID: 1436540607}
   - {fileID: 1937649426}
+  - {fileID: 1166915153}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1926,6 +2146,36 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1937649425}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1358025438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1358025437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 929360c6455df144582eece6eb2335eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isDelete: 1
+  _isDelayMode: 0
+  _delay: 1500
+  _isFirstSelectMode: 1
+  _nextSelectButton: {fileID: 708574007}
+  _callNextButtons: []
+  _deleteButtons: []
+  _animStateName: 
+  _onClickSounds: 
+  _isStageSelectMode: 0
+  _onClickSoundsUnknownStage: 
+  _unknownStageSelectWarningPanel: {fileID: 0}
+  _playable: {fileID: 0}
+  _buttonTargetColor: {r: 1, g: 1, b: 1, a: 1}
+  _textTargetColor: {r: 0, g: 0, b: 0, a: 0}
+  _fadeTime: 1
+  _stageNum: 0
+  _playerNum: 0
 --- !u!1001 &1380912854
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2169,6 +2419,7 @@ MonoBehaviour:
   _isDelayMode: 0
   _delay: 1500
   _isFirstSelectMode: 0
+  _nextSelectButton: {fileID: 0}
   _callNextButtons: []
   _deleteButtons: []
   _animStateName: 
@@ -2176,6 +2427,7 @@ MonoBehaviour:
   _isStageSelectMode: 0
   _onClickSoundsUnknownStage: 
   _unknownStageSelectWarningPanel: {fileID: 0}
+  _playable: {fileID: 0}
   _buttonTargetColor: {r: 0, g: 0, b: 0, a: 0}
   _textTargetColor: {r: 0, g: 0, b: 0, a: 0}
   _fadeTime: 1
@@ -2362,6 +2614,7 @@ MonoBehaviour:
   _isDelayMode: 0
   _delay: 1500
   _isFirstSelectMode: 0
+  _nextSelectButton: {fileID: 0}
   _callNextButtons: []
   _deleteButtons: []
   _animStateName: 
@@ -2369,6 +2622,7 @@ MonoBehaviour:
   _isStageSelectMode: 1
   _onClickSoundsUnknownStage: 02000000
   _unknownStageSelectWarningPanel: {fileID: 1358025437}
+  _playable: {fileID: 1166915158}
   _buttonTargetColor: {r: 1, g: 1, b: 1, a: 1}
   _textTargetColor: {r: 0.9137255, g: 0.78039217, b: 0, a: 1}
   _fadeTime: 1
@@ -2745,6 +2999,41 @@ PrefabInstance:
       propertyPath: m_Text
       value: "\u30B9\u30C6\u30FC\u30B8\u672A\u89E3\u653E\u306E\u305F\u3081\u9078\u629E\u3067\u304D\u307E\u305B\u3093\n\u3000\n 
         \u753B\u9762\u3092\u30AF\u30EA\u30C3\u30AF,\u53F3\u30DC\u30BF\u30F3\u3092\u62BC\u3057\u3066\u623B\u308B"
+      objectReference: {fileID: 0}
+    - target: {fileID: 452971903548703960, guid: 2bc765c300bcfe940bd995fc48ac268c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 452971903548703960, guid: 2bc765c300bcfe940bd995fc48ac268c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 452971903548703960, guid: 2bc765c300bcfe940bd995fc48ac268c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1358025438}
+    - target: {fileID: 452971903548703960, guid: 2bc765c300bcfe940bd995fc48ac268c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 452971903548703960, guid: 2bc765c300bcfe940bd995fc48ac268c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: NormalSelect
+      objectReference: {fileID: 0}
+    - target: {fileID: 452971903548703960, guid: 2bc765c300bcfe940bd995fc48ac268c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: ButtonController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 452971903548703960, guid: 2bc765c300bcfe940bd995fc48ac268c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 452971903548703961, guid: 2bc765c300bcfe940bd995fc48ac268c,
         type: 3}

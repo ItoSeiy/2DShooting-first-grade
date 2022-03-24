@@ -98,8 +98,9 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
         {
             if (x.SceneName == SceneLoder.Instance.ActiveSceneName)
             {
-                Debug.Log($"Play{x.NormalBGM.name}");
                 _normalBgmAudioSource.clip = x.NormalBGM;
+                _bossBgmAudioSource.clip = x.BossBGM;
+
                 _normalBgmAudioSource.Play();
             }
         });

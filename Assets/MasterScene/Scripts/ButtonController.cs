@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using UnityEngine.Playables;
 
 public class ButtonController : MonoBehaviour
 {
@@ -24,7 +25,11 @@ public class ButtonController : MonoBehaviour
     bool _isFirstSelectMode = false;
 
     [SerializeField]
-    [Header("呼び出すオブジェクト")]
+    [Header("選択時にセレクトさせるボタン")]
+    Button _nextSelectButton = null;
+
+    [SerializeField]
+    [Header("選択時に呼び出すオブジェクト")]
     GameObject[] _callNextButtons = null;
 
     [SerializeField]
@@ -50,6 +55,10 @@ public class ButtonController : MonoBehaviour
     [SerializeField]
     [Header("[ステージ選択時] 解放されていないステージを選択したら出すパネル")]
     GameObject _unknownStageSelectWarningPanel = null;
+
+    [SerializeField]
+    [Header("[ステージ選択時 ステージが解放された際に再生するTimeLine]")]
+    PlayableDirector _playable;
 
     [SerializeField]
     [Header("[ステージ選択時]ステージ解放後のボタンの色")]
@@ -120,8 +129,12 @@ public class ButtonController : MonoBehaviour
         {
             ObjectsActiveChange(_callNextButtons, true);
         }
+        if(_nextSelectButton != null)
+        {
+            _nextSelectButton.Select();
+        }
 
-        _sceneLoadCaller.LoadSceneString();
+        _sceneLoadCaller?.LoadSceneString();
     }
 
     public void StageSelect()
@@ -177,7 +190,9 @@ public class ButtonController : MonoBehaviour
 
                 if (SaveDataManager.Instance.SaveData.Player1StageActives[_stageNum - 1] == true)
                 {
+                    _playable.gameObject.SetActive(true);
                     DoButtonColor();
+                    DoTextColor();
                 }
                 else if (_stageNum <= 0 || _stageNum > SaveDataManager.Instance.Player1StageConut)
                 {
@@ -190,7 +205,9 @@ public class ButtonController : MonoBehaviour
 
                 if (SaveDataManager.Instance.SaveData.Player2StageActives[_stageNum - 1] == true)
                 {
+                    _playable.gameObject.SetActive(true);
                     DoButtonColor();
+                    DoTextColor();
                 }
                 else if (_stageNum <= 0 || _stageNum > SaveDataManager.Instance.Player2StageCount)
                 {
