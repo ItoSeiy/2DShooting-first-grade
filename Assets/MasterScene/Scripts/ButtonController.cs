@@ -1,10 +1,10 @@
+using DG.Tweening;
 using Overdose.Data;
 using System;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.UI;
-using DG.Tweening;
 using UnityEngine.Playables;
+using UnityEngine.UI;
 
 public class ButtonController : MonoBehaviour
 {
@@ -107,7 +107,7 @@ public class ButtonController : MonoBehaviour
         }
         if(_isStageSelectMode)
         {
-            CheckButtonState();
+            CheckButton();
         }
     }
 
@@ -182,7 +182,7 @@ public class ButtonController : MonoBehaviour
         }
     }
 
-    private void CheckButtonState()
+    private void CheckButton()
     {
         switch(_playerNum)
         {

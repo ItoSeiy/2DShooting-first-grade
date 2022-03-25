@@ -126,7 +126,6 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
             case true:
                 _timer += Time.deltaTime;
                 if (_timer <= _novelWaitTime) return;
-                Debug.Log("ボス開始");
                 _isBossStage = true;
                 Novel();
                 break;

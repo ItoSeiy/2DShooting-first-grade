@@ -114,7 +114,6 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
                 _normalBgmAudioSource.clip = x.NormalBGM;
                 _bossBgmAudioSource.clip = x.BossBGM;
 
-                _normalBgmAudioSource.UnPause();
                 _normalBgmAudioSource.Play();
             }
         });
