@@ -61,7 +61,7 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
     /// <summary>BGMを流すタイミングをデリゲートに登録するなどの設定を行う関数</summary>
     private void SettingBGM()
     {
-        SceneLoder.Instance.OnLoadEnd += () =>
+        GameManager.Instance.OnInGame += () =>
         {
             _normalBgmAudioSource.volume = _initialAudioSourceVolme;
             _bossBgmAudioSource.volume = _initialAudioSourceVolme;
@@ -84,7 +84,7 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
             };
 
 
-            PhaseNovelManager.Instance.OnEndAfterNovel += () => FadeBgm(_normalBgmAudioSource, 0f, _bgmFadeTime);
+            PhaseNovelManager.Instance.OnEndAfterNovel += () => _bossBgmAudioSource.Stop();
         };
 
         //キャラ死亡時

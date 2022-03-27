@@ -9,6 +9,8 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
 {
     public NovelPhase NovelePhaesState => _novelPhase;
 
+    public StageData StageData => _stageParam;
+
     [SerializeField, Header("ƒmƒxƒ‹‘O‚É‘Ò‚ÂŽžŠÔ")]
     float _novelWaitTime = 5f;
 
@@ -104,6 +106,7 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
         base.Awake();
         GameManager.Instance.OnGameOver += OnGameOver;
         GameManager.Instance.OnStageClear += () => _novelPhase = NovelPhase.Win;
+        SceneLoder.Instance.OnBeforeLoad += AllBulletEnemyDestroy;
     }
 
     void Start()

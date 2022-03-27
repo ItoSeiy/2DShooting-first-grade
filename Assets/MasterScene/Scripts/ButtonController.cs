@@ -62,11 +62,15 @@ public class ButtonController : MonoBehaviour
 
     [SerializeField]
     [Header("[ステージ選択時]ステージ解放後のボタンの色")]
-    Color _buttonTargetColor = Color.white;
+    Color _imageTargetColor = Color.white;
 
     [SerializeField]
     [Header("[ステージ選択時]ステージ解放後のテキストの色")]
-    Color _textTargetColor; 
+    Color _textTargetColor;
+
+    [SerializeField]
+    [Header("[ステージ選択時]ステージ解放後のテキスト")]
+    string _targetTextStr = "テキストを設定してください";
 
     [SerializeField]
     [Header("[ステージ選択時]ステージが解放された時のボタンの変色の時間")]
@@ -83,6 +87,7 @@ public class ButtonController : MonoBehaviour
     Button _button;
     Animator _animator = null;
     Text _buttonText;
+    Image _image;
 
     SceneLoadCaller _sceneLoadCaller;
 
@@ -92,6 +97,7 @@ public class ButtonController : MonoBehaviour
         _button = GetComponent<Button>();
         _animator = GetComponent<Animator>();
         _buttonText = GetComponentInChildren<Text>();
+        _image = GetComponent<Image>();
 
         if(_animStateName != null && _animator != null)
         {
@@ -191,7 +197,8 @@ public class ButtonController : MonoBehaviour
                 if (SaveDataManager.Instance.SaveData.Player1StageActives[_stageNum - 1] == true)
                 {
                     _playable.gameObject.SetActive(true);
-                    DoButtonColor();
+                    _buttonText.text = _targetTextStr;
+                    DoImageColor();
                     DoTextColor();
                 }
                 else if (_stageNum <= 0 || _stageNum > SaveDataManager.Instance.Player1StageConut)
@@ -206,7 +213,8 @@ public class ButtonController : MonoBehaviour
                 if (SaveDataManager.Instance.SaveData.Player2StageActives[_stageNum - 1] == true)
                 {
                     _playable.gameObject.SetActive(true);
-                    DoButtonColor();
+                    _buttonText.text = _targetTextStr;
+                    DoImageColor();
                     DoTextColor();
                 }
                 else if (_stageNum <= 0 || _stageNum > SaveDataManager.Instance.Player2StageCount)
@@ -221,16 +229,13 @@ public class ButtonController : MonoBehaviour
         }
     }
 
-    private void DoButtonColor()
+    private void DoImageColor()
     {
-        var color = _button.colors.normalColor;
-
-        DOTween.To(() => color,
-            c => color = c,
-            _buttonTargetColor,
+        DOTween.To(() => _image.color,
+            c => _image.color = c,
+            _imageTargetColor,
             _fadeTime)
-            .OnUpdate(() => _button.colors = new ColorBlock { normalColor = color })
-            .OnComplete(() => _button.colors = new ColorBlock { normalColor = _buttonTargetColor });
+            .OnComplete(() => _image.color = _imageTargetColor);
     }
 
     private void DoTextColor()

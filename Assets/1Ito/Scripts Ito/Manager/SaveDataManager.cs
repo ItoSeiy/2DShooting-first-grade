@@ -16,24 +16,24 @@ public class SaveDataManager : SingletonMonoBehaviour<SaveDataManager>
     private int _player2StageCount = 5;
 
     [SerializeField]
-    private StageData[] _stageData = null;
+    private StageData _stageData = null;
 
     protected override void Awake()
     {
         base.Awake();
         Load();
-
-        GameManager.Instance.OnStageClear += Check;
+        GameManager.Instance.OnInGame += SetCurreentStageData;
+        GameManager.Instance.OnStageClear += TryOpenStage;
     }
 
     void OnApplicationQuit()
     {
-        Save(SaveData);
+        Save();
     }
 
-    public void Save(SaveData saveData)
+    private void Save()
     {
-        var jsonSaveDataStr = JsonUtility.ToJson(saveData);
+        var jsonSaveDataStr = JsonUtility.ToJson(SaveData);
 
         var writer = new StreamWriter(Application.dataPath + "/SaveData/SaveData.json", false);
         writer.Write(jsonSaveDataStr);
@@ -43,7 +43,7 @@ public class SaveDataManager : SingletonMonoBehaviour<SaveDataManager>
         SaveData = JsonUtility.FromJson<SaveData>(jsonSaveDataStr);
     }
 
-    public void Load()
+    private void Load()
     {
         var reader = new StreamReader(Application.dataPath + "/SaveData/SaveData.json");
         var jsonSaveDataStr = reader.ReadToEnd();
@@ -58,11 +58,25 @@ public class SaveDataManager : SingletonMonoBehaviour<SaveDataManager>
         SaveData = new SaveData(_player1StageConut, _player2StageCount);
     }
 
-    private void Check()
+    private void SetCurreentStageData()
     {
-        Array.ForEach(_stageData, x =>
-        {
+        _stageData = PhaseNovelManager.Instance.StageData;
+    }
 
-        });
+    private void TryOpenStage()
+    {
+        switch (_stageData.PlayerNum)
+        {
+            case 1:
+                SaveData.Player1StageActives[_stageData.StageNum - 1] = true;
+                break;
+            case 2:
+                SaveData.Player2StageActives[_stageData.StageNum - 1] = true;
+                break;
+
+            default:
+                Debug.LogWarning($"{_stageData.PlayerNum}ÇÕë∂ç›ÇµÇ‹ÇπÇÒ");
+                break;
+        }
     }
 }
