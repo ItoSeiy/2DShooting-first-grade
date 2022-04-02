@@ -135,9 +135,9 @@ GameObject:
   - component: {fileID: 240392904}
   - component: {fileID: 240392903}
   - component: {fileID: 240392902}
-  - component: {fileID: 240392905}
-  - component: {fileID: 240392900}
   - component: {fileID: 240392901}
+  - component: {fileID: 240392900}
+  - component: {fileID: 240392905}
   m_Layer: 5
   m_Name: Stage5SelectButton
   m_TagString: Untagged
@@ -162,7 +162,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1006, y: -713}
+  m_AnchoredPosition: {x: 340, y: -236}
   m_SizeDelta: {x: 1919.9999, y: 1080.2637}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &240392900
@@ -237,9 +237,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 240392900}
+        m_TargetAssemblyTypeName: SceneLoadCaller, Assembly-CSharp
+        m_MethodName: LoadSceneString
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 240392905}
-        m_TargetAssemblyTypeName: ButtonController, Assembly-CSharp
-        m_MethodName: StageSelect
+        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
+        m_MethodName: Click
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -262,7 +274,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -297,28 +309,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 240392898}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 929360c6455df144582eece6eb2335eb, type: 3}
+  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _isDelete: 0
   _isDelayMode: 0
   _delay: 1500
-  _isFirstSelectMode: 0
-  _nextSelectButton: {fileID: 0}
+  _isFirstSelectButton: 0
   _callNextButtons: []
   _deleteButtons: []
+  _callPanel: []
+  _deletePanel: []
   _animStateName: 
   _onClickSounds: 11000000
-  _isStageSelectMode: 1
-  _onClickSoundsUnknownStage: 02000000
-  _unknownStageSelectWarningPanel: {fileID: 1358025437}
-  _playable: {fileID: 1166915158}
-  _imageTargetColor: {r: 1, g: 1, b: 1, a: 1}
-  _textTargetColor: {r: 0.32941177, g: 0.84313726, b: 0.8862745, a: 1}
-  _targetTextStr: Stage5
-  _fadeTime: 3
-  _stageNum: 5
-  _playerNum: 1
 --- !u!1 &344518103
 GameObject:
   m_ObjectHideFlags: 0
@@ -426,9 +429,9 @@ GameObject:
   - component: {fileID: 708574008}
   - component: {fileID: 708574005}
   - component: {fileID: 708574007}
-  - component: {fileID: 708574009}
-  - component: {fileID: 708574004}
   - component: {fileID: 708574006}
+  - component: {fileID: 708574004}
+  - component: {fileID: 708574009}
   m_Layer: 5
   m_Name: Stage1SelectButton
   m_TagString: Untagged
@@ -453,7 +456,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 339.99878, y: -235.99951}
+  m_AnchoredPosition: {x: 340, y: -236}
   m_SizeDelta: {x: 1919.9999, y: 1080.2637}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &708574004
@@ -559,9 +562,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 708574004}
+        m_TargetAssemblyTypeName: SceneLoadCaller, Assembly-CSharp
+        m_MethodName: LoadSceneString
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 708574009}
-        m_TargetAssemblyTypeName: ButtonController, Assembly-CSharp
-        m_MethodName: StageSelect
+        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
+        m_MethodName: Click
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -588,28 +603,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 708574002}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 929360c6455df144582eece6eb2335eb, type: 3}
+  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _isDelete: 0
   _isDelayMode: 0
   _delay: 1500
-  _isFirstSelectMode: 1
-  _nextSelectButton: {fileID: 0}
+  _isFirstSelectButton: 0
   _callNextButtons: []
   _deleteButtons: []
+  _callPanel: []
+  _deletePanel: []
   _animStateName: 
   _onClickSounds: 11000000
-  _isStageSelectMode: 0
-  _onClickSoundsUnknownStage: 02000000
-  _unknownStageSelectWarningPanel: {fileID: 0}
-  _playable: {fileID: 0}
-  _imageTargetColor: {r: 1, g: 1, b: 1, a: 1}
-  _textTargetColor: {r: 0.7372549, g: 0, b: 0, a: 1}
-  _targetTextStr: "\u30C6\u30AD\u30B9\u30C8\u3092\u8A2D\u5B9A\u3057\u3066\u304F\u3060\u3055\u3044"
-  _fadeTime: 1
-  _stageNum: 1
-  _playerNum: 1
 --- !u!1 &749824695
 GameObject:
   m_ObjectHideFlags: 0
@@ -622,9 +628,9 @@ GameObject:
   - component: {fileID: 749824701}
   - component: {fileID: 749824700}
   - component: {fileID: 749824699}
-  - component: {fileID: 749824702}
-  - component: {fileID: 749824697}
   - component: {fileID: 749824698}
+  - component: {fileID: 749824697}
+  - component: {fileID: 749824702}
   m_Layer: 5
   m_Name: Stage3SelectButton
   m_TagString: Untagged
@@ -649,7 +655,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1630, y: -236}
+  m_AnchoredPosition: {x: 340, y: -236}
   m_SizeDelta: {x: 1919.9999, y: 1080.2637}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &749824697
@@ -724,9 +730,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 749824697}
+        m_TargetAssemblyTypeName: SceneLoadCaller, Assembly-CSharp
+        m_MethodName: LoadSceneString
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 749824702}
-        m_TargetAssemblyTypeName: ButtonController, Assembly-CSharp
-        m_MethodName: StageSelect
+        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
+        m_MethodName: Click
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -749,7 +767,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -784,28 +802,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 749824695}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 929360c6455df144582eece6eb2335eb, type: 3}
+  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _isDelete: 0
   _isDelayMode: 0
   _delay: 1500
-  _isFirstSelectMode: 0
-  _nextSelectButton: {fileID: 0}
+  _isFirstSelectButton: 0
   _callNextButtons: []
   _deleteButtons: []
+  _callPanel: []
+  _deletePanel: []
   _animStateName: 
   _onClickSounds: 11000000
-  _isStageSelectMode: 1
-  _onClickSoundsUnknownStage: 02000000
-  _unknownStageSelectWarningPanel: {fileID: 1358025437}
-  _playable: {fileID: 1166915158}
-  _imageTargetColor: {r: 1, g: 1, b: 1, a: 1}
-  _textTargetColor: {r: 0.28235295, g: 0.28235295, b: 0.28235295, a: 1}
-  _targetTextStr: Stage3
-  _fadeTime: 3
-  _stageNum: 3
-  _playerNum: 1
 --- !u!1 &810004443
 GameObject:
   m_ObjectHideFlags: 0
@@ -1061,8 +1070,8 @@ GameObject:
   - component: {fileID: 1041058803}
   - component: {fileID: 1041058802}
   - component: {fileID: 1041058801}
-  - component: {fileID: 1041058804}
   - component: {fileID: 1041058800}
+  - component: {fileID: 1041058804}
   m_Layer: 0
   m_Name: KeybordTutorialButton
   m_TagString: Untagged
@@ -1147,9 +1156,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1041058800}
+        m_TargetAssemblyTypeName: SceneLoadCaller, Assembly-CSharp
+        m_MethodName: LoadSceneString
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1041058804}
-        m_TargetAssemblyTypeName: ButtonController, Assembly-CSharp
-        m_MethodName: StageSelect
+        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
+        m_MethodName: Click
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1206,28 +1227,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 1041058798}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 929360c6455df144582eece6eb2335eb, type: 3}
+  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _isDelete: 0
   _isDelayMode: 0
   _delay: 1500
-  _isFirstSelectMode: 0
-  _nextSelectButton: {fileID: 0}
+  _isFirstSelectButton: 0
   _callNextButtons: []
   _deleteButtons: []
+  _callPanel: []
+  _deletePanel: []
   _animStateName: 
-  _onClickSounds: 08000000
-  _isStageSelectMode: 0
-  _onClickSoundsUnknownStage: 
-  _unknownStageSelectWarningPanel: {fileID: 0}
-  _playable: {fileID: 0}
-  _imageTargetColor: {r: 1, g: 1, b: 1, a: 1}
-  _textTargetColor: {r: 0, g: 0, b: 0, a: 0}
-  _targetTextStr: "\u30C6\u30AD\u30B9\u30C8\u3092\u8A2D\u5B9A\u3057\u3066\u304F\u3060\u3055\u3044"
-  _fadeTime: 1
-  _stageNum: 1
-  _playerNum: 1
+  _onClickSounds: 11000000
 --- !u!1 &1102707280
 GameObject:
   m_ObjectHideFlags: 0
@@ -1240,9 +1252,9 @@ GameObject:
   - component: {fileID: 1102707286}
   - component: {fileID: 1102707285}
   - component: {fileID: 1102707284}
-  - component: {fileID: 1102707287}
-  - component: {fileID: 1102707282}
   - component: {fileID: 1102707283}
+  - component: {fileID: 1102707282}
+  - component: {fileID: 1102707287}
   m_Layer: 5
   m_Name: Stage4SelectButton
   m_TagString: Untagged
@@ -1267,7 +1279,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 340, y: -707}
+  m_AnchoredPosition: {x: 340, y: -236}
   m_SizeDelta: {x: 1919.9999, y: 1080.2637}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1102707282
@@ -1342,9 +1354,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1102707282}
+        m_TargetAssemblyTypeName: SceneLoadCaller, Assembly-CSharp
+        m_MethodName: LoadSceneString
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1102707287}
-        m_TargetAssemblyTypeName: ButtonController, Assembly-CSharp
-        m_MethodName: StageSelect
+        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
+        m_MethodName: Click
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1367,7 +1391,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1402,28 +1426,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 1102707280}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 929360c6455df144582eece6eb2335eb, type: 3}
+  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _isDelete: 0
   _isDelayMode: 0
   _delay: 1500
-  _isFirstSelectMode: 0
-  _nextSelectButton: {fileID: 0}
+  _isFirstSelectButton: 0
   _callNextButtons: []
   _deleteButtons: []
+  _callPanel: []
+  _deletePanel: []
   _animStateName: 
   _onClickSounds: 11000000
-  _isStageSelectMode: 1
-  _onClickSoundsUnknownStage: 02000000
-  _unknownStageSelectWarningPanel: {fileID: 1358025437}
-  _playable: {fileID: 1166915158}
-  _imageTargetColor: {r: 1, g: 1, b: 1, a: 1}
-  _textTargetColor: {r: 0, g: 0, b: 0, a: 1}
-  _targetTextStr: Stage4
-  _fadeTime: 3
-  _stageNum: 4
-  _playerNum: 1
 --- !u!1 &1139904099
 GameObject:
   m_ObjectHideFlags: 0
@@ -1475,7 +1490,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: a0ee249dfd30a1d45bc88a4dedac217c, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.32961905, g: 0.8440632, b: 0.8867924, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1495,7 +1510,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: ???
+  m_Text: Stage5
 --- !u!222 &1139904102
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1570,7 +1585,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: d8fc15f62d481ee40ab6076f9f34e7b0, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1590,7 +1605,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: ???
+  m_Text: Stage4
 --- !u!222 &1162433964
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1614,214 +1629,6 @@ MonoBehaviour:
   m_EffectColor: {r: 1, g: 1, b: 1, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
---- !u!1001 &1166915152
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 1335214658}
-    m_Modifications:
-    - target: {fileID: 9194280062857918372, guid: f7946d0b931365644871a74da816124c,
-        type: 3}
-      propertyPath: m_Pivot.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 9194280062857918372, guid: f7946d0b931365644871a74da816124c,
-        type: 3}
-      propertyPath: m_Pivot.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 9194280062857918372, guid: f7946d0b931365644871a74da816124c,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 9194280062857918372, guid: f7946d0b931365644871a74da816124c,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 9194280062857918372, guid: f7946d0b931365644871a74da816124c,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 9194280062857918372, guid: f7946d0b931365644871a74da816124c,
-        type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 9194280062857918372, guid: f7946d0b931365644871a74da816124c,
-        type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 9194280062857918372, guid: f7946d0b931365644871a74da816124c,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 1920
-      objectReference: {fileID: 0}
-    - target: {fileID: 9194280062857918372, guid: f7946d0b931365644871a74da816124c,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 1080
-      objectReference: {fileID: 0}
-    - target: {fileID: 9194280062857918372, guid: f7946d0b931365644871a74da816124c,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9194280062857918372, guid: f7946d0b931365644871a74da816124c,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9194280062857918372, guid: f7946d0b931365644871a74da816124c,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9194280062857918372, guid: f7946d0b931365644871a74da816124c,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9194280062857918372, guid: f7946d0b931365644871a74da816124c,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9194280062857918372, guid: f7946d0b931365644871a74da816124c,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9194280062857918372, guid: f7946d0b931365644871a74da816124c,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9194280062857918372, guid: f7946d0b931365644871a74da816124c,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9194280062857918372, guid: f7946d0b931365644871a74da816124c,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9194280062857918372, guid: f7946d0b931365644871a74da816124c,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9194280062857918372, guid: f7946d0b931365644871a74da816124c,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9194280062857918372, guid: f7946d0b931365644871a74da816124c,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9194280062857918373, guid: f7946d0b931365644871a74da816124c,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 9194280062857918373, guid: f7946d0b931365644871a74da816124c,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9194280062857918373, guid: f7946d0b931365644871a74da816124c,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 1166915155}
-    - target: {fileID: 9194280062857918373, guid: f7946d0b931365644871a74da816124c,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 9194280062857918373, guid: f7946d0b931365644871a74da816124c,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: NormalSelect
-      objectReference: {fileID: 0}
-    - target: {fileID: 9194280062857918373, guid: f7946d0b931365644871a74da816124c,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: ButtonController, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 9194280062857918373, guid: f7946d0b931365644871a74da816124c,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 9194280062857918375, guid: f7946d0b931365644871a74da816124c,
-        type: 3}
-      propertyPath: m_Name
-      value: Stage Open Button
-      objectReference: {fileID: 0}
-    - target: {fileID: 9194280062857918375, guid: f7946d0b931365644871a74da816124c,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: f7946d0b931365644871a74da816124c, type: 3}
---- !u!224 &1166915153 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 9194280062857918372, guid: f7946d0b931365644871a74da816124c,
-    type: 3}
-  m_PrefabInstance: {fileID: 1166915152}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1166915154 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9194280062857918375, guid: f7946d0b931365644871a74da816124c,
-    type: 3}
-  m_PrefabInstance: {fileID: 1166915152}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1166915155
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1166915154}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 929360c6455df144582eece6eb2335eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _isDelete: 1
-  _isDelayMode: 0
-  _delay: 1500
-  _isFirstSelectMode: 1
-  _nextSelectButton: {fileID: 708574007}
-  _callNextButtons: []
-  _deleteButtons: []
-  _animStateName: 
-  _onClickSounds: 
-  _isStageSelectMode: 0
-  _onClickSoundsUnknownStage: 
-  _unknownStageSelectWarningPanel: {fileID: 0}
-  _playable: {fileID: 0}
-  _imageTargetColor: {r: 1, g: 1, b: 1, a: 1}
-  _textTargetColor: {r: 0, g: 0, b: 0, a: 0}
-  _targetTextStr: "\u30C6\u30AD\u30B9\u30C8\u3092\u8A2D\u5B9A\u3057\u3066\u304F\u3060\u3055\u3044"
-  _fadeTime: 1
-  _stageNum: 0
-  _playerNum: 0
---- !u!320 &1166915158 stripped
-PlayableDirector:
-  m_CorrespondingSourceObject: {fileID: 9194280062857918368, guid: f7946d0b931365644871a74da816124c,
-    type: 3}
-  m_PrefabInstance: {fileID: 1166915152}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1211019908
 GameObject:
   m_ObjectHideFlags: 0
@@ -1834,9 +1641,9 @@ GameObject:
   - component: {fileID: 1211019914}
   - component: {fileID: 1211019913}
   - component: {fileID: 1211019912}
-  - component: {fileID: 1211019915}
-  - component: {fileID: 1211019910}
   - component: {fileID: 1211019911}
+  - component: {fileID: 1211019910}
+  - component: {fileID: 1211019915}
   m_Layer: 5
   m_Name: TitleSelectButton
   m_TagString: Untagged
@@ -1861,7 +1668,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1624, y: -705}
+  m_AnchoredPosition: {x: 340, y: -239}
   m_SizeDelta: {x: 960, y: 540}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1211019910
@@ -1936,9 +1743,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1211019910}
+        m_TargetAssemblyTypeName: SceneLoadCaller, Assembly-CSharp
+        m_MethodName: LoadSceneString
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1211019915}
-        m_TargetAssemblyTypeName: ButtonController, Assembly-CSharp
-        m_MethodName: StageSelect
+        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
+        m_MethodName: Click
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1996,28 +1815,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 1211019908}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 929360c6455df144582eece6eb2335eb, type: 3}
+  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _isDelete: 0
   _isDelayMode: 0
   _delay: 1500
-  _isFirstSelectMode: 0
-  _nextSelectButton: {fileID: 0}
+  _isFirstSelectButton: 1
   _callNextButtons: []
   _deleteButtons: []
+  _callPanel: []
+  _deletePanel: []
   _animStateName: 
-  _onClickSounds: 08000000
-  _isStageSelectMode: 0
-  _onClickSoundsUnknownStage: 
-  _unknownStageSelectWarningPanel: {fileID: 0}
-  _playable: {fileID: 0}
-  _imageTargetColor: {r: 1, g: 1, b: 1, a: 1}
-  _textTargetColor: {r: 0, g: 0, b: 0, a: 0}
-  _targetTextStr: "\u30C6\u30AD\u30B9\u30C8\u3092\u8A2D\u5B9A\u3057\u3066\u304F\u3060\u3055\u3044"
-  _fadeTime: 1
-  _stageNum: 1
-  _playerNum: 1
+  _onClickSounds: 11000000
 --- !u!1 &1335214657
 GameObject:
   m_ObjectHideFlags: 0
@@ -2057,8 +1867,6 @@ RectTransform:
   - {fileID: 1211019909}
   - {fileID: 1041058799}
   - {fileID: 1436540607}
-  - {fileID: 1937649426}
-  - {fileID: 1166915153}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2147,43 +1955,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!1 &1358025437 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 452971903548703962, guid: 2bc765c300bcfe940bd995fc48ac268c,
-    type: 3}
-  m_PrefabInstance: {fileID: 1937649425}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1358025438
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1358025437}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 929360c6455df144582eece6eb2335eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _isDelete: 1
-  _isDelayMode: 0
-  _delay: 1500
-  _isFirstSelectMode: 1
-  _nextSelectButton: {fileID: 708574007}
-  _callNextButtons: []
-  _deleteButtons: []
-  _animStateName: 
-  _onClickSounds: 
-  _isStageSelectMode: 0
-  _onClickSoundsUnknownStage: 
-  _unknownStageSelectWarningPanel: {fileID: 0}
-  _playable: {fileID: 0}
-  _imageTargetColor: {r: 1, g: 1, b: 1, a: 1}
-  _textTargetColor: {r: 0, g: 0, b: 0, a: 0}
-  _targetTextStr: "\u30C6\u30AD\u30B9\u30C8\u3092\u8A2D\u5B9A\u3057\u3066\u304F\u3060\u3055\u3044"
-  _fadeTime: 1
-  _stageNum: 0
-  _playerNum: 0
 --- !u!1001 &1380912854
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2275,8 +2046,8 @@ GameObject:
   - component: {fileID: 1436540611}
   - component: {fileID: 1436540610}
   - component: {fileID: 1436540609}
-  - component: {fileID: 1436540612}
   - component: {fileID: 1436540608}
+  - component: {fileID: 1436540612}
   m_Layer: 0
   m_Name: ControllerTutorialButton
   m_TagString: Untagged
@@ -2361,9 +2132,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1436540608}
+        m_TargetAssemblyTypeName: SceneLoadCaller, Assembly-CSharp
+        m_MethodName: LoadSceneString
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1436540612}
-        m_TargetAssemblyTypeName: ButtonController, Assembly-CSharp
-        m_MethodName: StageSelect
+        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
+        m_MethodName: Click
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2420,28 +2203,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 1436540606}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 929360c6455df144582eece6eb2335eb, type: 3}
+  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _isDelete: 0
   _isDelayMode: 0
   _delay: 1500
-  _isFirstSelectMode: 0
-  _nextSelectButton: {fileID: 0}
+  _isFirstSelectButton: 0
   _callNextButtons: []
   _deleteButtons: []
+  _callPanel: []
+  _deletePanel: []
   _animStateName: 
-  _onClickSounds: 08000000
-  _isStageSelectMode: 0
-  _onClickSoundsUnknownStage: 
-  _unknownStageSelectWarningPanel: {fileID: 0}
-  _playable: {fileID: 0}
-  _imageTargetColor: {r: 1, g: 1, b: 1, a: 1}
-  _textTargetColor: {r: 0, g: 0, b: 0, a: 0}
-  _targetTextStr: "\u30C6\u30AD\u30B9\u30C8\u3092\u8A2D\u5B9A\u3057\u3066\u304F\u3060\u3055\u3044"
-  _fadeTime: 1
-  _stageNum: 1
-  _playerNum: 1
+  _onClickSounds: 11000000
 --- !u!1 &1514549977
 GameObject:
   m_ObjectHideFlags: 0
@@ -2454,9 +2228,9 @@ GameObject:
   - component: {fileID: 1514549983}
   - component: {fileID: 1514549982}
   - component: {fileID: 1514549981}
-  - component: {fileID: 1514549984}
-  - component: {fileID: 1514549979}
   - component: {fileID: 1514549980}
+  - component: {fileID: 1514549979}
+  - component: {fileID: 1514549984}
   m_Layer: 5
   m_Name: Stage2SelectButton
   m_TagString: Untagged
@@ -2481,7 +2255,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1009, y: -235.99951}
+  m_AnchoredPosition: {x: 340, y: -236}
   m_SizeDelta: {x: 1919.9999, y: 1080.2637}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1514549979
@@ -2537,7 +2311,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.4509804, g: 0.4509804, b: 0.4509804, a: 1}
     m_SelectedColor: {r: 0.65882355, g: 0.65882355, b: 0.65882355, a: 1}
-    m_DisabledColor: {r: 0.65882355, g: 0.65882355, b: 0.65882355, a: 0.5019608}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -2556,9 +2330,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1514549979}
+        m_TargetAssemblyTypeName: SceneLoadCaller, Assembly-CSharp
+        m_MethodName: LoadSceneString
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1514549984}
-        m_TargetAssemblyTypeName: ButtonController, Assembly-CSharp
-        m_MethodName: StageSelect
+        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
+        m_MethodName: Click
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2581,7 +2367,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2616,28 +2402,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 1514549977}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 929360c6455df144582eece6eb2335eb, type: 3}
+  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _isDelete: 0
   _isDelayMode: 0
   _delay: 1500
-  _isFirstSelectMode: 0
-  _nextSelectButton: {fileID: 0}
+  _isFirstSelectButton: 0
   _callNextButtons: []
   _deleteButtons: []
+  _callPanel: []
+  _deletePanel: []
   _animStateName: 
   _onClickSounds: 11000000
-  _isStageSelectMode: 1
-  _onClickSoundsUnknownStage: 02000000
-  _unknownStageSelectWarningPanel: {fileID: 1358025437}
-  _playable: {fileID: 1166915158}
-  _imageTargetColor: {r: 1, g: 1, b: 1, a: 1}
-  _textTargetColor: {r: 0.9137255, g: 0.78039217, b: 0, a: 1}
-  _targetTextStr: Stage2
-  _fadeTime: 3
-  _stageNum: 2
-  _playerNum: 1
 --- !u!1 &1727963869
 GameObject:
   m_ObjectHideFlags: 0
@@ -2689,7 +2466,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: 86ab7011eeb8eb74c8632c5adfa38036, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.2830189, g: 0.2830189, b: 0.2830189, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2709,7 +2486,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: ???
+  m_Text: Stage3
 --- !u!222 &1727963872
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2997,197 +2774,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f6b164bacb001034daba893496ba4df0, type: 3}
---- !u!1001 &1937649425
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 1335214658}
-    m_Modifications:
-    - target: {fileID: 452971903067004026, guid: 2bc765c300bcfe940bd995fc48ac268c,
-        type: 3}
-      propertyPath: m_Text
-      value: "\u30B9\u30C6\u30FC\u30B8\u672A\u89E3\u653E\u306E\u305F\u3081\u9078\u629E\u3067\u304D\u307E\u305B\u3093\n\u3000\n 
-        \u753B\u9762\u3092\u30AF\u30EA\u30C3\u30AF,\u53F3\u30DC\u30BF\u30F3\u3092\u62BC\u3057\u3066\u623B\u308B"
-      objectReference: {fileID: 0}
-    - target: {fileID: 452971903548703960, guid: 2bc765c300bcfe940bd995fc48ac268c,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 452971903548703960, guid: 2bc765c300bcfe940bd995fc48ac268c,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 452971903548703960, guid: 2bc765c300bcfe940bd995fc48ac268c,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 1358025438}
-    - target: {fileID: 452971903548703960, guid: 2bc765c300bcfe940bd995fc48ac268c,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 452971903548703960, guid: 2bc765c300bcfe940bd995fc48ac268c,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: NormalSelect
-      objectReference: {fileID: 0}
-    - target: {fileID: 452971903548703960, guid: 2bc765c300bcfe940bd995fc48ac268c,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: ButtonController, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 452971903548703960, guid: 2bc765c300bcfe940bd995fc48ac268c,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 452971903548703961, guid: 2bc765c300bcfe940bd995fc48ac268c,
-        type: 3}
-      propertyPath: m_Pivot.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 452971903548703961, guid: 2bc765c300bcfe940bd995fc48ac268c,
-        type: 3}
-      propertyPath: m_Pivot.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 452971903548703961, guid: 2bc765c300bcfe940bd995fc48ac268c,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 452971903548703961, guid: 2bc765c300bcfe940bd995fc48ac268c,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 452971903548703961, guid: 2bc765c300bcfe940bd995fc48ac268c,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 452971903548703961, guid: 2bc765c300bcfe940bd995fc48ac268c,
-        type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 452971903548703961, guid: 2bc765c300bcfe940bd995fc48ac268c,
-        type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 452971903548703961, guid: 2bc765c300bcfe940bd995fc48ac268c,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 1920
-      objectReference: {fileID: 0}
-    - target: {fileID: 452971903548703961, guid: 2bc765c300bcfe940bd995fc48ac268c,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 1080
-      objectReference: {fileID: 0}
-    - target: {fileID: 452971903548703961, guid: 2bc765c300bcfe940bd995fc48ac268c,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 452971903548703961, guid: 2bc765c300bcfe940bd995fc48ac268c,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 452971903548703961, guid: 2bc765c300bcfe940bd995fc48ac268c,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 452971903548703961, guid: 2bc765c300bcfe940bd995fc48ac268c,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 452971903548703961, guid: 2bc765c300bcfe940bd995fc48ac268c,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 452971903548703961, guid: 2bc765c300bcfe940bd995fc48ac268c,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 452971903548703961, guid: 2bc765c300bcfe940bd995fc48ac268c,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 452971903548703961, guid: 2bc765c300bcfe940bd995fc48ac268c,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 452971903548703961, guid: 2bc765c300bcfe940bd995fc48ac268c,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 452971903548703961, guid: 2bc765c300bcfe940bd995fc48ac268c,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 452971903548703961, guid: 2bc765c300bcfe940bd995fc48ac268c,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 452971903548703961, guid: 2bc765c300bcfe940bd995fc48ac268c,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 452971903548703961, guid: 2bc765c300bcfe940bd995fc48ac268c,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 452971903548703961, guid: 2bc765c300bcfe940bd995fc48ac268c,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 452971903548703961, guid: 2bc765c300bcfe940bd995fc48ac268c,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 452971903548703962, guid: 2bc765c300bcfe940bd995fc48ac268c,
-        type: 3}
-      propertyPath: m_Name
-      value: StageSelectWarningButton
-      objectReference: {fileID: 0}
-    - target: {fileID: 452971903548703962, guid: 2bc765c300bcfe940bd995fc48ac268c,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 452971903548703967, guid: 2bc765c300bcfe940bd995fc48ac268c,
-        type: 3}
-      propertyPath: m_Color.a
-      value: 0.69411767
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 2bc765c300bcfe940bd995fc48ac268c, type: 3}
---- !u!224 &1937649426 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 452971903548703961, guid: 2bc765c300bcfe940bd995fc48ac268c,
-    type: 3}
-  m_PrefabInstance: {fileID: 1937649425}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2083453209
 GameObject:
   m_ObjectHideFlags: 0
@@ -3239,7 +2825,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: 08e27a9a08708254399d8b411ef78f42, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.9150943, g: 0.780146, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3259,7 +2845,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: ???
+  m_Text: Stage2
 --- !u!222 &2083453212
 CanvasRenderer:
   m_ObjectHideFlags: 0

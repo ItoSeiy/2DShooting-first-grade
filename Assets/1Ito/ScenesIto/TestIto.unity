@@ -141,15 +141,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ===Managers===
       objectReference: {fileID: 0}
-    - target: {fileID: 4710857687889372998, guid: 03ee70c6eee84834babf631082b1865f,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4710857687889372999, guid: 03ee70c6eee84834babf631082b1865f,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4710857687889372999, guid: 03ee70c6eee84834babf631082b1865f,
         type: 3}
@@ -317,6 +312,22 @@ MonoBehaviour:
   _leftLimit: -4
   _upperLimit: 2.5
   _lowerLimit: 1.5
+--- !u!1 &638774820
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 912063238}
+  m_Layer: 0
+  m_Name: Recovery GameObject (912063238)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &677897013
 GameObject:
   m_ObjectHideFlags: 0
@@ -459,7 +470,7 @@ PrefabInstance:
     - target: {fileID: 6832131661852865002, guid: 41c0021f46274084c838320a01adc01f,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6832131661852865002, guid: 41c0021f46274084c838320a01adc01f,
         type: 3}
@@ -728,15 +739,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8210e586883f1b4a954f5f27880afa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _muzzle: {fileID: 0}
+  _muzzles: []
   _attackInterval: 0.64
   _bullet: 
   _rotationInterval: 1
   _maximumCount: 7
   _endingTime: 20
-  _probability: 50
-  _normalAttack: 0
-  _maxAttackCount: 2
 --- !u!1 &906801308
 GameObject:
   m_ObjectHideFlags: 0
@@ -785,9 +793,6 @@ MonoBehaviour:
   _firstBullet: 17000000
   _secondBullet: 17000000
   _endingTime: 20
-  _probability: 50
-  _normalAttack: 0
-  _audioInterval: 2
 --- !u!1001 &912063234
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -897,53 +902,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 65f4a61f7c0fdf545b23f3aff4b184b0, type: 3}
---- !u!4 &912063235
+--- !u!4 &912063235 stripped
 Transform:
-  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 4629382609093981595, guid: 65f4a61f7c0fdf545b23f3aff4b184b0,
     type: 3}
   m_PrefabInstance: {fileID: 912063234}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1257332610}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1096083945}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &912063236
+--- !u!4 &912063236 stripped
 Transform:
-  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 4629382609795725151, guid: 65f4a61f7c0fdf545b23f3aff4b184b0,
     type: 3}
   m_PrefabInstance: {fileID: 912063234}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1720579097}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1402803472}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &912063237
+--- !u!4 &912063237 stripped
 Transform:
-  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 4629382610687237670, guid: 65f4a61f7c0fdf545b23f3aff4b184b0,
     type: 3}
   m_PrefabInstance: {fileID: 912063234}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2072023706}
+--- !u!4 &912063238
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 638774820}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 233063010}
-  - {fileID: 93915679}
-  m_Father: {fileID: 1402803472}
-  m_RootOrder: 1
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &912063239 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 912063234}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &915474560
 GameObject:
   m_ObjectHideFlags: 0
@@ -987,15 +982,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 114c7bca3a8c812429f3e26a8eb3ca30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerTag: 
   _muzzles: []
   _attackInterval: 0.46
   _bullet: 
   _secondBullet: 0
   _rotationInterval: 45
   _endingTime: 20
-  _probability: 50
-  _normalAttack: 0
-  _audioInterval: 1
 --- !u!1 &926571358
 GameObject:
   m_ObjectHideFlags: 0
@@ -1035,9 +1028,6 @@ MonoBehaviour:
   _firstBullet: 16000000
   _secondBullet: 17000000
   _endingTime: 20
-  _probability: 50
-  _normalAttack: 0
-  _audioInterval: 2
 --- !u!4 &926571360
 Transform:
   m_ObjectHideFlags: 0
@@ -1134,7 +1124,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &1096083941
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1210,8 +1200,6 @@ MonoBehaviour:
     items: []
   _itemDropRangeX: 2
   _itemDropRangeY: 2
-  _killedParticle: {fileID: 0}
-  _soundType: 0
   _data:
     actionPatterns:
     - bossAttackActions:
@@ -1287,10 +1275,9 @@ Transform:
   - {fileID: 1087561681}
   - {fileID: 2138193435}
   - {fileID: 1059215244}
-  - {fileID: 1402803472}
-  - {fileID: 912063235}
+  - {fileID: 912063239}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1096131484
 PrefabInstance:
@@ -1302,7 +1289,7 @@ PrefabInstance:
     - target: {fileID: 1173303680988654937, guid: 8ee05df372273d4459d3d9c93ded8522,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1173303680988654937, guid: 8ee05df372273d4459d3d9c93ded8522,
         type: 3}
@@ -1359,11 +1346,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
-    - target: {fileID: 9166521669907580530, guid: 8ee05df372273d4459d3d9c93ded8522,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8ee05df372273d4459d3d9c93ded8522, type: 3}
 --- !u!1 &1118932145
@@ -1410,33 +1392,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _superAttackPosition: {x: 0, y: 4}
-  _muzzle: {fileID: 0}
+  _muzzles:
+  - {fileID: 912063237}
   _speed: 4
   _waitTime: 5
   _activationTime: 30
-  _angleInterval: 20
+  _rotationInterval: 20
   _attackInterval: 1
   _bullet: 1e000000
-  _damageTakenRationRange: 0.5
-  _Introduction: {fileID: 0}
-  _superAttack: 0
-  _introductionStopTime: 3
---- !u!1 &1257332610
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 912063235}
-  m_Layer: 0
-  m_Name: Missing Prefab (Dummy)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &1295514442
 GameObject:
   m_ObjectHideFlags: 0
@@ -1475,8 +1438,6 @@ MonoBehaviour:
   _attackInterval: 1
   _bullet: 160000001700000018000000
   _endingTime: 20
-  _probability: 50
-  _normalAttack: 0
 --- !u!4 &1295514444
 Transform:
   m_ObjectHideFlags: 0
@@ -1490,82 +1451,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1087561681}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1402803471
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1402803472}
-  m_Layer: 0
-  m_Name: MuzzleLeft02 (Missing Prefab)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1402803472
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1402803471}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 912063236}
-  - {fileID: 912063237}
-  m_Father: {fileID: 1096083945}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1405291541
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1405291543}
-  - component: {fileID: 1405291542}
-  m_Layer: 0
-  m_Name: SaveData
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1405291542
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1405291541}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41803e8477f31194aa9000cedeb4ede5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _jsonDataPath: StageActivity
---- !u!4 &1405291543
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1405291541}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1443392313
 GameObject:
@@ -1614,8 +1499,6 @@ MonoBehaviour:
   _attackInterval: 0.6
   _bullet: 16000000
   _endingTime: 20
-  _probability: 50
-  _normalAttack: 0
 --- !u!1 &1539239775
 GameObject:
   m_ObjectHideFlags: 0
@@ -1714,9 +1597,6 @@ MonoBehaviour:
   _bullet: 18000000
   _maximumBulletRange: 11
   _endingTime: 20
-  _probability: 50
-  _normalAttack: 0
-  _audioInterval: 2
 --- !u!1001 &1608398145
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1727,7 +1607,7 @@ PrefabInstance:
     - target: {fileID: 4551802122371824448, guid: a0fba6d711617884f8bb908d7b6035ab,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4551802122371824448, guid: a0fba6d711617884f8bb908d7b6035ab,
         type: 3}
@@ -1867,22 +1747,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1611588908}
   m_CullTransparentMesh: 1
---- !u!1 &1720579097
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 912063236}
-  m_Layer: 0
-  m_Name: Missing Prefab (Dummy)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &1793011904
 GameObject:
   m_ObjectHideFlags: 0
@@ -1976,8 +1840,6 @@ MonoBehaviour:
     items: []
   _itemDropRangeX: 2
   _itemDropRangeY: 2
-  _killedParticle: {fileID: 0}
-  _soundType: 0
   _data:
     actionPatterns: []
     bossSuperAttackActons: []
@@ -2094,7 +1956,7 @@ Transform:
   - {fileID: 2043769780}
   - {fileID: 839387437}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1821538078 stripped
 MonoBehaviour:
@@ -2178,7 +2040,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1921367107
 GameObject:
@@ -2414,22 +2276,6 @@ MonoBehaviour:
   _shortMoveTime: 1
   _longMoveTime: 3
   _stopTime: 1
---- !u!1 &2072023706
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 912063237}
-  m_Layer: 0
-  m_Name: Missing Prefab (Dummy)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1001 &2082749060
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2452,15 +2298,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player1
       objectReference: {fileID: 0}
-    - target: {fileID: 8073652284958033810, guid: 9e9962444e183474597e568b85370ae6,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8073652285846561726, guid: 9e9962444e183474597e568b85370ae6,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8073652285846561726, guid: 9e9962444e183474597e568b85370ae6,
         type: 3}
