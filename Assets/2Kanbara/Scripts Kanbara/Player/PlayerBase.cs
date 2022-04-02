@@ -243,6 +243,7 @@ public class PlayerBase : MonoBehaviour, IPauseable
     protected const int _level1 = 1;
     protected const int _level2 = 2;
     protected const int _level3 = 3;
+
     public int PlayerPowerRequiredNumberLevel2 => _playerPowerRequiredNumberLevel2;
     public int PlayerPowerRequiredNumberLevel3 => _playerPowerRequiredNumberLevel3;
 
@@ -472,7 +473,7 @@ public class PlayerBase : MonoBehaviour, IPauseable
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //EnemyまたはEnemyBuletに当たった際行う残機を減らす処理　無敵モードであれば残機は減らない
-        if (!_isGodMode && collision.gameObject.tag == _enemyTag || collision.gameObject.tag == _enemyBulletTag)
+        if (!_isGodMode && collision.tag == _enemyTag || collision.tag == _enemyBulletTag)
         {
             if (_isGodMode) return;
             _cmvcam1.Priority = -1;
@@ -496,47 +497,48 @@ public class PlayerBase : MonoBehaviour, IPauseable
             }
         }
 
-        if (collision.gameObject.tag == _1upTag)//残機を増やす処理
+        if (collision.tag == _1upTag)//残機を増やす処理
         {
-            CollisionItem(collision.gameObject, _1UPAudio, GameManager.Instance.PlayerResidueCount, GameManager.Instance.ResidueChange);
+            CollisionItem(collision.gameObject, _1UPAudio, GameManager.Instance.ResidueChange);
             if(GameManager.Instance.PlayerResidueCount >= _playerResidueLimit)
             {
                 _is1upMax = true;
             }
         }
 
-        if (collision.gameObject.tag == _bombItemTag)//ボムの所持数を増やす処理
+        if (collision.tag == _bombItemTag)//ボムの所持数を増やす処理
         {
-            CollisionItem(collision.gameObject, _getBombAudio, GameManager.Instance.PlayerBombCount, GameManager.Instance.PlayerBombCountChange);
+            CollisionItem(collision.gameObject, _getBombAudio, GameManager.Instance.PlayerBombCountChange);
             if(GameManager.Instance.PlayerBombCount >= _playerBombLimit)
             {
                 _isBombMax = true;
             }
         }
 
-        if (collision.gameObject.tag == _pointTag)//スコアを増やす処理
+        if (collision.tag == _pointTag)//スコアを増やす処理
         {
-            CollisionItem(collision.gameObject, _itemGetAudio, GameManager.Instance.PlayerScore, GameManager.Instance.PlayerScoreChange);
+            CollisionItem(collision.gameObject, _itemGetAudio, GameManager.Instance.PlayerScoreChange);
         }
 
-        if (collision.gameObject.tag == _powerTag)//パワーを増やす処理
+        if (collision.tag == _powerTag)//パワーを増やす処理
         {
-            CollisionItem(collision.gameObject, _itemGetAudio, GameManager.Instance.PlayerPowerItemCount,
+            var power = GameManager.Instance.PlayerPowerItemCount;
+            CollisionItem(collision.gameObject, _itemGetAudio,
                 GameManager.Instance.PlayerPowerItemCountChange);
-            if(GameManager.Instance.PlayerPowerItemCount == _playerPowerRequiredNumberLevel2 || GameManager.Instance.PlayerPowerItemCount == _playerPowerRequiredNumberLevel3 || GameManager.Instance.PlayerPowerItemCount == _playerPowerLimit)
+            if(power == _playerPowerRequiredNumberLevel2 || power == _playerPowerRequiredNumberLevel3 || power == _playerPowerLimit)
             {
                 Play(_levelUpAudio);//LevelUP時に音を鳴らす
             }
-            if (GameManager.Instance.PlayerPowerItemCount >= _playerPowerLimit)
+            if (power >= _playerPowerLimit)
             {
                 _fullPowerModeEffect.gameObject.SetActive(true);
                 _isPowerMax = true;
             }
         }
 
-        if (collision.gameObject.tag == _invincibleTag)//一定数取得すると無敵になるアイテムの所持数を増やす処理
+        if (collision.tag == _invincibleTag)//一定数取得すると無敵になるアイテムの所持数を増やす処理
         {
-            CollisionItem(collision.gameObject, _itemGetAudio, GameManager.Instance.PlayerInvincibleObjectCount, GameManager.Instance.PlayerInvicibleObjectValueChange);
+            CollisionItem(collision.gameObject, _itemGetAudio, GameManager.Instance.PlayerInvicibleObjectValueChange);
             if(GameManager.Instance.PlayerInvincibleObjectCount >= _invincibleLimit)
             {
                 InvincibleMode();
@@ -549,12 +551,12 @@ public class PlayerBase : MonoBehaviour, IPauseable
         }
     }
 
-    void CollisionItem(GameObject go, string audioName, int count, Action<int> uiAction)
+    void CollisionItem(GameObject go, string audioName, Action<int> action)
     {
         var item = go.GetComponent<ItemBase>();
         Play(audioName);
         if (item.IsTaking) return;
-        uiAction(item.ItemCount);
+        action(item.ItemCount);
         item.IsTaking = true;
     }
 

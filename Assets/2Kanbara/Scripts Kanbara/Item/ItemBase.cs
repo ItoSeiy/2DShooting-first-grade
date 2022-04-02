@@ -21,13 +21,11 @@ public class ItemBase : MonoBehaviour, IPauseable
     [SerializeField, Header("演出が再生されるタイミング")] StartPS _stratPS = StartPS.Contact;
 
     bool _isGetItemMode = false;
-
     bool _isTaking = false;
 
-    public bool IsTaking { get => isTaking; set => isTaking = value; }
+    public bool IsTaking { get => _isTaking; set => _isTaking = value; }
 
     Vector2 _oldVerocity;
-    private bool isTaking;
 
     public int ItemCount => _itemCount;
 
