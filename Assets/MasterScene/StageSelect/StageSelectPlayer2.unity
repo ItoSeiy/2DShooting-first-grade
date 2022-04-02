@@ -135,9 +135,9 @@ GameObject:
   - component: {fileID: 240392904}
   - component: {fileID: 240392903}
   - component: {fileID: 240392902}
-  - component: {fileID: 240392901}
-  - component: {fileID: 240392900}
   - component: {fileID: 240392905}
+  - component: {fileID: 240392900}
+  - component: {fileID: 240392901}
   m_Layer: 5
   m_Name: Stage5SelectButton
   m_TagString: Untagged
@@ -237,21 +237,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 240392900}
-        m_TargetAssemblyTypeName: SceneLoadCaller, Assembly-CSharp
-        m_MethodName: LoadSceneString
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 240392905}
-        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
-        m_MethodName: Click
+        m_TargetAssemblyTypeName: ButtonController, Assembly-CSharp
+        m_MethodName: StageSelect
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -309,7 +297,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 240392898}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
+  m_Script: {fileID: 11500000, guid: 929360c6455df144582eece6eb2335eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _isDelete: 0
@@ -318,10 +306,12 @@ MonoBehaviour:
   _isFirstSelectButton: 0
   _callNextButtons: []
   _deleteButtons: []
-  _callPanel: []
-  _deletePanel: []
   _animStateName: 
-  _onClickSounds: 11000000
+  _onClickSounds: 02000000
+  _stageSelectWarningPanel: {fileID: 0}
+  _unknownStagePanel: {fileID: 0}
+  _stageNum: 5
+  _playerNum: 2
 --- !u!1 &294626375
 GameObject:
   m_ObjectHideFlags: 0
@@ -334,8 +324,8 @@ GameObject:
   - component: {fileID: 294626380}
   - component: {fileID: 294626379}
   - component: {fileID: 294626378}
-  - component: {fileID: 294626377}
   - component: {fileID: 294626381}
+  - component: {fileID: 294626377}
   m_Layer: 0
   m_Name: ControllerTutorialButton
   m_TagString: Untagged
@@ -420,21 +410,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 294626377}
-        m_TargetAssemblyTypeName: SceneLoadCaller, Assembly-CSharp
-        m_MethodName: LoadSceneString
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 294626381}
-        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
-        m_MethodName: Click
+        m_TargetAssemblyTypeName: ButtonController, Assembly-CSharp
+        m_MethodName: StageSelect
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -491,7 +469,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 294626375}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
+  m_Script: {fileID: 11500000, guid: 929360c6455df144582eece6eb2335eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _isDelete: 0
@@ -500,10 +478,12 @@ MonoBehaviour:
   _isFirstSelectButton: 0
   _callNextButtons: []
   _deleteButtons: []
-  _callPanel: []
-  _deletePanel: []
   _animStateName: 
-  _onClickSounds: 11000000
+  _onClickSounds: 08000000
+  _stageSelectWarningPanel: {fileID: 0}
+  _unknownStagePanel: {fileID: 0}
+  _stageNum: 1
+  _playerNum: 2
 --- !u!1 &296581590
 GameObject:
   m_ObjectHideFlags: 0
@@ -690,9 +670,9 @@ GameObject:
   - component: {fileID: 708574008}
   - component: {fileID: 708574005}
   - component: {fileID: 708574007}
-  - component: {fileID: 708574006}
-  - component: {fileID: 708574004}
   - component: {fileID: 708574009}
+  - component: {fileID: 708574004}
+  - component: {fileID: 708574006}
   m_Layer: 5
   m_Name: Stage1SelectButton
   m_TagString: Untagged
@@ -823,21 +803,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 708574004}
-        m_TargetAssemblyTypeName: SceneLoadCaller, Assembly-CSharp
-        m_MethodName: LoadSceneString
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 708574009}
-        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
-        m_MethodName: Click
+        m_TargetAssemblyTypeName: ButtonController, Assembly-CSharp
+        m_MethodName: StageSelect
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -864,19 +832,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 708574002}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
+  m_Script: {fileID: 11500000, guid: 929360c6455df144582eece6eb2335eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _isDelete: 0
   _isDelayMode: 0
   _delay: 1500
-  _isFirstSelectButton: 0
+  _isFirstSelectButton: 1
   _callNextButtons: []
   _deleteButtons: []
-  _callPanel: []
-  _deletePanel: []
   _animStateName: 
   _onClickSounds: 11000000
+  _stageSelectWarningPanel: {fileID: 0}
+  _unknownStagePanel: {fileID: 0}
+  _stageNum: 1
+  _playerNum: 2
 --- !u!1 &749824695
 GameObject:
   m_ObjectHideFlags: 0
@@ -889,9 +859,9 @@ GameObject:
   - component: {fileID: 749824701}
   - component: {fileID: 749824700}
   - component: {fileID: 749824699}
-  - component: {fileID: 749824698}
-  - component: {fileID: 749824697}
   - component: {fileID: 749824702}
+  - component: {fileID: 749824697}
+  - component: {fileID: 749824698}
   m_Layer: 5
   m_Name: Stage3SelectButton
   m_TagString: Untagged
@@ -991,21 +961,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 749824697}
-        m_TargetAssemblyTypeName: SceneLoadCaller, Assembly-CSharp
-        m_MethodName: LoadSceneString
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 749824702}
-        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
-        m_MethodName: Click
+        m_TargetAssemblyTypeName: ButtonController, Assembly-CSharp
+        m_MethodName: StageSelect
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1063,7 +1021,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 749824695}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
+  m_Script: {fileID: 11500000, guid: 929360c6455df144582eece6eb2335eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _isDelete: 0
@@ -1072,10 +1030,12 @@ MonoBehaviour:
   _isFirstSelectButton: 0
   _callNextButtons: []
   _deleteButtons: []
-  _callPanel: []
-  _deletePanel: []
   _animStateName: 
-  _onClickSounds: 11000000
+  _onClickSounds: 02000000
+  _stageSelectWarningPanel: {fileID: 0}
+  _unknownStagePanel: {fileID: 0}
+  _stageNum: 3
+  _playerNum: 2
 --- !u!1 &837945820
 GameObject:
   m_ObjectHideFlags: 0
@@ -1252,9 +1212,9 @@ GameObject:
   - component: {fileID: 1102707286}
   - component: {fileID: 1102707285}
   - component: {fileID: 1102707284}
-  - component: {fileID: 1102707283}
-  - component: {fileID: 1102707282}
   - component: {fileID: 1102707287}
+  - component: {fileID: 1102707282}
+  - component: {fileID: 1102707283}
   m_Layer: 5
   m_Name: Stage4SelectButton
   m_TagString: Untagged
@@ -1354,21 +1314,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1102707282}
-        m_TargetAssemblyTypeName: SceneLoadCaller, Assembly-CSharp
-        m_MethodName: LoadSceneString
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1102707287}
-        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
-        m_MethodName: Click
+        m_TargetAssemblyTypeName: ButtonController, Assembly-CSharp
+        m_MethodName: StageSelect
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1426,7 +1374,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1102707280}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
+  m_Script: {fileID: 11500000, guid: 929360c6455df144582eece6eb2335eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _isDelete: 0
@@ -1435,10 +1383,12 @@ MonoBehaviour:
   _isFirstSelectButton: 0
   _callNextButtons: []
   _deleteButtons: []
-  _callPanel: []
-  _deletePanel: []
   _animStateName: 
-  _onClickSounds: 11000000
+  _onClickSounds: 02000000
+  _stageSelectWarningPanel: {fileID: 0}
+  _unknownStagePanel: {fileID: 0}
+  _stageNum: 4
+  _playerNum: 2
 --- !u!1 &1139904099
 GameObject:
   m_ObjectHideFlags: 0
@@ -1720,9 +1670,9 @@ GameObject:
   - component: {fileID: 1211019914}
   - component: {fileID: 1211019913}
   - component: {fileID: 1211019912}
-  - component: {fileID: 1211019911}
-  - component: {fileID: 1211019910}
   - component: {fileID: 1211019915}
+  - component: {fileID: 1211019910}
+  - component: {fileID: 1211019911}
   m_Layer: 5
   m_Name: TitleSelectButton
   m_TagString: Untagged
@@ -1822,21 +1772,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1211019910}
-        m_TargetAssemblyTypeName: SceneLoadCaller, Assembly-CSharp
-        m_MethodName: LoadSceneString
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1211019915}
-        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
-        m_MethodName: Click
+        m_TargetAssemblyTypeName: ButtonController, Assembly-CSharp
+        m_MethodName: StageSelect
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1894,19 +1832,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 1211019908}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
+  m_Script: {fileID: 11500000, guid: 929360c6455df144582eece6eb2335eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _isDelete: 0
   _isDelayMode: 0
   _delay: 1500
-  _isFirstSelectButton: 1
+  _isFirstSelectButton: 0
   _callNextButtons: []
   _deleteButtons: []
-  _callPanel: []
-  _deletePanel: []
   _animStateName: 
-  _onClickSounds: 11000000
+  _onClickSounds: 08000000
+  _stageSelectWarningPanel: {fileID: 0}
+  _unknownStagePanel: {fileID: 0}
+  _stageNum: 1
+  _playerNum: 2
 --- !u!1 &1335214657
 GameObject:
   m_ObjectHideFlags: 0
@@ -2046,8 +1986,8 @@ GameObject:
   - component: {fileID: 1370229828}
   - component: {fileID: 1370229827}
   - component: {fileID: 1370229826}
-  - component: {fileID: 1370229825}
   - component: {fileID: 1370229829}
+  - component: {fileID: 1370229825}
   m_Layer: 0
   m_Name: KeybordTutorialButton
   m_TagString: Untagged
@@ -2132,21 +2072,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1370229825}
-        m_TargetAssemblyTypeName: SceneLoadCaller, Assembly-CSharp
-        m_MethodName: LoadSceneString
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1370229829}
-        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
-        m_MethodName: Click
+        m_TargetAssemblyTypeName: ButtonController, Assembly-CSharp
+        m_MethodName: StageSelect
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2203,7 +2131,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1370229823}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
+  m_Script: {fileID: 11500000, guid: 929360c6455df144582eece6eb2335eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _isDelete: 0
@@ -2212,10 +2140,12 @@ MonoBehaviour:
   _isFirstSelectButton: 0
   _callNextButtons: []
   _deleteButtons: []
-  _callPanel: []
-  _deletePanel: []
   _animStateName: 
-  _onClickSounds: 11000000
+  _onClickSounds: 08000000
+  _stageSelectWarningPanel: {fileID: 0}
+  _unknownStagePanel: {fileID: 0}
+  _stageNum: 1
+  _playerNum: 2
 --- !u!1001 &1380912854
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2307,9 +2237,9 @@ GameObject:
   - component: {fileID: 1514549983}
   - component: {fileID: 1514549982}
   - component: {fileID: 1514549981}
-  - component: {fileID: 1514549980}
-  - component: {fileID: 1514549979}
   - component: {fileID: 1514549984}
+  - component: {fileID: 1514549979}
+  - component: {fileID: 1514549980}
   m_Layer: 5
   m_Name: Stage2SelectButton
   m_TagString: Untagged
@@ -2409,21 +2339,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1514549979}
-        m_TargetAssemblyTypeName: SceneLoadCaller, Assembly-CSharp
-        m_MethodName: LoadSceneString
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1514549984}
-        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
-        m_MethodName: Click
+        m_TargetAssemblyTypeName: ButtonController, Assembly-CSharp
+        m_MethodName: StageSelect
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2481,7 +2399,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1514549977}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19a70e8718b769f47ae11d7e1a879870, type: 3}
+  m_Script: {fileID: 11500000, guid: 929360c6455df144582eece6eb2335eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _isDelete: 0
@@ -2490,10 +2408,12 @@ MonoBehaviour:
   _isFirstSelectButton: 0
   _callNextButtons: []
   _deleteButtons: []
-  _callPanel: []
-  _deletePanel: []
   _animStateName: 
-  _onClickSounds: 11000000
+  _onClickSounds: 02000000
+  _stageSelectWarningPanel: {fileID: 0}
+  _unknownStagePanel: {fileID: 0}
+  _stageNum: 2
+  _playerNum: 2
 --- !u!1 &1727963869
 GameObject:
   m_ObjectHideFlags: 0

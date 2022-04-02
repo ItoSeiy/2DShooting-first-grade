@@ -23,12 +23,17 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
     private AudioSource _bossBgmAudioSource;
 
     [SerializeField]
+    [Header("AudioSourceの音量の初期値")]
+    [Range(0f, 1f)]
+    private float _initialAudioSourceVolme = 0.6f;
+
+    [SerializeField]
     [Header("BGMのフェードにかける時間")]
     private float _bgmFadeTime = 2f;
 
     [SerializeField]
     [Header("BGMを小さく流す際の音量")]
-    private float _bgmFadeOutVol = 0.2f;
+    private float _bgmFadeOutVol = 0.1f;
 
     [SerializeField]
     [Header("効果音が格納されたクラス")]
@@ -56,26 +61,36 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
     /// <summary>BGMを流すタイミングをデリゲートに登録するなどの設定を行う関数</summary>
     private void SettingBGM()
     {
-        SceneLoder.Instance.OnLoadEnd += TryPlayBGM;
-
-        PhaseNovelManager.Instance.OnBeforeNovel += () =>
+        GameManager.Instance.OnInGame += () =>
         {
-            //ノベル時はBGMを小さく流す
-            FadeBgm(_normalBgmAudioSource, _bgmFadeOutVol, _bgmFadeTime);
-        };
+            _normalBgmAudioSource.volume = _initialAudioSourceVolme;
+            _bossBgmAudioSource.volume = _initialAudioSourceVolme;
 
-        //ボス生成時
-        PhaseNovelManager.Instance.OnBoss += () =>
-        {
-            //ボスが始まったら普通のBGMは消す
-            _normalBgmAudioSource.Stop();
-            //ボスのBGM再生
-            _bossBgmAudioSource.Play();
+            TryPlayBGM();
+
+            PhaseNovelManager.Instance.OnBeforeNovel += () =>
+            {
+                //ノベル時はBGMを小さく流す
+                FadeBgm(_normalBgmAudioSource, _bgmFadeOutVol, _bgmFadeTime);
+            };
+
+            //ボス生成時
+            PhaseNovelManager.Instance.OnBoss += () =>
+            {
+                //ボスが始まったら普通のBGMは消す
+                _normalBgmAudioSource.Stop();
+                //ボスのBGM再生
+                _bossBgmAudioSource.Play();
+            };
+
+
+            PhaseNovelManager.Instance.OnEndAfterNovel += () => _bossBgmAudioSource.Stop();
         };
 
         //キャラ死亡時
         GameManager.Instance.OnGameOver += () =>
         {
+            Debug.Log("GameOver");
             //BGM停止
             FadeBgm(_normalBgmAudioSource, 0f, _bgmFadeTime);
             //ボス戦闘中に死んだ際はノベルが流れるため少し音を残す
@@ -84,8 +99,6 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 
         //ボス死亡時                               ノベルが流れるため少し音を残す
         GameManager.Instance.OnStageClear += () => FadeBgm(_bossBgmAudioSource, _bgmFadeOutVol, _bgmFadeTime);
-
-        PhaseNovelManager.Instance.OnEndAfterNovel += () => FadeBgm(_normalBgmAudioSource, 0f, _bgmFadeTime);
     }
 
     /// <summary>BGMを流すステージかどうかを判別してBGMを流す関数</summary>
@@ -98,8 +111,9 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
         {
             if (x.SceneName == SceneLoder.Instance.ActiveSceneName)
             {
-                Debug.Log($"Play{x.NormalBGM.name}");
                 _normalBgmAudioSource.clip = x.NormalBGM;
+                _bossBgmAudioSource.clip = x.BossBGM;
+
                 _normalBgmAudioSource.Play();
             }
         });

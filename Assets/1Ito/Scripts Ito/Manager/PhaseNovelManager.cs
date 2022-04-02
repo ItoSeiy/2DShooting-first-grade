@@ -9,6 +9,8 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
 {
     public NovelPhase NovelePhaesState => _novelPhase;
 
+    public StageData StageData => _stageParam;
+
     [SerializeField, Header("ノベル前に待つ時間")]
     float _novelWaitTime = 5f;
 
@@ -104,6 +106,7 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
         base.Awake();
         GameManager.Instance.OnGameOver += OnGameOver;
         GameManager.Instance.OnStageClear += () => _novelPhase = NovelPhase.Win;
+        SceneLoder.Instance.OnBeforeLoad += AllBulletEnemyDestroy;
     }
 
     void Start()
@@ -126,7 +129,6 @@ public class PhaseNovelManager : SingletonMonoBehaviour<PhaseNovelManager>
             case true:
                 _timer += Time.deltaTime;
                 if (_timer <= _novelWaitTime) return;
-                Debug.Log("ボス開始");
                 _isBossStage = true;
                 Novel();
                 break;

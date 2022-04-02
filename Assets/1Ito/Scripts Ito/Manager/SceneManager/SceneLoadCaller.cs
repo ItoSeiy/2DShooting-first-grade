@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class SceneLoadCaller : MonoBehaviour
 {
@@ -17,6 +14,6 @@ public class SceneLoadCaller : MonoBehaviour
     /// </summary>
     public void LoadSameScene()
     {
-        SceneLoder.Instance.LoadScene(SceneManager.GetActiveScene().name);
+        SceneLoder.Instance.LoadScene(SceneLoder.Instance.ActiveSceneName);
     }
 }
