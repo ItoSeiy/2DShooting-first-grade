@@ -10,8 +10,6 @@ namespace Overdose.Data
         public string SceneName => _sceneName;
         public AudioClip NormalBGM => _normalBGM;
         public AudioClip BossBGM => _bossBGM;
-        public int PlayerNum => _playerNum;
-        public int StageNum => _stageNum;
         public PhaseData[] PhaseParms => _phaseParms;
 
         [SerializeField]
@@ -23,13 +21,7 @@ namespace Overdose.Data
         private AudioClip _bossBGM;
 
         [SerializeField]
-        private int _playerNum;
-        [SerializeField]
-        private int _stageNum;
-
-        [SerializeField]
         private PhaseData[] _phaseParms = default;
-
     }
 
 
