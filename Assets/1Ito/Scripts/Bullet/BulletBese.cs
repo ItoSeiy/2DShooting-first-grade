@@ -126,7 +126,7 @@ public abstract class BulletBese : MonoBehaviour, IPauseable
     /// <param name="col">当たった相手のコライダー</param>
     protected virtual void BulletAttack(Collider2D col)
     {
-        var target = col.gameObject.GetComponent<IAttackble>();
+        IAttackble target = col.gameObject.GetComponent<IAttackble>();
         target?.AddDamage(_damage, col);
     }
     void IPauseable.PauseResume(bool isPause)
