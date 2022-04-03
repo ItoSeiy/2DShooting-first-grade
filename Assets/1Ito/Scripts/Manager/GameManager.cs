@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using Overdose.Data;
 
 /// <summary>
 /// ゲームマネージャー
@@ -66,8 +65,6 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     public event Action OnGameOver;
     /// <summary>ステージクリア時の処理を登録する</summary>
     public event Action OnStageClear;
-    /// <summary>ゲーム開始時の処理を登録する</summary>
-    public event Action OnInGame;
 
     protected override void Awake()
     {
@@ -101,8 +98,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
     public void SettingScene()
     {
-        Debug.Log("プレイヤーを参照できました\nUI,プレイヤーのセットステージ開始時の処理を行います");
-        OnInGame?.Invoke();
+        Debug.Log("プレイヤーを参照できました\nUIとプレイヤーのセットを行います");
         PlayerLevelSet();
         UIManager.Instance.UISet();
         _isGameStart = true;

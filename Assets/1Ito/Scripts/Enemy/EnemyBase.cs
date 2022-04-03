@@ -6,7 +6,7 @@ using UnityEngine;
 /// </summary>
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Collider2D))]
-public abstract class EnemyBase : MonoBehaviour, IAttackble, IPauseable
+public abstract class EnemyBase : MonoBehaviour, IDamage, IPauseable
 {
     public float Speed => _speed;
     public float EnemyHp => _enemyHp;
