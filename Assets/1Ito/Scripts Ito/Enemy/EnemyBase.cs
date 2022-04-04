@@ -168,7 +168,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamage, IPauseable
     /// 受けるダメージ量はBulletが指定する
     /// </summary>
     /// <param name="damage">受けるダメージ量</param>
-    void IAttackble.AddDamage(float damage, Collider2D col)
+    public void AddDamage(float damage, Collider2D col)
     {
         //攻撃力を設定した分減らす処理
         damage *= _damageTakenRatio;
