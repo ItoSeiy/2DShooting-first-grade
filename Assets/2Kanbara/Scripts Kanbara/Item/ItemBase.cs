@@ -21,7 +21,9 @@ public class ItemBase : MonoBehaviour, IPauseable
     [SerializeField, Header("演出が再生されるタイミング")] StartPS _stratPS = StartPS.Contact;
 
     bool _isGetItemMode = false;
-    public bool _isTaking = false;
+    bool _isTaking = false;
+
+    public bool IsTaking { get => _isTaking; set => _isTaking = value; }
 
     Vector2 _oldVerocity;
 
@@ -74,9 +76,9 @@ public class ItemBase : MonoBehaviour, IPauseable
             _childrenPS.SetActive(false);
             gameObject.SetActive(false);
         }
-        if(collision.tag == _itemGetColiderTag)
+        if (collision.tag == _itemGetColiderTag)
         {
-            if(_stratPS == StartPS.Contact)
+            if (_stratPS == StartPS.Contact)
             {
                 _childrenPS.SetActive(true);
             }
@@ -91,7 +93,7 @@ public class ItemBase : MonoBehaviour, IPauseable
 
     void IPauseable.PauseResume(bool isPause)
     {
-        if(isPause)
+        if (isPause)
         {
             _oldVerocity = _rb.velocity;
             _rb.velocity = Vector2.zero;
