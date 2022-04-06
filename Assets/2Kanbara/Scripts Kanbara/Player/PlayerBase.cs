@@ -170,7 +170,7 @@ public class PlayerBase : MonoBehaviour, IPauseable
 
     [SerializeField]
     [Header("精密操作時のPlayerの色をゲーミングにする変数")]
-    int _gameingPlayerColorTime = default;
+    int _gameingPlayerColorCoolTime = default;
 
     [SerializeField]
     [Header("パワーアイテムの数がカンストしたとき（レベルマックスのとき）の演出")]
@@ -293,7 +293,7 @@ public class PlayerBase : MonoBehaviour, IPauseable
         GameManager.Instance.OnStageClear += () =>
         {
             AllFalse();
-            AllItemGet();
+            OnItemGetLine();
         };
 
         _rb = GetComponent<Rigidbody2D>();
@@ -379,15 +379,13 @@ public class PlayerBase : MonoBehaviour, IPauseable
         {
             _isLateMode = true;
             _playerCollider.SetActive(true);
-            GamingPlayer();
-            Debug.Log(_isLateMode);
+            PlayerGamingEffect();
         }
         if (context.performed || context.canceled)//LeftShiftKeyが離された瞬間の処理
         {
             _isLateMode = false;
             _playerCollider.SetActive(false);
             GamingFalse();
-            Debug.Log(_isLateMode);
         }
     }
 
@@ -547,7 +545,7 @@ public class PlayerBase : MonoBehaviour, IPauseable
 
         if(collision.tag == _playerItemGetLineTag)
         {
-            AllItemGet();
+            OnItemGetLine();
         }
     }
 
@@ -560,16 +558,16 @@ public class PlayerBase : MonoBehaviour, IPauseable
         item.IsTaking = true;
     }
 
-    void AllItemGet()
+    void OnItemGetLine()
     {
             string[] itemTags = new string[] {_1upTag, _bombItemTag, _pointTag, _powerTag, _invincibleTag};
             foreach(var itemTag in itemTags)
             {
-                OnItemGetLine(itemTag);
+                AllItemGet(itemTag);
             }
     }
 
-    void OnItemGetLine(string itemTag)
+    void AllItemGet(string itemTag)
     {
         GameObject[] items = GameObject.FindGameObjectsWithTag(itemTag);
         foreach(var item in items)
@@ -638,14 +636,14 @@ public class PlayerBase : MonoBehaviour, IPauseable
             Debug.Log("AudioClipがありません");
         }
     }
-    async void GamingPlayer()
+    async void PlayerGamingEffect()
     {
         if (!_isLateMode) return;
         _parsR.gameObject.SetActive(true);
-        await Task.Delay(_gameingPlayerColorTime);
+        await Task.Delay(_gameingPlayerColorCoolTime);
         if (!_isLateMode) return;
         _parsB.gameObject.SetActive(true);
-        await Task.Delay(_gameingPlayerColorTime);
+        await Task.Delay(_gameingPlayerColorCoolTime);
         if (!_isLateMode) return;
         _parsG.gameObject.SetActive(true);
     }
